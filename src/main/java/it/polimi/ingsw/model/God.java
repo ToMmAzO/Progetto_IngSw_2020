@@ -16,5 +16,5 @@ public class God {
     public void setGodPower(String godPower) {
         this.godPower = godPower;
     }
-    
+
 }
