@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 public class Game {
+
     private Player[] players;
     private Map map;
     private Deck divinityCardsDeck;
@@ -34,4 +35,5 @@ public class Game {
     public void victory(){
         //codice
     }
+
 }
