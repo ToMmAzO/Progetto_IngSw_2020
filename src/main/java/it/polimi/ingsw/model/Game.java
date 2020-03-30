@@ -24,6 +24,10 @@ public class Game {
         //codice
     }
 
+    public void deletePlayer(){
+        //codice
+    }
+
     public boolean getAllow_ZChanges() {
         return allow_ZChanges;
     }
