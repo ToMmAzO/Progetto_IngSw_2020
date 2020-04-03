@@ -1,17 +1,24 @@
 package it.polimi.ingsw.model;
 
-public enum Cell {
+public class Cell {
 
-    BLOCK1("B1"), BLOCK2("B2"), BLOCK3("B3"), CUPOLA("C"), EMPTY("E"), WORKERLV0("W0"), WORKERLV1("W1"), WORKERLV2("W2"),WORKERLV3("W3");
+    private Worker workerToken;
+    private BlockType block;
 
-    private String abbreviation;
-
-    private Cell(String abbreviation){
-        this.abbreviation = abbreviation;
+    public void setWorkerToken(Worker workerToken) {
+        this.workerToken = workerToken;
     }
 
-    public String getAbbreviation() {
-        return abbreviation;
+    public Worker getWorkerToken() {
+        return workerToken;
+    }
+
+    public void setBlock(BlockType block) {
+        this.block = block;
+    }
+
+    public BlockType getBlock() {
+        return block;
     }
 
 }

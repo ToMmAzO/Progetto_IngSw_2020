@@ -14,8 +14,4 @@ public class WorkerPrometheus extends Worker {
         super.buildBlock();  //ridefinisco metodo
     }
 
-    public void setAllow_Zchanges(){
-        //codice
-    }
-
 }

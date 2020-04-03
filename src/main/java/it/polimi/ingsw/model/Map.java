@@ -2,21 +2,24 @@ package it.polimi.ingsw.model;
 
 public class Map {
 
-    private Cell[][] ground;
+    private BlockType[][] ground;
 
     public void reset(){
         //codice
     }
 
-    public Cell[][] getGround() {
-        return ground;
+    public void setCell(){
+        //codice
     }
 
-    public void setGround(Cell[][] ground) {
-        this.ground = ground;
+    public BlockType getCell(){
+        //codice
+        return ground[0][0];//esempio
     }
 
     public boolean isEmpty(){
         //codice
+        return true;//esempio
     }
+
 }

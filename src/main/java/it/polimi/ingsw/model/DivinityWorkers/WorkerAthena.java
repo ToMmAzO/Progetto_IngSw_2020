@@ -4,8 +4,9 @@ import it.polimi.ingsw.model.Worker;
 
 public class WorkerAthena extends Worker {
 
-    public void setAllow_Zchanges(){
-        //codice
+    @Override
+    public void changePosition() {
+        super.changePosition();  //ridefinisco metodo
     }
 
 }

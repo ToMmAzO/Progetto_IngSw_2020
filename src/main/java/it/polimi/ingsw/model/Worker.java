@@ -2,36 +2,28 @@ package it.polimi.ingsw.model;
 
 public abstract class Worker {
 
-    private int coordX, coordY, coordZ;
-    private Color playerColor;
+    private String idWorker;
+    private int[] coord;
+    private Color color;
 
-
-    public int getCoordX() {
-        return coordX;
+    public void setIdWorker(String idWorker) {
+        this.idWorker = idWorker;
     }
 
-    public void setCoordX(int coordX) {
-        this.coordX = coordX;
+    public void setCoord() {
+        //codice
     }
 
-    public int getCoordY() {
-        return coordY;
+    public String getIdWorker() {
+        return idWorker;
     }
 
-    public void setCoordY(int coordY) {
-        this.coordY = coordY;
+    public int[] getCoord() {
+        return coord;
     }
 
-    public int getCoordZ() {
-        return coordZ;
-    }
-
-    public void setCoordZ(int coordZ) {
-        this.coordZ = coordZ;
-    }
-
-    public Color getPlayerColor() {
-        return playerColor;
+    public Color getColor() {
+        return color;
     }
 
     public void changePosition(){

@@ -2,41 +2,18 @@ package it.polimi.ingsw.model;
 
 public class Game {
 
-    private Player[] players;
-    private Map map;
-    private Deck divinityCardsDeck;
-    private boolean terminator;
-    private boolean allow_ZChanges;
+    private God[] cardSelected;
 
-    public void addPlayer(){
+    public void setCards(){
         //codice
     }
 
-    public void setOrderPlayer(){
+    public God getCard(){
         //codice
+        return cardSelected[0];//esempio
     }
 
-    public void startGame(){
-        //codice
-    }
-
-    public Player nextPlayer(){
-        //codice
-    }
-
-    public void deletePlayer(){
-        //codice
-    }
-
-    public boolean getAllow_ZChanges() {
-        return allow_ZChanges;
-    }
-
-    public void setAllow_ZChanges(boolean allow_ZChanges) {
-        this.allow_ZChanges = allow_ZChanges;
-    }
-
-    public void victory(){
+    public void endGame(){
         //codice
     }
 

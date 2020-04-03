@@ -13,8 +13,4 @@ public class God {
         return godPower;
     }
 
-    public void setGodPower(String godPower) {
-        this.godPower = godPower;
-    }
-
 }

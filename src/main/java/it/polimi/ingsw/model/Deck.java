@@ -2,14 +2,9 @@ package it.polimi.ingsw.model;
 
 public class Deck {
 
-    private God[] godlist;
-    private God[] selected;
+    private God[] godList;
 
     public void shuffle(){
-        //codice
-    }
-
-    public God pickCard(){
         //codice
     }
 

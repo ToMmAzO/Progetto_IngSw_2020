@@ -3,49 +3,41 @@ package it.polimi.ingsw.model;
 public class Player {
 
     private String nickname;
-    private int age;
     private Color color;
     private Worker[] workers;
     private Effect godChoice;
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    private void setNickname(String nickname) {
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
-    public Color getColor() {
-        return color;
-    }
-
-    private void setColor(Color color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    private void setAge(int age) {
-        this.age = age;
+    public void setGodChoice(Effect godChoice) {
+        this.godChoice = godChoice;
     }
 
     private void setWorkers(Worker[] workers) {
         this.workers = workers;
     }
 
-    public Worker chooseWorker(){
-        //codice
+    public String getNickname() {
+        return nickname;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public Effect getGodChoice() {
         return godChoice;
     }
 
-    public void setGodChoice(Effect godChoice) {
-        this.godChoice = godChoice;
+    public Worker getWorkerSelected(){
+        //codice
+        return workers[0];//esempio
     }
 
 }
