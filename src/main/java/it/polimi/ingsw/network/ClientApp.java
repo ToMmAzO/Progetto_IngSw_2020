@@ -1,10 +1,10 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.network;
 
 /**
  * Hello world!
  *
  */
-public class App 
+public class ClientApp
 {
     public static void main( String[] args )
     {
