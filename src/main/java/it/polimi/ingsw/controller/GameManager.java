@@ -3,7 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.Map;
 import it.polimi.ingsw.model.Player;
 
-public class RoundManager {
+public class GameManager {
 
     private Player[] players;
     private Map map;
@@ -13,6 +13,15 @@ public class RoundManager {
     public void addPlayer(){
         //codice
     }
+
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
 
     public void startGame(){
         //codice
