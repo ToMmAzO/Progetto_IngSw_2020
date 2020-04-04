@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public enum Effect {
+public enum Divinity {
 
     APOLLO, ARTEMIS, ATHENA, ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS
 

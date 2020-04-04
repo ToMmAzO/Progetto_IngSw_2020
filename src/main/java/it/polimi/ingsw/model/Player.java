@@ -5,7 +5,7 @@ public class Player {
     private String nickname;
     private Color color;
     private Worker[] workers;
-    private Effect godChoice;
+    private Divinity godChoice;
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
@@ -15,7 +15,7 @@ public class Player {
         this.color = color;
     }
 
-    public void setGodChoice(Effect godChoice) {
+    public void setGodChoice(Divinity godChoice) {
         this.godChoice = godChoice;
     }
 
@@ -31,7 +31,7 @@ public class Player {
         return color;
     }
 
-    public Effect getGodChoice() {
+    public Divinity getGodChoice() {
         return godChoice;
     }
 

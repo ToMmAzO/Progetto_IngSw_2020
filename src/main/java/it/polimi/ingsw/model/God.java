@@ -2,10 +2,15 @@ package it.polimi.ingsw.model;
 
 public class God {
 
-    private Effect godName;
-    private String godPower;
+    private final Divinity godName;
+    private final String godPower;
 
-    public Effect getGodName() {
+    public God(Divinity godName, String godPower){
+        this.godName = godName;
+        this.godPower = godPower;
+    }
+
+    public Divinity getGodName() {
         return godName;
     }
 
