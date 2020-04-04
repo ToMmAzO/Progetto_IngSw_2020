@@ -1,13 +1,12 @@
 package it.polimi.ingsw.model.Cards;
 
-import it.polimi.ingsw.model.God;
-
 public class Deck {
 
     private static God[] godList;
 
     public Deck(){
         godList = new God[9];
+        GodDescription.setList();
         int i = 0;
         for(Divinity d: Divinity.values()) {
             godList[i] = new God(d, GodDescription.list[i]);
@@ -29,7 +28,7 @@ public class Deck {
             while (true){
                 int random = (int) (Math.random() * 9);
                 if (random != casual[0] && random != casual[1]) {
-                    casual[1] = random;
+                    casual[2] = random;
                     break;
                 }
             }
