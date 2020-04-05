@@ -8,7 +8,7 @@ public class Map {
 
     /*
     public static void main(String[] args){
-        Map m = new Map();
+        CIao m = new CIao();
         m.printMap();
         System.out.println();
         m.setCellBlockType(4, 2, BlockType.BLOCK1);

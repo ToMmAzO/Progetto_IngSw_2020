@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.Board.Map;
+
 public abstract class Worker {
 
     private String idWorker;
