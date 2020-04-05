@@ -8,17 +8,17 @@ public class GameManager {
     private Player[] players;
     private Map map;
     private boolean allowHeight;
-    private int numberOfPlayers;
+    private static int numberOfPlayers;
 
     public void addPlayer(){
         //codice
     }
 
     public void setNumberOfPlayers(int numberOfPlayers) {
-        this.numberOfPlayers = numberOfPlayers;
+        GameManager.numberOfPlayers = numberOfPlayers;
     }
 
-    public int getNumberOfPlayers() {
+    public static int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
