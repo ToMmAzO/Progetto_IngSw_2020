@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Map;
+import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Player;
 
 public class GameManager {

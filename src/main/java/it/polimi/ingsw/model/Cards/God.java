@@ -4,8 +4,8 @@ import it.polimi.ingsw.model.Cards.Divinity;
 
 public class God {
 
-    private final Divinity godName;
-    private final String godPower;
+    private Divinity godName;
+    private String godPower;
 
     public God(Divinity godName, String godPower){
         this.godName = godName;
