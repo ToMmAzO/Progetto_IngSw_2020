@@ -7,17 +7,13 @@ import it.polimi.ingsw.model.Cards.God;
 public class Game {
 
     private God[] cardsSelected;
-    private Boolean[] availability = {true, true, true};
-
-
-    /*per testare impostare in setCardsSelected()
-        this.cardsSelected = Deck.extractCards(3);
+    private Boolean[] availability;
+    
+    /*per testare impostare tutte le istanze in Game() di GameManager.getNumberOfPlayers() a 3
     */
     /*
     public static void main (String[] args){
-        Deck d= new Deck();
         Game g= new Game();
-        g.setCardsSelected();
         God[] x = g.getCardsSelected();
         Boolean[] a = g.getAvailability();
         for (int i=0; i<3; i++){
@@ -34,9 +30,13 @@ public class Game {
     }
      */
 
-
-    public void setCardsSelected(){
-        this.cardsSelected = Deck.extractCards(GameManager.getNumberOfPlayers());
+    public Game(){
+        Deck d = new Deck();
+        this.cardsSelected = d.extractCards(GameManager.getNumberOfPlayers());
+        this.availability = new Boolean[GameManager.getNumberOfPlayers()];
+        for (int i = 0; i < GameManager.getNumberOfPlayers(); i++){
+            this.availability[i] = true;
+        }
     }
 
     public God[] getCardsSelected(){
