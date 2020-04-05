@@ -2,15 +2,15 @@ package it.polimi.ingsw.model;
 
 public enum BlockType {
 
-    EMPTY("0"), BLOCK1("1"), BLOCK2("2"), BLOCK3("3"), CUPOLA("4");
+    EMPTY(0), BLOCK1(1), BLOCK2(2), BLOCK3(3), CUPOLA(4);
 
-    private String abbreviation;
+    private int abbreviation;
 
-    BlockType(String abbreviation){
+    BlockType(int abbreviation){
         this.abbreviation = abbreviation;
     }
 
-    public String getAbbreviation() {
+    public int getAbbreviation() {
         return abbreviation;
     }
 

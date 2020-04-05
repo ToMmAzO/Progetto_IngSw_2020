@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 public class Map {
 
-    private BlockType[][] ground;
+    private Cell[][] ground;
 
     public void reset(){
         //codice
@@ -12,9 +12,9 @@ public class Map {
         //codice
     }
 
-    public BlockType getCell(){
+    public Cell getCell(int x, int y){
         //codice
-        return ground[0][0];//esempio
+        return ground[x][y];//esempio
     }
 
     public boolean isEmpty(){

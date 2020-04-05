@@ -6,10 +6,6 @@
 t
 Dsrc/main/java/it/polimi/ingsw/model/DivinityWorkers/WorkerAtlas.java,a\0\a00d99c8beda8ab3ecc87591502c9c3f5df11194
 _
-/src/main/java/it/polimi/ingsw/model/Effect.java,3\c\3c8bb09c7382a4d5d4daa003a7918d480777bdc1
-]
--src/main/java/it/polimi/ingsw/model/Deck.java,3\a\3a8e6b0f7de0ffd02f5e82761ae2780de062078f
-_
 /src/main/java/it/polimi/ingsw/model/Player.java,e\1\e19d6cc5cab1487940cbd25652aa891efd59c5aa
 u
 Esrc/main/java/it/polimi/ingsw/model/DivinityWorkers/WorkerAthena.java,e\5\e5aba5f400e962efc4b36557ec7d34204cb2b93f
@@ -48,3 +44,13 @@ d
 0src/test/java/it/polimi/ingsw/ClientAppTest.java,2\4\240bbaf0fde47e32c3ecdc0bb5da8c0b7d733d5d
 k
 ;src/main/java/it/polimi/ingsw/controller/ActionManager.java,3\6\3658c91f2de0b578635420a60d889c3ad4ddd35b
+c
+3src/main/java/it/polimi/ingsw/model/Cards/Deck.java,d\5\d53f6bb1ea73f752987b3b73a49ff3f39b01b03e
+g
+7src/main/java/it/polimi/ingsw/model/Cards/Divinity.java,0\e\0ef459bbf084020cd87db1249dd4612e5cf885cf
+m
+=src/main/java/it/polimi/ingsw/model/Cards/GodDescription.java,e\b\eb876feb1fb56db70c62d1fee8ae321864d24b25
+b
+2src/main/java/it/polimi/ingsw/model/BlockType.java,e\d\ed22337f0b1a281fcda88f8997daa366bdb67680
+_
+/src/main/java/it/polimi/ingsw/model/Worker.java,5\0\50a23c66e9a52961e71e550bf8c35e74387f8988
