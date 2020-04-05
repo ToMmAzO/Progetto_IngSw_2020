@@ -6,15 +6,15 @@ public class Map {
 
     private Cell[][] map;
 
-    /*
+/*
     public static void main(String[] args){
-        CIao m = new CIao();
+        Map m = new Map();
         m.printMap();
         System.out.println();
         m.setCellBlockType(4, 2, BlockType.BLOCK1);
         m.printMap();
     }
-    */
+*/
 
     public Map(){
         map = new Cell[5][5];

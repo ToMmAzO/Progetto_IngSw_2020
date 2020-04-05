@@ -44,7 +44,7 @@ public class GameManager {
         return allowHeight;
     }
 
-    public void victory(){
+    public static void victory(){
         //codice
     }
 

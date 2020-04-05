@@ -20,10 +20,6 @@ Bsrc/main/java/it/polimi/ingsw/model/DivinityWorkers/WorkerPan.java,c\3\c3e3316
 y
 Isrc/main/java/it/polimi/ingsw/model/DivinityWorkers/WorkerPrometheus.java,8\6\868b8b38614dd89515bfee30fde428151a5aa13f
 ]
--src/main/java/it/polimi/ingsw/model/Cell.java,e\7\e7081ec17eabf90f38df867d7ab37555409775b0
-\
-,src/main/java/it/polimi/ingsw/model/Map.java,f\5\f5d6968108de3d96e9e897c8f2d29ef4309c6cbe
-]
 -src/main/java/it/polimi/ingsw/model/Game.java,9\5\950971fa7f452620730613b808121bde81e86f84
 :
 
@@ -50,7 +46,15 @@ g
 7src/main/java/it/polimi/ingsw/model/Cards/Divinity.java,0\e\0ef459bbf084020cd87db1249dd4612e5cf885cf
 m
 =src/main/java/it/polimi/ingsw/model/Cards/GodDescription.java,e\b\eb876feb1fb56db70c62d1fee8ae321864d24b25
-b
-2src/main/java/it/polimi/ingsw/model/BlockType.java,e\d\ed22337f0b1a281fcda88f8997daa366bdb67680
 _
 /src/main/java/it/polimi/ingsw/model/Worker.java,5\0\50a23c66e9a52961e71e550bf8c35e74387f8988
+c
+3src/main/java/it/polimi/ingsw/model/Board/Cell.java,7\5\75f054ef6f9d2bd4465be321f2a7e515085dc9db
+h
+8src/main/java/it/polimi/ingsw/model/Board/BlockType.java,c\d\cd7b9eb2d0e08d729618f74bd3c8efd3a0d357b1
+i
+9src/main/java/it/polimi/ingsw/controller/GameManager.java,e\c\ec1ac7ed18113c822dedbd92cbc0e3499935be29
+u
+Esrc/main/java/it/polimi/ingsw/model/DivinityWorkers/WorkerApollo.java,3\5\35eccc86f31bf9b55202d32fafb87c2c8a679349
+b
+2src/main/java/it/polimi/ingsw/model/Board/Map.java,4\5\456bcddfb1d96b69973075de766d69e7600e5013
