@@ -64,6 +64,10 @@ public abstract class Worker {
         return true;
     }
 
+    public boolean canMove(boolean noGoUp) {             //solo per sottoclassi se no dava fastidio l'override
+        return true;
+    }
+
     public void changePosition(int newX, int newY){
         if(coordZ == 2 && Map.getCellBlockType(newX, newY).getAbbreviation() == 3){
             coordX = newX;
@@ -89,6 +93,10 @@ public abstract class Worker {
         return true;
     }
 
+    public boolean canBuild(boolean buildAgain) {       //solo per sottoclassi se no dava fastidio l'override
+        return true;
+    }
+
     public void buildBlock(int buildX, int buildY){
         if(Map.getCellBlockType(buildX, buildY) == BlockType.EMPTY){
             Map.setCellBlockType(buildX, buildY, BlockType.BLOCK1);
@@ -99,6 +107,14 @@ public abstract class Worker {
         }else if(Map.getCellBlockType(buildX, buildY) == BlockType.BLOCK3){
             Map.setCellBlockType(buildX, buildY, BlockType.CUPOLA);
         }
+    }
+
+    public void buildBlock(boolean buildAgain, int buildX, int buildY) {         //solo per sottoclassi se no dava fastidio l'override PROMETHEUS e HEPHAESTUS
+
+    }
+
+    public void buildBlock(int buildX, int buildY, int buildAgainX, int buildAgainY){       //solo per sottoclassi se no dava fastidio l'override DEMETER
+
     }
 
 }

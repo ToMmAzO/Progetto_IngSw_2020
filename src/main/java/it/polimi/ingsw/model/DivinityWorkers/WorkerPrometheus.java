@@ -12,7 +12,7 @@ public class WorkerPrometheus extends Worker {
         super(p, coordX, coordY);
     }
 
-    @Override           //se passo cose rompe la superclasse, come faccio?
+    @Override
     public boolean canMove(boolean noGoUp) {
         for(int i = getCoordX() - 1; i < getCoordX() + 1; i++){
             for(int j = getCoordY() - 1; j < getCoordY() + 1; j++) {
