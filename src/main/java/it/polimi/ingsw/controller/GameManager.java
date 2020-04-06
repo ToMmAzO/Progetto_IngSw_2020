@@ -36,7 +36,7 @@ public class GameManager {
         //codice
     }
 
-    public void setAllowHeight(boolean allowHeight) {
+    public static void setAllowHeight(boolean allowHeight) {
         this.allowHeight = allowHeight;
     }
 

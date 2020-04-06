@@ -11,8 +11,13 @@ public class WorkerDemeter extends Worker {
     }
 
     @Override
-    public void buildBlock(Map field, int buildX, int buildY) {
-        super.buildBlock(field, buildX, buildY);  //ridefinisco metodo
+    public void buildBlock(int buildX, int buildY, int buildAgainX, int buildAgainY) {
+        if(buildAgainX == buildX && buildAgainY == buildY){
+            //ERRORE
+        }else{
+            super.buildBlock(buildX, buildY);
+            super.buildBlock(buildAgainX, buildAgainY);
+        }
     }
 
 }
