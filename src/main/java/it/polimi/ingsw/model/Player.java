@@ -18,9 +18,9 @@ public class Player {
     }
     /*public static void main(String[]args){
 
-        Player p1 = new Player("raffo");
-        Player p2 = new Player("raffo2");
-        Player p3 = new Player("raffo3");
+        Player p1 = new Player("MarcoRiva");
+        Player p2 = new Player("GabrieleVangi");
+        Player p3 = new Player("MattiaValassi");
         for(Color color: Color.values())
             color.init();
         p1.chooseColor();
@@ -41,9 +41,9 @@ public class Player {
     public void chooseColor(){
         System.out.println("write 'RED' , 'YELLOW' or 'BLUE' to choose your color");
         for(Color color: Color.values()){
-            Boolean x = false;
+            Boolean x;
             x = color.isAvailiable();
-            if(x==true)
+            if(x)
                 System.out.println("color:" + color + " is availiable");
             else
                 System.out.println("color:" + color + " is NOT availiable");
@@ -123,10 +123,7 @@ public class Player {
         do {
             Scanner scanner = new Scanner(System.in);
             selection = scanner.nextInt();
-            if (selection == '1' || selection == '2')
-                correct = true;
-            else
-                correct = false;
+            correct = selection == '1' || selection == '2';
 
             switch (selection) {
                 case 1:
@@ -137,7 +134,7 @@ public class Player {
                     System.out.println("you can only insert '1' or '2'");
                     break;
             }
-        }while(correct == false);
+        }while(!correct);
     return workers[selection-1];
     }
 

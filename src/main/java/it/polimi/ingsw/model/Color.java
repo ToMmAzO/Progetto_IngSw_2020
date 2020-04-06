@@ -9,7 +9,7 @@ public enum Color {
     RED, YELLOW, BLUE;
 
 
-    HashMap<Color, Boolean > availability = new HashMap<>();
+    static HashMap<Color, Boolean > availability = new HashMap<>();
 
     //Before starting the game you need to initialize the Hashmap by doing:
     //for(Color color: Color.values())
