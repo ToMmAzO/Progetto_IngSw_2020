@@ -30,12 +30,11 @@ public class Game {
     }
     */
 
-
     public Game(){
-        Deck d = new Deck();
-        cardsSelected = d.extractCards(3);
-        availability = new Boolean[3];
-        for (int i = 0; i < 3; i++){
+        new Deck();
+        cardsSelected = Deck.extractCards(GameManager.getNumberOfPlayers());
+        availability = new Boolean[GameManager.getNumberOfPlayers()];
+        for (int i = 0; i < GameManager.getNumberOfPlayers(); i++){
             availability[i] = true;
         }
     }

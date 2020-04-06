@@ -1,17 +1,21 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 
 public class TurnManager {
 
-    private Worker workerSelected;
+    private static Worker workerSelected;
 
-    public void startTurn(){
-        //codice
+    public static void startTurn(Player player){
+        workerSelected = player.getWorkerSelected();
+        selectAction();
+        workerSelected = null;
     }
 
-    public void selectAction(){
-        //codice
+    public static void selectAction(){
+        workerSelected.changePosition(100, 100);
+        workerSelected.buildBlock(100, 100);
     }
 
 }

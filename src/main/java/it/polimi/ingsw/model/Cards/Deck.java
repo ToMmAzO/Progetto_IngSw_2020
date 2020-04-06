@@ -2,19 +2,19 @@ package it.polimi.ingsw.model.Cards;
 
 public class Deck {
 
-    private God[] godList;
+    private static God[] godList;
 
     public Deck(){
-        this.godList = new God[9];
+        godList = new God[9];
         GodDescription.setList();
         int i = 0;
         for(Divinity d: Divinity.values()) {
-            this.godList[i] = new God(d, GodDescription.list[i]);
+            godList[i] = new God(d, GodDescription.list[i]);
             i++;
         }
     }
 
-    public God[] extractCards(int number){
+    public static God[] extractCards(int number){
         int[] casual = new int[number];
         casual[0] = (int) (Math.random() * 9);
         while (true){
@@ -35,7 +35,7 @@ public class Deck {
         }
         God[] selected = new God[number];
         for (int i = 0; i < number; i++){
-            selected[i] = (this.godList[casual[i]]);
+            selected[i] = (godList[casual[i]]);
         }
         return selected;
     }

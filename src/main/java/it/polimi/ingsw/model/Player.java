@@ -74,8 +74,8 @@ public class Player {
 
     }
 
-    public void setGodChoice() {
-        this.godChoice = Game.getCardToPlayer(1).getGodName();//int di prova
+    public void setGodChoice(God god) {
+        this.godChoice = god.getGodName();
     }
 
     private void setWorkers() {
