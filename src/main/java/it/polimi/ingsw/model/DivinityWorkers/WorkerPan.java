@@ -2,9 +2,7 @@ package it.polimi.ingsw.model.DivinityWorkers;
 
 
 import it.polimi.ingsw.controller.GameManager;
-import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 

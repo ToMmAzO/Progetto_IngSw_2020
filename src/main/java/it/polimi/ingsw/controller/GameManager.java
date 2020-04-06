@@ -112,7 +112,7 @@ public class GameManager {
         allowHeight = setAllowHeight;
     }
 
-    public boolean getAllowHeight() {
+    public static boolean getAllowHeight() {
         return allowHeight;
     }
 

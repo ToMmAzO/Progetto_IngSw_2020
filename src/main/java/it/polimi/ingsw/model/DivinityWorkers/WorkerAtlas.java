@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.DivinityWorkers;
 
+import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
@@ -11,8 +12,12 @@ public class WorkerAtlas extends Worker {
     }
 
     @Override
-    public void buildBlock(int buildX, int buildY) {
-        super.buildBlock(buildX, buildY);  //ridefinisco metodo
+    public void buildBlock(boolean buildCupola, int buildX, int buildY) {
+        if(buildCupola){
+            Map.setCellBlockType(buildX, buildY, BlockType.CUPOLA);
+        }else {
+            super.buildBlock(buildX, buildY);
+        }
     }
 
 }

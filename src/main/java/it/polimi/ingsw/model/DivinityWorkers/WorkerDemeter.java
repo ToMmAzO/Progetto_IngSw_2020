@@ -12,7 +12,7 @@ public class WorkerDemeter extends Worker {
 
     @Override
     public void buildBlock(int buildX, int buildY, int buildAgainX, int buildAgainY) {
-        if(buildAgainX == buildX && buildAgainY == buildY){
+        if(buildAgainX == buildX && buildAgainY == buildY){         //BRUTTO: meglio nel conroller: chiamata buildBlock -> bollean buildAgain -> chiamata buildBlock con controlli sul =
             //ERRORE
         }else{
             super.buildBlock(buildX, buildY);

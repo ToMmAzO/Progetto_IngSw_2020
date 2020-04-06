@@ -15,6 +15,7 @@ public abstract class Worker {
         this.coordY = coordY;
         this.coordZ = 0;
         this.color = p.getColor();
+        //Map.setWorkerInCell(coordRow, coordColumn, this);
     }
 
     public void setIdWorker(String idWorker) {
@@ -56,15 +57,11 @@ public abstract class Worker {
     public boolean canMove(){
         for(int i = coordX - 1; i < coordX + 1; i++){
             for(int j = coordY - 1; j < coordY + 1; j++) {
-                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
+                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || (!GameManager.getAllowHeight() && Map.getCellBlockType(i, j).getAbbreviation() > getCoordZ()) || Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
                         return false;
                 }
             }
         }
-        return true;
-    }
-
-    public boolean canMove(boolean noGoUp) {             //solo per sottoclassi se no dava fastidio l'override
         return true;
     }
 
@@ -80,6 +77,10 @@ public abstract class Worker {
             coordY = newY;
             coordZ = Map.getCellBlockType(newX, newY).getAbbreviation();
         }
+    }
+
+    public void changePosition(int newX, int newY, int newNewX, int newNewY){            //solo per sottoclassi se no dava fastidio l'override ARTEMIS
+
     }
 
     public boolean canBuild(){
@@ -109,7 +110,7 @@ public abstract class Worker {
         }
     }
 
-    public void buildBlock(boolean buildAgain, int buildX, int buildY) {         //solo per sottoclassi se no dava fastidio l'override PROMETHEUS e HEPHAESTUS
+    public void buildBlock(boolean build, int buildX, int buildY) {         //solo per sottoclassi se no dava fastidio l'override PROMETHEUS, HEPHAESTUS e ATLAS
 
     }
 
