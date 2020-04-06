@@ -75,7 +75,7 @@ public class Player {
     }
 
     public void setGodChoice(Divinity godChoice) {
-        Game.getCardsSelected() ;
+        //Game.getCardsSelected() ;
         this.godChoice = godChoice;
     }
 
@@ -91,14 +91,14 @@ public class Player {
         column = scanner.nextInt();
         System.out.println("row: ");
         row = scanner.nextInt();
-        Map.setWorkerInCell(row,column,workers[0]);
+        //Map.setWorkerInCell(row,column,workers[0]);
         System.out.println(" ");
         System.out.println("- WORKER 2 : ");
         System.out.println("column: ");
         column = scanner.nextInt();
         System.out.println("row: ");
         row = scanner.nextInt();
-        Map.setWorkerInCell(row,column,workers[1]);
+        //Map.setWorkerInCell(row,column,workers[1]);
 
 
     }
