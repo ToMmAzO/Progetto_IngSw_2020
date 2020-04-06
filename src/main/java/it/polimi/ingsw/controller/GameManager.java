@@ -7,7 +7,7 @@ public class GameManager {
 
     private Player[] players;
     private Map map;
-    private boolean allowHeight;
+    private static boolean allowHeight;
     private static int numberOfPlayers;
 
     public void addPlayer(){
@@ -36,8 +36,8 @@ public class GameManager {
         //codice
     }
 
-    public static void setAllowHeight(boolean allowHeight) {
-        this.allowHeight = allowHeight;
+    public static void setAllowHeight(boolean setAllowHeight) {
+        allowHeight = setAllowHeight;
     }
 
     public boolean getAllowHeight() {

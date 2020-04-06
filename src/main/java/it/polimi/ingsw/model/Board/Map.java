@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.Worker;
 
 public class Map {
 
-    private Cell[][] map;
+    private static Cell[][] map;
 
     /*
     public static void main(String[] args){
@@ -33,12 +33,16 @@ public class Map {
         return map[row][column].getBlock();
     }
 
-    public void setWorkerInCell(int row, int column, Worker worker){
+    public static void setWorkerInCell(int row, int column, Worker worker){
         map[row][column].setWorkerPresence(worker);
     }
 
     public static Worker getWorkerInCell(int row, int column){
         return map[row][column].getWorkerPresence();
+    }
+
+    public static Boolean noWorkerHere(int row, int column){
+        return map[row][column].getWorkerPresence() == null;
     }
 
     public void printMap(){
@@ -49,8 +53,5 @@ public class Map {
             System.out.println();
         }
     }
-
-    public static Boolean noWorkerHere(int row, int column){
-        return map[row][column].getWorkerPresence() == null;
-    }
+    
 }
