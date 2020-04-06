@@ -79,10 +79,6 @@ public abstract class Worker {
         }
     }
 
-    public void changePosition(int newX, int newY, int newNewX, int newNewY){            //solo per sottoclassi se no dava fastidio l'override ARTEMIS
-
-    }
-
     public boolean canBuild(){
         for(int i = coordX - 1; i < coordX + 1; i++){
             for(int j = coordY - 1; j < coordY + 1; j++) {
@@ -94,7 +90,7 @@ public abstract class Worker {
         return true;
     }
 
-    public boolean canBuild(boolean buildAgain) {       //solo per sottoclassi se no dava fastidio l'override
+    public boolean canBuild(boolean buildAgain) {       //solo per sottoclassi se no dava fastidio l'override HEPHAESTUS
         return true;
     }
 
@@ -111,10 +107,6 @@ public abstract class Worker {
     }
 
     public void buildBlock(boolean build, int buildX, int buildY) {         //solo per sottoclassi se no dava fastidio l'override PROMETHEUS, HEPHAESTUS e ATLAS
-
-    }
-
-    public void buildBlock(int buildX, int buildY, int buildAgainX, int buildAgainY){       //solo per sottoclassi se no dava fastidio l'override DEMETER
 
     }
 

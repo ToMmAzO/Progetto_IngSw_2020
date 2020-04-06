@@ -10,13 +10,8 @@ public class WorkerArtemis extends Worker {
     }
 
     @Override
-    public void changePosition(int newX, int newY, int newNewX, int newNewY){
-        if(newNewX == newX && newNewY == newY){         //BRUTTO: meglio nel conroller: chiamata changePosition -> bollean MoveAgain -> chiamata changePosition con controlli sul =
-            //ERRORE
-        }else{
-            super.changePosition(newX, newY);
-            super.changePosition(newNewX, newNewY);
-        }
+    public void changePosition(int newX, int newY){         //classe inutile XD
+        super.changePosition(newX, newY);
     }
 
 }

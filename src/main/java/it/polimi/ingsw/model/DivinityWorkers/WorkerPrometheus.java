@@ -12,13 +12,9 @@ public class WorkerPrometheus extends Worker {
 
     @Override
     public void buildBlock(boolean buildFirst, int buildX, int buildY) {
-        if(buildFirst){
-            super.buildBlock(buildX, buildY);
+        if(buildFirst)
             GameManager.setAllowHeight(false);       //true quando?
-        }else{
-            super.buildBlock(buildX, buildY);
-        }
 
+        super.buildBlock(buildX, buildY);
     }
-
 }
