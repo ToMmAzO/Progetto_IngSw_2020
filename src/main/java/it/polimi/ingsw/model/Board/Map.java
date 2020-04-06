@@ -6,7 +6,7 @@ public class Map {
 
     private Cell[][] map;
 
-/*
+    /*
     public static void main(String[] args){
         Map m = new Map();
         m.printMap();
@@ -14,7 +14,7 @@ public class Map {
         m.setCellBlockType(4, 2, BlockType.BLOCK1);
         m.printMap();
     }
-*/
+    */
 
     public Map(){
         map = new Cell[5][5];

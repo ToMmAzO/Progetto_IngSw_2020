@@ -58,3 +58,5 @@ u
 Esrc/main/java/it/polimi/ingsw/model/DivinityWorkers/WorkerApollo.java,3\5\35eccc86f31bf9b55202d32fafb87c2c8a679349
 b
 2src/main/java/it/polimi/ingsw/model/Board/Map.java,4\5\456bcddfb1d96b69973075de766d69e7600e5013
+v
+Fsrc/main/java/it/polimi/ingsw/model/DivinityWorkers/WorkerArtemis.java,5\8\58321ed2085d8531e33deb6195a6450192af98fb
