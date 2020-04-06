@@ -11,8 +11,8 @@ public class WorkerHephaestus extends Worker {
     }
 
     @Override
-    public void buildBlock(Map field, int buildX, int buildY) {
-        super.buildBlock(field, buildX, buildY);  //ridefinisco metodo
+    public void buildBlock(int buildX, int buildY) {
+        super.buildBlock(buildX, buildY);  //ridefinisco metodo
     }
 
 }

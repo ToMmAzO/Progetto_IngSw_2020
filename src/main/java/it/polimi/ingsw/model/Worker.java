@@ -29,22 +29,34 @@ public abstract class Worker {
         return coordX;
     }
 
+    public void setCoordX(int coordX) {
+        this.coordX = coordX;
+    }
+
     public int getCoordY() {
         return coordY;
+    }
+
+    public void setCoordY(int coordY) {
+        this.coordY = coordY;
     }
 
     public int getCoordZ() {
         return coordZ;
     }
 
+    public void setCoordZ(int coordZ) {
+        this.coordZ = coordZ;
+    }
+
     public Color getColor() {
         return color;
     }
 
-    public boolean canMove(Map field){
+    public boolean canMove(){
         for(int i = coordX - 1; i < coordX + 1; i++){
             for(int j = coordY - 1; j < coordY + 1; j++) {
-                if ((i != coordX && j != coordY) || field.noWorkerHere(i, j) || field.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || field.getCellBlockType(i, j) == BlockType.CUPOLA) {
+                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
                         return false;
                 }
             }
@@ -52,23 +64,24 @@ public abstract class Worker {
         return true;
     }
 
-    public void changePosition(Map field, int newX, int newY){
-        if(coordZ == 2 && field.getCellBlockType(newX, newY).getAbbreviation() == 3){
+    public void changePosition(int newX, int newY){
+        if(coordZ == 2 && Map.getCellBlockType(newX, newY).getAbbreviation() == 3){
             coordX = newX;
             coordY = newY;
-            coordZ = field.getCellBlockType(newX, newY).getAbbreviation();
+            coordZ = Map.getCellBlockType(newX, newY).getAbbreviation();
+            //setWorkerInCell NO?
             GameManager.victory();
         }else{
             coordX = newX;
             coordY = newY;
-            coordZ = field.getCellBlockType(newX, newY).getAbbreviation();
+            coordZ = Map.getCellBlockType(newX, newY).getAbbreviation();
         }
     }
 
-    public boolean canBuild(Map field){
+    public boolean canBuild(){
         for(int i = coordX - 1; i < coordX + 1; i++){
             for(int j = coordY - 1; j < coordY + 1; j++) {
-                if ((i != coordX && j != coordY) || field.noWorkerHere(i, j) || field.getCellBlockType(i, j) == BlockType.CUPOLA) {
+                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
                         return false;
                 }
             }
@@ -76,15 +89,15 @@ public abstract class Worker {
         return true;
     }
 
-    public void buildBlock(Map field, int buildX, int buildY){
-        if(field.getCellBlockType(buildX, buildY) == BlockType.EMPTY){
-            field.setCellBlockType(buildX, buildY, BlockType.BLOCK1);
-        }else if(field.getCellBlockType(buildX, buildY) == BlockType.BLOCK1){
-            field.setCellBlockType(buildX, buildY, BlockType.BLOCK2);
-        }else if(field.getCellBlockType(buildX, buildY) == BlockType.BLOCK2){
-            field.setCellBlockType(buildX, buildY, BlockType.BLOCK3);
-        }else if(field.getCellBlockType(buildX, buildY) == BlockType.BLOCK3){
-            field.setCellBlockType(buildX, buildY, BlockType.CUPOLA);
+    public void buildBlock(int buildX, int buildY){
+        if(Map.getCellBlockType(buildX, buildY) == BlockType.EMPTY){
+            Map.setCellBlockType(buildX, buildY, BlockType.BLOCK1);
+        }else if(Map.getCellBlockType(buildX, buildY) == BlockType.BLOCK1){
+            Map.setCellBlockType(buildX, buildY, BlockType.BLOCK2);
+        }else if(Map.getCellBlockType(buildX, buildY) == BlockType.BLOCK2){
+            Map.setCellBlockType(buildX, buildY, BlockType.BLOCK3);
+        }else if(Map.getCellBlockType(buildX, buildY) == BlockType.BLOCK3){
+            Map.setCellBlockType(buildX, buildY, BlockType.CUPOLA);
         }
     }
 

@@ -25,11 +25,11 @@ public class Map {
         }
     }
 
-    public void setCellBlockType(int row, int column, BlockType block){
+    public static void setCellBlockType(int row, int column, BlockType block){
         map[row][column].setBlock(block);
     }
 
-    public BlockType getCellBlockType(int row, int column){
+    public static BlockType getCellBlockType(int row, int column){
         return map[row][column].getBlock();
     }
 
@@ -37,7 +37,7 @@ public class Map {
         map[row][column].setWorkerPresence(worker);
     }
 
-    public Worker getWorkerInCell(int row, int column){
+    public static Worker getWorkerInCell(int row, int column){
         return map[row][column].getWorkerPresence();
     }
 
@@ -50,7 +50,7 @@ public class Map {
         }
     }
 
-    public Boolean noWorkerHere(int row, int column){
+    public static Boolean noWorkerHere(int row, int column){
         return map[row][column].getWorkerPresence() == null;
     }
 }

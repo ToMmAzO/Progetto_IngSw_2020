@@ -11,7 +11,7 @@ public class WorkerAthena extends Worker {
     }
 
     @Override
-    public void changePosition(Map field, int newX, int newY){
-        super.changePosition(field, newX, newY);  //ridefinisco metodo
+    public void changePosition(int newX, int newY){
+        super.changePosition(newX, newY);  //ridefinisco metodo
     }
 }
