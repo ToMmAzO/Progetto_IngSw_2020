@@ -2,7 +2,9 @@ package it.polimi.ingsw.model;
 
 import java.util.Scanner;
 
+import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.Divinity;
+import it.polimi.ingsw.model.Cards.God;
 
 public class Player {
 
@@ -14,7 +16,7 @@ public class Player {
     public Player(String nickname){
         this.nickname = nickname;
     }
-    public static void main(String[]args){
+    /*public static void main(String[]args){
 
         Player p1 = new Player("raffo");
         Player p2 = new Player("raffo2");
@@ -24,7 +26,7 @@ public class Player {
         p1.chooseColor();
         p2.chooseColor();
         p3.chooseColor();
-    }
+    }*/
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
@@ -51,7 +53,7 @@ public class Player {
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.nextLine();
         choice = choice.toUpperCase();
-        System.out.println("ho letto: " + choice);
+        System.out.println("you have choose: " + choice);
         switch (choice){
             case "RED":
                 this.setColor(Color.RED);
@@ -73,11 +75,32 @@ public class Player {
     }
 
     public void setGodChoice(Divinity godChoice) {
+        Game.getCardsSelected() ;
         this.godChoice = godChoice;
     }
 
-    private void setWorkers(Worker[] workers) {
-        this.workers = workers;
+
+    private void setWorkers() {
+        Scanner scanner = new Scanner(System.in);
+        int row , column;
+        System.out.println("In order to start the game put your workers on the map.");
+        System.out.println("Choose a cell for each worker; insert raw and column number (from 1 to 5) ");
+        System.out.println(" ");
+        System.out.println("- WORKER 1 : ");
+        System.out.println("column: ");
+        column = scanner.nextInt();
+        System.out.println("row: ");
+        row = scanner.nextInt();
+        Map.setWorkerInCell(row,column,workers[0]);
+        System.out.println(" ");
+        System.out.println("- WORKER 2 : ");
+        System.out.println("column: ");
+        column = scanner.nextInt();
+        System.out.println("row: ");
+        row = scanner.nextInt();
+        Map.setWorkerInCell(row,column,workers[1]);
+
+
     }
 
     public String getNickname() {
