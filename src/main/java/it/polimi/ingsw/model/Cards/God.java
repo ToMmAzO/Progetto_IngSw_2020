@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model.Cards;
 
-import it.polimi.ingsw.model.Cards.Divinity;
-
 public class God {
 
     private Divinity godName;

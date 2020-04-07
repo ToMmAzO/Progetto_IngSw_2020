@@ -8,7 +8,7 @@ public class Game {
 
     private static God[] cardsSelected;
     private static Boolean[] availability;
-    
+
     /*per testare impostare tutte le istanze in Game() di GameManager.getNumberOfPlayers() a 3
     */
     /*
@@ -40,7 +40,6 @@ public class Game {
     }
     */
 
-
     public Game(){
         new Deck();
         cardsSelected = Deck.extractCards(GameManager.getNumberOfPlayers());
@@ -65,10 +64,6 @@ public class Game {
 
     private static void cardChosen(int number) {
         availability[number-1] = false;
-    }
-
-    public void endGame(){
-        //codice
     }
 
 }

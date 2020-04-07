@@ -10,80 +10,65 @@ import java.util.Scanner;
 
 public class GameManager {
 
-    private Player[] players;
+    private static Player[] players;
     private static boolean allowHeight, allowHeightPrometheus;
     private static int numberOfPlayers;
 
-    public void addPlayer(int numberConnection){// tipo int x = Server.getNumberOfConnection;
+    public void addPlayer(int numberConnection, String nickname){
         switch (numberConnection){
             case 0:{
                 System.out.println("Sei il primo giocatore ad unirsi alla lobby.");
                 System.out.println("Scegli quanti giocatori avrà la partita (min: 2, max: 3).");
                 Scanner scanner = new Scanner(System.in);
-                int nunberOfPlayers= Integer.parseInt((scanner.nextLine()));
-                setNumberOfPlayers(nunberOfPlayers);
+                int numberOfPlayers= Integer.parseInt((scanner.nextLine()));
+                setNumberOfPlayers(numberOfPlayers);
                 new Game();
                 new Map();
-                players = new Player[nunberOfPlayers];
-                this.players[0] = new Player("Player 1");
-                /*
-                Scelta del colore con relativi controlli
-
-                System.out.println("Scegli il tuo colore.");
-
-                this.players[0].chooseColor();
-                */
+                players = new Player[numberOfPlayers];
+                players[0] = new Player(nickname);
+                System.out.println("Hai il colore " + players[0].getColor().toString());
+                System.out.println("Scegli il numero di una delle " + GameManager.numberOfPlayers + " carte:");
                 View.printCardsSelected();
-                System.out.println("Scegli il numero di una delle 3 carte.");
                 God g = Game.getCardToPlayer(Integer.parseInt((scanner.nextLine())));
-                this.players[0].setGodChoice(g);
+                players[0].setGodChoice(g);
                 View.printCardChosen(g);
+                break;
             }
             case 1:{
                 System.out.println("Sei il secondo giocatore ad unirsi alla lobby.");
-                System.out.println("Attendi che il giocatore" + this.players[0].getNickname() + " concluda la sua configurazione.");
+                System.out.println("Attendi che " + players[0].getNickname() + " concluda la sua configurazione.");
                 Scanner scanner = new Scanner(System.in);
-                this.players[1] = new Player("Player 2");
-                /*
-                Scelta del colore con relativi controlli
-
-                System.out.println("Scegli il tuo colore.");
-
-                this.players[1].chooseColor();
-                */
+                players[1] = new Player(nickname);
+                System.out.println("Hai il colore " + players[1].getColor().toString());
+                System.out.println("Scegli il numero di una delle " + numberOfPlayers + " carte ancora disponibili:");
                 View.printCardsSelected();
-                System.out.println("Scegli il numero di una delle 3 carte ancora disponibili.");
-                int numeroCarta = Integer.parseInt((scanner.nextLine()));
-                while (!Game.getAvailability()[numeroCarta - 1]){
+                int cardNumber = Integer.parseInt((scanner.nextLine()));
+                while (!Game.getAvailability()[cardNumber - 1]){
                     System.out.println("Carta non disponibile, seleziona una carta disponibile!");
-                    numeroCarta = Integer.parseInt((scanner.nextLine()));
+                    cardNumber = Integer.parseInt((scanner.nextLine()));
                 }
-                God g = Game.getCardToPlayer(numeroCarta);
-                this.players[1].setGodChoice(g);
+                God g = Game.getCardToPlayer(cardNumber);
+                players[1].setGodChoice(g);
                 View.printCardChosen(g);
+                break;
             }
             case 2:{
                 System.out.println("Sei il terzo giocatore ad unirsi alla lobby.");
-                System.out.println("Attendi che il giocatore" + this.players[1].getNickname() + " concluda la sua configurazione.");
+                System.out.println("Attendi che " + players[1].getNickname() + " concluda la sua configurazione.");
                 Scanner scanner = new Scanner(System.in);
-                this.players[2] = new Player ("Player 3");
-                /*
-                Scelta del colore con relativi controlli
-
-                System.out.println("Scegli il tuo colore.");
-
-                this.players[2].chooseColor();
-                */
+                players[2] = new Player (nickname);
+                System.out.println("Hai il colore " + players[2].getColor().toString());
+                System.out.println("Scegli il numero di una delle  " + numberOfPlayers + " carte ancora disponibili:");
                 View.printCardsSelected();
-                System.out.println("Scegli il numero di una delle 3 carte ancora disponibili.");
-                int numeroCarta = Integer.parseInt((scanner.nextLine()));
-                while (!Game.getAvailability()[numeroCarta - 1]){
+                int cardNumber = Integer.parseInt((scanner.nextLine()));
+                while (!Game.getAvailability()[cardNumber - 1]){
                     System.out.println("Carta non disponibile, seleziona il numero di una disponibile!");
-                    numeroCarta = Integer.parseInt((scanner.nextLine()));
+                    cardNumber = Integer.parseInt((scanner.nextLine()));
                 }
-                God g = Game.getCardToPlayer(numeroCarta);
-                this.players[2].setGodChoice(g);
+                God g = Game.getCardToPlayer(cardNumber);
+                players[2].setGodChoice(g);
                 View.printCardChosen(g);
+                break;
             }
         }
     }
@@ -97,15 +82,25 @@ public class GameManager {
     }
 
     public void startGame(){
-
+        //primo giocatore
         View.printMapToPlayer();
-        //tutti i player posizionano i lavoratori
-
+        System.out.println("Inserisci le cordinate in cui vuoi posizionare i tuoi lavoratori.");
+        players[0].setWorkers();//condizioni gestite dal model???
+        //secondo giocatore
+        View.printMapToPlayer();
+        System.out.println("Inserisci le cordinate in cui vuoi posizionare i tuoi lavoratori.");
+        players[1].setWorkers();//condizioni gestite dal model???
+        //terzo giocatore
+        if(getNumberOfPlayers() == 3){
+            View.printMapToPlayer();
+            System.out.println("Inserisci le cordinate in cui vuoi posizionare i tuoi lavoratori.");
+            players[2].setWorkers();//condizioni gestite dal model???
+        }
         int currPlayer = 0;
         while (true){
+            //interessa il giocatore corrente, gli altri aspettano
             TurnManager.startTurn(players[currPlayer]);
-            //il server decide di mandare questo al client corrispondente al giocatore corrente
-            if (currPlayer == 1000){//tipo se turnmanager torna false qualcuno ha chiamato vitory e quindi si esce dal ciclo){
+            if (currPlayer == 10000000){//si esce dal ciclo se qualcuno vince (ciclo if a caso)
                 break;
             }
             currPlayer = nextPlayer(currPlayer);
@@ -120,12 +115,28 @@ public class GameManager {
         }
     }
 
-    public void deletePlayer(){
-        //codice
+    public void deletePlayer(Player player){
+        int i = 0;
+        while (!players[i].equals(player)){
+            i++;
+        }
+        //si stampa a player[i]
+        System.out.println("Hai perso!");
+        String nickname = player.getNickname();
+        //devo eliminare i suoi costruttori dalla mappa
+        //elimino il giocatore da players[]
+        //chiudo la connessione con il client
+        if (players.length == 1){
+            victory();// <--- players[0]
+        } else {
+            //si stampa ai due giocatori rimasti
+            System.out.println(nickname + " è stato eliminato, e i suoi costruttori rimossi dal gioco.");
+            setNumberOfPlayers(players.length);
+        }
     }
 
-    public static void setAllowHeight(boolean setAllowHeight) {
-        allowHeight = setAllowHeight;
+    public static void setAllowHeight(boolean allowHeight) {
+        GameManager.allowHeight = allowHeight;
     }
 
     public static boolean getAllowHeight() {
@@ -140,8 +151,27 @@ public class GameManager {
         return allowHeightPrometheus;
     }
 
-    public static void victory(){
-        //codice
+    public static void victory(){/*<--- Player player
+        //si stampa al giocatore che ha vinto
+        System.out.println("Congratulazioni, hai vinto la partita!");
+        if (players.length == 1){
+            //chiudo la connessione col client
+            //chiudo il server
+        } else {
+            int i = 0;
+            while (!players[i].equals(player)){
+                i++;
+            }
+            for (int j = 0; j < players.length; j++){
+                if(j != i){
+                    //si manda ai giocatori players[j] (quelli rimanenti)
+                    System.out.println(players[i].getNickname() + " ha vinto.");
+                    //chiudo il client players[j]
+                }
+            }
+            //chiudo il server
+        }
+        */
     }
 
 }
