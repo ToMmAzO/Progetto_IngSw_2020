@@ -10,9 +10,8 @@ public class GameManager {
 
     private Player[] players;
     private Map map;
-    private static boolean allowHeight;
+    private static boolean allowHeight, allowHeightPrometheus;
     private static int numberOfPlayers;
-
 
     public void addPlayer(int x){// tipo int x = Server.getNumberOfConnection;
         switch (x){
@@ -114,6 +113,14 @@ public class GameManager {
 
     public static boolean getAllowHeight() {
         return allowHeight;
+    }
+
+    public static void setAllowHeightPrometheus(boolean allowHeightPrometheus) {
+        GameManager.allowHeightPrometheus = allowHeightPrometheus;
+    }
+
+    public static boolean getAllowHeightPrometheus() {
+        return allowHeightPrometheus;
     }
 
     public static void victory(){
