@@ -17,18 +17,29 @@ public class Game {
         God[] x = Game.getCardsSelected();
         Boolean[] a = Game.getAvailability();
         for (int i=0; i<3; i++){
-            System.out.println(x[i].getGodName().toString() + x[i].getGodPower());
-            System.out.println(a[i].toString());
+            System.out.println(x[i].getGodName().toString() + ": " + x[i].getGodPower());
+            if (a[i]){
+                System.out.println("La carta è ancora disponibile.\n");
+            } else {
+                System.out.println("La carta non è più disponibile.\n");
+            }
+
         }
+        System.out.println("\n*Scelta della carta*\n");
         Game.getCardToPlayer(2);//seleziona la seconda carta dell'array
         God[] y = Game.getCardsSelected();
         Boolean[] b = Game.getAvailability();
         for (int i=0; i<3; i++){
-            System.out.println(y[i].getGodName().toString() + y[i].getGodPower());
-            System.out.println(a[i].toString());
+            System.out.println(y[i].getGodName().toString() + ": " + y[i].getGodPower());
+            if (a[i]){
+                System.out.println("La carta è ancora disponibile.\n");
+            } else {
+                System.out.println("La carta non è più disponibile.\n");
+            }
         }
     }
     */
+
 
     public Game(){
         new Deck();

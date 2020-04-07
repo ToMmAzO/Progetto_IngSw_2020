@@ -9,10 +9,10 @@ public class Map {
     /*
     public static void main(String[] args){
         Map m = new Map();
-        m.printMap();
+        printMap();
         System.out.println();
-        m.setCellBlockType(4, 2, BlockType.BLOCK1);
-        m.printMap();
+        setCellBlockType(4, 2, BlockType.BLOCK1);
+        printMap();
     }
     */
 
@@ -45,7 +45,7 @@ public class Map {
         return map[row][column].getWorkerPresence() == null;
     }
 
-    public void printMap(){
+    public static void printMap(){
         for (int i = 0; i < 5; i++){
             for (int j = 0; j < 5; j++){
                 System.out.printf("%10s", map[i][j].getBlock().toString());

@@ -1,21 +1,21 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.Board.Map;
+import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.view.View;
 
 import java.util.Scanner;
 
 public class GameManager {
 
     private Player[] players;
-    private Map map;
     private static boolean allowHeight;
     private static int numberOfPlayers;
 
-
-    public void addPlayer(int x){// tipo int x = Server.getNumberOfConnection;
-        switch (x){
+    public void addPlayer(int numberConnection){// tipo int x = Server.getNumberOfConnection;
+        switch (numberConnection){
             case 0:{
                 System.out.println("Sei il primo giocatore ad unirsi alla lobby.");
                 System.out.println("Scegli quanti giocatori avrà la partita (min: 2, max: 3).");
@@ -25,50 +25,65 @@ public class GameManager {
                 new Game();
                 new Map();
                 players = new Player[n];
-                this.players[0] = new Player("nickname passato dal client");
+                this.players[0] = new Player("Player 1");
+                /*
+                Scelta del colore con relativi controlli
 
-                //chiede colore
+                System.out.println("Scegli il tuo colore.");
 
-                //chiama un metodo della view che stampa a video le 3 carte con Game.getCardsSelected()
+                this.players[0].chooseColor();
+                */
+                View.printCardsSelected();
                 System.out.println("Scegli il numero di una delle 3 carte.");
-                this.players[0].setGodChoice(Game.getCardToPlayer(Integer.parseInt((scanner.nextLine()))));
-
+                God g = Game.getCardToPlayer(Integer.parseInt((scanner.nextLine())));
+                this.players[0].setGodChoice(g);
+                View.printCardChosen(g);
             }
             case 1:{
                 System.out.println("Sei il secondo giocatore ad unirsi alla lobby.");
-                System.out.println("Attendi che il giocatore precedente concluda la sua configurazione.");
-                this.players[1] = new Player("nickname passato dal client");
+                System.out.println("Attendi che il giocatore" + this.players[0].getNickname() + " concluda la sua configurazione.");
                 Scanner scanner = new Scanner(System.in);
+                this.players[1] = new Player("Player 2");
+                /*
+                Scelta del colore con relativi controlli
 
-                //chiede colore
+                System.out.println("Scegli il tuo colore.");
 
-                //chiama un metodo della view che stampa a video le 3 carte con Game.getCardsSelected()
+                this.players[1].chooseColor();
+                */
+                View.printCardsSelected();
                 System.out.println("Scegli il numero di una delle 3 carte ancora disponibili.");
                 int y = Integer.parseInt((scanner.nextLine()));
                 while (!Game.getAvailability()[y - 1]){
-                    System.out.println("Carta non disponibile, seleziona il numero di una disponibile!");
+                    System.out.println("Carta non disponibile, seleziona una carta disponibile!");
                     y = Integer.parseInt((scanner.nextLine()));
                 }
-                this.players[1].setGodChoice(Game.getCardToPlayer(y));
-
+                God g = Game.getCardToPlayer(y);
+                this.players[1].setGodChoice(g);
+                View.printCardChosen(g);
             }
             case 2:{
                 System.out.println("Sei il terzo giocatore ad unirsi alla lobby.");
-                System.out.println("Attendi che il giocatore precedente concluda la sua configurazione.");
-                this.players[2] = new Player ("nickname passato dal client");
+                System.out.println("Attendi che il giocatore" + this.players[1].getNickname() + " concluda la sua configurazione.");
                 Scanner scanner = new Scanner(System.in);
+                this.players[2] = new Player ("Player 3");
+                /*
+                Scelta del colore con relativi controlli
 
-                //chiede colore
+                System.out.println("Scegli il tuo colore.");
 
-                //chiama un metodo della view che stampa a video le 3 carte con Game.getCardsSelected()
+                this.players[2].chooseColor();
+                */
+                View.printCardsSelected();
                 System.out.println("Scegli il numero di una delle 3 carte ancora disponibili.");
                 int y = Integer.parseInt((scanner.nextLine()));
                 while (!Game.getAvailability()[y - 1]){
                     System.out.println("Carta non disponibile, seleziona il numero di una disponibile!");
                     y = Integer.parseInt((scanner.nextLine()));
                 }
-                this.players[2].setGodChoice(Game.getCardToPlayer(y));
-
+                God g = Game.getCardToPlayer(y);
+                this.players[2].setGodChoice(g);
+                View.printCardChosen(g);
             }
         }
     }
@@ -83,6 +98,7 @@ public class GameManager {
 
     public void startGame(){
 
+        View.printMapToPlayer();
         //tutti i player posizionano i lavoratori
 
         int currPlayer = 0;
