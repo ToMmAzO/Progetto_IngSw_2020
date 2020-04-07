@@ -57,7 +57,7 @@ public abstract class Worker {
     public boolean canMove(){
         for(int i = coordX - 1; i < coordX + 1; i++){
             for(int j = coordY - 1; j < coordY + 1; j++) {
-                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || (!GameManager.getAllowHeight() && Map.getCellBlockType(i, j).getAbbreviation() > getCoordZ()) || Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
+                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || (!GameManager.getAllowHeight() && Map.getCellBlockType(i, j).getAbbreviation() > coordZ) || Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
                         return false;
                 }
             }
@@ -106,7 +106,7 @@ public abstract class Worker {
         }
     }
 
-    public void buildBlock(boolean build, int buildX, int buildY) {         //solo per sottoclassi se no dava fastidio l'override PROMETHEUS, HEPHAESTUS e ATLAS
+    public void buildBlock(boolean build, int buildX, int buildY) {         //solo per sottoclassi se no dava fastidio l'override HEPHAESTUS e ATLAS
 
     }
 

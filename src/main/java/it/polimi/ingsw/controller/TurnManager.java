@@ -3,13 +3,12 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 
-import static it.polimi.ingsw.model.Cards.Divinity.ARTEMIS;
-
 public class TurnManager {
 
     private static Worker workerSelected;
     private static int row, column;
-    private static boolean moveAgain, buildCupola, buildAgain, buildFirst;      //può essere anche un solo move e un solo bulid
+    private static boolean yes;
+    private static int x, y;             //richiede le due coordinate e gliele ripassa controllando che siano diverse
 
     public static void setRow(int row) {
         TurnManager.row = row;
@@ -19,20 +18,8 @@ public class TurnManager {
         TurnManager.column = column;
     }
 
-    public static void setMoveAgain(boolean moveAgain) {
-        TurnManager.moveAgain = moveAgain;
-    }
-
-    public static void setBuildCupola(boolean buildCupola) {
-        TurnManager.buildCupola = buildCupola;
-    }
-
-    public static void setBuildAgain(boolean buildAgain) {
-        TurnManager.buildAgain = buildAgain;
-    }
-
-    public static void setBuildFirst(boolean buildFirst) {
-        TurnManager.buildFirst = buildFirst;
+    public static void setYes(boolean yes) {
+        TurnManager.yes = yes;
     }
 
     public static void startTurn(Player player){
@@ -44,15 +31,22 @@ public class TurnManager {
     public static void selectAction(Player player){
         switch (player.getGodChoice()) {
             case ARTEMIS:
-                if(ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)) {
+                x = workerSelected.getCoordX();
+                y = workerSelected.getCoordY();
+
+                if(ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)) {        //tutti questi if possono essere try catch
                     workerSelected.canMove();
                     workerSelected.changePosition(row, column);
                 }
 
-                if(moveAgain){          //richiede le due coordinate e gliele ripassa controllando che siano diverse
-                    if(ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)) {    //sposta sopra + bello
-                        workerSelected.canMove();
-                        workerSelected.changePosition(row, column);
+                if(yes){
+                    if(x != row && y != column) {
+                        if (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)) {    //sposta sopra + bello
+                            workerSelected.canMove();
+                            workerSelected.changePosition(row, column);
+                        }
+                    }else{
+                        //ERRORE
                     }
                 }
 
@@ -70,7 +64,7 @@ public class TurnManager {
 
                 if(ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)){
                     workerSelected.canBuild();
-                    workerSelected.buildBlock(buildCupola, row, column);
+                    workerSelected.buildBlock(yes, row, column);
                 }
                 break;
 
@@ -81,14 +75,20 @@ public class TurnManager {
                 }
 
                 if(ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)){
+                    x = row;
+                    y = column;
                     workerSelected.canBuild();
                     workerSelected.buildBlock(row, column);
                 }
 
-                if(buildAgain){          //richiede le due coordinate e gliele ripassa controllando che siano diverse
-                    if(ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)){    //sposta sopra + bello
-                        workerSelected.canBuild();
-                        workerSelected.buildBlock(row, column);
+                if(yes){
+                    if(x != row && y != column) {
+                        if (ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)) {    //sposta sopra + bello
+                            workerSelected.canBuild();
+                            workerSelected.buildBlock(row, column);
+                        }
+                    }else{
+                        //ERRORE
                     }
                 }
                 break;
@@ -100,15 +100,16 @@ public class TurnManager {
                 }
 
                 if(ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)){
-                    workerSelected.canBuild(buildAgain);
-                    workerSelected.buildBlock(buildAgain, row, column);
+                    workerSelected.canBuild(yes);
+                    workerSelected.buildBlock(yes, row, column);
                 }
                 break;
             case PROMETHEUS:
-                if(buildFirst){          //richiede le due coordinate
+                if(yes){
                     if(ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)){    //sposta sopra + bello
                         workerSelected.canBuild();
                         workerSelected.buildBlock(row, column);
+                        GameManager.setAllowHeightPrometheus(false);
                     }
                 }
 
@@ -120,6 +121,7 @@ public class TurnManager {
                 if(ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)){
                     workerSelected.canBuild();
                     workerSelected.buildBlock(row, column);
+                    GameManager.setAllowHeightPrometheus(true);
                 }
                 break;
 

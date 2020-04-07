@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class GameManager {
 
     private Player[] players;
-    private static boolean allowHeight;
+    private static boolean allowHeight, allowHeightPrometheus;
     private static int numberOfPlayers;
 
     public void addPlayer(int numberConnection){// tipo int x = Server.getNumberOfConnection;
@@ -20,11 +20,11 @@ public class GameManager {
                 System.out.println("Sei il primo giocatore ad unirsi alla lobby.");
                 System.out.println("Scegli quanti giocatori avrà la partita (min: 2, max: 3).");
                 Scanner scanner = new Scanner(System.in);
-                int n= Integer.parseInt((scanner.nextLine()));
-                setNumberOfPlayers(n);
+                int nunberOfPlayers= Integer.parseInt((scanner.nextLine()));
+                setNumberOfPlayers(nunberOfPlayers);
                 new Game();
                 new Map();
-                players = new Player[n];
+                players = new Player[nunberOfPlayers];
                 this.players[0] = new Player("Player 1");
                 /*
                 Scelta del colore con relativi controlli
@@ -53,12 +53,12 @@ public class GameManager {
                 */
                 View.printCardsSelected();
                 System.out.println("Scegli il numero di una delle 3 carte ancora disponibili.");
-                int y = Integer.parseInt((scanner.nextLine()));
-                while (!Game.getAvailability()[y - 1]){
+                int numeroCarta = Integer.parseInt((scanner.nextLine()));
+                while (!Game.getAvailability()[numeroCarta - 1]){
                     System.out.println("Carta non disponibile, seleziona una carta disponibile!");
-                    y = Integer.parseInt((scanner.nextLine()));
+                    numeroCarta = Integer.parseInt((scanner.nextLine()));
                 }
-                God g = Game.getCardToPlayer(y);
+                God g = Game.getCardToPlayer(numeroCarta);
                 this.players[1].setGodChoice(g);
                 View.printCardChosen(g);
             }
@@ -76,12 +76,12 @@ public class GameManager {
                 */
                 View.printCardsSelected();
                 System.out.println("Scegli il numero di una delle 3 carte ancora disponibili.");
-                int y = Integer.parseInt((scanner.nextLine()));
-                while (!Game.getAvailability()[y - 1]){
+                int numeroCarta = Integer.parseInt((scanner.nextLine()));
+                while (!Game.getAvailability()[numeroCarta - 1]){
                     System.out.println("Carta non disponibile, seleziona il numero di una disponibile!");
-                    y = Integer.parseInt((scanner.nextLine()));
+                    numeroCarta = Integer.parseInt((scanner.nextLine()));
                 }
-                God g = Game.getCardToPlayer(y);
+                God g = Game.getCardToPlayer(numeroCarta);
                 this.players[2].setGodChoice(g);
                 View.printCardChosen(g);
             }
@@ -130,6 +130,14 @@ public class GameManager {
 
     public static boolean getAllowHeight() {
         return allowHeight;
+    }
+
+    public static void setAllowHeightPrometheus(boolean allowHeightPrometheus) {
+        GameManager.allowHeightPrometheus = allowHeightPrometheus;
+    }
+
+    public static boolean getAllowHeightPrometheus() {
+        return allowHeightPrometheus;
     }
 
     public static void victory(){
