@@ -62,3 +62,5 @@ v
 Fsrc/main/java/it/polimi/ingsw/model/DivinityWorkers/WorkerArtemis.java,5\8\58321ed2085d8531e33deb6195a6450192af98fb
 i
 9src/main/java/it/polimi/ingsw/controller/TurnManager.java,8\5\858995f7d4a45e71dbe8d7fbb78dadeaf3e3d0b9
+b
+2src/main/java/it/polimi/ingsw/model/Cards/God.java,1\e\1e1794898de8a0c72b3a259b61be17d65a0da404

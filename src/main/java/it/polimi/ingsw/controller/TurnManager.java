@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.DivinityWorkers.WorkerArtemis;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 
@@ -45,7 +46,7 @@ public class TurnManager {
         switch (player.getGodChoice()) {
             case ARTEMIS:
                 if(ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)) {
-                    workerSelected.canMove();
+                    workerSelected.canMove();                         //idea dell'ultimo secondo
                     workerSelected.changePosition(row, column);
                 }
 
