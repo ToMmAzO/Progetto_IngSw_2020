@@ -57,7 +57,7 @@ public abstract class Worker {
     public boolean canMove(){
         for(int i = coordX - 1; i < coordX + 1; i++){
             for(int j = coordY - 1; j < coordY + 1; j++) {
-                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || (!GameManager.getAllowHeight() && Map.getCellBlockType(i, j).getAbbreviation() > coordZ) || Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
+                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || (GameManager.cannotGoUp() && Map.getCellBlockType(i, j).getAbbreviation() > coordZ) || Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
                         return false;
                 }
             }
@@ -95,7 +95,7 @@ public abstract class Worker {
     }
 
     public void buildBlock(int buildX, int buildY){
-        if(Map.getCellBlockType(buildX, buildY) == BlockType.EMPTY){
+        if(Map.getCellBlockType(buildX, buildY) == BlockType.GROUND){
             Map.setCellBlockType(buildX, buildY, BlockType.BLOCK1);
         }else if(Map.getCellBlockType(buildX, buildY) == BlockType.BLOCK1){
             Map.setCellBlockType(buildX, buildY, BlockType.BLOCK2);

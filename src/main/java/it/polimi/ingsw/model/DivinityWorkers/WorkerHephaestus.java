@@ -26,7 +26,7 @@ public class WorkerHephaestus extends Worker {
     @Override
     public void buildBlock(boolean buildAgain, int buildX, int buildY) {
         if(buildAgain){
-            if(Map.getCellBlockType(buildX, buildY) == BlockType.EMPTY){
+            if(Map.getCellBlockType(buildX, buildY) == BlockType.GROUND){
                 Map.setCellBlockType(buildX, buildY, BlockType.BLOCK2);
             }else if(Map.getCellBlockType(buildX, buildY) == BlockType.BLOCK1){
                 Map.setCellBlockType(buildX, buildY, BlockType.BLOCK3);

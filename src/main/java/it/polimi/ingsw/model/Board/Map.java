@@ -46,11 +46,13 @@ public class Map {
     }
 
     public static void printMap(){
+        System.out.printf("%9d%8d%8d%8d%8d\n\n", 0, 1, 2, 3, 4);
         for (int i = 0; i < 5; i++){
+            System.out.printf("%d  ", i);
             for (int j = 0; j < 5; j++){
-                System.out.printf("%10s", map[i][j].getBlock().toString());
+                System.out.printf("%8s", map[i][j].getBlock().toString());
             }
-            System.out.println();
+            System.out.println("\n");
         }
     }
     

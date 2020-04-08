@@ -108,7 +108,7 @@ public class GameManager {
     }
 
     public int nextPlayer(int indexOfActualPlayer){
-        if(indexOfActualPlayer == players.length){
+        if(indexOfActualPlayer == players.length - 1){
             return 0;
         } else{
             return indexOfActualPlayer + 1;
@@ -139,8 +139,8 @@ public class GameManager {
         GameManager.allowHeight = allowHeight;
     }
 
-    public static boolean getAllowHeight() {
-        return allowHeight;
+    public static boolean cannotGoUp() {
+        return !allowHeight;
     }
 
     public static void setAllowHeightPrometheus(boolean allowHeightPrometheus) {

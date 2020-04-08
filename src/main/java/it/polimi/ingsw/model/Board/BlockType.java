@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.Board;
 
 public enum BlockType {
 
-    EMPTY(0), BLOCK1(1), BLOCK2(2), BLOCK3(3), CUPOLA(4);
+    GROUND(0), BLOCK1(1), BLOCK2(2), BLOCK3(3), CUPOLA(4);
 
     private int abbreviation;
 

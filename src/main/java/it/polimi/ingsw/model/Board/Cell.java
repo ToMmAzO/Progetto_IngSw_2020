@@ -8,7 +8,7 @@ public class Cell {
     private Worker workerPresence;
 
     public Cell(){
-        this.block = BlockType.EMPTY;
+        this.block = BlockType.GROUND;
         this.workerPresence = null;
     }
 
