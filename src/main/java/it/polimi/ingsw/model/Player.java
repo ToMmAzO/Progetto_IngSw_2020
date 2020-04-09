@@ -11,7 +11,7 @@ public class Player {
 
     private String nickname;
     private Color color;
-    private Worker[] workers;
+    private Worker[] workers = new Worker[2];
     private Divinity godChoice;
 
     public Player(String nickname){

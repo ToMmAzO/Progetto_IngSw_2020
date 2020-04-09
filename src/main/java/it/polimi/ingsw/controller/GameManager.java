@@ -13,6 +13,7 @@ public class GameManager {
     private static Player[] players;
     private static boolean allowHeight, allowHeightPrometheus;
     private static int numberOfPlayers;
+    private Boolean victory = false;
 
     public void addPlayer(int numberConnection, String nickname){
         switch (numberConnection){
@@ -82,27 +83,49 @@ public class GameManager {
     }
 
     public void startGame(){
-        //primo giocatore
-        View.printMapToPlayer();
-        System.out.println("Inserisci le cordinate in cui vuoi posizionare i tuoi lavoratori.");
-        players[0].setWorkers();//condizioni gestite dal model???
-        //secondo giocatore
-        View.printMapToPlayer();
-        System.out.println("Inserisci le cordinate in cui vuoi posizionare i tuoi lavoratori.");
-        players[1].setWorkers();//condizioni gestite dal model???
-        //terzo giocatore
-        if(getNumberOfPlayers() == 3){
+        Scanner scanner = new Scanner(System.in);
+        int currPlayer;
+        //posizionamento lavoratori
+        for (currPlayer = 0; currPlayer != players.length; currPlayer++){
+            System.out.println("\n*VISUALE CLIENT " + (currPlayer) + "\n");
             View.printMapToPlayer();
-            System.out.println("Inserisci le cordinate in cui vuoi posizionare i tuoi lavoratori.");
-            players[2].setWorkers();//condizioni gestite dal model???
-        }
-        int currPlayer = 0;
-        while (true){
-            //interessa il giocatore corrente, gli altri aspettano
-            TurnManager.startTurn(players[currPlayer]);
-            if (currPlayer == 10000000){//si esce dal ciclo se qualcuno vince (ciclo if a caso)
-                break;
+            String[] coordString = new String[2];
+            System.out.println("Inserisci le cordinate in cui vuoi posizionare il primo lavoratore.");
+            coordString = scanner.nextLine().split(",");
+            while(true){
+                if(Integer.parseInt(coordString[0]) >= 0 && Integer.parseInt(coordString[0]) <= 4 &&
+                        Integer.parseInt(coordString[1]) >= 0 && Integer.parseInt(coordString[1]) <= 4){
+                    while(!players[currPlayer].setWorker1(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]))){
+                        System.out.println("Impossibile posizionare il lavoratore, inserisci delle coordinate valide!");
+                        coordString = scanner.nextLine().split(",");
+                    }
+                    break;
+                } else{
+                    System.out.println("Inserisci delle coordinate valide!");
+                    coordString = scanner.nextLine().split(",");
+                }
             }
+            System.out.println("Inserisci le cordinate in cui vuoi posizionare il secondo lavoratore.");
+            coordString = scanner.nextLine().split(",");
+            while(true){
+                if(Integer.parseInt(coordString[0]) >= 0 && Integer.parseInt(coordString[0]) <= 4 &&
+                        Integer.parseInt(coordString[1]) >= 0 && Integer.parseInt(coordString[1]) <= 4){
+                    while(!players[currPlayer].setWorker2(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]))){
+                        System.out.println("Impossibile posizionare il lavoratore, inserisci delle coordinate valide!");
+                        coordString = scanner.nextLine().split(",");
+                    }
+                    break;
+                } else{
+                    System.out.println("Inserisci delle coordinate valide!");
+                    coordString = scanner.nextLine().split(",");
+                }
+            }
+        }
+        //inizio dei turni
+        currPlayer = 0;
+        while (!victory){
+            System.out.println("\n*VISUALE CLIENT " + (currPlayer++) + "\n");
+            TurnManager.startTurn(players[currPlayer]);
             currPlayer = nextPlayer(currPlayer);
         }
     }
