@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model.DivinityWorkers;
 
+import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 
 public class WorkerArtemis extends Worker {
 
-    public WorkerArtemis(Player p, int coordX, int coordY) {
-        super(p, coordX, coordY);
+    public WorkerArtemis(Color c, int coordX, int coordY) {
+        super(c, coordX, coordY);
     }
 
     @Override

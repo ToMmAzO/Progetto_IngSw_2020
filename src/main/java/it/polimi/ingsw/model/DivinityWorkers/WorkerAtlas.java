@@ -2,13 +2,14 @@ package it.polimi.ingsw.model.DivinityWorkers;
 
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
+import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 
 public class WorkerAtlas extends Worker {
 
-    public WorkerAtlas(Player p, int coordX, int coordY) {
-        super(p, coordX, coordY);
+    public WorkerAtlas(Color c, int coordX, int coordY) {
+        super(c, coordX, coordY);
     }
 
     @Override

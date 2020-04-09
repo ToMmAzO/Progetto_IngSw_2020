@@ -10,12 +10,11 @@ public abstract class Worker {
     private int coordX, coordY, coordZ;
     private Color color;    //inutile?
 
-    public Worker(Player p, int coordX, int coordY) {
+    public Worker(Color c, int coordX, int coordY) {
         this.coordX = coordX;
         this.coordY = coordY;
         this.coordZ = 0;
-        this.color = p.getColor();
-        //Map.setWorkerInCell(coordRow, coordColumn, this);
+        this.color = c;
     }
 
     public void setIdWorker(String idWorker) {
