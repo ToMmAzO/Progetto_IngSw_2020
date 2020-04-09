@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.util.Scanner;
-
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.Divinity;
 import it.polimi.ingsw.model.Cards.God;
@@ -35,8 +33,7 @@ public class Player {
     }
 
     public boolean setWorker1(int row, int column) {
-        boolean isValid = true;
-        if(Map.getWorkerInCell(row,column)==null) {
+        if(Map.noWorkerHere(row, column)) {
             switch (this.getGodChoice()) {
                 case PAN:
                     workers[0] = new WorkerPan(this.color, column, row);
@@ -74,17 +71,14 @@ public class Player {
                     workers[0] = new WorkerPrometheus(this.color, column, row);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
-                default:
-                    System.out.println("invalid God choice!");
             }
+            return true;
         } else
-            isValid = false;
-    return isValid;
+            return false;
     }
 
     public boolean setWorker2(int row, int column) {
-        boolean isValid = true;
-        if(Map.getWorkerInCell(row,column)==null) {
+        if(Map.noWorkerHere(row, column)) {
             switch (this.getGodChoice()) {
                 case PAN:
                     workers[1] = new WorkerPan(this.color, column, row);
@@ -122,12 +116,10 @@ public class Player {
                     workers[1] = new WorkerPrometheus(this.color, column, row);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
-                default:
-                    System.out.println("invalid God choice!");
             }
+            return true;
         } else
-            isValid = false;
-        return isValid;
+            return false;
     }
 
     public String getNickname() {
@@ -142,29 +134,8 @@ public class Player {
         return godChoice;
     }
 
-    public Worker getWorkerSelected(){
-        boolean correct;
-        int selection;
-        System.out.println("select the worker you want to use: ");
-        System.out.println("write '1' to use worker number 1 ");
-        System.out.println("write '2' to use worker number 2 ");
-        System.out.println("than press Enter ");
-        do {
-            Scanner scanner = new Scanner(System.in);
-            selection = scanner.nextInt();
-            correct = selection == '1' || selection == '2';
-
-            switch (selection) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                default:
-                    System.out.println("you can only insert '1' or '2'");
-                    break;
-            }
-        }while(!correct);
-    return workers[selection-1];
+    public Worker getWorkerSelected(int number){
+        return workers[number - 1];
     }
 
 }

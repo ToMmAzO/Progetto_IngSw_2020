@@ -6,16 +6,6 @@ public class Map {
 
     private static Cell[][] map;
 
-    /*
-    public static void main(String[] args){
-        Map m = new Map();
-        printMap();
-        System.out.println();
-        setCellBlockType(4, 2, BlockType.BLOCK1);
-        printMap();
-    }
-    */
-
     public Map(){
         map = new Cell[5][5];
         for (int i = 0; i < 5; i++){
@@ -41,19 +31,12 @@ public class Map {
         return map[row][column].getWorkerPresence();
     }
 
+    public static void deleteWorkerInCell(Worker worker){
+        map[worker.getCoordX()][worker.getCoordY()].setWorkerPresence(null);
+    }
+
     public static Boolean noWorkerHere(int row, int column){
         return map[row][column].getWorkerPresence() == null;
     }
 
-    public static void printMap(){
-        System.out.printf("%9d%8d%8d%8d%8d\n\n", 0, 1, 2, 3, 4);
-        for (int i = 0; i < 5; i++){
-            System.out.printf("%d  ", i);
-            for (int j = 0; j < 5; j++){
-                System.out.printf("%8s", map[i][j].getBlock().toString());
-            }
-            System.out.println("\n");
-        }
-    }
-    
 }

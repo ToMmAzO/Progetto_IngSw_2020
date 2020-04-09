@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.GameManager;
+import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
 
@@ -56,7 +57,7 @@ public abstract class Worker {
     public boolean canMove(){
         for(int i = coordX - 1; i < coordX + 1; i++){
             for(int j = coordY - 1; j < coordY + 1; j++) {
-                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || (GameManager.cannotGoUp() && Map.getCellBlockType(i, j).getAbbreviation() > coordZ) || Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
+                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || (TurnManager.cannotGoUp() && Map.getCellBlockType(i, j).getAbbreviation() > coordZ) || Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
                         return false;
                 }
             }
@@ -70,7 +71,7 @@ public abstract class Worker {
             coordY = newY;
             coordZ = Map.getCellBlockType(newX, newY).getAbbreviation();
             //setWorkerInCell NO?
-            GameManager.victory();
+            GameManager.setVictory();
         }else{
             coordX = newX;
             coordY = newY;

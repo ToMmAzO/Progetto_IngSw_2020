@@ -1,10 +1,9 @@
 package it.polimi.ingsw.model.DivinityWorkers;
 
-import it.polimi.ingsw.controller.GameManager;
+import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 
 public class WorkerAthena extends Worker {
@@ -27,9 +26,9 @@ public class WorkerAthena extends Worker {
 
     @Override
     public void changePosition(int newX, int newY){
-        GameManager.setAllowHeight(true);               //può andare
+        TurnManager.setAllowHeight(true);               //può andare
         if(Map.getCellBlockType(newX, newY).getAbbreviation() > getCoordZ()){
-            GameManager.setAllowHeight(false);
+            TurnManager.setAllowHeight(false);
         }
         super.changePosition(newX, newY);
     }

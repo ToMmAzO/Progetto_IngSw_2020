@@ -1,10 +1,9 @@
 package it.polimi.ingsw.model.DivinityWorkers;
 
-import it.polimi.ingsw.controller.GameManager;
+import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 
 public class WorkerMinotaur extends Worker {
@@ -17,7 +16,7 @@ public class WorkerMinotaur extends Worker {
     public boolean canMove() {
         for(int i = getCoordX() - 1; i < getCoordX() + 1; i++){
             for(int j = getCoordY() - 1; j < getCoordY() + 1; j++) {
-                if ((i == getCoordX() && j == getCoordY()) || (GameManager.cannotGoUp() && Map.getCellBlockType(i, j).getAbbreviation() > getCoordZ()) || Map.getCellBlockType(i, j).getAbbreviation() >= getCoordZ() + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
+                if ((i == getCoordX() && j == getCoordY()) || (TurnManager.cannotGoUp() && Map.getCellBlockType(i, j).getAbbreviation() > getCoordZ()) || Map.getCellBlockType(i, j).getAbbreviation() >= getCoordZ() + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
                     //BASSO SINISTRA
                     if(i == getCoordX() - 1 && j == getCoordY() - 1 && !Map.noWorkerHere(i, j)){
                         if(getCoordX() - 2 < 0 || getCoordX() - 2 > 4 || getCoordY() - 2 < 0 || getCoordY() - 2 > 4 || Map.getCellBlockType(getCoordX() - 2, getCoordY() - 2).getAbbreviation() >= Map.getCellBlockType(i, j).getAbbreviation() + 2 || Map.getCellBlockType(getCoordX() - 2, getCoordY() - 2) == BlockType.CUPOLA){

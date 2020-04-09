@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Worker;
 public class TurnManager {
 
     private static Worker workerSelected;
+    static boolean allowHeight, allowHeightPrometheus;
     private static int row, column;
     private static boolean yes;
     private static int x, y;             //richiede le due coordinate e gliele ripassa controllando che siano diverse
@@ -23,7 +24,7 @@ public class TurnManager {
     }
 
     public static void startTurn(Player player){
-        workerSelected = player.getWorkerSelected();
+        workerSelected = player.getWorkerSelected(1);//inserito 1 per non generare errori (devi mettere 1 o 2)
         selectAction(player);
         workerSelected = null;
     }
@@ -109,7 +110,7 @@ public class TurnManager {
                     if(ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)){    //sposta sopra + bello
                         workerSelected.canBuild();
                         workerSelected.buildBlock(row, column);
-                        GameManager.setAllowHeightPrometheus(false);
+                        setAllowHeightPrometheus(false);
                     }
                 }
 
@@ -121,7 +122,7 @@ public class TurnManager {
                 if(ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), row, column)){
                     workerSelected.canBuild();
                     workerSelected.buildBlock(row, column);
-                    GameManager.setAllowHeightPrometheus(true);
+                    setAllowHeightPrometheus(true);
                 }
                 break;
 
@@ -137,5 +138,21 @@ public class TurnManager {
                 }
                 break;
         }
+    }
+
+    public static void setAllowHeight(boolean allowHeight) {
+        TurnManager.allowHeight = allowHeight;
+    }
+
+    public static boolean cannotGoUp() {
+        return !allowHeight;
+    }
+
+    public static void setAllowHeightPrometheus(boolean allowHeightPrometheus) {
+        TurnManager.allowHeightPrometheus = allowHeightPrometheus;
+    }
+
+    public static boolean getAllowHeightPrometheus() {
+        return allowHeightPrometheus;
     }
 }
