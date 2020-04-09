@@ -5,6 +5,7 @@ import java.util.Scanner;
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.Divinity;
 import it.polimi.ingsw.model.Cards.God;
+import it.polimi.ingsw.model.DivinityWorkers.*;
 
 public class Player {
 
@@ -33,27 +34,100 @@ public class Player {
         this.godChoice = god.getGodName();
     }
 
-    public void setWorkers() {
-        Scanner scanner = new Scanner(System.in);
-        int row , column;
-        System.out.println("In order to start the game put your workers on the map.");
-        System.out.println("Choose a cell for each worker; insert raw and column number (from 1 to 5) ");
-        System.out.println(" ");
-        System.out.println("- WORKER 1 : ");
-        System.out.println("column: ");
-        column = scanner.nextInt();
-        System.out.println("row: ");
-        row = scanner.nextInt();
-        Map.setWorkerInCell(row,column,workers[0]);
-        System.out.println(" ");
-        System.out.println("- WORKER 2 : ");
-        System.out.println("column: ");
-        column = scanner.nextInt();
-        System.out.println("row: ");
-        row = scanner.nextInt();
-        Map.setWorkerInCell(row,column,workers[1]);
+    public boolean setWorker1(int row, int column) {
+        boolean isValid = true;
+        if(Map.getWorkerInCell(row,column)==null) {
+            switch (this.getGodChoice()) {
+                case PAN:
+                    workers[0] = new WorkerPan(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[0]);
+                    break;
+                case ATLAS:
+                    workers[0] = new WorkerAtlas(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[0]);
+                    break;
+                case APOLLO:
+                    workers[0] = new WorkerApollo(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[0]);
+                    break;
+                case ATHENA:
+                    workers[0] = new WorkerAthena(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[0]);
+                    break;
+                case ARTEMIS:
+                    workers[0] = new WorkerArtemis(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[0]);
+                    break;
+                case DEMETER:
+                    workers[0] = new WorkerDemeter(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[0]);
+                    break;
+                case MINOTAUR:
+                    workers[0] = new WorkerMinotaur(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[0]);
+                    break;
+                case HEPHAESTUS:
+                    workers[0] = new WorkerHephaestus(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[0]);
+                    break;
+                case PROMETHEUS:
+                    workers[0] = new WorkerPrometheus(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[0]);
+                    break;
+                default:
+                    System.out.println("invalid God choice!");
+            }
+        } else
+            isValid = false;
+    return isValid;
+    }
 
-
+    public boolean setWorker2(int row, int column) {
+        boolean isValid = true;
+        if(Map.getWorkerInCell(row,column)==null) {
+            switch (this.getGodChoice()) {
+                case PAN:
+                    workers[1] = new WorkerPan(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[1]);
+                    break;
+                case ATLAS:
+                    workers[1] = new WorkerAtlas(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[1]);
+                    break;
+                case APOLLO:
+                    workers[1] = new WorkerApollo(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[1]);
+                    break;
+                case ATHENA:
+                    workers[1] = new WorkerAthena(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[1]);
+                    break;
+                case ARTEMIS:
+                    workers[1] = new WorkerArtemis(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[1]);
+                    break;
+                case DEMETER:
+                    workers[1] = new WorkerDemeter(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[1]);
+                    break;
+                case MINOTAUR:
+                    workers[1] = new WorkerMinotaur(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[1]);
+                    break;
+                case HEPHAESTUS:
+                    workers[1] = new WorkerHephaestus(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[1]);
+                    break;
+                case PROMETHEUS:
+                    workers[1] = new WorkerPrometheus(this.color, column, row);
+                    Map.setWorkerInCell(row, column, workers[1]);
+                    break;
+                default:
+                    System.out.println("invalid God choice!");
+            }
+        } else
+            isValid = false;
+        return isValid;
     }
 
     public String getNickname() {
