@@ -12,10 +12,10 @@ public class WorkerHephaestus extends Worker {
     }
 
     @Override
-    public boolean canBuild(boolean buildAgain) {
+    public boolean canBuild(boolean buildTwoTimes) {
         for(int i = getCoordX() - 1; i < getCoordX() + 1; i++){
             for(int j = getCoordY() - 1; j < getCoordY() + 1; j++) {
-                if ((i == getCoordX() && j == getCoordY()) || !Map.noWorkerHere(i, j) || (buildAgain &&  Map.getCellBlockType(i, j) == BlockType.BLOCK2) || (buildAgain &&  Map.getCellBlockType(i, j) == BlockType.BLOCK3) || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
+                if ((i == getCoordX() && j == getCoordY()) || !Map.noWorkerHere(i, j) || (buildTwoTimes &&  Map.getCellBlockType(i, j) == BlockType.BLOCK2) || (buildTwoTimes &&  Map.getCellBlockType(i, j) == BlockType.BLOCK3) || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
                     return false;
                 }
             }
@@ -24,19 +24,20 @@ public class WorkerHephaestus extends Worker {
     }
 
     @Override
-    public void buildBlock(boolean buildAgain, int buildX, int buildY) {
-        if(buildAgain){
+    public boolean canBuild() {
+        return super.canBuild();
+    }
+
+    @Override
+    public void buildBlock(boolean buildTwoTimes, int buildX, int buildY) {
+        if(buildTwoTimes){
             if(Map.getCellBlockType(buildX, buildY) == BlockType.GROUND){
                 Map.setCellBlockType(buildX, buildY, BlockType.BLOCK2);
             }else if(Map.getCellBlockType(buildX, buildY) == BlockType.BLOCK1){
                 Map.setCellBlockType(buildX, buildY, BlockType.BLOCK3);
             }
         } else {
-            if(Map.getCellBlockType(buildX, buildY) == BlockType.BLOCK2){
-                Map.setCellBlockType(buildX, buildY, BlockType.BLOCK3);
-            }else if(Map.getCellBlockType(buildX, buildY) == BlockType.BLOCK3) {
-                Map.setCellBlockType(buildX, buildY, BlockType.CUPOLA);
-            }
+            super.buildBlock(buildX, buildY);
         }
     }
 
