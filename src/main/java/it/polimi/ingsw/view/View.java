@@ -26,21 +26,22 @@ public class View {
     }
 
     public static void printMap(){
-        System.out.printf("%9d%8d%8d%8d%8d\n\n", 0, 1, 2, 3, 4);
+        System.out.printf("   |   %d  |   %d  |   %d  |   %d  |   %d  |\n", 0, 1, 2, 3, 4);
+        System.out.println("---|------|------|------|------|------|");
         for (int i = 0; i < 5; i++){
-            System.out.printf("%d  ", i);
+            System.out.printf("%d  |", i);
             for (int j = 0; j < 5; j++){
                 if(Map.noWorkerHere(i, j)){
                     if(Map.getCellBlockType(i, j) == BlockType.GROUND){
-                        System.out.printf("%8s", "------");
+                        System.out.printf("%7c", '|');
                     } else{
-                        System.out.printf("%8s", Map.getCellBlockType(i, j).toString());
+                        System.out.printf("%s|", Map.getCellBlockType(i, j).toString());
                     }
                 } else{
-                    System.out.printf("%3c%s|", '|', Map.getWorkerInCell(i, j).getIdWorker());
+                    System.out.printf("|%s||", Map.getWorkerInCell(i, j).getIdWorker());
                 }
             }
-            System.out.println("\n");
+            System.out.println("\n---|------|------|------|------|------|");
         }
     }
 

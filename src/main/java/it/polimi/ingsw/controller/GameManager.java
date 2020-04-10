@@ -58,20 +58,10 @@ public class GameManager {
                 break;
             }
         }
-        System.out.println("Scegli il numero di una delle " + numberOfPlayers + " carte disponibili:");
-        View.printCardsSelected();
-        int cardNumber = Integer.parseInt((scanner.nextLine()));
-        while ((cardNumber < 1 || cardNumber > numberOfPlayers) || (!Deck.getAvailability()[cardNumber - 1])){
-            System.out.println("Devi inserire il numero corrispondente a una delle carte e deve essere disponibile!");
-            cardNumber= Integer.parseInt((scanner.nextLine()));
-        }
-        God g = Deck.getCardToPlayer(cardNumber);
-        players[numberConnection].setGodChoice(g);
-        View.printCardChosen(g);
+        choiceOfCard(numberConnection);
     }
 
     public static void startGame(){
-        Scanner scanner = new Scanner(System.in);
         int currPlayer;
         for (currPlayer = 0; currPlayer < numberOfPlayers; currPlayer++){
             System.out.println("\n*VISUALE CLIENT " + currPlayer + "*\n");
@@ -82,42 +72,8 @@ public class GameManager {
                     View.printWorkersPositions(players[1]);
                 }
             }
-            String[] coordString;
-            for (int i = 1; i < 3; i++){
-                System.out.println("Inserisci le cordinate in cui vuoi posizionare il lavoratore " + (i) + ".");
-                coordString = scanner.nextLine().split(",");
-                int coordRow = Integer.parseInt(coordString[0]);
-                int coordColumn = Integer.parseInt(coordString[1]);
-                boolean exitCondition = false;
-                while (!exitCondition){
-                    if ((coordRow >= 0 && coordRow <= 4) && (coordColumn >= 0 && coordColumn <= 4)){
-                        switch (i){
-                            case 1:{
-                                if (players[currPlayer].setWorker1(coordRow, coordColumn)){
-                                    exitCondition = true;
-                                    continue;
-                                } else{
-                                    break;
-                                }
-                            }
-                            case 2:{
-                                if (players[currPlayer].setWorker2(coordRow, coordColumn)){
-                                    exitCondition = true;
-                                    continue;
-                                } else{
-                                    break;
-                                }
-                            }
-                        }
-                        System.out.println("È già presente un lavoratore quì, inserisci delle altre coordinate!");
-                    } else{
-                        System.out.println("Inserisci delle coordinate valide!");
-                    }
-                    coordString = scanner.nextLine().split(",");
-                    coordRow = Integer.parseInt(coordString[0]);
-                    coordColumn = Integer.parseInt(coordString[1]);
-                }
-            }
+            positioningWorkerOnMap(currPlayer, 1);
+            positioningWorkerOnMap(currPlayer, 2);
         }
         currPlayer = 0;
         while (!victory){
@@ -148,14 +104,6 @@ public class GameManager {
         endGame(players[currPlayer]);
     }
 
-    private static int nextPlayer(int indexOfActualPlayer){
-        if (indexOfActualPlayer == numberOfPlayers - 1){
-            return 0;
-        } else{
-            return indexOfActualPlayer + 1;
-        }
-    }
-
     public static void deletePlayer(Player player){
         int i = 0;
         while (!players[i].equals(player)){
@@ -168,9 +116,68 @@ public class GameManager {
         System.out.println("\n*CONNESSIONE CLIENT CHIUSA*\n");
     }
 
-    public static void endGame(Player player){
+    private static void choiceOfCard(int indexOfPlayer){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Scegli il numero di una delle " + numberOfPlayers + " carte disponibili:");
+        View.printCardsSelected();
+        int cardNumber = Integer.parseInt((scanner.nextLine()));
+        while ((cardNumber < 1 || cardNumber > numberOfPlayers) || (!Deck.getAvailability()[cardNumber - 1])){
+            System.out.println("Devi inserire il numero corrispondente a una delle carte e deve essere disponibile!");
+            cardNumber= Integer.parseInt((scanner.nextLine()));
+        }
+        God g = Deck.getCardToPlayer(cardNumber);
+        players[indexOfPlayer].setGodChoice(g);
+        View.printCardChosen(g);
+    }
+
+    private static void positioningWorkerOnMap(int indexOfPlayer, int numberOfWorker){
+        System.out.println("Inserisci le cordinate in cui vuoi posizionare il lavoratore " + (numberOfWorker) + ".");
+        Scanner scanner = new Scanner(System.in);
+        String[] coordString = scanner.nextLine().split(",");
+        int coordRow = Integer.parseInt(coordString[0]);
+        int coordColumn = Integer.parseInt(coordString[1]);
+        boolean exitCondition = false;
+        while (!exitCondition){
+            if ((coordRow >= 0 && coordRow <= 4) && (coordColumn >= 0 && coordColumn <= 4)){
+                switch (numberOfWorker){
+                    case 1:{
+                        if (players[indexOfPlayer].setWorker1(coordRow, coordColumn)){
+                            exitCondition = true;
+                            continue;
+                        } else{
+                            break;
+                        }
+                    }
+                    case 2:{
+                        if (players[indexOfPlayer].setWorker2(coordRow, coordColumn)){
+                            exitCondition = true;
+                            continue;
+                        } else{
+                            break;
+                        }
+                    }
+                }
+                System.out.println("È già presente un lavoratore quì, inserisci delle altre coordinate!");
+            } else{
+                System.out.println("Inserisci delle coordinate valide!");
+            }
+            coordString = scanner.nextLine().split(",");
+            coordRow = Integer.parseInt(coordString[0]);
+            coordColumn = Integer.parseInt(coordString[1]);
+        }
+    }
+
+    private static int nextPlayer(int indexOfActualPlayer){
+        if (indexOfActualPlayer == numberOfPlayers - 1){
+            return 0;
+        } else{
+            return indexOfActualPlayer + 1;
+        }
+    }
+
+    private static void endGame(Player winnerPlayer){
         int i = 0;
-        while (!players[i].equals(player)){
+        while (!players[i].equals(winnerPlayer)){
             i++;
         }
         String winner = players[i].getNickname();

@@ -12,11 +12,11 @@ public class Cell {
         this.workerPresence = null;
     }
 
-    public void setBlock(BlockType block) {
+    public void setBlockType(BlockType block) {
         this.block = block;
     }
 
-    public BlockType getBlock() {
+    public BlockType getBlockType() {
         return block;
     }
 

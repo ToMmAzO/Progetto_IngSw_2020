@@ -16,11 +16,11 @@ public class Map {
     }
 
     public static void setCellBlockType(int row, int column, BlockType block){
-        map[row][column].setBlock(block);
+        map[row][column].setBlockType(block);
     }
 
     public static BlockType getCellBlockType(int row, int column){
-        return map[row][column].getBlock();
+        return map[row][column].getBlockType();
     }
 
     public static void setWorkerInCell(int row, int column, Worker worker){

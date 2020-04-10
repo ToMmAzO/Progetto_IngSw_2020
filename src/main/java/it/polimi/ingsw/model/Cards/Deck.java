@@ -47,9 +47,9 @@ public class Deck {
         return availability;
     }
 
-    public static God getCardToPlayer(int number){
-        availability[number-1] = false;
-        return godSelected[number-1];
+    public static God getCardToPlayer(int indexOfCardSelected){
+        availability[indexOfCardSelected-1] = false;
+        return godSelected[indexOfCardSelected-1];
     }
 
 }
