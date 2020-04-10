@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.Cards;
 public class Deck {
 
     private static God[] godSelected;
-    private static Boolean[] availability;
+    private static boolean[] availability;
 
     public Deck(int numberOfCards){
         int numberOfGods = God.values().length;
@@ -19,22 +19,22 @@ public class Deck {
             int random = (int) (Math.random() * numberOfGods);
             if (random != casual[0]) {
                 casual[1] = random;
+                if (numberOfCards == 3){
+                    while (true){
+                        random = (int) (Math.random() * numberOfGods);
+                        if (random != casual[0] && random != casual[1]) {
+                            casual[2] = random;
+                            break;
+                        }
+                    }
+                }
                 break;
             }
         }
-        if (numberOfCards == 3){
-            while (true){
-                int random = (int) (Math.random() * numberOfGods);
-                if (random != casual[0] && random != casual[1]) {
-                    casual[2] = random;
-                    break;
-                }
-            }
-        }
         godSelected = new God[numberOfCards];
-        availability = new Boolean[numberOfCards];
+        availability = new boolean[numberOfCards];
         for (i = 0; i < numberOfCards; i++){
-            godSelected[i] = (godList[casual[i]]);
+            godSelected[i] = godList[casual[i]];
             availability[i] = true;
         }
     }
@@ -43,7 +43,7 @@ public class Deck {
         return godSelected;
     }
 
-    public static Boolean[] getAvailability() {
+    public static boolean[] getAvailability() {
         return availability;
     }
 

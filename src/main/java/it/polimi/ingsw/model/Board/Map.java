@@ -35,7 +35,7 @@ public class Map {
         map[worker.getCoordX()][worker.getCoordY()].setWorkerPresence(null);
     }
 
-    public static Boolean noWorkerHere(int row, int column){
+    public static boolean noWorkerHere(int row, int column){
         return map[row][column].getWorkerPresence() == null;
     }
 

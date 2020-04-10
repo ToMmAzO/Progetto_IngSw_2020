@@ -24,7 +24,7 @@ public class TurnManager {
     }
 
     public static void startTurn(Player player){
-        workerSelected = player.getWorkerSelected(1);//inserito 1 per non generare errori (devi mettere 1 o 2)
+        workerSelected = player.getWorkerSelected(5);//inserito 5 per non generare errori (devi mettere 1 o 2)
         selectAction(player);
         workerSelected = null;
     }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.controller.GameManager;
+import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Cards.God;
@@ -10,9 +10,9 @@ public class View {
 
     public static void printCardsSelected(){
         God[] x = Deck.getCardsSelected();
-        Boolean[] a = Deck.getAvailability();
-        for (int i = 0; i < GameManager.getNumberOfPlayers(); i++){
-            System.out.println("Carta " + (i+1) + ": " + x[i].toString() + ": " + x[i].getGodDescription(x[i]));
+        boolean[] a = Deck.getAvailability();
+        for (int i = 0; i < x.length; i++){
+            System.out.println("Carta " + (i+1) + " --> " + x[i].toString() + ": " + x[i].getGodDescription(x[i]));
             if (a[i]){
                 System.out.println("La carta è ancora disponibile.\n");
             } else {
@@ -31,7 +31,11 @@ public class View {
             System.out.printf("%d  ", i);
             for (int j = 0; j < 5; j++){
                 if(Map.noWorkerHere(i, j)){
-                    System.out.printf("%8s", Map.getCellBlockType(i, j).toString());
+                    if(Map.getCellBlockType(i, j) == BlockType.GROUND){
+                        System.out.printf("%8s", "------");
+                    } else{
+                        System.out.printf("%8s", Map.getCellBlockType(i, j).toString());
+                    }
                 } else{
                     System.out.printf("%3c%s|", '|', Map.getWorkerInCell(i, j).getIdWorker());
                 }
