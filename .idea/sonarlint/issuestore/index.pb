@@ -19,8 +19,6 @@ r
 Bsrc/main/java/it/polimi/ingsw/model/DivinityWorkers/WorkerPan.java,c\3\c3e33160e2c9c7c9689e608e0edbfc3a67951fa1
 y
 Isrc/main/java/it/polimi/ingsw/model/DivinityWorkers/WorkerPrometheus.java,8\6\868b8b38614dd89515bfee30fde428151a5aa13f
-]
--src/main/java/it/polimi/ingsw/model/Game.java,9\5\950971fa7f452620730613b808121bde81e86f84
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
@@ -42,10 +40,6 @@ k
 ;src/main/java/it/polimi/ingsw/controller/ActionManager.java,3\6\3658c91f2de0b578635420a60d889c3ad4ddd35b
 c
 3src/main/java/it/polimi/ingsw/model/Cards/Deck.java,d\5\d53f6bb1ea73f752987b3b73a49ff3f39b01b03e
-g
-7src/main/java/it/polimi/ingsw/model/Cards/Divinity.java,0\e\0ef459bbf084020cd87db1249dd4612e5cf885cf
-m
-=src/main/java/it/polimi/ingsw/model/Cards/GodDescription.java,e\b\eb876feb1fb56db70c62d1fee8ae321864d24b25
 _
 /src/main/java/it/polimi/ingsw/model/Worker.java,5\0\50a23c66e9a52961e71e550bf8c35e74387f8988
 c
@@ -64,3 +58,5 @@ i
 9src/main/java/it/polimi/ingsw/controller/TurnManager.java,8\5\858995f7d4a45e71dbe8d7fbb78dadeaf3e3d0b9
 b
 2src/main/java/it/polimi/ingsw/model/Cards/God.java,1\e\1e1794898de8a0c72b3a259b61be17d65a0da404
+X
+(src/main/java/it/polimi/ingsw/Prova.java,2\9\2945e24e5f93d97b69f07d45d38e20eae9b2c56a
