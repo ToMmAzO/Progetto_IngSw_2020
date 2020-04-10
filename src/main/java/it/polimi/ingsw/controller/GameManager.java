@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.Board.Map;
+import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Cards.God;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.View;
 
@@ -36,7 +36,7 @@ public class GameManager {
                 Scanner scanner = new Scanner(System.in);
                 int numberOfPlayers= Integer.parseInt((scanner.nextLine()));
                 setNumberOfPlayers(numberOfPlayers);
-                new Game();
+                new Deck(numberOfPlayers);
                 new Map();
                 players = new Player[numberOfPlayers];
                 inGame = new Boolean[numberOfPlayers];
@@ -45,7 +45,7 @@ public class GameManager {
                 System.out.println("Hai il colore " + players[0].getColor().toString());
                 System.out.println("Scegli il numero di una delle " + GameManager.numberOfPlayers + " carte:");
                 View.printCardsSelected();
-                God g = Game.getCardToPlayer(Integer.parseInt((scanner.nextLine())));
+                God g = Deck.getCardToPlayer(Integer.parseInt((scanner.nextLine())));
                 players[0].setGodChoice(g);
                 View.printCardChosen(g);
                 break;
@@ -61,11 +61,11 @@ public class GameManager {
                 System.out.println("Scegli il numero di una delle " + numberOfPlayers + " carte ancora disponibili:");
                 View.printCardsSelected();
                 int cardNumber = Integer.parseInt((scanner.nextLine()));
-                while (!Game.getAvailability()[cardNumber - 1]){
+                while (!Deck.getAvailability()[cardNumber - 1]){
                     System.out.println("Carta non disponibile, seleziona una carta disponibile!");
                     cardNumber = Integer.parseInt((scanner.nextLine()));
                 }
-                God g = Game.getCardToPlayer(cardNumber);
+                God g = Deck.getCardToPlayer(cardNumber);
                 players[1].setGodChoice(g);
                 View.printCardChosen(g);
                 break;
@@ -81,11 +81,11 @@ public class GameManager {
                 System.out.println("Scegli il numero di una delle  " + numberOfPlayers + " carte ancora disponibili:");
                 View.printCardsSelected();
                 int cardNumber = Integer.parseInt((scanner.nextLine()));
-                while (!Game.getAvailability()[cardNumber - 1]){
+                while (!Deck.getAvailability()[cardNumber - 1]){
                     System.out.println("Carta non disponibile, seleziona il numero di una disponibile!");
                     cardNumber = Integer.parseInt((scanner.nextLine()));
                 }
-                God g = Game.getCardToPlayer(cardNumber);
+                God g = Deck.getCardToPlayer(cardNumber);
                 players[2].setGodChoice(g);
                 View.printCardChosen(g);
                 break;

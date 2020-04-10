@@ -1,21 +1,27 @@
 package it.polimi.ingsw.model.Cards;
 
-public class God {
+import java.util.HashMap;
 
-    private Divinity godName;
-    private String godPower;
+public enum God {
 
-    public God(Divinity godName, String godPower){
-        this.godName = godName;
-        this.godPower = godPower;
-    }
+    APOLLO, ARTEMIS, ATHENA, ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS;
 
-    public Divinity getGodName() {
-        return godName;
-    }
+    static HashMap<God, String> godDescription = new HashMap<God, String>(){
+        {
+            put(APOLLO, "Il tuo lavoratore può spostarsi nella casella di un lavoratore avversario, mandandolo nella tua attuale casella.");
+            put(ARTEMIS, "Il tuo lavoratore può spostarsi una volta in più, ma non può tornare nella casella in sui è partito.");
+            put(ATHENA, "Se nel tuo turno uno dei tuoi lavoratori è salito di livello, in questo turno i lavoratori degli avversari non possono salire di livello.");
+            put(ATLAS, "Il tuo lavoratore può costruire una cupola su qualsiasi livello, compreso il terreno.");
+            put(DEMETER, "Il tuo lavoratore può costruire una volta in più, ma non nella stessa casella.");
+            put(HEPHAESTUS, "Il tuo lavoratore può costruire un blocco aggiuntuvo (non una cupola) al di sopra del primo blocco.");
+            put(MINOTAUR, "Il tuo lavoratore può spostarsi nella casella di un lavoratore avversario se la casella successiva nella stessa direzione è libera, spostando il lavoratore avversario in questa (indipendentemente dal livello).");
+            put(PAN, "Vinci anche se il tuo lavoratore è sceso di due o più livelli.");
+            put(PROMETHEUS, "Se il tuo lavoratore non sale di livello, può costruire prima e dopo essere stato mosso.");
+        }
+    };
 
-    public String getGodPower() {
-        return godPower;
+    public String getGodDescription(God god){
+        return godDescription.get(god);
     }
 
 }

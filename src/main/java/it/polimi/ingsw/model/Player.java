@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Board.Map;
-import it.polimi.ingsw.model.Cards.Divinity;
 import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.DivinityWorkers.*;
 
@@ -10,7 +9,7 @@ public class Player {
     private String nickname;
     private Color color;
     private Worker[] workers = new Worker[2];
-    private Divinity godChoice;
+    private God godChoice;
 
     public Player(String nickname){
         this.nickname = nickname;
@@ -29,7 +28,7 @@ public class Player {
     }
 
     public void setGodChoice(God god) {
-        this.godChoice = god.getGodName();
+        this.godChoice = god;
     }
 
     public boolean setWorker1(int row, int column) {
@@ -130,7 +129,7 @@ public class Player {
         return color;
     }
 
-    public Divinity getGodChoice() {
+    public God getGodChoice() {
         return godChoice;
     }
 
