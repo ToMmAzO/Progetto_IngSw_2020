@@ -31,7 +31,7 @@ public class TurnManager {
             System.out.println("Devi inserire 1 oppure 2!");
             selectionWorker = Integer.parseInt((scanner.nextLine()));
         }
-        workerSelected = player.getWorkerSelected(selectionWorker);
+        workerSelected = player.getWorkerSelected(selectionWorker);     //DA ERRORE QUA
         if(!workerSelected.canMove()){
             System.out.println(player.getNickname() + " NON può muoversi, prendo l'altro Worker"); //workerID
             if(selectionWorker + 1 == 3){       //BRUTTO --> selectionWorker = 2
@@ -349,7 +349,7 @@ public class TurnManager {
                 }
 
                 workerSelected.changePosition(column, row);
-                
+
                 if(workerSelected.canBuild()) {
                     System.out.println("Inserisci le cordinate dove vuoi costruire: ");
                     coordString = scanner.nextLine().split(",");
@@ -368,14 +368,33 @@ public class TurnManager {
                 break;
 
             default:    //APOLLO, ATHENA, ATLAS, MINOTAUR, PAN
-                if(ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
-                    workerSelected.canMove();
-                    workerSelected.changePosition(column, row);
+                System.out.println("Inserisci le cordinate in cui ti vuoi spostare: ");
+                coordString = scanner.nextLine().split(",");
+                column = Integer.parseInt(coordString[0]);
+                row = Integer.parseInt(coordString[1]);
+                while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
+                    System.out.println("Inserisci delle coordinate valide!");
+                    coordString = scanner.nextLine().split(",");
+                    column = Integer.parseInt(coordString[0]);
+                    row = Integer.parseInt(coordString[1]);
                 }
 
-                if(ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
-                    workerSelected.canBuild();
+                workerSelected.changePosition(column, row);
+
+                if(workerSelected.canBuild()) {
+                    System.out.println("Inserisci le cordinate dove vuoi costruire: ");
+                    coordString = scanner.nextLine().split(",");
+                    column = Integer.parseInt(coordString[0]);
+                    row = Integer.parseInt(coordString[1]);
+                    while (ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
+                        System.out.println("Inserisci delle coordinate valide!");
+                        coordString = scanner.nextLine().split(",");
+                        column = Integer.parseInt(coordString[0]);
+                        row = Integer.parseInt(coordString[1]);
+                    }
                     workerSelected.buildBlock(column, row);
+                }else{
+                    System.out.println(player.getNickname() + " NON può costruire!"); //workerID
                 }
                 break;
         }
