@@ -1,15 +1,13 @@
-package it.polimi.ingsw.model.DivinityWorkers;
+package it.polimi.ingsw.model.Workers;
 
 import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
-import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.Worker;
 
 public class WorkerMinotaur extends Worker {
 
-    public WorkerMinotaur(Color c, int coordX, int coordY) {
-        super(c, coordX, coordY);
+    public WorkerMinotaur(String idWorker, int coordX, int coordY) {
+        super(idWorker, coordX, coordY);
     }
 
     @Override

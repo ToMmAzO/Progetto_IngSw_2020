@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.Player.Player;
+import it.polimi.ingsw.model.Workers.Worker;
 
 import java.util.Scanner;
 
@@ -16,16 +16,9 @@ public class TurnManager {
 
     static Scanner scanner = new Scanner(System.in);    //prova
 
-    public static void setColumn(int column) {
-        TurnManager.column = column;
-    }
-
-    public static void setRow(int row) {
-        TurnManager.row = row;
-    }
-
     public static void startTurn(Player player){
-        System.out.println("Scegli che worker usare: " + player.getNickname() + " o " + player.getNickname() + " (1 o 2)"); //workerID
+        System.out.println("Scegli che worker usare: " + player.getWorkerSelected(1).getIdWorker() +
+                " o " + player.getWorkerSelected(2).getIdWorker() + " (scrivi 1 o 2)");
         int selectionWorker = Integer.parseInt((scanner.nextLine()));
         while (selectionWorker != 1 && selectionWorker != 2) {
             System.out.println("Devi inserire 1 oppure 2!");
@@ -49,7 +42,6 @@ public class TurnManager {
         }else{
             selectAction(player);
         }
-
         workerSelected = null;
     }
 

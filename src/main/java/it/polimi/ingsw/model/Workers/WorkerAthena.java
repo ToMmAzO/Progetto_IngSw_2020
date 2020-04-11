@@ -1,15 +1,13 @@
-package it.polimi.ingsw.model.DivinityWorkers;
+package it.polimi.ingsw.model.Workers;
 
 import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
-import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.Worker;
 
 public class WorkerAthena extends Worker {
 
-    public WorkerAthena(Color c, int coordX, int coordY) {
-        super(c, coordX, coordY);
+    public WorkerAthena(String idWorker, int coordX, int coordY) {
+        super(idWorker, coordX, coordY);
     }
 
     @Override

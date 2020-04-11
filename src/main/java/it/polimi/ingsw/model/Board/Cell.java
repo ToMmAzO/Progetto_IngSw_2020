@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.Board;
 
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.Workers.Worker;
 
 public class Cell {
 

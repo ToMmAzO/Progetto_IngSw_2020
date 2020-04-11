@@ -1,14 +1,12 @@
-package it.polimi.ingsw.model.DivinityWorkers;
+package it.polimi.ingsw.model.Workers;
 
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
-import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.Worker;
 
 public class WorkerHephaestus extends Worker {
 
-    public WorkerHephaestus(Color c, int coordX, int coordY) {
-        super(c, coordX, coordY);
+    public WorkerHephaestus(String idWorker, int coordX, int coordY) {
+        super(idWorker, coordX, coordY);
     }
 
     @Override

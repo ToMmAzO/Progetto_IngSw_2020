@@ -1,8 +1,8 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.Player;
 
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.God;
-import it.polimi.ingsw.model.DivinityWorkers.*;
+import it.polimi.ingsw.model.Workers.*;
 
 public class Player {
 
@@ -31,43 +31,45 @@ public class Player {
         this.godChoice = god;
     }
 
+
     public boolean setWorker1(int row, int column) {
+        String id = color.toString().substring(0, 3).concat("1");
         if(Map.noWorkerHere(row, column)) {
             switch (this.getGodChoice()) {
                 case PAN:
-                    workers[0] = new WorkerPan(this.color, column, row);
+                    workers[0] = new WorkerPan(id, column, row);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case ATLAS:
-                    workers[0] = new WorkerAtlas(this.color, column, row);
+                    workers[0] = new WorkerAtlas(id, column, row);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case APOLLO:
-                    workers[0] = new WorkerApollo(this.color, column, row);
+                    workers[0] = new WorkerApollo(id, column, row);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case ATHENA:
-                    workers[0] = new WorkerAthena(this.color, column, row);
+                    workers[0] = new WorkerAthena(id, column, row);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case ARTEMIS:
-                    workers[0] = new WorkerArtemis(this.color, column, row);
+                    workers[0] = new WorkerArtemis(id, column, row);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case DEMETER:
-                    workers[0] = new WorkerDemeter(this.color, column, row);
+                    workers[0] = new WorkerDemeter(id, column, row);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case MINOTAUR:
-                    workers[0] = new WorkerMinotaur(this.color, column, row);
+                    workers[0] = new WorkerMinotaur(id, column, row);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case HEPHAESTUS:
-                    workers[0] = new WorkerHephaestus(this.color, column, row);
+                    workers[0] = new WorkerHephaestus(id, column, row);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case PROMETHEUS:
-                    workers[0] = new WorkerPrometheus(this.color, column, row);
+                    workers[0] = new WorkerPrometheus(id, column, row);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
             }
@@ -77,42 +79,43 @@ public class Player {
     }
 
     public boolean setWorker2(int row, int column) {
+        String id = color.toString().substring(0, 3).concat("2");
         if(Map.noWorkerHere(row, column)) {
             switch (this.getGodChoice()) {
                 case PAN:
-                    workers[1] = new WorkerPan(this.color, column, row);
+                    workers[1] = new WorkerPan(id, column, row);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case ATLAS:
-                    workers[1] = new WorkerAtlas(this.color, column, row);
+                    workers[1] = new WorkerAtlas(id, column, row);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case APOLLO:
-                    workers[1] = new WorkerApollo(this.color, column, row);
+                    workers[1] = new WorkerApollo(id, column, row);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case ATHENA:
-                    workers[1] = new WorkerAthena(this.color, column, row);
+                    workers[1] = new WorkerAthena(id, column, row);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case ARTEMIS:
-                    workers[1] = new WorkerArtemis(this.color, column, row);
+                    workers[1] = new WorkerArtemis(id, column, row);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case DEMETER:
-                    workers[1] = new WorkerDemeter(this.color, column, row);
+                    workers[1] = new WorkerDemeter(id, column, row);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case MINOTAUR:
-                    workers[1] = new WorkerMinotaur(this.color, column, row);
+                    workers[1] = new WorkerMinotaur(id, column, row);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case HEPHAESTUS:
-                    workers[1] = new WorkerHephaestus(this.color, column, row);
+                    workers[1] = new WorkerHephaestus(id, column, row);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case PROMETHEUS:
-                    workers[1] = new WorkerPrometheus(this.color, column, row);
+                    workers[1] = new WorkerPrometheus(id, column, row);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
             }

@@ -3,7 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Cards.God;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.view.View;
 
 import java.util.Objects;

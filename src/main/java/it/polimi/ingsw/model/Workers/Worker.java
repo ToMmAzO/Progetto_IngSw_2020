@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.Workers;
 
 import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.controller.TurnManager;
@@ -9,17 +9,12 @@ public abstract class Worker {
 
     private String idWorker;
     private int coordX, coordY, coordZ;
-    private Color color;    //inutile?
 
-    public Worker(Color c, int coordX, int coordY) {
+    public Worker(String idWorker, int coordX, int coordY) {
+        this.idWorker = idWorker;
         this.coordX = coordX;
         this.coordY = coordY;
         this.coordZ = 0;
-        this.color = c;
-    }
-
-    public void setIdWorker(String idWorker) {
-        this.idWorker = idWorker;
     }
 
     public String getIdWorker() {
@@ -48,10 +43,6 @@ public abstract class Worker {
 
     public void setCoordZ(int coordZ) {
         this.coordZ = coordZ;
-    }
-
-    public Color getColor() {
-        return color;
     }
 
     public boolean canMove(){
