@@ -24,23 +24,31 @@ public class TurnManager {
             System.out.println("Devi inserire 1 oppure 2!");
             selectionWorker = Integer.parseInt((scanner.nextLine()));
         }
-        workerSelected = player.getWorkerSelected(selectionWorker);     //DA ERRORE QUA
-        if(!workerSelected.canMove()){
+        workerSelected = player.getWorkerSelected(selectionWorker);  //DA ERRORE QUA
+        //System.out.println("hai selezionato: "+ player.getWorkerSelected(selectionWorker).getIdWorker());
+
+
+        if(workerSelected.canMove())          //se il worker scelto può muoversi passa a selectAction()
+            selectAction(player);
+        else {                                //altrimenti controlla: se l'altro worker può muoversi fa muovere l'altro, se nemmeno l'altro può muoversi (entrambi bloccati) --> player eliminato
             System.out.println(player.getNickname() + " NON può muoversi, prendo l'altro Worker"); //workerID
-            if(selectionWorker + 1 == 3){       //BRUTTO --> selectionWorker = 2
+            if (selectionWorker == 1) {
+                selectionWorker = 2;
                 workerSelected = player.getWorkerSelected((selectionWorker - 1));
-            }else{
-                workerSelected = player.getWorkerSelected((selectionWorker + 1));
+
+            } else {
+                selectionWorker = 1;
+                workerSelected = player.getWorkerSelected((selectionWorker - 1));
             }
 
-            if(!workerSelected.canMove()){
+
+            if (workerSelected.canMove())
+                selectAction(player);
+
+            if (!workerSelected.canMove()) {
                 System.out.println(player.getNickname() + " NON può muoversi"); //workerID
                 GameManager.deletePlayer(player);      //next turn
-            }else{
-                selectAction(player);
             }
-        }else{
-            selectAction(player);
         }
         workerSelected = null;
     }
