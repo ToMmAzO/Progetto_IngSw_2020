@@ -11,19 +11,20 @@ public class WorkerHephaestus extends Worker {
 
     @Override
     public boolean canBuild(boolean buildTwoTimes) {
-        for(int i = getCoordX() - 1; i < getCoordX() + 1; i++){
-            for(int j = getCoordY() - 1; j < getCoordY() + 1; j++) {
-                if ((i == getCoordX() && j == getCoordY()) || !Map.noWorkerHere(i, j) || (buildTwoTimes &&  Map.getCellBlockType(i, j) == BlockType.BLOCK2) || (buildTwoTimes &&  Map.getCellBlockType(i, j) == BlockType.BLOCK3) || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
-                    return false;
+        boolean canBuild = false;
+
+        if(buildTwoTimes) {
+            for (int i = getCoordX() - 1; i <= getCoordX() + 1 || canBuild; i++) {
+                for (int j = getCoordY() - 1; j <= getCoordY() + 1 || canBuild; j++) {
+                    if ((i != getCoordX() && j != getCoordY()) && Map.noWorkerHere(i, j) && (buildTwoTimes && Map.getCellBlockType(i, j) != BlockType.BLOCK2) && (buildTwoTimes && Map.getCellBlockType(i, j) != BlockType.BLOCK3) && Map.getCellBlockType(i, j) != BlockType.CUPOLA) {
+                        canBuild = true;
+                    }
                 }
             }
+            return canBuild;
+        }else{
+            return super.canBuild();
         }
-        return true;
-    }
-
-    @Override
-    public boolean canBuild() {
-        return super.canBuild();
     }
 
     @Override

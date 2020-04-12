@@ -46,14 +46,16 @@ public abstract class Worker {
     }
 
     public boolean canMove(){
-        for(int i = coordX - 1; i < coordX + 1; i++){
-            for(int j = coordY - 1; j < coordY + 1; j++) {
-                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || (TurnManager.cannotGoUp() && Map.getCellBlockType(i, j).getAbbreviation() > coordZ) || Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
-                        return false;
+        boolean canMove = false;
+
+        for(int i = coordX - 1; i <= coordX + 1 || canMove; i++){           //se no funziona --> while
+            for(int j = coordY - 1; j <= coordY + 1 || canMove; j++) {
+                if ((i != coordX && j != coordY) && Map.noWorkerHere(i, j) && (TurnManager.cannotGoUp() && Map.getCellBlockType(i, j).getAbbreviation() <= coordZ) && Map.getCellBlockType(i, j).getAbbreviation() < coordZ + 2 && Map.getCellBlockType(i, j) != BlockType.CUPOLA) {
+                        canMove = true;
                 }
             }
         }
-        return true;
+        return canMove;
     }
 
     public void changePosition(int newX, int newY){
@@ -61,7 +63,6 @@ public abstract class Worker {
             coordX = newX;
             coordY = newY;
             coordZ = Map.getCellBlockType(newX, newY).getAbbreviation();
-            //setWorkerInCell NO?
             GameManager.setVictory();
         }else{
             coordX = newX;
@@ -71,14 +72,16 @@ public abstract class Worker {
     }
 
     public boolean canBuild(){
-        for(int i = coordX - 1; i < coordX + 1; i++){
-            for(int j = coordY - 1; j < coordY + 1; j++) {
-                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
-                        return false;
+        boolean canBuild = false;
+
+        for(int i = coordX - 1; i <= coordX + 1 || canBuild; i++){
+            for(int j = coordY - 1; j <= coordY + 1 || canBuild; j++) {
+                if ((i != coordX && j != coordY) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA) {
+                        canBuild = true;
                 }
             }
         }
-        return true;
+        return canBuild;
     }
 
     public boolean canBuild(boolean buildAgain) {       //solo per sottoclassi se no dava fastidio l'override HEPHAESTUS
