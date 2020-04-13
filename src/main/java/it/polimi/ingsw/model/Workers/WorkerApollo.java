@@ -12,16 +12,22 @@ public class WorkerApollo extends Worker {
 
     @Override
     public boolean canMove() {
-        boolean canMove = false;
-
-        for(int i = getCoordX() - 1; i <= getCoordX() + 1 || canMove; i++){           //se no funziona --> while
-            for(int j = getCoordY() - 1; j <= getCoordY() + 1 || canMove; j++) {
-                if ((i != getCoordX() && j != getCoordY()) && (TurnManager.cannotGoUp() && Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) && Map.getCellBlockType(i, j).getAbbreviation() < getCoordZ() + 2 && Map.getCellBlockType(i, j) != BlockType.CUPOLA) {
-                    canMove = true;
+        for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {           //se no funziona --> while
+            for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
+                if (!(i == getCoordX() && j == getCoordY()) && Map.isAcceptable(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
+                    if(TurnManager.cannotGoUp()){
+                        if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
+                            return true;
+                        }
+                    }else{
+                        if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
+                            return true;
+                        }
+                    }
                 }
             }
         }
-        return canMove;
+        return false;
     }
 
     @Override

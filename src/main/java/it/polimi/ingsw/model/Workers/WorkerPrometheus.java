@@ -12,16 +12,22 @@ public class WorkerPrometheus extends Worker {
 
     @Override
     public boolean canMove() {
-        boolean canMove = false;
-
-        for(int i = getCoordX() - 1; i <= getCoordX() + 1 || canMove; i++){           //se no funziona --> while
-            for(int j = getCoordY() - 1; j <= getCoordY() + 1 || canMove; j++) {
-                if ((i != getCoordX() && j != getCoordY()) && Map.noWorkerHere(i, j) && ((TurnManager.cannotGoUp() || !TurnManager.getAllowHeightPrometheus()) && Map.getCellBlockType(i, j).getAbbreviation() > getCoordZ()) && (TurnManager.cannotGoUp() && Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) && Map.getCellBlockType(i, j).getAbbreviation() < getCoordZ() + 2 && Map.getCellBlockType(i, j) != BlockType.CUPOLA) {
-                    canMove = true;
+        for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {           //se no funziona --> while
+            for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
+                if (!(i == getCoordX() && j == getCoordY()) && Map.isAcceptable(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
+                    if(TurnManager.cannotGoUp() && !TurnManager.getAllowHeightPrometheus()){
+                        if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
+                            return true;
+                        }
+                    }else{
+                        if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
+                            return true;
+                        }
+                    }
                 }
             }
         }
-        return canMove;
+        return false;
     }
 
     @Override
