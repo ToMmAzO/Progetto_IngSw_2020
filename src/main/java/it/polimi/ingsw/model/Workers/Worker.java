@@ -48,20 +48,21 @@ public abstract class Worker {
     public boolean canMove(){
       int i,j;
 
-      j=coordY -1;
-      for(i=coordX -1;i <= coordX + 1; i++) {
-          if (Map.isAcceptable(i, j)) {
-              if (TurnManager.cannotGoUp())
-                  if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA))
-                      return true;
-              if (!TurnManager.cannotGoUp())
-                  if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ + 1) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA))
-                      return true;
+      for(j=coordY - 1;j <= coordY + 1; j++) {
+          for (i = coordX - 1; i <= coordX + 1; i++) {
+              if (Map.isAcceptable(i, j)) {
+                  if (TurnManager.cannotGoUp())
+                      if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA))
+                          return true;
+                  if (!TurnManager.cannotGoUp())
+                      if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ + 1) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA))
+                          return true;
 
+              }
           }
       }
 
-      j=coordY +1;
+      /*j=coordY +1;
       for(i=coordX -1;i <= coordX + 1; i++){
           if (Map.isAcceptable(i,j)) {
               if (TurnManager.cannotGoUp())
@@ -86,7 +87,7 @@ public abstract class Worker {
           if (TurnManager.cannotGoUp())
               if(Map.noWorkerHere(i,j) && (Map.getCellBlockType(i,j).getAbbreviation()<=coordZ) && (Map.getCellBlockType(i,j) != BlockType.CUPOLA))
                   return true;
-
+    */
      return false;
     }
 
