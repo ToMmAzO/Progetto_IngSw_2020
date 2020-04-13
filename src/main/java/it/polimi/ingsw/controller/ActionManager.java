@@ -3,7 +3,9 @@ package it.polimi.ingsw.controller;
 public class ActionManager {
 
     public static boolean movementManager(int row, int column, int newRow, int newColumn){
-        return newRow >= 0 && newRow <= 4 && newColumn >= 0 && newColumn <= 4 && newRow >= row - 1 && newRow <= row + 1 && newColumn >= column - 1 && newColumn <= column + 1;
+        if (newRow >= 0) if (newRow <= 4) if (newColumn >= 0) if (newColumn <= 4) if (newRow >= row - 1)
+            if (newRow <= row + 1) if (newColumn >= column - 1) if (newColumn <= column + 1) return true;
+        return false;
     }
 
     public static boolean buildManager(int row, int column, int buildRow, int buildColumn){

@@ -60,7 +60,7 @@ public class TurnManager {
                 coordString = scanner.nextLine().split(",");
                 column = Integer.parseInt(coordString[0]);
                 row = Integer.parseInt(coordString[1]);
-                while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
+                while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
                     System.out.println("Inserisci delle coordinate valide!");
                     coordString = scanner.nextLine().split(",");
                     column = Integer.parseInt(coordString[0]);
@@ -85,7 +85,7 @@ public class TurnManager {
                         coordString = scanner.nextLine().split(",");
                         column = Integer.parseInt(coordString[0]);
                         row = Integer.parseInt(coordString[1]);
-                        while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
+                        while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
                             if(x == column && y == row) {
                                 System.out.println("Inserisci delle coordinate DIVERSE da quelle di partenza!");
                                 coordString = scanner.nextLine().split(",");
@@ -109,7 +109,7 @@ public class TurnManager {
                     coordString = scanner.nextLine().split(",");
                     column = Integer.parseInt(coordString[0]);
                     row = Integer.parseInt(coordString[1]);
-                    while (ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
+                    while (!ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
                         System.out.println("Inserisci delle coordinate valide!");
                         coordString = scanner.nextLine().split(",");
                         column = Integer.parseInt(coordString[0]);
@@ -126,7 +126,7 @@ public class TurnManager {
                 coordString = scanner.nextLine().split(",");
                 column = Integer.parseInt(coordString[0]);
                 row = Integer.parseInt(coordString[1]);
-                while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
+                while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
                     System.out.println("Inserisci delle coordinate valide!");
                     coordString = scanner.nextLine().split(",");
                     column = Integer.parseInt(coordString[0]);
@@ -148,7 +148,7 @@ public class TurnManager {
                         coordString = scanner.nextLine().split(",");
                         column = Integer.parseInt(coordString[0]);
                         row = Integer.parseInt(coordString[1]);
-                        while (ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
+                        while (!ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
                             System.out.println("Inserisci delle coordinate valide!");
                             coordString = scanner.nextLine().split(",");
                             column = Integer.parseInt(coordString[0]);
@@ -160,7 +160,7 @@ public class TurnManager {
                         coordString = scanner.nextLine().split(",");
                         column = Integer.parseInt(coordString[0]);
                         row = Integer.parseInt(coordString[1]);
-                        while (ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
+                        while (!ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
                             System.out.println("Inserisci delle coordinate valide!");
                             coordString = scanner.nextLine().split(",");
                             column = Integer.parseInt(coordString[0]);
@@ -179,7 +179,7 @@ public class TurnManager {
                 coordString = scanner.nextLine().split(",");
                 column = Integer.parseInt(coordString[0]);
                 row = Integer.parseInt(coordString[1]);
-                while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
+                while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
                     System.out.println("Inserisci delle coordinate valide!");
                     coordString = scanner.nextLine().split(",");
                     column = Integer.parseInt(coordString[0]);
@@ -193,7 +193,7 @@ public class TurnManager {
                     coordString = scanner.nextLine().split(",");
                     column = Integer.parseInt(coordString[0]);
                     row = Integer.parseInt(coordString[1]);
-                    while (ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
+                    while (!ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
                         System.out.println("Inserisci delle coordinate valide!");
                         coordString = scanner.nextLine().split(",");
                         column = Integer.parseInt(coordString[0]);
@@ -216,7 +216,7 @@ public class TurnManager {
                         coordString = scanner.nextLine().split(",");
                         column = Integer.parseInt(coordString[0]);
                         row = Integer.parseInt(coordString[1]);
-                        while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
+                        while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
                             if(x == column && y == row) {
                                 System.out.println("Inserisci delle coordinate DIVERSE da quelle dove hai costruito prima!");
                                 coordString = scanner.nextLine().split(",");
@@ -241,7 +241,7 @@ public class TurnManager {
                 coordString = scanner.nextLine().split(",");
                 column = Integer.parseInt(coordString[0]);
                 row = Integer.parseInt(coordString[1]);
-                while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
+                while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
                     System.out.println("Inserisci delle coordinate valide!");
                     coordString = scanner.nextLine().split(",");
                     column = Integer.parseInt(coordString[0]);
@@ -264,7 +264,7 @@ public class TurnManager {
                             coordString = scanner.nextLine().split(",");
                             column = Integer.parseInt(coordString[0]);
                             row = Integer.parseInt(coordString[1]);
-                            while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
+                            while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
                                 System.out.println("Inserisci delle coordinate valide!");
                                 coordString = scanner.nextLine().split(",");
                                 column = Integer.parseInt(coordString[0]);
@@ -277,7 +277,7 @@ public class TurnManager {
                             coordString = scanner.nextLine().split(",");
                             column = Integer.parseInt(coordString[0]);
                             row = Integer.parseInt(coordString[1]);
-                            while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
+                            while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
                                 System.out.println("Inserisci delle coordinate valide!");
                                 coordString = scanner.nextLine().split(",");
                                 column = Integer.parseInt(coordString[0]);
@@ -290,7 +290,7 @@ public class TurnManager {
                         coordString = scanner.nextLine().split(",");
                         column = Integer.parseInt(coordString[0]);
                         row = Integer.parseInt(coordString[1]);
-                        while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
+                        while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
                             System.out.println("Inserisci delle coordinate valide!");
                             coordString = scanner.nextLine().split(",");
                             column = Integer.parseInt(coordString[0]);
@@ -319,7 +319,7 @@ public class TurnManager {
                             coordString = scanner.nextLine().split(",");
                             column = Integer.parseInt(coordString[0]);
                             row = Integer.parseInt(coordString[1]);
-                            while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
+                            while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
                                 System.out.println("Inserisci delle coordinate valide!");
                                 coordString = scanner.nextLine().split(",");
                                 column = Integer.parseInt(coordString[0]);
@@ -341,7 +341,7 @@ public class TurnManager {
                 coordString = scanner.nextLine().split(",");
                 column = Integer.parseInt(coordString[0]);
                 row = Integer.parseInt(coordString[1]);
-                while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
+                while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
                     System.out.println("Inserisci delle coordinate valide!");
                     coordString = scanner.nextLine().split(",");
                     column = Integer.parseInt(coordString[0]);
@@ -355,7 +355,7 @@ public class TurnManager {
                     coordString = scanner.nextLine().split(",");
                     column = Integer.parseInt(coordString[0]);
                     row = Integer.parseInt(coordString[1]);
-                    while (ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
+                    while (!ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
                         System.out.println("Inserisci delle coordinate valide!");
                         coordString = scanner.nextLine().split(",");
                         column = Integer.parseInt(coordString[0]);
@@ -372,7 +372,7 @@ public class TurnManager {
                 coordString = scanner.nextLine().split(",");
                 column = Integer.parseInt(coordString[0]);
                 row = Integer.parseInt(coordString[1]);
-                while (ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
+                while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
                     System.out.println("Inserisci delle coordinate valide!");
                     coordString = scanner.nextLine().split(",");
                     column = Integer.parseInt(coordString[0]);
@@ -386,7 +386,7 @@ public class TurnManager {
                     coordString = scanner.nextLine().split(",");
                     column = Integer.parseInt(coordString[0]);
                     row = Integer.parseInt(coordString[1]);
-                    while (ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
+                    while (!ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
                         System.out.println("Inserisci delle coordinate valide!");
                         coordString = scanner.nextLine().split(",");
                         column = Integer.parseInt(coordString[0]);
