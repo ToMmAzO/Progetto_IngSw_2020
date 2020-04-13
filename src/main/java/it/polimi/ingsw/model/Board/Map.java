@@ -41,7 +41,7 @@ public class Map {
     }
 
     public static boolean isAcceptable(int i, int j){
-        if((i>=0 && i<=4)&&(j>=0 && j<=4))
+        if((i >= 0 && i <= 4) && (j >= 0 && j <= 4))
             return true;
         else
             return false;

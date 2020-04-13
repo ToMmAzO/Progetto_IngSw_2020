@@ -14,15 +14,18 @@ public class WorkerPan extends Worker {
     @Override
     public void changePosition(int newX, int newY){
         if((getCoordZ() == 3 && Map.getCellBlockType(newX, newY).getAbbreviation() == 1) || (getCoordZ() == 3 && Map.getCellBlockType(newX, newY).getAbbreviation() == 0) || (getCoordZ() == 2 && Map.getCellBlockType(newX, newY).getAbbreviation() == 0) || (getCoordZ() == 2 && Map.getCellBlockType(newX, newY).getAbbreviation() == 3)){
+            Map.deleteWorkerInCell(this);
             setCoordX(newX);
             setCoordY(newY);
             setCoordZ(Map.getCellBlockType(newX, newY).getAbbreviation());
-            //setWorkerInCell NO?
+            Map.setWorkerInCell(newX, newY, this);
             GameManager.setVictory();
         }else{
+            Map.deleteWorkerInCell(this);
             setCoordX(newX);
             setCoordY(newY);
             setCoordZ(Map.getCellBlockType(newX, newY).getAbbreviation());
+            Map.setWorkerInCell(newX, newY, this);
         }
     }
 }

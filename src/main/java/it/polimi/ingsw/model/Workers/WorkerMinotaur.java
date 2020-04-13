@@ -20,7 +20,7 @@ public class WorkerMinotaur extends Worker {
                 if (!(i == getCoordX() && j == getCoordY()) && Map.isAcceptable(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
                     if(TurnManager.cannotGoUp()){
                         if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
-                            if (Map.isAcceptable(m, n) && Map.getCellBlockType(m, n).getAbbreviation() <= Map.getCellBlockType(i, j).getAbbreviation() + 1 && Map.getCellBlockType(m, n) != BlockType.CUPOLA) {
+                            if (Map.isAcceptable(m, n) && Map.getCellBlockType(m, n).getAbbreviation() <= Map.getCellBlockType(i, j).getAbbreviation() && Map.getCellBlockType(m, n) != BlockType.CUPOLA) {
                                 return true;
                             }
                         }
@@ -50,12 +50,20 @@ public class WorkerMinotaur extends Worker {
             for(int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
                 for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
                     if(newX == i && newY == j) {
+                        Map.deleteWorkerInCell(this);
+
                         setCoordX(newX);
                         setCoordY(newY);
                         setCoordZ(Map.getCellBlockType(newX, newY).getAbbreviation());
+
                         Map.getWorkerInCell(newX, newY).setCoordX(m);
                         Map.getWorkerInCell(newX, newY).setCoordY(n);
                         Map.getWorkerInCell(newX, newY).setCoordZ(Map.getCellBlockType(m, n).getAbbreviation());
+
+                        Map.setWorkerInCell(m, n, Map.getWorkerInCell(newX, newY));
+                        Map.deleteWorkerInCell(Map.getWorkerInCell(newX, newY));
+
+                        Map.setWorkerInCell(newX, newY, this);
                     }
                     n = n + 2;
                 }

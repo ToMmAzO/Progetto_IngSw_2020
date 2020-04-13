@@ -33,12 +33,20 @@ public class WorkerApollo extends Worker {
     @Override
     public void changePosition(int newX, int newY){
         if(!Map.noWorkerHere(newX, newY)){
+            Map.deleteWorkerInCell(this);
+
             Map.getWorkerInCell(newX, newY).setCoordX(getCoordX());
             Map.getWorkerInCell(newX, newY).setCoordY(getCoordY());
             Map.getWorkerInCell(newX, newY).setCoordZ(getCoordZ());
+
+            Map.setWorkerInCell(getCoordX(), getCoordY(), Map.getWorkerInCell(newX, newY));
+            Map.deleteWorkerInCell(Map.getWorkerInCell(newX, newY));
+
             setCoordX(newX);
             setCoordY(newY);
             setCoordZ(Map.getCellBlockType(newX, newY).getAbbreviation());
+
+            Map.setWorkerInCell(newX, newY, this);
         }else {
             super.changePosition(newX, newY);
         }

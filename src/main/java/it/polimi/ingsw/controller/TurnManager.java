@@ -35,11 +35,10 @@ public class TurnManager {
             }
             workerSelected = player.getWorkerSelected((selectionWorker));
 
-            System.out.println("il worker selezionato è: "+ workerSelected.getIdWorker());
-            if (workerSelected.canMove())
+            System.out.println("Il worker selezionato è: "+ workerSelected.getIdWorker());
+            if (workerSelected.canMove()){
                 selectAction(player);
-
-            if (!workerSelected.canMove()) {
+            } else {
                 System.out.println(workerSelected.getIdWorker() + " NON può muoversi"); //workerID
                 GameManager.deletePlayer(player);      //next turn
             }

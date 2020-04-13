@@ -46,21 +46,22 @@ public abstract class Worker {
     }
 
     public boolean canMove(){
-      int i,j;
-
-      for(j=coordY - 1;j <= coordY + 1; j++) {
-          for (i = coordX - 1; i <= coordX + 1; i++) {
-              if (Map.isAcceptable(i, j)) {
-                  if (TurnManager.cannotGoUp())
-                      if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA))
-                          return true;
-                  if (!TurnManager.cannotGoUp())
-                      if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ + 1) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA))
-                          return true;
-
-              }
-          }
-      }
+        for (int i = coordX - 1; i <= coordX + 1; i++) {
+            for (int j = coordY - 1; j <= coordY + 1; j++) {
+                if (!(i == coordX && j == coordY) && Map.isAcceptable(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
+                    if(TurnManager.cannotGoUp()){
+                        if(Map.getCellBlockType(i, j).getAbbreviation() <= coordZ) {
+                            return true;
+                        }
+                    }else{
+                        if(Map.getCellBlockType(i, j).getAbbreviation() <= coordZ + 1) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
 
       /*j=coordY +1;
       for(i=coordX -1;i <= coordX + 1; i++){
@@ -88,21 +89,23 @@ public abstract class Worker {
               if(Map.noWorkerHere(i,j) && (Map.getCellBlockType(i,j).getAbbreviation()<=coordZ) && (Map.getCellBlockType(i,j) != BlockType.CUPOLA))
                   return true;
     */
-     return false;
     }
 
 
     public void changePosition(int newX, int newY){
         if(coordZ == 2 && Map.getCellBlockType(newX, newY).getAbbreviation() == 3){
+            Map.deleteWorkerInCell(this);
             coordX = newX;
             coordY = newY;
             coordZ = Map.getCellBlockType(newX, newY).getAbbreviation();
-            //setWorkerInCell NO?
+            Map.setWorkerInCell(newX, newY, this);
             GameManager.setVictory();
         }else{
+            Map.deleteWorkerInCell(this);
             coordX = newX;
             coordY = newY;
             coordZ = Map.getCellBlockType(newX, newY).getAbbreviation();
+            Map.setWorkerInCell(newX, newY, this);
         }
     }
 
