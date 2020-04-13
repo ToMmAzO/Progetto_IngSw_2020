@@ -106,14 +106,14 @@ public abstract class Worker {
     }
 
     public boolean canBuild(){
-        for(int i = coordX - 1; i < coordX + 1; i++){
-            for(int j = coordY - 1; j < coordY + 1; j++) {
-                if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
-                        return false;
+        for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
+            for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
+                if (!(i == getCoordX() && j == getCoordY()) && Map.isAcceptable(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA) {
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public boolean canBuild(boolean buildAgain) {       //solo per sottoclassi se no dava fastidio l'override HEPHAESTUS

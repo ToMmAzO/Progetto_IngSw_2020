@@ -12,22 +12,31 @@ public class WorkerMinotaur extends Worker {
 
     @Override
     public boolean canMove() {
-        boolean canMove = false;
         int m = getCoordX() - 2;
         int n = getCoordY() - 2;
 
-        for(int i = getCoordX() - 1; i <= getCoordX() + 1 || canMove; i++){
-            for(int j = getCoordY() - 1; j <= getCoordY() + 1 || canMove; j++) {
-                if ((i != getCoordX() && j != getCoordY()) && (TurnManager.cannotGoUp() && Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) && Map.getCellBlockType(i, j).getAbbreviation() < getCoordZ() + 2 && Map.getCellBlockType(i, j) != BlockType.CUPOLA) {
-                    if (m >= 0 && m <= 4 && n >= 0 && n <= 4 && Map.getCellBlockType(m, n).getAbbreviation() < Map.getCellBlockType(i, j).getAbbreviation() + 2 && Map.getCellBlockType(m, n) != BlockType.CUPOLA) {
-                        canMove = true;
+        for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {           //se no funziona --> while
+            for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
+                if (!(i == getCoordX() && j == getCoordY()) && Map.isAcceptable(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
+                    if(TurnManager.cannotGoUp()){
+                        if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
+                            if (Map.isAcceptable(m, n) && Map.getCellBlockType(m, n).getAbbreviation() <= Map.getCellBlockType(i, j).getAbbreviation() + 1 && Map.getCellBlockType(m, n) != BlockType.CUPOLA) {
+                                return true;
+                            }
+                        }
+                    }else{
+                        if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
+                            if (Map.isAcceptable(m, n) && Map.getCellBlockType(m, n).getAbbreviation() <= Map.getCellBlockType(i, j).getAbbreviation() + 1 && Map.getCellBlockType(m, n) != BlockType.CUPOLA) {
+                                return true;
+                            }
+                        }
                     }
                 }
                 n = n + 2;
             }
             m = m + 2;
         }
-        return canMove;
+        return false;
     }
 
     @Override
