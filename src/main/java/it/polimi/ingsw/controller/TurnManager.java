@@ -31,17 +31,15 @@ public class TurnManager {
         if(workerSelected.canMove())          //se il worker scelto può muoversi passa a selectAction()
             selectAction(player);
         else {                                //altrimenti controlla: se l'altro worker può muoversi fa muovere l'altro, se nemmeno l'altro può muoversi (entrambi bloccati) --> player eliminato
-            System.out.println(player.getNickname() + " NON può muoversi, prendo l'altro Worker"); //workerID
+            System.out.println(workerSelected.getIdWorker() + " NON può muoversi, prendo l'altro Worker"); //workerID
             if (selectionWorker == 1) {
-                selectionWorker = 2;
-                workerSelected = player.getWorkerSelected((selectionWorker - 1));
-
+                selectionWorker ++;
             } else {
-                selectionWorker = 1;
-                workerSelected = player.getWorkerSelected((selectionWorker - 1));
+                selectionWorker --;
             }
+            workerSelected = player.getWorkerSelected((selectionWorker));
 
-
+            System.out.println("il worker selezionato è: "+ workerSelected.getIdWorker());
             if (workerSelected.canMove())
                 selectAction(player);
 
@@ -394,7 +392,7 @@ public class TurnManager {
                     }
                     workerSelected.buildBlock(column, row);
                 }else{
-                    System.out.println(player.getNickname() + " NON può costruire!"); //workerID
+                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!"); //workerID
                 }
                 break;
         }

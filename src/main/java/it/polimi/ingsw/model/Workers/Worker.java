@@ -89,45 +89,7 @@ public abstract class Worker {
 
      return false;
     }
-    /*public boolean canMove(){
-        boolean check1 = false, check2 = false, check3 = false, check4 = false;
-        for(int i = coordX - 1; i < coordX ; i++){
-            for(int j = coordY - 1; j < coordY + 1; j++) {
-                if ((i != coordX && j != coordY) && (Map.noWorkerHere(i, j)) && (!TurnManager.cannotGoUp() && !(Map.getCellBlockType(i, j).getAbbreviation() > coordZ +1)) && !(Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2) && !(Map.getCellBlockType(i, j) == BlockType.CUPOLA)) {
-                    check1 = true;
-                }
-            }
-        }
 
-        for (int i = coordX; i <= coordX; i++){
-            for(int j = coordY - 1; j <= coordY - 1; j++) {
-                if ((i != coordX && j != coordY) && Map.noWorkerHere(i, j) && (!TurnManager.cannotGoUp() && !(Map.getCellBlockType(i, j).getAbbreviation() > coordZ +1)) && !(Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2) && !(Map.getCellBlockType(i, j) == BlockType.CUPOLA)) {
-                    check2 = true;
-                }
-            }
-            for(int j = coordY + 1; j <= coordY + 1; j++) {
-                //if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || (TurnManager.cannotGoUp() && Map.getCellBlockType(i, j).getAbbreviation() > coordZ) || Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
-                if ((i != coordX && j != coordY) && Map.noWorkerHere(i, j) && (!TurnManager.cannotGoUp()) && !(Map.getCellBlockType(i, j).getAbbreviation() > coordZ +1)) && !(Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2) && !(Map.getCellBlockType(i, j) == BlockType.CUPOLA)) {
-                    check3 = true;
-                }
-            }
-
-        }
-
-        for(int i = coordX + 1; i <= coordX + 1 ; i++){
-            for(int j = coordY - 1; j < coordY + 1; j++) {
-                //if ((i == coordX && j == coordY) || !Map.noWorkerHere(i, j) || (TurnManager.cannotGoUp() && Map.getCellBlockType(i, j).getAbbreviation() > coordZ) || Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2 || Map.getCellBlockType(i, j) == BlockType.CUPOLA) {
-                if ((i != coordX && j != coordY) && Map.noWorkerHere(i, j) && (!TurnManager.cannotGoUp() && !(Map.getCellBlockType(i, j).getAbbreviation() > coordZ +1)) && !(Map.getCellBlockType(i, j).getAbbreviation() >= coordZ + 2) && !(Map.getCellBlockType(i, j) == BlockType.CUPOLA)) {
-                    check4 = true;
-                }
-            }
-        }
-
-        if(check1==true || check2==true || check3==true || check4==true)
-            return true;
-        else
-            return false;
-    }*/
 
     public void changePosition(int newX, int newY){
         if(coordZ == 2 && Map.getCellBlockType(newX, newY).getAbbreviation() == 3){
