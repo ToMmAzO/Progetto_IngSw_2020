@@ -37,39 +37,39 @@ public class Player {
         if(Map.noWorkerHere(row, column)) {
             switch (this.getGodChoice()) {
                 case PAN:
-                    workers[0] = new WorkerPan(id, column, row);
+                    workers[0] = new WorkerPan(id, row, column);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case ATLAS:
-                    workers[0] = new WorkerAtlas(id, column, row);
+                    workers[0] = new WorkerAtlas(id, row, column);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case APOLLO:
-                    workers[0] = new WorkerApollo(id, column, row);
+                    workers[0] = new WorkerApollo(id, row, column);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case ATHENA:
-                    workers[0] = new WorkerAthena(id, column, row);
+                    workers[0] = new WorkerAthena(id, row, column);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case ARTEMIS:
-                    workers[0] = new WorkerArtemis(id, column, row);
+                    workers[0] = new WorkerArtemis(id, row, column);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case DEMETER:
-                    workers[0] = new WorkerDemeter(id, column, row);
+                    workers[0] = new WorkerDemeter(id, row, column);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case MINOTAUR:
-                    workers[0] = new WorkerMinotaur(id, column, row);
+                    workers[0] = new WorkerMinotaur(id, row, column);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case HEPHAESTUS:
-                    workers[0] = new WorkerHephaestus(id, column, row);
+                    workers[0] = new WorkerHephaestus(id, row, column);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
                 case PROMETHEUS:
-                    workers[0] = new WorkerPrometheus(id, column, row);
+                    workers[0] = new WorkerPrometheus(id, row, column);
                     Map.setWorkerInCell(row, column, workers[0]);
                     break;
             }
@@ -83,39 +83,39 @@ public class Player {
         if(Map.noWorkerHere(row, column)) {
             switch (this.getGodChoice()) {
                 case PAN:
-                    workers[1] = new WorkerPan(id, column, row);
+                    workers[1] = new WorkerPan(id, row, column);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case ATLAS:
-                    workers[1] = new WorkerAtlas(id, column, row);
+                    workers[1] = new WorkerAtlas(id, row, column);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case APOLLO:
-                    workers[1] = new WorkerApollo(id, column, row);
+                    workers[1] = new WorkerApollo(id, row, column);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case ATHENA:
-                    workers[1] = new WorkerAthena(id, column, row);
+                    workers[1] = new WorkerAthena(id, row, column);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case ARTEMIS:
-                    workers[1] = new WorkerArtemis(id, column, row);
+                    workers[1] = new WorkerArtemis(id, row, column);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case DEMETER:
-                    workers[1] = new WorkerDemeter(id, column, row);
+                    workers[1] = new WorkerDemeter(id, row, column);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case MINOTAUR:
-                    workers[1] = new WorkerMinotaur(id, column, row);
+                    workers[1] = new WorkerMinotaur(id, row, column);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case HEPHAESTUS:
-                    workers[1] = new WorkerHephaestus(id, column, row);
+                    workers[1] = new WorkerHephaestus(id, row, column);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
                 case PROMETHEUS:
-                    workers[1] = new WorkerPrometheus(id, column, row);
+                    workers[1] = new WorkerPrometheus(id, row, column);
                     Map.setWorkerInCell(row, column, workers[1]);
                     break;
             }

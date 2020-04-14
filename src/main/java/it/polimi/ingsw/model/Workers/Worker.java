@@ -45,8 +45,29 @@ public abstract class Worker {
         this.coordZ = coordZ;
     }
 
-    public boolean canMove(){
-        for (int i = coordX - 1; i <= coordX + 1; i++) {
+    public boolean canMove() {
+
+        for (int j = coordY - 1; j <= coordY + 1; j++) {
+            for (int i = coordX - 1; i <= coordX + 1; i++) {
+                if (Map.isAcceptable(i, j)) {
+                    if (TurnManager.cannotGoUp())
+                        if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA)) {
+                            //System.out.println("trovato spazio libero in: " + j + "," + i);
+                            return true;
+                        }
+                    if (!TurnManager.cannotGoUp())
+                        if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ + 1) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA)) {
+                            //System.out.println("trovato spazio libero in: " + j + "," + i);
+                            return true;
+                        }
+
+                }
+            }
+        }
+        return false;
+    }
+
+        /*for (int i = coordX - 1; i <= coordX + 1; i++) {
             for (int j = coordY - 1; j <= coordY + 1; j++) {
                 if (!(i == coordX && j == coordY) && Map.isAcceptable(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
                     if(TurnManager.cannotGoUp()){
@@ -61,35 +82,10 @@ public abstract class Worker {
                 }
             }
         }
-        return false;
+        return false;*/
 
-      /*j=coordY +1;
-      for(i=coordX -1;i <= coordX + 1; i++){
-          if (Map.isAcceptable(i,j)) {
-              if (TurnManager.cannotGoUp())
-                  if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA))
-                      return true;
-              if (!TurnManager.cannotGoUp())
-                  if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ + 1) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA))
-                      return true;
-          }
-      }
 
-      j=coordY;
-      i=coordX-1;
-      if (Map.isAcceptable(i,j))
-          if (TurnManager.cannotGoUp())
-              if(Map.noWorkerHere(i,j) && (Map.getCellBlockType(i,j).getAbbreviation()<=coordZ) && (Map.getCellBlockType(i,j) != BlockType.CUPOLA))
-                  return true;
 
-      j=coordY;
-      i=coordX+1;
-      if (Map.isAcceptable(i,j))
-          if (TurnManager.cannotGoUp())
-              if(Map.noWorkerHere(i,j) && (Map.getCellBlockType(i,j).getAbbreviation()<=coordZ) && (Map.getCellBlockType(i,j) != BlockType.CUPOLA))
-                  return true;
-    */
-    }
 
 
     public void changePosition(int newX, int newY){
