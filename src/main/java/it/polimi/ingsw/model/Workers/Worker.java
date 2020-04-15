@@ -15,6 +15,7 @@ public abstract class Worker {
         this.coordX = coordX;
         this.coordY = coordY;
         this.coordZ = 0;
+        Map.setWorkerInCell(coordX, coordY, this);
     }
 
     public String getIdWorker() {

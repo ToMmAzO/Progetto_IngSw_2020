@@ -36,15 +36,11 @@ public class Map {
     }
 
     public static boolean noWorkerHere(int row, int column){
-        if (map[row][column].getWorkerPresence() == null) return true;
-        else return false;
+        return map[row][column].getWorkerPresence() == null;
     }
 
     public static boolean isAcceptable(int i, int j){
-        if((i >= 0 && i <= 4) && (j >= 0 && j <= 4))
-            return true;
-        else
-            return false;
+        return (i >= 0 && i <= 4) && (j >= 0 && j <= 4);
     }
 
 }
