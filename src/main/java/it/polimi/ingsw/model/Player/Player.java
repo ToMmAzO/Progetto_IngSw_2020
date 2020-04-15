@@ -31,7 +31,6 @@ public class Player {
         this.godChoice = god;
     }
 
-
     public boolean setWorker1(int row, int column) {
         String id = color.toString().substring(0, 3).concat("1");
         if(Map.noWorkerHere(row, column)) {
