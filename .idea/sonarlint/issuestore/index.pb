@@ -18,8 +18,6 @@ d
 4src/main/java/it/polimi/ingsw/network/ClientApp.java,a\f\afbce27749880142cfdcbec9cf7aa0750eff5245
 d
 4src/main/java/it/polimi/ingsw/network/ServerApp.java,4\6\46ddd7bf95b290bb55be8b7458c0a52e6c3b717c
-`
-0src/test/java/it/polimi/ingsw/ClientAppTest.java,2\4\240bbaf0fde47e32c3ecdc0bb5da8c0b7d733d5d
 k
 ;src/main/java/it/polimi/ingsw/controller/ActionManager.java,3\6\3658c91f2de0b578635420a60d889c3ad4ddd35b
 c
@@ -64,3 +62,7 @@ f
 6src/main/java/it/polimi/ingsw/model/Player/Player.java,9\e\9e27ac591a7ea82c59f6d2c9f77b18ad9e5138f9
 g
 7src/main/java/it/polimi/ingsw/model/Workers/Worker.java,d\2\d239881cf271fed2cc5c59526b97828031450245
+\
+,src/main/java/it/polimi/ingsw/view/View.java,8\2\829d4d5d3a8233b554d38c744c9b8e1efb0ba272
+E
+src/uml/Santorini.mdj,e\a\eabfc3e3d0d21f915ac72c60c0260b0ba10877a1

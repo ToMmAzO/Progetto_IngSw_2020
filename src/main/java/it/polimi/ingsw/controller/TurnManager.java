@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.model.Workers.Worker;
+import it.polimi.ingsw.view.View;
 
 import java.util.Scanner;
 
@@ -27,7 +28,7 @@ public class TurnManager {
         if(workerSelected.canMove())          //se il worker scelto può muoversi passa a selectAction()
             selectAction(player);
         else {                                //altrimenti controlla: se l'altro worker può muoversi fa muovere l'altro, se nemmeno l'altro può muoversi (entrambi bloccati) --> player eliminato
-            System.out.println(workerSelected.getIdWorker() + " NON può muoversi, prendo l'altro Worker"); //workerID
+            System.out.println(workerSelected.getIdWorker() + " NON può muoversi, prendo l'altro Worker");
             if (selectionWorker == 1) {
                 selectionWorker ++;
             } else {
@@ -39,7 +40,7 @@ public class TurnManager {
             if (workerSelected.canMove()){
                 selectAction(player);
             } else {
-                System.out.println(workerSelected.getIdWorker() + " NON può muoversi"); //workerID
+                System.out.println(workerSelected.getIdWorker() + " NON può muoversi");
                 GameManager.deletePlayer(player);
                 return false;
             }
@@ -51,345 +52,200 @@ public class TurnManager {
     public static void selectAction(Player player){
         switch (player.getGodChoice()) {
             case ARTEMIS:
-                System.out.println("Inserisci le cordinate in cui ti vuoi spostare: ");
-                coordString = scanner.nextLine().split(",");
-                column = Integer.parseInt(coordString[0]);
-                row = Integer.parseInt(coordString[1]);
-                while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
-                    System.out.println("Inserisci delle coordinate valide!");
-                    coordString = scanner.nextLine().split(",");
-                    column = Integer.parseInt(coordString[0]);
-                    row = Integer.parseInt(coordString[1]);
-                }
+                System.out.println("MOVIMENTO: ");
+                coordString =  ActionManager.insertCoordinate(workerSelected);
 
                 x = workerSelected.getCoordX();
                 y = workerSelected.getCoordY();
 
-                workerSelected.changePosition(column, row);
+                workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
 
-                if(workerSelected.canMove()) {
+                View.printMap();
+
+                if(workerSelected.canMove(x, y)){
                     System.out.println("Vuoi muovere ancora? (Yes o No)");
-                     answer = scanner.nextLine();
-                    while (!answer.equals("yes") && !answer.equals("no") && !answer.equals("Yes") && !answer.equals("No")) {
-                        System.out.println("Puoi rispondere solo con yes, Yes, no, No.");
-                        answer = scanner.nextLine();
-                    }
+                    answer = ActionManager.yesOrNo();
 
-                    if(answer.equals("yes") || answer.equals("Yes")){
-                        System.out.println("Inserisci le NUOVE cordinate in cui ti vuoi spostare: ");
-                        coordString = scanner.nextLine().split(",");
-                        column = Integer.parseInt(coordString[0]);
-                        row = Integer.parseInt(coordString[1]);
-                        while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
-                            if(x == column && y == row) {
-                                System.out.println("Inserisci delle coordinate DIVERSE da quelle di partenza!");
-                                coordString = scanner.nextLine().split(",");
-                                column = Integer.parseInt(coordString[0]);
-                                row = Integer.parseInt(coordString[1]);
-                            }else {
-                                System.out.println("Inserisci delle coordinate valide!");
-                                coordString = scanner.nextLine().split(",");
-                                column = Integer.parseInt(coordString[0]);
-                                row = Integer.parseInt(coordString[1]);
-                            }
+                    if((answer.equals("yes") || answer.equals("Yes"))) {
+                        System.out.println("MOVIMENTO: ");
+                        coordString = ActionManager.insertCoordinate(workerSelected);
+                        while (x == Integer.parseInt(coordString[0]) && y == Integer.parseInt(coordString[1])) {
+                            System.out.println("Inserisci delle coordinate DIVERSE da quelle di partenza!");
+                            coordString = ActionManager.insertCoordinate(workerSelected);
                         }
-                        workerSelected.changePosition(column, row);
+
+                        workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+
+                        View.printMap();
                     }
                 }else{
-                    System.out.println(player.getNickname() + " NON può muoversi una seconda volta!"); //workerID
+                    System.out.println(workerSelected.getIdWorker() + " NON può muoversi una seconda volta!");
                 }
 
                 if(workerSelected.canBuild()) {
-                    System.out.println("Inserisci le cordinate dove vuoi costruire: ");
-                    coordString = scanner.nextLine().split(",");
-                    column = Integer.parseInt(coordString[0]);
-                    row = Integer.parseInt(coordString[1]);
-                    while (!ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
-                        System.out.println("Inserisci delle coordinate valide!");
-                        coordString = scanner.nextLine().split(",");
-                        column = Integer.parseInt(coordString[0]);
-                        row = Integer.parseInt(coordString[1]);
-                    }
-                    workerSelected.buildBlock(column, row);
+                    System.out.println("COSTRUZIONE: ");
+                    coordString =  ActionManager.insertCoordinate(workerSelected);
+
+                    workerSelected.buildBlock(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 }else{
-                    System.out.println(player.getNickname() + " NON può costruire!"); //workerID
+                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
                 }
                 break;
 
             case ATLAS:
-                System.out.println("Inserisci le cordinate in cui ti vuoi spostare: ");
-                coordString = scanner.nextLine().split(",");
-                column = Integer.parseInt(coordString[0]);
-                row = Integer.parseInt(coordString[1]);
-                while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
-                    System.out.println("Inserisci delle coordinate valide!");
-                    coordString = scanner.nextLine().split(",");
-                    column = Integer.parseInt(coordString[0]);
-                    row = Integer.parseInt(coordString[1]);
-                }
+                System.out.println("MOVIMENTO: ");
+                coordString =  ActionManager.insertCoordinate(workerSelected);
 
-                workerSelected.changePosition(column, row);
+                workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+
+                View.printMap();
 
                 if(workerSelected.canBuild()) {
                     System.out.println("Vuoi costruire una CUPOLA? (Yes o No)");
-                    answer = scanner.nextLine();
-                    while (!answer.equals("yes") && !answer.equals("no") && !answer.equals("Yes") && !answer.equals("No")) {
-                        System.out.println("Puoi rispondere solo con yes, Yes, no, No.");
-                        answer = scanner.nextLine();
-                    }
+                    answer = ActionManager.yesOrNo();
 
                     if(answer.equals("yes") || answer.equals("Yes")){
-                        System.out.println("Inserisci le cordinate dove vuoi costruire: ");
-                        coordString = scanner.nextLine().split(",");
-                        column = Integer.parseInt(coordString[0]);
-                        row = Integer.parseInt(coordString[1]);
-                        while (!ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
-                            System.out.println("Inserisci delle coordinate valide!");
-                            coordString = scanner.nextLine().split(",");
-                            column = Integer.parseInt(coordString[0]);
-                            row = Integer.parseInt(coordString[1]);
-                        }
-                        workerSelected.buildBlock(true, column, row);
+                        System.out.println("COSTRUZIONE: ");
+                        coordString =  ActionManager.insertCoordinate(workerSelected);
+
+                        workerSelected.buildBlock(true, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                     }else{
-                        System.out.println("Inserisci le cordinate dove vuoi costruire: ");
-                        coordString = scanner.nextLine().split(",");
-                        column = Integer.parseInt(coordString[0]);
-                        row = Integer.parseInt(coordString[1]);
-                        while (!ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
-                            System.out.println("Inserisci delle coordinate valide!");
-                            coordString = scanner.nextLine().split(",");
-                            column = Integer.parseInt(coordString[0]);
-                            row = Integer.parseInt(coordString[1]);
-                        }
-                        workerSelected.buildBlock(false, column, row);
+                        System.out.println("COSTRUZIONE: ");
+                        coordString =  ActionManager.insertCoordinate(workerSelected);
+
+                        workerSelected.buildBlock(false, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                     }
                 }else{
-                    System.out.println(player.getNickname() + " NON può costruire!"); //workerID
+                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
                 }
 
                 break;
 
             case DEMETER:
-                System.out.println("Inserisci le cordinate in cui ti vuoi spostare: ");
-                coordString = scanner.nextLine().split(",");
-                column = Integer.parseInt(coordString[0]);
-                row = Integer.parseInt(coordString[1]);
-                while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
-                    System.out.println("Inserisci delle coordinate valide!");
-                    coordString = scanner.nextLine().split(",");
-                    column = Integer.parseInt(coordString[0]);
-                    row = Integer.parseInt(coordString[1]);
-                }
+                System.out.println("MOVIMENTO: ");
+                coordString =  ActionManager.insertCoordinate(workerSelected);
 
-                workerSelected.changePosition(column, row);
+                workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+
+                View.printMap();
 
                 if(workerSelected.canBuild()) {
-                    System.out.println("Inserisci le cordinate dove vuoi costruire: ");
-                    coordString = scanner.nextLine().split(",");
-                    column = Integer.parseInt(coordString[0]);
-                    row = Integer.parseInt(coordString[1]);
-                    while (!ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
-                        System.out.println("Inserisci delle coordinate valide!");
-                        coordString = scanner.nextLine().split(",");
-                        column = Integer.parseInt(coordString[0]);
-                        row = Integer.parseInt(coordString[1]);
-                    }
-                    x = column;
-                    y = row;
+                    System.out.println("COSTRUZIONE: ");
+                    coordString =  ActionManager.insertCoordinate(workerSelected);
 
-                    workerSelected.buildBlock(column, row);
+                    x = Integer.parseInt(coordString[0]);
+                    y = Integer.parseInt(coordString[1]);
+
+                    workerSelected.buildBlock(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+
+                    View.printMap();
 
                     System.out.println("Vuoi costruire ancora? (Yes o No)");
-                    answer = scanner.nextLine();
-                    while (!answer.equals("yes") && !answer.equals("no") && !answer.equals("Yes") && !answer.equals("No")) {
-                        System.out.println("Puoi rispondere solo con yes, Yes, no, No.");
-                        answer = scanner.nextLine();
-                    }
+                    answer = ActionManager.yesOrNo();
 
                     if(answer.equals("yes") || answer.equals("Yes")){
-                        System.out.println("Inserisci le NUOVE cordinate in cui vuoi costruire: ");
-                        coordString = scanner.nextLine().split(",");
-                        column = Integer.parseInt(coordString[0]);
-                        row = Integer.parseInt(coordString[1]);
-                        while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
-                            if(x == column && y == row) {
-                                System.out.println("Inserisci delle coordinate DIVERSE da quelle dove hai costruito prima!");
-                                coordString = scanner.nextLine().split(",");
-                                column = Integer.parseInt(coordString[0]);
-                                row = Integer.parseInt(coordString[1]);
-                            }else {
-                                System.out.println("Inserisci delle coordinate valide!");
-                                coordString = scanner.nextLine().split(",");
-                                column = Integer.parseInt(coordString[0]);
-                                row = Integer.parseInt(coordString[1]);
-                            }
+                        System.out.println("COSTRUZIONE: ");
+                        coordString =  ActionManager.insertCoordinate(workerSelected);
+                        while (x == Integer.parseInt(coordString[0]) && y == Integer.parseInt(coordString[1])) {
+                            System.out.println("Inserisci delle coordinate DIVERSE da quelle dove hai costruito prima!");
+                            coordString = ActionManager.insertCoordinate(workerSelected);
                         }
-                        workerSelected.buildBlock(column, row);
+
+                        workerSelected.buildBlock(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                     }
                 }else{
-                    System.out.println(player.getNickname() + " NON può costruire!"); //workerID
+                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
                 }
                 break;
 
             case HEPHAESTUS:
-                System.out.println("Inserisci le cordinate in cui ti vuoi spostare: ");
-                coordString = scanner.nextLine().split(",");
-                column = Integer.parseInt(coordString[0]);
-                row = Integer.parseInt(coordString[1]);
-                while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
-                    System.out.println("Inserisci delle coordinate valide!");
-                    coordString = scanner.nextLine().split(",");
-                    column = Integer.parseInt(coordString[0]);
-                    row = Integer.parseInt(coordString[1]);
-                }
+                System.out.println("MOVIMENTO: ");
+                coordString =  ActionManager.insertCoordinate(workerSelected);
 
-                workerSelected.changePosition(column, row);
+                workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+
+                View.printMap();
 
                 if(workerSelected.canBuild()) {
                     System.out.println("Vuoi costruire 2 volte? (Yes o No)");
-                    answer = scanner.nextLine();
-                    while (!answer.equals("yes") && !answer.equals("no") && !answer.equals("Yes") && !answer.equals("No")) {
-                        System.out.println("Puoi rispondere solo con yes, Yes, no, No.");
-                        answer = scanner.nextLine();
-                    }
+                    answer = ActionManager.yesOrNo();
 
-                    if(answer.equals("yes") || answer.equals("Yes")){
-                        if(workerSelected.canBuild(true)) {
-                            System.out.println("Inserisci le cordinate in cui vuoi costruire: ");
-                            coordString = scanner.nextLine().split(",");
-                            column = Integer.parseInt(coordString[0]);
-                            row = Integer.parseInt(coordString[1]);
-                            while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
-                                System.out.println("Inserisci delle coordinate valide!");
-                                coordString = scanner.nextLine().split(",");
-                                column = Integer.parseInt(coordString[0]);
-                                row = Integer.parseInt(coordString[1]);
-                            }
-                            workerSelected.buildBlock(true, column, row);
-                        }else{
-                            System.out.println(player.getNickname() + " NON può costruire 2 volte!"); //workerID
-                            System.out.println("Inserisci le cordinate in cui vuoi costruire: ");
-                            coordString = scanner.nextLine().split(",");
-                            column = Integer.parseInt(coordString[0]);
-                            row = Integer.parseInt(coordString[1]);
-                            while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
-                                System.out.println("Inserisci delle coordinate valide!");
-                                coordString = scanner.nextLine().split(",");
-                                column = Integer.parseInt(coordString[0]);
-                                row = Integer.parseInt(coordString[1]);
-                            }
-                            workerSelected.buildBlock(false, column, row);
+                    if ((answer.equals("yes") || answer.equals("Yes")) && workerSelected.canBuild(true)) {
+                        System.out.println("COSTRUZIONE: ");
+                        coordString = ActionManager.insertCoordinate(workerSelected);
+
+                        workerSelected.buildBlock(true, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                    } else {
+                        if (!workerSelected.canBuild(true)) {
+                            System.out.println(workerSelected.getIdWorker() + " NON può costruire 2 volte!");
                         }
-                    }else{
-                        System.out.println("Inserisci le cordinate in cui vuoi costruire: ");
-                        coordString = scanner.nextLine().split(",");
-                        column = Integer.parseInt(coordString[0]);
-                        row = Integer.parseInt(coordString[1]);
-                        while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
-                            System.out.println("Inserisci delle coordinate valide!");
-                            coordString = scanner.nextLine().split(",");
-                            column = Integer.parseInt(coordString[0]);
-                            row = Integer.parseInt(coordString[1]);
-                        }
-                        workerSelected.buildBlock(false, column, row);
+
+                        System.out.println("COSTRUZIONE: ");
+                        coordString = ActionManager.insertCoordinate(workerSelected);
+
+                        workerSelected.buildBlock(false, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                     }
-                }else{
-                    System.out.println(player.getNickname() + " NON può costruire!"); //workerID
+                } else {
+                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
                 }
                 break;
 
             case PROMETHEUS:
                 if (workerSelected.canBuild()) {
                     System.out.println("Vuoi costruire prima di muoverti? (Yes o No)");
-                    answer = scanner.nextLine();
-                    while (!answer.equals("yes") && !answer.equals("no") && !answer.equals("Yes") && !answer.equals("No")) {
-                        System.out.println("Puoi rispondere solo con yes, Yes, no, No.");
-                        answer = scanner.nextLine();
-                    }
+                    answer = ActionManager.yesOrNo();
 
                     if (answer.equals("yes") || answer.equals("Yes")) {
+                        System.out.println("COSTRUZIONE: ");
+                        coordString =  ActionManager.insertCoordinate(workerSelected);
+
                         setAllowHeightPrometheus(false);
-                        if (workerSelected.canMove()) {
-                            System.out.println("Inserisci le cordinate in cui vuoi costruire: ");
-                            coordString = scanner.nextLine().split(",");
-                            column = Integer.parseInt(coordString[0]);
-                            row = Integer.parseInt(coordString[1]);
-                            while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
-                                System.out.println("Inserisci delle coordinate valide!");
-                                coordString = scanner.nextLine().split(",");
-                                column = Integer.parseInt(coordString[0]);
-                                row = Integer.parseInt(coordString[1]);
-                            }
-                            workerSelected.buildBlock(column, row);
+                        if (workerSelected.canMove(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]))) {
+                            workerSelected.buildBlock(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                            View.printMap();
                         } else {
-                            System.out.println(player.getNickname() + " NON può costruire prima!"); //workerID
+                            System.out.println(workerSelected.getIdWorker() + " NON può costruire prima!");
                             setAllowHeightPrometheus(true);
                         }
                     }else{
                         setAllowHeightPrometheus(true);
                     }
                 }else {
-                    System.out.println(player.getNickname() + " NON può costruire!"); //workerID
+                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
                 }
 
-                System.out.println("Inserisci le cordinate in cui ti vuoi spostare: ");
-                coordString = scanner.nextLine().split(",");
-                column = Integer.parseInt(coordString[0]);
-                row = Integer.parseInt(coordString[1]);
-                while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
-                    System.out.println("Inserisci delle coordinate valide!");
-                    coordString = scanner.nextLine().split(",");
-                    column = Integer.parseInt(coordString[0]);
-                    row = Integer.parseInt(coordString[1]);
-                }
+                System.out.println("MOVIMENTO: ");
+                coordString =  ActionManager.insertCoordinate(workerSelected);
 
-                workerSelected.changePosition(column, row);
+                workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+
+                View.printMap();
 
                 if(workerSelected.canBuild()) {
-                    System.out.println("Inserisci le cordinate dove vuoi costruire: ");
-                    coordString = scanner.nextLine().split(",");
-                    column = Integer.parseInt(coordString[0]);
-                    row = Integer.parseInt(coordString[1]);
-                    while (!ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
-                        System.out.println("Inserisci delle coordinate valide!");
-                        coordString = scanner.nextLine().split(",");
-                        column = Integer.parseInt(coordString[0]);
-                        row = Integer.parseInt(coordString[1]);
-                    }
-                    workerSelected.buildBlock(column, row);
+                    System.out.println("COSTRUZIONE: ");
+                    coordString =  ActionManager.insertCoordinate(workerSelected);
+
+                    workerSelected.buildBlock(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 }else{
-                    System.out.println(player.getNickname() + " NON può costruire!"); //workerID
+                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
                 }
                 break;
 
             default:    //APOLLO, ATHENA, ATLAS, MINOTAUR, PAN
-                System.out.println("Inserisci le cordinate in cui ti vuoi spostare: ");
-                coordString = scanner.nextLine().split(",");
-                column = Integer.parseInt(coordString[0]);
-                row = Integer.parseInt(coordString[1]);
-                while (!ActionManager.movementManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)){
-                    System.out.println("Inserisci delle coordinate valide!");
-                    coordString = scanner.nextLine().split(",");
-                    column = Integer.parseInt(coordString[0]);
-                    row = Integer.parseInt(coordString[1]);
-                }
+                System.out.println("MOVIMENTO: ");
+                coordString =  ActionManager.insertCoordinate(workerSelected);
 
-                workerSelected.changePosition(column, row);
+                workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+
+                View.printMap();
 
                 if(workerSelected.canBuild()) {
-                    System.out.println("Inserisci le cordinate dove vuoi costruire: ");
-                    coordString = scanner.nextLine().split(",");
-                    column = Integer.parseInt(coordString[0]);
-                    row = Integer.parseInt(coordString[1]);
-                    while (!ActionManager.buildManager(workerSelected.getCoordX(), workerSelected.getCoordY(), column, row)) {
-                        System.out.println("Inserisci delle coordinate valide!");
-                        coordString = scanner.nextLine().split(",");
-                        column = Integer.parseInt(coordString[0]);
-                        row = Integer.parseInt(coordString[1]);
-                    }
-                    workerSelected.buildBlock(column, row);
+                    System.out.println("COSTRUZIONE: ");
+                    coordString =  ActionManager.insertCoordinate(workerSelected);
+
+                    workerSelected.buildBlock(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 }else{
-                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!"); //workerID
+                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
                 }
                 break;
         }
