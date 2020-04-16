@@ -6,12 +6,13 @@ import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.view.View;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class GameManager {
 
-    private static Player[] players;
+    private static ArrayList<Player> players = new ArrayList<>();
     private static int numberOfPlayers;
     private static boolean victory = false;
 
@@ -38,23 +39,22 @@ public class GameManager {
                 setNumberOfPlayers(numberOfPlayers);
                 new Deck(numberOfPlayers);
                 new Map();
-                players = new Player[numberOfPlayers];
-                players[0] = new Player(nickname);
-                System.out.println("Avrai il colore " + players[0].getColor().toString() + ".");
+                players.add(0, new Player(nickname));
+                System.out.println("Avrai il colore " + players.get(0).getColor().toString() + ".");
                 break;
             }
             case 1:{
                 System.out.println("\n*VISUALE CLIENT " + numberConnection + "*\n");
-                players[1] = new Player(nickname);
-                System.out.println("Sei il secondo giocatore ad unirsi alla lobby, avrai il colore " + players[1].getColor().toString() + ".");
-                System.out.println("Attendi che " + players[0].getNickname() + " concluda la sua configurazione.");
+                players.add(1, new Player(nickname));
+                System.out.println("Sei il secondo giocatore ad unirsi alla lobby, avrai il colore " + players.get(1).getColor().toString() + ".");
+                System.out.println("Attendi che " + players.get(0).getNickname() + " concluda la sua configurazione.");
                 break;
             }
             case 2:{
                 System.out.println("\n*VISUALE CLIENT " + numberConnection + "*\n");
-                players[2] = new Player (nickname);
-                System.out.println("Sei il terzo giocatore ad unirsi alla lobby, avrai il colore " + players[2].getColor().toString() + ".");
-                System.out.println("Attendi che " + players[1].getNickname() + " concluda la sua configurazione.");
+                players.add(2, new Player(nickname));
+                System.out.println("Sei il terzo giocatore ad unirsi alla lobby, avrai il colore " + players.get(2).getColor().toString() + ".");
+                System.out.println("Attendi che " + players.get(1).getNickname() + " concluda la sua configurazione.");
                 break;
             }
         }
@@ -67,9 +67,9 @@ public class GameManager {
             System.out.println("\n*VISUALE CLIENT " + currPlayer + "*\n");
             View.printMap();
             if (currPlayer > 0){
-                View.printWorkersPositions(players[0]);
+                View.printWorkersPositions(players.get(0));
                 if (currPlayer > 1) {
-                    View.printWorkersPositions(players[1]);
+                    View.printWorkersPositions(players.get(1));
                 }
             }
             positioningWorkerOnMap(currPlayer, 1);
@@ -79,41 +79,40 @@ public class GameManager {
         while (!victory){
             System.out.println("\n*VISUALE CLIENT " + currPlayer + "*\n");
             View.printMap();
-            for (int i = 0; i < numberOfPlayers; i++){
-                if (players[i] != null){
-                    View.printWorkersPositions(players[i]);
-                }
+            for (Player player : players) {
+                View.printWorkersPositions(player);
             }
-            TurnManager.startTurn(Objects.requireNonNull(players[currPlayer]));
-            if (!victory){
-                if (players[currPlayer] == null){
+            if (TurnManager.startTurn((players.get(currPlayer)))){
+                if(!victory){
                     currPlayer = nextPlayer(currPlayer);
-                    if (numberOfPlayers == 2){
-                        setVictory();
-                    } else if (numberOfPlayers == 3){
-                        if (players[currPlayer] == null){
-                            currPlayer = nextPlayer(currPlayer);
-                            setVictory();
-                        }
-                    }
+                }
+            } else {
+                if (players.size() == 1){
+                    currPlayer = 0;
+                    setVictory();
                 } else{
-                    currPlayer = nextPlayer(currPlayer);
+                    if (currPlayer == 2){
+                        currPlayer = 0;
+                    }
                 }
             }
         }
-        endGame(players[currPlayer]);
+        endGame(players.get(currPlayer));
     }
 
     public static void deletePlayer(Player player){
-        int i = 0;
-        while (!players[i].equals(player)){
-            i++;
+        Iterator<Player> i = players.iterator();
+        while (i.hasNext()) {
+            Player currPlayer = i.next();
+            if (currPlayer.equals(player)) {
+                System.out.println("Hai perso!");
+                Map.deleteWorkerInCell(currPlayer.getWorkerSelected(1));
+                Map.deleteWorkerInCell(currPlayer.getWorkerSelected(2));
+                i.remove();
+                System.out.println("\n*CONNESSIONE CLIENT CHIUSA*\n");
+                break;
+            }
         }
-        System.out.println("Hai perso!");
-        Map.deleteWorkerInCell(players[i].getWorkerSelected(1));
-        Map.deleteWorkerInCell(players[i].getWorkerSelected(2));
-        players[i] = null;
-        System.out.println("\n*CONNESSIONE CLIENT CHIUSA*\n");
     }
 
     private static void choiceOfCard(int indexOfPlayer){
@@ -126,7 +125,7 @@ public class GameManager {
             cardNumber= Integer.parseInt((scanner.nextLine()));
         }
         God g = Deck.getCardToPlayer(cardNumber);
-        players[indexOfPlayer].setGodChoice(g);
+        players.get(indexOfPlayer).setGodChoice(g);
         View.printCardChosen(g);
     }
 
@@ -141,7 +140,7 @@ public class GameManager {
             if ((coordRow >= 0 && coordRow <= 4) && (coordColumn >= 0 && coordColumn <= 4)){
                 switch (numberOfWorker){
                     case 1:{
-                        if (players[indexOfPlayer].setWorker1(coordRow, coordColumn)){
+                        if (players.get(indexOfPlayer).setWorker1(coordRow, coordColumn)){
                             exitCondition = true;
                             continue;
                         } else{
@@ -149,7 +148,7 @@ public class GameManager {
                         }
                     }
                     case 2:{
-                        if (players[indexOfPlayer].setWorker2(coordRow, coordColumn)){
+                        if (players.get(indexOfPlayer).setWorker2(coordRow, coordColumn)){
                             exitCondition = true;
                             continue;
                         } else{
@@ -168,7 +167,7 @@ public class GameManager {
     }
 
     private static int nextPlayer(int indexOfActualPlayer){
-        if (indexOfActualPlayer == numberOfPlayers - 1){
+        if (indexOfActualPlayer == players.size() - 1){
             return 0;
         } else{
             return indexOfActualPlayer + 1;
@@ -176,18 +175,22 @@ public class GameManager {
     }
 
     private static void endGame(Player winnerPlayer){
-        int i = 0;
-        while (!players[i].equals(winnerPlayer)){
-            i++;
+        String winner = null;
+        Iterator<Player> i = players.iterator();
+        while (i.hasNext()) {
+            Player currPlayer = i.next();
+            if (currPlayer.equals(winnerPlayer)) {
+                winner = currPlayer.getNickname();
+                System.out.println("\n*VISUALE CLIENT " + i + "*\n");
+                System.out.println("Congratulazioni, hai vinto la partita!");
+                i.remove();
+                System.out.println("\n*CONNESSIONE CLIENT CHIUSA*\n");
+                break;
+            }
         }
-        String winner = players[i].getNickname();
-        System.out.println("\n*VISUALE CLIENT " + i + "*\n");
-        System.out.println("Congratulazioni, hai vinto la partita!");
-        players[i] = null;
-        System.out.println("\n*CONNESSIONE CLIENT CHIUSA*\n");
-        for (i = 0; i < numberOfPlayers; i++){
-            if (players[i] != null){
-                System.out.println("\n*VISUALE CLIENT " + 1 + "*\n");
+        if(players.size() > 1) {
+            for (Player player : players) {
+                System.out.println("\n*VISUALE CLIENT " + player + "*\n");
                 System.out.println("GAME OVER! " + winner + " ha vinto.");
                 System.out.println("\n*CONNESSIONE CLIENT CHIUSA*\n");
             }

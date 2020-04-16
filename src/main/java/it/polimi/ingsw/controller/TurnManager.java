@@ -16,7 +16,7 @@ public class TurnManager {
 
     static Scanner scanner = new Scanner(System.in);    //prova
 
-    public static void startTurn(Player player){
+    public static boolean startTurn(Player player){
         System.out.println("Scegli che worker usare: " + player.getWorkerSelected(1).getIdWorker() + " o " + player.getWorkerSelected(2).getIdWorker() + " (scrivi 1 o 2)");
         int selectionWorker = Integer.parseInt((scanner.nextLine()));
         while (selectionWorker != 1 && selectionWorker != 2) {
@@ -40,10 +40,12 @@ public class TurnManager {
                 selectAction(player);
             } else {
                 System.out.println(workerSelected.getIdWorker() + " NON può muoversi"); //workerID
-                GameManager.deletePlayer(player);      //next turn
+                GameManager.deletePlayer(player);
+                return false;
             }
         }
         workerSelected = null;
+        return true;
     }
 
     public static void selectAction(Player player){
