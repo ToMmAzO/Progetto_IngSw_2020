@@ -31,6 +31,33 @@ public class WorkerPrometheus extends Worker {
     }
 
     @Override
+    public boolean canMove(int x, int y) {
+        int block;
+        block = Map.getCellBlockType(x, y).getAbbreviation() + 1;
+
+        //BlockType blocco = new BlockType(block);
+
+        //Map.setCellBlockType(x, y, blocco);
+
+        for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {           //se no funziona --> while
+            for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
+                if (!(i == getCoordX() && j == getCoordY()) && Map.isAcceptable(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
+                    if(TurnManager.cannotGoUp() && !TurnManager.getAllowHeightPrometheus()){
+                        if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
+                            return true;
+                        }
+                    }else{
+                        if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void changePosition(int newX, int newY){         //classe inutile XD
         super.changePosition(newX, newY);
     }
