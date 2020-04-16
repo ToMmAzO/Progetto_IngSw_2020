@@ -46,14 +46,16 @@ public class GameManager {
             case 1:{
                 System.out.println("\n*VISUALE CLIENT " + numberConnection + "*\n");
                 players.add(1, new Player(nickname));
-                System.out.println("Sei il secondo giocatore ad unirsi alla lobby, avrai il colore " + players.get(1).getColor().toString() + ".");
+                System.out.println("Sei il secondo giocatore ad unirsi alla lobby.");
+                System.out.println("Avrai il colore " + players.get(1).getColor().toString() + ".");
                 System.out.println("Attendi che " + players.get(0).getNickname() + " concluda la sua configurazione.");
                 break;
             }
             case 2:{
                 System.out.println("\n*VISUALE CLIENT " + numberConnection + "*\n");
                 players.add(2, new Player(nickname));
-                System.out.println("Sei il terzo giocatore ad unirsi alla lobby, avrai il colore " + players.get(2).getColor().toString() + ".");
+                System.out.println("Sei il terzo giocatore ad unirsi alla lobby.");
+                System.out.println("Avrai il colore " + players.get(2).getColor().toString() + ".");
                 System.out.println("Attendi che " + players.get(1).getNickname() + " concluda la sua configurazione.");
                 break;
             }
@@ -130,7 +132,7 @@ public class GameManager {
     }
 
     private static void positioningWorkerOnMap(int indexOfPlayer, int numberOfWorker){
-        System.out.println("Inserisci le cordinate in cui vuoi posizionare il lavoratore " + (numberOfWorker) + ".");
+        System.out.println("Inserisci le coordinate dove vuoi posizionare il lavoratore " + (numberOfWorker) + ".");
         Scanner scanner = new Scanner(System.in);
         String[] coordString = scanner.nextLine().split(",");
         int coordRow = Integer.parseInt(coordString[0]);

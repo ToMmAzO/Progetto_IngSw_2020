@@ -10,10 +10,6 @@ public class TurnManager {
 
     private static Worker workerSelected;
     static boolean allowHeight, allowHeightPrometheus;
-    private static int row, column;
-    private static int x, y;             //richiede le due coordinate e gliele ripassa controllando che siano diverse
-    private static String answer;
-    private static String[] coordString;
 
     static Scanner scanner = new Scanner(System.in);    //prova
 
@@ -50,10 +46,14 @@ public class TurnManager {
     }
 
     public static void selectAction(Player player){
+        String answer;
+        int x, y;
+        String[] coordString;
+
         switch (player.getGodChoice()) {
             case ARTEMIS:
                 System.out.println("MOVIMENTO: ");
-                coordString =  ActionManager.insertCoordinate(workerSelected);
+                coordString =  ActionManager.insertCoordinateMovement(workerSelected);
 
                 x = workerSelected.getCoordX();
                 y = workerSelected.getCoordY();
@@ -61,6 +61,7 @@ public class TurnManager {
                 workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
 
                 View.printMap();
+                View.printWorkersPositions(player);
 
                 if(workerSelected.canMove(x, y)){
                     System.out.println("Vuoi muovere ancora? (Yes o No)");
@@ -68,15 +69,16 @@ public class TurnManager {
 
                     if((answer.equals("yes") || answer.equals("Yes"))) {
                         System.out.println("MOVIMENTO: ");
-                        coordString = ActionManager.insertCoordinate(workerSelected);
+                        coordString = ActionManager.insertCoordinateMovement(workerSelected);
                         while (x == Integer.parseInt(coordString[0]) && y == Integer.parseInt(coordString[1])) {
                             System.out.println("Inserisci delle coordinate DIVERSE da quelle di partenza!");
-                            coordString = ActionManager.insertCoordinate(workerSelected);
+                            coordString = ActionManager.insertCoordinateMovement(workerSelected);
                         }
 
                         workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
 
                         View.printMap();
+                        View.printWorkersPositions(player);
                     }
                 }else{
                     System.out.println(workerSelected.getIdWorker() + " NON può muoversi una seconda volta!");
@@ -84,7 +86,7 @@ public class TurnManager {
 
                 if(workerSelected.canBuild()) {
                     System.out.println("COSTRUZIONE: ");
-                    coordString =  ActionManager.insertCoordinate(workerSelected);
+                    coordString =  ActionManager.insertCoordinateConstruction(workerSelected);
 
                     workerSelected.buildBlock(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 }else{
@@ -94,11 +96,12 @@ public class TurnManager {
 
             case ATLAS:
                 System.out.println("MOVIMENTO: ");
-                coordString =  ActionManager.insertCoordinate(workerSelected);
+                coordString =  ActionManager.insertCoordinateMovement(workerSelected);
 
                 workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
 
                 View.printMap();
+                View.printWorkersPositions(player);
 
                 if(workerSelected.canBuild()) {
                     System.out.println("Vuoi costruire una CUPOLA? (Yes o No)");
@@ -106,12 +109,12 @@ public class TurnManager {
 
                     if(answer.equals("yes") || answer.equals("Yes")){
                         System.out.println("COSTRUZIONE: ");
-                        coordString =  ActionManager.insertCoordinate(workerSelected);
+                        coordString =  ActionManager.insertCoordinateConstruction(workerSelected);
 
                         workerSelected.buildBlock(true, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                     }else{
                         System.out.println("COSTRUZIONE: ");
-                        coordString =  ActionManager.insertCoordinate(workerSelected);
+                        coordString =  ActionManager.insertCoordinateConstruction(workerSelected);
 
                         workerSelected.buildBlock(false, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                     }
@@ -123,15 +126,16 @@ public class TurnManager {
 
             case DEMETER:
                 System.out.println("MOVIMENTO: ");
-                coordString =  ActionManager.insertCoordinate(workerSelected);
+                coordString =  ActionManager.insertCoordinateMovement(workerSelected);
 
                 workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
 
                 View.printMap();
+                View.printWorkersPositions(player);
 
                 if(workerSelected.canBuild()) {
                     System.out.println("COSTRUZIONE: ");
-                    coordString =  ActionManager.insertCoordinate(workerSelected);
+                    coordString =  ActionManager.insertCoordinateConstruction(workerSelected);
 
                     x = Integer.parseInt(coordString[0]);
                     y = Integer.parseInt(coordString[1]);
@@ -139,16 +143,17 @@ public class TurnManager {
                     workerSelected.buildBlock(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
 
                     View.printMap();
+                    View.printWorkersPositions(player);
 
                     System.out.println("Vuoi costruire ancora? (Yes o No)");
                     answer = ActionManager.yesOrNo();
 
                     if(answer.equals("yes") || answer.equals("Yes")){
                         System.out.println("COSTRUZIONE: ");
-                        coordString =  ActionManager.insertCoordinate(workerSelected);
+                        coordString =  ActionManager.insertCoordinateConstruction(workerSelected);
                         while (x == Integer.parseInt(coordString[0]) && y == Integer.parseInt(coordString[1])) {
                             System.out.println("Inserisci delle coordinate DIVERSE da quelle dove hai costruito prima!");
-                            coordString = ActionManager.insertCoordinate(workerSelected);
+                            coordString = ActionManager.insertCoordinateConstruction(workerSelected);
                         }
 
                         workerSelected.buildBlock(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
@@ -160,11 +165,12 @@ public class TurnManager {
 
             case HEPHAESTUS:
                 System.out.println("MOVIMENTO: ");
-                coordString =  ActionManager.insertCoordinate(workerSelected);
+                coordString =  ActionManager.insertCoordinateMovement(workerSelected);
 
                 workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
 
                 View.printMap();
+                View.printWorkersPositions(player);
 
                 if(workerSelected.canBuild()) {
                     System.out.println("Vuoi costruire 2 volte? (Yes o No)");
@@ -172,7 +178,7 @@ public class TurnManager {
 
                     if ((answer.equals("yes") || answer.equals("Yes")) && workerSelected.canBuild(true)) {
                         System.out.println("COSTRUZIONE: ");
-                        coordString = ActionManager.insertCoordinate(workerSelected);
+                        coordString = ActionManager.insertCoordinateConstruction(workerSelected);
 
                         workerSelected.buildBlock(true, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                     } else {
@@ -181,7 +187,7 @@ public class TurnManager {
                         }
 
                         System.out.println("COSTRUZIONE: ");
-                        coordString = ActionManager.insertCoordinate(workerSelected);
+                        coordString = ActionManager.insertCoordinateConstruction(workerSelected);
 
                         workerSelected.buildBlock(false, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                     }
@@ -197,12 +203,13 @@ public class TurnManager {
 
                     if (answer.equals("yes") || answer.equals("Yes")) {
                         System.out.println("COSTRUZIONE: ");
-                        coordString =  ActionManager.insertCoordinate(workerSelected);
+                        coordString =  ActionManager.insertCoordinateConstruction(workerSelected);
 
                         setAllowHeightPrometheus(false);
                         if (workerSelected.canMove(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]))) {
                             workerSelected.buildBlock(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                             View.printMap();
+                            View.printWorkersPositions(player);
                         } else {
                             System.out.println(workerSelected.getIdWorker() + " NON può costruire prima!");
                             setAllowHeightPrometheus(true);
@@ -215,15 +222,16 @@ public class TurnManager {
                 }
 
                 System.out.println("MOVIMENTO: ");
-                coordString =  ActionManager.insertCoordinate(workerSelected);
+                coordString =  ActionManager.insertCoordinateMovement(workerSelected);
 
                 workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
 
                 View.printMap();
+                View.printWorkersPositions(player);
 
                 if(workerSelected.canBuild()) {
                     System.out.println("COSTRUZIONE: ");
-                    coordString =  ActionManager.insertCoordinate(workerSelected);
+                    coordString =  ActionManager.insertCoordinateConstruction(workerSelected);
 
                     workerSelected.buildBlock(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 }else{
@@ -233,15 +241,16 @@ public class TurnManager {
 
             default:    //APOLLO, ATHENA, ATLAS, MINOTAUR, PAN
                 System.out.println("MOVIMENTO: ");
-                coordString =  ActionManager.insertCoordinate(workerSelected);
+                coordString =  ActionManager.insertCoordinateMovement(workerSelected);
 
                 workerSelected.changePosition(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
 
                 View.printMap();
+                View.printWorkersPositions(player);
 
                 if(workerSelected.canBuild()) {
                     System.out.println("COSTRUZIONE: ");
-                    coordString =  ActionManager.insertCoordinate(workerSelected);
+                    coordString =  ActionManager.insertCoordinateMovement(workerSelected);
 
                     workerSelected.buildBlock(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 }else{

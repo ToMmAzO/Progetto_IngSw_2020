@@ -38,9 +38,4 @@ public class Map {
     public static boolean noWorkerHere(int row, int column){
         return map[row][column].getWorkerPresence() == null;
     }
-
-    public static boolean isAcceptable(int i, int j){
-        return (i >= 0 && i <= 4) && (j >= 0 && j <= 4);
-    }
-
 }

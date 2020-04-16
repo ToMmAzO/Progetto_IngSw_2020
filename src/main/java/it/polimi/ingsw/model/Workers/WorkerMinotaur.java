@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.Workers;
 
+import it.polimi.ingsw.controller.ActionManager;
 import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
@@ -17,16 +18,16 @@ public class WorkerMinotaur extends Worker {
 
         for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {           //se no funziona --> while
             for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
-                if (!(i == getCoordX() && j == getCoordY()) && Map.isAcceptable(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
+                if (!(i == getCoordX() && j == getCoordY()) && ActionManager.isAcceptable(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
                     if(TurnManager.cannotGoUp()){
                         if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
-                            if (Map.isAcceptable(m, n) && Map.getCellBlockType(m, n).getAbbreviation() <= Map.getCellBlockType(i, j).getAbbreviation() && Map.getCellBlockType(m, n) != BlockType.CUPOLA) {
+                            if (ActionManager.isAcceptable(m, n) && Map.getCellBlockType(m, n).getAbbreviation() <= Map.getCellBlockType(i, j).getAbbreviation() && Map.getCellBlockType(m, n) != BlockType.CUPOLA) {
                                 return true;
                             }
                         }
                     }else{
                         if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
-                            if (Map.isAcceptable(m, n) && Map.getCellBlockType(m, n).getAbbreviation() <= Map.getCellBlockType(i, j).getAbbreviation() + 1 && Map.getCellBlockType(m, n) != BlockType.CUPOLA) {
+                            if (ActionManager.isAcceptable(m, n) && Map.getCellBlockType(m, n).getAbbreviation() <= Map.getCellBlockType(i, j).getAbbreviation() + 1 && Map.getCellBlockType(m, n) != BlockType.CUPOLA) {
                                 return true;
                             }
                         }
