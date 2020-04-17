@@ -8,7 +8,7 @@ import it.polimi.ingsw.model.Board.Map;
 
 public abstract class Worker {
 
-    private String idWorker;
+    private final String idWorker;
     private int coordX, coordY, coordZ;
 
     public Worker(String idWorker, int coordX, int coordY) {
