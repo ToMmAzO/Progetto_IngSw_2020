@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class GameManager {
 
-    private static ArrayList<Player> players = new ArrayList<>();
+    private static final ArrayList<Player> players = new ArrayList<>();
     private static int numberOfPlayers;
     private static boolean victory = false;
 
@@ -30,33 +30,37 @@ public class GameManager {
             case 0:{
                 System.out.println("\n*VISUALE CLIENT " + numberConnection + "*\n");
                 System.out.println("Sei il primo giocatore ad unirsi alla lobby.");
-                System.out.println("Scegli quanti giocatori avrà la partita (min: 2, max: 3).");
-                int numberOfPlayers= Integer.parseInt((scanner.nextLine()));
-                while (numberOfPlayers != 2 && numberOfPlayers != 3){
-                    System.out.println("Devi inserire 2 oppure 3!");
-                    numberOfPlayers= Integer.parseInt((scanner.nextLine()));
+                System.out.print("Scegli quanti giocatori avrà la partita. ");
+                int numberChosen = 0;
+                while (numberChosen != 2 && numberChosen != 3){
+                    try{
+                        System.out.print("Scrivi 2 oppure 3: ");
+                        numberChosen= Integer.parseInt((scanner.nextLine()));
+                    } catch(IllegalArgumentException e){
+                        System.out.print("Formato Input scorretto! ");
+                    }
                 }
-                setNumberOfPlayers(numberOfPlayers);
-                new Deck(numberOfPlayers);
+                setNumberOfPlayers(numberChosen);
+                new Deck(numberChosen);
                 new Map();
                 players.add(0, new Player(nickname));
-                System.out.println("Avrai il colore " + players.get(0).getColor().toString() + ".");
+                System.out.println("Avrai il colore " + players.get(0).getColor().toString() + ".\n");
                 break;
             }
             case 1:{
                 System.out.println("\n*VISUALE CLIENT " + numberConnection + "*\n");
                 players.add(1, new Player(nickname));
-                System.out.println("Sei il secondo giocatore ad unirsi alla lobby.");
-                System.out.println("Avrai il colore " + players.get(1).getColor().toString() + ".");
+                System.out.print("Sei il secondo giocatore ad unirsi alla lobby. ");
                 System.out.println("Attendi che " + players.get(0).getNickname() + " concluda la sua configurazione.");
+                System.out.println("Avrai il colore " + players.get(1).getColor().toString() + ".\n");
                 break;
             }
             case 2:{
                 System.out.println("\n*VISUALE CLIENT " + numberConnection + "*\n");
                 players.add(2, new Player(nickname));
-                System.out.println("Sei il terzo giocatore ad unirsi alla lobby.");
-                System.out.println("Avrai il colore " + players.get(2).getColor().toString() + ".");
+                System.out.print("Sei il terzo giocatore ad unirsi alla lobby. ");
                 System.out.println("Attendi che " + players.get(1).getNickname() + " concluda la sua configurazione.");
+                System.out.println("Avrai il colore " + players.get(2).getColor().toString() + ".\n");
                 break;
             }
         }
@@ -119,12 +123,15 @@ public class GameManager {
 
     private static void choiceOfCard(int indexOfPlayer){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Scegli il numero di una delle " + numberOfPlayers + " carte disponibili:");
         View.printCardsSelected();
-        int cardNumber = Integer.parseInt((scanner.nextLine()));
+        int cardNumber = 0;
         while ((cardNumber < 1 || cardNumber > numberOfPlayers) || (!Deck.getAvailability()[cardNumber - 1])){
-            System.out.println("Devi inserire il numero corrispondente a una delle carte e deve essere disponibile!");
-            cardNumber= Integer.parseInt((scanner.nextLine()));
+            try{
+                System.out.print("Scegli il numero di una delle " + numberOfPlayers + " carte ancora disponibili: ");
+                cardNumber= Integer.parseInt((scanner.nextLine()));
+            } catch(IllegalArgumentException e){
+                System.out.print("Formato Input scorretto! ");
+            }
         }
         God g = Deck.getCardToPlayer(cardNumber);
         players.get(indexOfPlayer).setGodChoice(g);
@@ -132,39 +139,44 @@ public class GameManager {
     }
 
     private static void positioningWorkerOnMap(int indexOfPlayer, int numberOfWorker){
-        System.out.println("Inserisci le coordinate dove vuoi posizionare il lavoratore " + (numberOfWorker) + ".");
+        System.out.print("Posizionamento lavoratore " + (numberOfWorker) + ". ");
         Scanner scanner = new Scanner(System.in);
-        String[] coordString = scanner.nextLine().split(",");
-        int coordRow = Integer.parseInt(coordString[0]);
-        int coordColumn = Integer.parseInt(coordString[1]);
+        String[] coordString;
+        int coordRow;
+        int coordColumn;
         boolean exitCondition = false;
         while (!exitCondition){
-            if ((coordRow >= 0 && coordRow <= 4) && (coordColumn >= 0 && coordColumn <= 4)){
-                switch (numberOfWorker){
-                    case 1:{
-                        if (players.get(indexOfPlayer).setWorker1(coordRow, coordColumn)){
-                            exitCondition = true;
-                            continue;
-                        } else{
-                            break;
+            try{
+                System.out.print("Inserisci delle coordinate x, y: ");
+                coordString = scanner.nextLine().replace(" ", "").split(",");
+                coordRow = Integer.parseInt(coordString[0]);
+                coordColumn = Integer.parseInt(coordString[1]);
+                if ((coordRow >= 0 && coordRow <= 4) && (coordColumn >= 0 && coordColumn <= 4)){
+                    switch (numberOfWorker){
+                        case 1:{
+                            if (players.get(indexOfPlayer).setWorker1(coordRow, coordColumn)){
+                                exitCondition = true;
+                                continue;
+                            } else{
+                                break;
+                            }
+                        }
+                        case 2:{
+                            if (players.get(indexOfPlayer).setWorker2(coordRow, coordColumn)){
+                                exitCondition = true;
+                                continue;
+                            } else{
+                                break;
+                            }
                         }
                     }
-                    case 2:{
-                        if (players.get(indexOfPlayer).setWorker2(coordRow, coordColumn)){
-                            exitCondition = true;
-                            continue;
-                        } else{
-                            break;
-                        }
-                    }
+                    System.out.print("È già presente un lavoratore quì! ");
+                } else{
+                    System.out.print("Si eccede la mappa! ");
                 }
-                System.out.println("È già presente un lavoratore quì, inserisci delle altre coordinate!");
-            } else{
-                System.out.println("Inserisci delle coordinate valide!");
+            } catch(IllegalArgumentException e){
+                System.out.print("Formato Input scorretto! ");
             }
-            coordString = scanner.nextLine().split(",");
-            coordRow = Integer.parseInt(coordString[0]);
-            coordColumn = Integer.parseInt(coordString[1]);
         }
     }
 

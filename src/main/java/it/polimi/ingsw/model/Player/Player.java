@@ -6,9 +6,9 @@ import it.polimi.ingsw.model.Workers.*;
 
 public class Player {
 
-    private String nickname;
-    private Color color;
-    private Worker[] workers = new Worker[2];
+    private final String nickname;
+    private final Color color;
+    private final Worker[] workers = new Worker[2];
     private God godChoice;
 
     public Player(String nickname){
