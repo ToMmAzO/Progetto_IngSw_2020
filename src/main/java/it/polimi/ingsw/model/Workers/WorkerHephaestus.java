@@ -15,7 +15,7 @@ public class WorkerHephaestus extends Worker {
         if(buildTwoTimes) {
             for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
                 for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
-                    if (!(i == getCoordX() && j == getCoordY()) && ActionManager.isAcceptable(i, j) && Map.noWorkerHere(i, j) && (buildTwoTimes && Map.getCellBlockType(i, j) != BlockType.BLOCK2) && (buildTwoTimes && Map.getCellBlockType(i, j) != BlockType.BLOCK3) && Map.getCellBlockType(i, j) != BlockType.CUPOLA) {
+                    if (!(i == getCoordX() && j == getCoordY()) && ActionManager.validCoords(i, j) && Map.noWorkerHere(i, j) && (buildTwoTimes && Map.getCellBlockType(i, j) != BlockType.BLOCK2) && (buildTwoTimes && Map.getCellBlockType(i, j) != BlockType.BLOCK3) && Map.getCellBlockType(i, j) != BlockType.CUPOLA) {
                         return true;
                     }
                 }

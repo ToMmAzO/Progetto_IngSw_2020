@@ -15,7 +15,7 @@ public class WorkerAthena extends Worker {
     public boolean canMove() {
         for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {           //se no funziona --> while
             for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
-                if (!(i == getCoordX() && j == getCoordY()) && ActionManager.isAcceptable(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
+                if (!(i == getCoordX() && j == getCoordY()) && ActionManager.validCoords(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
                     if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
                         return true;
                     }

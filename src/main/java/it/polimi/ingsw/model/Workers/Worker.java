@@ -70,7 +70,7 @@ public abstract class Worker {
 
         for (int j = coordY - 1; j <= coordY + 1; j++) {
             for (int i = coordX - 1; i <= coordX + 1; i++) {
-                if (ActionManager.isAcceptable(i, j)) {
+                if (ActionManager.validCoords(i, j)) {
                     if (TurnManager.cannotGoUp())
                         if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA)) {
                             //System.out.println("trovato spazio libero in: " + j + "," + i);
@@ -112,7 +112,7 @@ public abstract class Worker {
     public boolean canBuild(){
         for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
             for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
-                if (!(i == getCoordX() && j == getCoordY()) && ActionManager.isAcceptable(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA) {
+                if (!(i == getCoordX() && j == getCoordY()) && ActionManager.validCoords(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA) {
                     return true;
                 }
             }

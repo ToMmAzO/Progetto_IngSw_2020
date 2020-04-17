@@ -144,27 +144,24 @@ public class GameManager {
         String[] coordString;
         int coordRow;
         int coordColumn;
-        boolean exitCondition = false;
-        while (!exitCondition){
+        while (true){
             try{
                 System.out.print("Inserisci delle coordinate x, y: ");
                 coordString = scanner.nextLine().replace(" ", "").split(",");
                 coordRow = Integer.parseInt(coordString[0]);
                 coordColumn = Integer.parseInt(coordString[1]);
-                if ((coordRow >= 0 && coordRow <= 4) && (coordColumn >= 0 && coordColumn <= 4)){
+                if (ActionManager.validCoords(coordRow, coordColumn)){
                     switch (numberOfWorker){
                         case 1:{
                             if (players.get(indexOfPlayer).setWorker1(coordRow, coordColumn)){
-                                exitCondition = true;
-                                continue;
+                                return;
                             } else{
                                 break;
                             }
                         }
                         case 2:{
                             if (players.get(indexOfPlayer).setWorker2(coordRow, coordColumn)){
-                                exitCondition = true;
-                                continue;
+                                return;
                             } else{
                                 break;
                             }
@@ -172,9 +169,9 @@ public class GameManager {
                     }
                     System.out.print("È già presente un lavoratore quì! ");
                 } else{
-                    System.out.print("Si eccede la mappa! ");
+                    System.out.print("Puoi inserire solo interi da 0 a 4! ");
                 }
-            } catch(IllegalArgumentException e){
+            } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                 System.out.print("Formato Input scorretto! ");
             }
         }
