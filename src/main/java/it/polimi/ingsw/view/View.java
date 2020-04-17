@@ -43,6 +43,7 @@ public class View {
             }
             System.out.println("\n---|------|------|------|------|------|");
         }
+
     }
 
     public static void printWorkersPositions(Player player){
