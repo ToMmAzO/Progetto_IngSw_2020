@@ -10,7 +10,8 @@ import java.util.Scanner;
 public class TurnManager {
 
     private static Worker workerSelected;
-    static boolean allowHeight, allowHeightPrometheus;
+    static boolean allowHeight = true;
+    static boolean allowHeightPrometheus = true;
 
     public static boolean startTurn(Player player){
         Scanner scanner = new Scanner(System.in);
@@ -56,7 +57,7 @@ public class TurnManager {
         switch (player.getGodChoice()) {
             case ARTEMIS:
                 System.out.println("MOVIMENTO: ");
-                coords =  ActionManager.insertCoordinateMovement(workerSelected);
+                coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
 
                 x = workerSelected.getCoordX();
                 y = workerSelected.getCoordY();
@@ -66,22 +67,32 @@ public class TurnManager {
                 View.printMap();
                 GameManager.printPlayerInGame();
 
+                if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                    GameManager.setVictory();
+                    break;
+                }
+
                 if(workerSelected.canMove(x, y)){
                     System.out.println("Vuoi muovere ancora? (Yes o No)");
                     answer = ActionManager.yesOrNo();
 
                     if(answer.equals("yes")) {
                         System.out.println("MOVIMENTO: ");
-                        coords = ActionManager.insertCoordinateMovement(workerSelected);
+                        coords = ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
                         while (x == coords[0] && y == coords[1]) {
                             System.out.println("Inserisci delle coordinate DIVERSE da quelle di partenza!");
-                            coords = ActionManager.insertCoordinateMovement(workerSelected);
+                            coords = ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
                         }
 
                         workerSelected.changePosition(coords[0], coords[1]);
 
                         View.printMap();
                         GameManager.printPlayerInGame();
+
+                        if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                            GameManager.setVictory();
+                            break;
+                        }
                     }
                 }else{
                     System.out.println(workerSelected.getIdWorker() + " NON può muoversi una seconda volta!");
@@ -99,12 +110,17 @@ public class TurnManager {
 
             case ATLAS:
                 System.out.println("MOVIMENTO: ");
-                coords =  ActionManager.insertCoordinateMovement(workerSelected);
+                coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
 
                 workerSelected.changePosition(coords[0], coords[1]);
 
                 View.printMap();
                 GameManager.printPlayerInGame();
+
+                if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                    GameManager.setVictory();
+                    break;
+                }
 
                 if(workerSelected.canBuild()) {
                     System.out.println("Vuoi costruire una CUPOLA? (Yes o No)");
@@ -129,7 +145,7 @@ public class TurnManager {
 
             case DEMETER:
                 System.out.println("MOVIMENTO: ");
-                coords =  ActionManager.insertCoordinateMovement(workerSelected);
+                coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
 
                 workerSelected.changePosition(coords[0], coords[1]);
 
@@ -173,12 +189,17 @@ public class TurnManager {
 
             case HEPHAESTUS:
                 System.out.println("MOVIMENTO: ");
-                coords =  ActionManager.insertCoordinateMovement(workerSelected);
+                coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
 
                 workerSelected.changePosition(coords[0], coords[1]);
 
                 View.printMap();
                 GameManager.printPlayerInGame();
+
+                if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                    GameManager.setVictory();
+                    break;
+                }
 
                 if(workerSelected.canBuild()) {
                     System.out.println("Vuoi costruire 2 volte? (Yes o No)");
@@ -204,38 +225,19 @@ public class TurnManager {
                 }
                 break;
 
-            case PROMETHEUS:
-                if (workerSelected.canBuild()) {
-                    System.out.println("Vuoi costruire prima di muoverti? (Yes o No)");
-                    answer = ActionManager.yesOrNo();
-
-                    if (answer.equals("yes")) {
-                        System.out.println("COSTRUZIONE: ");
-                        coords =  ActionManager.insertCoordinateConstruction(workerSelected);
-
-                        setAllowHeightPrometheus(false);
-                        if (workerSelected.canMove(coords[0], coords[1])) {
-                            workerSelected.buildBlock(coords[0], coords[1]);
-                            View.printMap();
-                            GameManager.printPlayerInGame();
-                        } else {
-                            System.out.println(workerSelected.getIdWorker() + " NON può costruire prima!");
-                            setAllowHeightPrometheus(true);
-                        }
-                    }else{
-                        setAllowHeightPrometheus(true);
-                    }
-                }else {
-                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
-                }
-
+            case PAN:
                 System.out.println("MOVIMENTO: ");
-                coords =  ActionManager.insertCoordinateMovement(workerSelected);
+                coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
 
                 workerSelected.changePosition(coords[0], coords[1]);
 
                 View.printMap();
                 GameManager.printPlayerInGame();
+
+                if((workerSelected.getCoordZ() == 3 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 1) || (workerSelected.getCoordZ() == 3 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0) || (workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0) || (workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3)){
+                    GameManager.setVictory();
+                    break;
+                }
 
                 if(workerSelected.canBuild()) {
                     System.out.println("COSTRUZIONE: ");
@@ -247,14 +249,62 @@ public class TurnManager {
                 }
                 break;
 
-            default:    //APOLLO, ATHENA, ATLAS, MINOTAUR, PAN
+            case PROMETHEUS:
+                if (workerSelected.canBuild()) {
+                    System.out.println("Vuoi costruire prima di muoverti? (Yes o No)");
+                    answer = ActionManager.yesOrNo();
+
+                    if (answer.equals("yes")) {
+                        System.out.println("COSTRUZIONE: ");        //devo controllare prima che può muoversi ancora dopo aver costruito?
+                        coords =  ActionManager.insertCoordinateConstruction(workerSelected);
+                        workerSelected.buildBlock(coords[0], coords[1]);
+                        View.printMap();
+                        GameManager.printPlayerInGame();
+                        setAllowHeightPrometheus(false);
+                    }
+
+                }else {
+                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
+                }
+
                 System.out.println("MOVIMENTO: ");
-                coords =  ActionManager.insertCoordinateMovement(workerSelected);
+                coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
 
                 workerSelected.changePosition(coords[0], coords[1]);
 
                 View.printMap();
                 GameManager.printPlayerInGame();
+
+                if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                    GameManager.setVictory();
+                    break;
+                }
+
+                if(workerSelected.canBuild()) {
+                    System.out.println("COSTRUZIONE: ");
+                    coords =  ActionManager.insertCoordinateConstruction(workerSelected);
+
+                    workerSelected.buildBlock(coords[0], coords[1]);
+                }else{
+                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
+                }
+
+                setAllowHeightPrometheus(true);
+                break;
+
+            default:    //APOLLO, ATHENA, ATLAS, MINOTAUR
+                System.out.println("MOVIMENTO: ");
+                coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
+
+                workerSelected.changePosition(coords[0], coords[1]);
+
+                View.printMap();
+                GameManager.printPlayerInGame();
+
+                if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                    GameManager.setVictory();
+                    break;
+                }
 
                 if(workerSelected.canBuild()) {
                     System.out.println("COSTRUZIONE: ");

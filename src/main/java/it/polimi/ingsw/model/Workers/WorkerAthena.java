@@ -13,7 +13,7 @@ public class WorkerAthena extends Worker {
 
     @Override
     public boolean canMove() {
-        for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {           //se no funziona --> while
+        for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
             for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
                 if (!(i == getCoordX() && j == getCoordY()) && ActionManager.validCoords(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
                     if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
@@ -27,7 +27,7 @@ public class WorkerAthena extends Worker {
 
     @Override
     public void changePosition(int newX, int newY){
-        TurnManager.setAllowHeight(true);               //può andare
+        TurnManager.setAllowHeight(true);
         if(Map.getCellBlockType(newX, newY).getAbbreviation() > getCoordZ()){
             TurnManager.setAllowHeight(false);
         }

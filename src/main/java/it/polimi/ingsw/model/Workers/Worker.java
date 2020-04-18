@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.Workers;
 
 import it.polimi.ingsw.controller.ActionManager;
-import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
@@ -48,11 +47,9 @@ public abstract class Worker {
     }
 
     public boolean canMove() {
-
-        /*
         for (int i = coordX - 1; i <= coordX + 1; i++) {
             for (int j = coordY - 1; j <= coordY + 1; j++) {
-                if (!(i == coordX && j == coordY) && Map.isAcceptable(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
+                if (!(i == coordX && j == coordY) && ActionManager.validCoords(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
                     if(TurnManager.cannotGoUp()){
                         if(Map.getCellBlockType(i, j).getAbbreviation() <= coordZ) {
                             return true;
@@ -62,26 +59,6 @@ public abstract class Worker {
                             return true;
                         }
                     }
-                }
-            }
-        }
-        return false;
-        */
-
-        for (int j = coordY - 1; j <= coordY + 1; j++) {
-            for (int i = coordX - 1; i <= coordX + 1; i++) {
-                if (ActionManager.validCoords(i, j)) {
-                    if (TurnManager.cannotGoUp())
-                        if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA)) {
-                            //System.out.println("trovato spazio libero in: " + j + "," + i);
-                            return true;
-                        }
-                    if (!TurnManager.cannotGoUp())
-                        if (Map.noWorkerHere(i, j) && (Map.getCellBlockType(i, j).getAbbreviation() <= coordZ + 1) && (Map.getCellBlockType(i, j) != BlockType.CUPOLA)) {
-                            //System.out.println("trovato spazio libero in: " + j + "," + i);
-                            return true;
-                        }
-
                 }
             }
         }
@@ -111,7 +88,7 @@ public abstract class Worker {
         return false;
     }
 
-    public boolean canBuild(boolean buildAgain) {       //solo per sottoclassi se no dava fastidio l'override HEPHAESTUS
+    public boolean canBuild(boolean buildAgain) {       //HEPHAESTUS
         return true;
     }
 
@@ -127,7 +104,7 @@ public abstract class Worker {
         }
     }
 
-    public void buildBlock(boolean build, int buildX, int buildY) {         //solo per sottoclassi se no dava fastidio l'override HEPHAESTUS e ATLAS
+    public void buildBlock(boolean build, int buildX, int buildY) {         //HEPHAESTUS e ATLAS
 
     }
 

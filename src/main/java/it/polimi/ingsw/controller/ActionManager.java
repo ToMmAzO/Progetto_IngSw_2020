@@ -2,7 +2,10 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
+import it.polimi.ingsw.model.Cards.God;
+import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.model.Workers.Worker;
+
 
 import java.util.Scanner;
 
@@ -16,31 +19,36 @@ public class ActionManager {
         return (i >= 0 && i <= 4) && (j >= 0 && j <= 4);
     }
 
-    public static int[] insertCoordinateMovement(Worker w){
+    public static int[] insertCoordinateMovement(Worker w, God g){
         Scanner scanner = new Scanner(System.in);
         String[] coordString;
-        int coordRow;
-        int coordColumn;
+        int coordX, coordY;
         while(true) {
             try{
                 System.out.print("Inserisci delle coordinate x, y: ");
                 coordString = scanner.nextLine().replace(" ", "").split(",");
-                coordRow = Integer.parseInt(coordString[0]);
-                coordColumn = Integer.parseInt(coordString[1]);
-                if (validCoords(coordRow, coordColumn)) {
-                    if(isAround(w.getCoordX(), w.getCoordY(), coordRow, coordColumn)) {
-                        if(w.getCoordX() != coordRow || w.getCoordY() != coordColumn) {
-                            if (Map.noWorkerHere(coordRow, coordColumn)) {
-                                if (Map.getCellBlockType(coordRow, coordColumn) != BlockType.CUPOLA) {
-                                    if (TurnManager.cannotGoUp()) {//AGGIUNGERE POTERE PROMETHEUS
-                                        if (Map.getCellBlockType(coordRow, coordColumn).getAbbreviation() <= w.getCoordZ()){
-                                            return new int[]{coordRow, coordColumn};
+                coordX = Integer.parseInt(coordString[0]);
+                coordY = Integer.parseInt(coordString[1]);
+                if (validCoords(coordX, coordY)) {
+                    if(isAround(w.getCoordX(), w.getCoordY(), coordX, coordY)) {
+                        if(w.getCoordX() != coordX || w.getCoordY() != coordY) {
+                            if (Map.noWorkerHere(coordX, coordY)) {
+                                if (Map.getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
+                                    if (TurnManager.cannotGoUp()) {
+                                        if (Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()){
+                                            return new int[]{coordX, coordY};
                                         } else{
                                             System.out.print("ATTENTO, c'è attivo il potere di ATHENA! ");
                                         }
                                     } else{
-                                        if (Map.getCellBlockType(coordRow, coordColumn).getAbbreviation() <= w.getCoordZ() + 1){
-                                            return new int[]{coordRow, coordColumn};
+                                        if(g == God.PROMETHEUS && TurnManager.cannotGoUpPrometheus()){
+                                            if (Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()){
+                                                return new int[]{coordX, coordY};
+                                            } else{
+                                                System.out.print("ATTENTO, hai appena costruito e sei PROMETHEUS! ");
+                                            }
+                                        }else if (Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1){
+                                            return new int[]{coordX, coordY};
                                         } else{
                                             System.out.print("ATTENTO, non puoi salire di due livelli! ");
                                         }
@@ -69,20 +77,19 @@ public class ActionManager {
     public static int[] insertCoordinateConstruction(Worker w){
         Scanner scanner = new Scanner(System.in);
         String[] coordString;
-        int coordRow;
-        int coordColumn;
+        int coordX, coordY;
         while(true) {
             try {
                 System.out.print("Inserisci delle coordinate x, y: ");
                 coordString = scanner.nextLine().replace(" ", "").split(",");
-                coordRow = Integer.parseInt(coordString[0]);
-                coordColumn = Integer.parseInt(coordString[1]);
-                if (validCoords(coordRow, coordColumn)) {
-                    if (isAround(w.getCoordX(), w.getCoordY(), coordRow, coordColumn)) {
-                        if (w.getCoordX() != coordRow || w.getCoordY() != coordColumn) {
-                            if (Map.noWorkerHere(coordRow, coordColumn)) {
-                                if (Map.getCellBlockType(coordRow, coordColumn) != BlockType.CUPOLA) {
-                                    return new int[]{coordRow, coordColumn};
+                coordX = Integer.parseInt(coordString[0]);
+                coordY = Integer.parseInt(coordString[1]);
+                if (validCoords(coordX, coordY)) {
+                    if (isAround(w.getCoordX(), w.getCoordY(), coordX, coordY)) {
+                        if (w.getCoordX() != coordX || w.getCoordY() != coordY) {
+                            if (Map.noWorkerHere(coordX, coordY)) {
+                                if (Map.getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
+                                    return new int[]{coordX, coordY};
                                 } else{
                                     System.out.print("ATTENTO, c'è una cupola! ");
                                 }
