@@ -93,20 +93,11 @@ public abstract class Worker {
     }
 
     public void changePosition(int newX, int newY){
-        if(coordZ == 2 && Map.getCellBlockType(newX, newY).getAbbreviation() == 3){
             Map.deleteWorkerInCell(this);
             coordX = newX;
             coordY = newY;
             coordZ = Map.getCellBlockType(newX, newY).getAbbreviation();
             Map.setWorkerInCell(newX, newY, this);
-            GameManager.setVictory();
-        }else{
-            Map.deleteWorkerInCell(this);
-            coordX = newX;
-            coordY = newY;
-            coordZ = Map.getCellBlockType(newX, newY).getAbbreviation();
-            Map.setWorkerInCell(newX, newY, this);
-        }
     }
 
     public boolean canBuild(){

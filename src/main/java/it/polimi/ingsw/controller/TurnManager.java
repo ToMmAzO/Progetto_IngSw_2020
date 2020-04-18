@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.model.Workers.Worker;
 import it.polimi.ingsw.view.View;
@@ -48,7 +49,7 @@ public class TurnManager {
         return true;
     }
 
-    public static void selectAction(Player player){
+    private static void selectAction(Player player){
         String answer;
         int x, y;
         int[] coords;
@@ -134,6 +135,11 @@ public class TurnManager {
 
                 View.printMap();
                 View.printWorkersPositions(player);
+
+                if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                    GameManager.setVictory();
+                    break;
+                }
 
                 if(workerSelected.canBuild()) {
                     System.out.println("COSTRUZIONE: ");
