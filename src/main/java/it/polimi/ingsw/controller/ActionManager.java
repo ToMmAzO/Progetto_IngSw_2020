@@ -33,7 +33,7 @@ public class ActionManager {
                 coordColumn = Integer.parseInt(coordString[1]);
                 if (validCoords(coordRow, coordColumn)) {
                     if(movementManager(w.getCoordX(), w.getCoordY(), coordRow, coordColumn)) {
-                        if(w.getCoordX() != coordRow && w.getCoordY() != coordColumn) {
+                        if(w.getCoordX() != coordRow || w.getCoordY() != coordColumn) {
                             if (Map.noWorkerHere(coordRow, coordColumn)) {
                                 if (Map.getCellBlockType(coordRow, coordColumn) != BlockType.CUPOLA) {
                                     if (TurnManager.cannotGoUp()) {         //AGGIUNGERE POTERE PROMETHEUS
@@ -83,7 +83,7 @@ public class ActionManager {
                 coordColumn = Integer.parseInt(coordString[1]);
                 if (validCoords(coordRow, coordColumn)) {
                     if (movementManager(w.getCoordX(), w.getCoordY(), coordRow, coordColumn)) {
-                        if (w.getCoordX() != coordRow && w.getCoordY() != coordColumn) {
+                        if (w.getCoordX() != coordRow || w.getCoordY() != coordColumn) {
                             if (Map.noWorkerHere(coordRow, coordColumn)) {
                                 if (Map.getCellBlockType(coordRow, coordColumn) != BlockType.CUPOLA) {
                                     return new int[]{coordRow, coordColumn};
@@ -109,11 +109,10 @@ public class ActionManager {
     }
 
     public static String yesOrNo(){
-        String answer;
         Scanner scanner = new Scanner(System.in);
-        answer = scanner.nextLine();
-        while (!answer.equals("yes") && !answer.equals("no") && !answer.equals("Yes") && !answer.equals("No")) {
-            System.out.println("Puoi rispondere solo con yes, Yes, no, No.");
+        String answer = scanner.nextLine().toLowerCase().replace(" ", "");
+        while (!answer.equals("yes") && !answer.equals("no")) {
+            System.out.println("Puoi rispondere solo con yes o no!");
             answer = scanner.nextLine();
         }
         return answer;

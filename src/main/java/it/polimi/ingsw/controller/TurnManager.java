@@ -69,7 +69,7 @@ public class TurnManager {
                     System.out.println("Vuoi muovere ancora? (Yes o No)");
                     answer = ActionManager.yesOrNo();
 
-                    if((answer.equals("yes") || answer.equals("Yes"))) {
+                    if(answer.equals("yes")) {
                         System.out.println("MOVIMENTO: ");
                         coords = ActionManager.insertCoordinateMovement(workerSelected);
                         while (x == coords[0] && y == coords[1]) {
@@ -109,7 +109,7 @@ public class TurnManager {
                     System.out.println("Vuoi costruire una CUPOLA? (Yes o No)");
                     answer = ActionManager.yesOrNo();
 
-                    if(answer.equals("yes") || answer.equals("Yes")){
+                    if(answer.equals("yes")){
                         System.out.println("COSTRUZIONE: ");
                         coords =  ActionManager.insertCoordinateConstruction(workerSelected);
 
@@ -150,7 +150,7 @@ public class TurnManager {
                     System.out.println("Vuoi costruire ancora? (Yes o No)");
                     answer = ActionManager.yesOrNo();
 
-                    if(answer.equals("yes") || answer.equals("Yes")){
+                    if(answer.equals("yes")){
                         System.out.println("COSTRUZIONE: ");
                         coords =  ActionManager.insertCoordinateConstruction(workerSelected);
                         while (x == coords[0] && y == coords[1]) {
@@ -178,7 +178,7 @@ public class TurnManager {
                     System.out.println("Vuoi costruire 2 volte? (Yes o No)");
                     answer = ActionManager.yesOrNo();
 
-                    if ((answer.equals("yes") || answer.equals("Yes")) && workerSelected.canBuild(true)) {
+                    if ((answer.equals("yes")) && workerSelected.canBuild(true)) {
                         System.out.println("COSTRUZIONE: ");
                         coords = ActionManager.insertCoordinateConstruction(workerSelected);
 
@@ -203,7 +203,7 @@ public class TurnManager {
                     System.out.println("Vuoi costruire prima di muoverti? (Yes o No)");
                     answer = ActionManager.yesOrNo();
 
-                    if (answer.equals("yes") || answer.equals("Yes")) {
+                    if (answer.equals("yes")) {
                         System.out.println("COSTRUZIONE: ");
                         coords =  ActionManager.insertCoordinateConstruction(workerSelected);
 
