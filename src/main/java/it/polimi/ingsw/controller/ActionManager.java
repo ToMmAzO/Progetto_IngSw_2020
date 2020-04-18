@@ -8,19 +8,15 @@ import java.util.Scanner;
 
 public class ActionManager {
 
-    public static boolean movementManager(int row, int column, int newRow, int newColumn){
+    public static boolean isAround(int row, int column, int newRow, int newColumn){
         return newRow >= row - 1 && newRow <= row + 1 && newColumn >= column - 1 && newColumn <= column + 1;
     }
-
-    public static boolean buildManager(int row, int column, int buildRow, int buildColumn){
-        return buildRow >= row - 1 && buildRow <= row + 1 && buildColumn >= column - 1 && buildColumn <= column + 1;
-    }
-
+    
     public static boolean validCoords(int i, int j){
         return (i >= 0 && i <= 4) && (j >= 0 && j <= 4);
     }
 
-    public static int[] insertCoordinateMovement(Worker w){      //fare controllo su nuova posizione
+    public static int[] insertCoordinateMovement(Worker w){
         Scanner scanner = new Scanner(System.in);
         String[] coordString;
         int coordRow;
@@ -32,11 +28,11 @@ public class ActionManager {
                 coordRow = Integer.parseInt(coordString[0]);
                 coordColumn = Integer.parseInt(coordString[1]);
                 if (validCoords(coordRow, coordColumn)) {
-                    if(movementManager(w.getCoordX(), w.getCoordY(), coordRow, coordColumn)) {
+                    if(isAround(w.getCoordX(), w.getCoordY(), coordRow, coordColumn)) {
                         if(w.getCoordX() != coordRow || w.getCoordY() != coordColumn) {
                             if (Map.noWorkerHere(coordRow, coordColumn)) {
                                 if (Map.getCellBlockType(coordRow, coordColumn) != BlockType.CUPOLA) {
-                                    if (TurnManager.cannotGoUp()) {         //AGGIUNGERE POTERE PROMETHEUS
+                                    if (TurnManager.cannotGoUp()) {//AGGIUNGERE POTERE PROMETHEUS
                                         if (Map.getCellBlockType(coordRow, coordColumn).getAbbreviation() <= w.getCoordZ()){
                                             return new int[]{coordRow, coordColumn};
                                         } else{
@@ -70,7 +66,7 @@ public class ActionManager {
         }
     }
 
-    public static int[] insertCoordinateConstruction(Worker w){      //fare controllo su nuova posizione
+    public static int[] insertCoordinateConstruction(Worker w){
         Scanner scanner = new Scanner(System.in);
         String[] coordString;
         int coordRow;
@@ -82,7 +78,7 @@ public class ActionManager {
                 coordRow = Integer.parseInt(coordString[0]);
                 coordColumn = Integer.parseInt(coordString[1]);
                 if (validCoords(coordRow, coordColumn)) {
-                    if (movementManager(w.getCoordX(), w.getCoordY(), coordRow, coordColumn)) {
+                    if (isAround(w.getCoordX(), w.getCoordY(), coordRow, coordColumn)) {
                         if (w.getCoordX() != coordRow || w.getCoordY() != coordColumn) {
                             if (Map.noWorkerHere(coordRow, coordColumn)) {
                                 if (Map.getCellBlockType(coordRow, coordColumn) != BlockType.CUPOLA) {
@@ -111,7 +107,7 @@ public class ActionManager {
     public static String yesOrNo(){
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine().toLowerCase().replace(" ", "");
-        while (!answer.equals("yes") && !answer.equals("no")) {
+        while (!answer.equals("yes") && !answer.equals("no")){
             System.out.println("Puoi rispondere solo con yes o no!");
             answer = scanner.nextLine();
         }

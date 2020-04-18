@@ -64,7 +64,7 @@ public class TurnManager {
                 workerSelected.changePosition(coords[0], coords[1]);
 
                 View.printMap();
-                View.printWorkersPositions(player);
+                GameManager.printPlayerInGame();
 
                 if(workerSelected.canMove(x, y)){
                     System.out.println("Vuoi muovere ancora? (Yes o No)");
@@ -81,7 +81,7 @@ public class TurnManager {
                         workerSelected.changePosition(coords[0], coords[1]);
 
                         View.printMap();
-                        View.printWorkersPositions(player);
+                        GameManager.printPlayerInGame();
                     }
                 }else{
                     System.out.println(workerSelected.getIdWorker() + " NON può muoversi una seconda volta!");
@@ -104,7 +104,7 @@ public class TurnManager {
                 workerSelected.changePosition(coords[0], coords[1]);
 
                 View.printMap();
-                View.printWorkersPositions(player);
+                GameManager.printPlayerInGame();
 
                 if(workerSelected.canBuild()) {
                     System.out.println("Vuoi costruire una CUPOLA? (Yes o No)");
@@ -134,7 +134,7 @@ public class TurnManager {
                 workerSelected.changePosition(coords[0], coords[1]);
 
                 View.printMap();
-                View.printWorkersPositions(player);
+                GameManager.printPlayerInGame();
 
                 if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
                     GameManager.setVictory();
@@ -151,7 +151,7 @@ public class TurnManager {
                     workerSelected.buildBlock(coords[0], coords[1]);
 
                     View.printMap();
-                    View.printWorkersPositions(player);
+                    GameManager.printPlayerInGame();
 
                     System.out.println("Vuoi costruire ancora? (Yes o No)");
                     answer = ActionManager.yesOrNo();
@@ -178,7 +178,7 @@ public class TurnManager {
                 workerSelected.changePosition(coords[0], coords[1]);
 
                 View.printMap();
-                View.printWorkersPositions(player);
+                GameManager.printPlayerInGame();
 
                 if(workerSelected.canBuild()) {
                     System.out.println("Vuoi costruire 2 volte? (Yes o No)");
@@ -217,7 +217,7 @@ public class TurnManager {
                         if (workerSelected.canMove(coords[0], coords[1])) {
                             workerSelected.buildBlock(coords[0], coords[1]);
                             View.printMap();
-                            View.printWorkersPositions(player);
+                            GameManager.printPlayerInGame();
                         } else {
                             System.out.println(workerSelected.getIdWorker() + " NON può costruire prima!");
                             setAllowHeightPrometheus(true);
@@ -235,7 +235,7 @@ public class TurnManager {
                 workerSelected.changePosition(coords[0], coords[1]);
 
                 View.printMap();
-                View.printWorkersPositions(player);
+                GameManager.printPlayerInGame();
 
                 if(workerSelected.canBuild()) {
                     System.out.println("COSTRUZIONE: ");
@@ -254,11 +254,11 @@ public class TurnManager {
                 workerSelected.changePosition(coords[0], coords[1]);
 
                 View.printMap();
-                View.printWorkersPositions(player);
+                GameManager.printPlayerInGame();
 
                 if(workerSelected.canBuild()) {
                     System.out.println("COSTRUZIONE: ");
-                    coords =  ActionManager.insertCoordinateMovement(workerSelected);
+                    coords =  ActionManager.insertCoordinateConstruction(workerSelected);
 
                     workerSelected.buildBlock(coords[0], coords[1]);
                 }else{

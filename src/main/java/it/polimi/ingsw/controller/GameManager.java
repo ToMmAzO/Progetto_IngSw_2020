@@ -201,10 +201,16 @@ public class GameManager {
         }
         if(players.size() > 1) {
             for (Player player : players) {
-                System.out.println("\n*VISUALE CLIENT " + player + "*\n");
+                System.out.println("\n*VISUALE CLIENT " + player.getNickname() + "*\n");
                 System.out.println("GAME OVER! " + winner + " ha vinto.");
                 System.out.println("\n*CONNESSIONE CLIENT CHIUSA*\n");
             }
+        }
+    }
+
+    protected static void printPlayerInGame(){
+        for (Player currPlayer : players) {
+            View.printWorkersPositions(currPlayer);
         }
     }
 
