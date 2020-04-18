@@ -65,6 +65,10 @@ public abstract class Worker {
         return false;
     }
 
+    public boolean canPush(int x, int y){       //MINOTAUR (ActionManager)
+        return true;
+    }
+
     public boolean canMove(int x, int y) {      //ARTEMIS
         return true;
     }
