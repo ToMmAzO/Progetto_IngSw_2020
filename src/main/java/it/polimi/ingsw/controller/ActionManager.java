@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 public class ActionManager {
 
-    public static boolean isAround(int row, int column, int newRow, int newColumn){
-        return newRow >= row - 1 && newRow <= row + 1 && newColumn >= column - 1 && newColumn <= column + 1;
+    public static boolean isAround(int x, int y, int newX, int newY){
+        return newX >= x - 1 && newX <= x + 1 && newY >= y - 1 && newY <= y + 1;
     }
     
     public static boolean validCoords(int i, int j){
