@@ -62,14 +62,16 @@ public class TurnManager {
                 x = workerSelected.getCoordX();
                 y = workerSelected.getCoordY();
 
-                workerSelected.changePosition(coords[0], coords[1]);
-
-                View.printMap();
-                GameManager.printPlayerInGame();
-
                 if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                     GameManager.setVictory();
                     break;
+                }else{
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                 }
 
                 if(workerSelected.canMove(x, y)){
@@ -84,14 +86,16 @@ public class TurnManager {
                             coords = ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
                         }
 
-                        workerSelected.changePosition(coords[0], coords[1]);
-
-                        View.printMap();
-                        GameManager.printPlayerInGame();
-
                         if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                            workerSelected.changePosition(coords[0], coords[1]);
+                            View.printMap();
+                            GameManager.printPlayerInGame();
                             GameManager.setVictory();
                             break;
+                        }else{
+                            workerSelected.changePosition(coords[0], coords[1]);
+                            View.printMap();
+                            GameManager.printPlayerInGame();
                         }
                     }
                 }else{
@@ -112,14 +116,16 @@ public class TurnManager {
                 System.out.println("MOVIMENTO: ");
                 coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
 
-                workerSelected.changePosition(coords[0], coords[1]);
-
-                View.printMap();
-                GameManager.printPlayerInGame();
-
                 if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                     GameManager.setVictory();
                     break;
+                }else{
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                 }
 
                 if(workerSelected.canBuild()) {
@@ -147,14 +153,16 @@ public class TurnManager {
                 System.out.println("MOVIMENTO: ");
                 coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
 
-                workerSelected.changePosition(coords[0], coords[1]);
-
-                View.printMap();
-                GameManager.printPlayerInGame();
-
                 if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                     GameManager.setVictory();
                     break;
+                }else{
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                 }
 
                 if(workerSelected.canBuild()) {
@@ -191,14 +199,16 @@ public class TurnManager {
                 System.out.println("MOVIMENTO: ");
                 coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
 
-                workerSelected.changePosition(coords[0], coords[1]);
-
-                View.printMap();
-                GameManager.printPlayerInGame();
-
                 if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                     GameManager.setVictory();
                     break;
+                }else{
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                 }
 
                 if(workerSelected.canBuild()) {
@@ -229,14 +239,16 @@ public class TurnManager {
                 System.out.println("MOVIMENTO: ");
                 coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
 
-                workerSelected.changePosition(coords[0], coords[1]);
-
-                View.printMap();
-                GameManager.printPlayerInGame();
-
                 if((workerSelected.getCoordZ() == 3 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 1) || (workerSelected.getCoordZ() == 3 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0) || (workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0) || (workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3)){
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                     GameManager.setVictory();
                     break;
+                }else{
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                 }
 
                 if(workerSelected.canBuild()) {
@@ -270,14 +282,16 @@ public class TurnManager {
                 System.out.println("MOVIMENTO: ");
                 coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
 
-                workerSelected.changePosition(coords[0], coords[1]);
-
-                View.printMap();
-                GameManager.printPlayerInGame();
-
                 if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                     GameManager.setVictory();
                     break;
+                }else{
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                 }
 
                 if(workerSelected.canBuild()) {
@@ -296,14 +310,16 @@ public class TurnManager {
                 System.out.println("MOVIMENTO: ");
                 coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
 
-                workerSelected.changePosition(coords[0], coords[1]);
-
-                View.printMap();
-                GameManager.printPlayerInGame();
-
                 if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                     GameManager.setVictory();
                     break;
+                }else{
+                    workerSelected.changePosition(coords[0], coords[1]);
+                    View.printMap();
+                    GameManager.printPlayerInGame();
                 }
 
                 if(workerSelected.canBuild()) {
