@@ -58,50 +58,58 @@ public class ActionManager {
                                 }
                             } else{
                                 if(g == God.APOLLO) {
-                                    if (Map.getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
-                                        if (TurnManager.cannotGoUp()) {
-                                            if (Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
-                                                return new int[]{coordX, coordY};
+                                    if (!Map.getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))) {
+                                        if (Map.getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
+                                            if (TurnManager.cannotGoUp()) {
+                                                if (Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
+                                                    return new int[]{coordX, coordY};
+                                                } else {
+                                                    System.out.print("ATTENTO, c'è attivo il potere di ATHENA! ");
+                                                }
                                             } else {
-                                                System.out.print("ATTENTO, c'è attivo il potere di ATHENA! ");
+                                                if (Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1) {
+                                                    return new int[]{coordX, coordY};
+                                                } else {
+                                                    System.out.print("ATTENTO, non puoi salire di due livelli! ");
+                                                }
                                             }
                                         } else {
-                                            if (Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1) {
-                                                return new int[]{coordX, coordY};
-                                            } else {
-                                                System.out.print("ATTENTO, non puoi salire di due livelli! ");
-                                            }
+                                            System.out.print("ATTENTO, c'è una cupola! ");
                                         }
-                                    } else {
-                                        System.out.print("ATTENTO, c'è una cupola! ");
+                                    }else{
+                                        System.out.print("ATTENTO, non è un worker avversario! ");
                                     }
                                 }
 
                                 if(g == God.MINOTAUR) {
-                                    if (Map.getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
-                                        if (TurnManager.cannotGoUp()) {
-                                            if (Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
-                                                if (w.canPush(coordX, coordY)) {
-                                                    return new int[]{coordX, coordY};
-                                                }else{
-                                                    System.out.print("ATTENTO, non puoi spingere quel worker! ");
+                                    if (!Map.getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))) {
+                                        if (Map.getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
+                                            if (TurnManager.cannotGoUp()) {
+                                                if (Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
+                                                    if (w.canPush(coordX, coordY)) {
+                                                        return new int[]{coordX, coordY};
+                                                    }else{
+                                                        System.out.print("ATTENTO, non puoi spingere quel worker! ");
+                                                    }
+                                                } else {
+                                                    System.out.print("ATTENTO, c'è attivo il potere di ATHENA! ");
                                                 }
                                             } else {
-                                                System.out.print("ATTENTO, c'è attivo il potere di ATHENA! ");
+                                                if (Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1) {
+                                                    if (w.canPush(coordX, coordY)) {
+                                                        return new int[]{coordX, coordY};
+                                                    }else{
+                                                        System.out.print("ATTENTO, non puoi spingere quel worker! ");
+                                                    }
+                                                } else {
+                                                    System.out.print("ATTENTO, non puoi salire di due livelli! ");
+                                                }
                                             }
                                         } else {
-                                            if (Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1) {
-                                                if (w.canPush(coordX, coordY)) {
-                                                    return new int[]{coordX, coordY};
-                                                }else{
-                                                    System.out.print("ATTENTO, non puoi spingere quel worker! ");
-                                                }
-                                            } else {
-                                                System.out.print("ATTENTO, non puoi salire di due livelli! ");
-                                            }
+                                            System.out.print("ATTENTO, c'è una cupola! ");
                                         }
-                                    } else {
-                                        System.out.print("ATTENTO, c'è una cupola! ");
+                                    }else{
+                                        System.out.print("ATTENTO, non è un worker avversario! ");
                                     }
                                 }
 

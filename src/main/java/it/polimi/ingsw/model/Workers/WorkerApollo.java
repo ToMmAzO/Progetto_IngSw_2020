@@ -16,13 +16,26 @@ public class WorkerApollo extends Worker {
         for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
             for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
                 if (!(i == getCoordX() && j == getCoordY()) && ActionManager.validCoords(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
-                    if(TurnManager.cannotGoUp()){
-                        if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
-                            return true;
+                    if(!Map.noWorkerHere(i, j) && (!Map.getWorkerInCell(i, j).getIdWorker().substring(0, 3).equals(getIdWorker().substring(0, 3)))){
+                        if (TurnManager.cannotGoUp()) {
+                            if (Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
+                                return true;
+                            }
+                        } else {
+                            if (Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
+                                return true;
+                            }
                         }
-                    }else{
-                        if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
-                            return true;
+                    }
+                    if(Map.noWorkerHere(i, j)){
+                        if (TurnManager.cannotGoUp()) {
+                            if (Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
+                                return true;
+                            }
+                        } else {
+                            if (Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
+                                return true;
+                            }
                         }
                     }
                 }

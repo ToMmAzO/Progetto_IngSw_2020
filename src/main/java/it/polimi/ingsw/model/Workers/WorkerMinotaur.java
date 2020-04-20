@@ -175,7 +175,7 @@ public class WorkerMinotaur extends Worker {
                         if (Map.getCellBlockType(i, j).getAbbreviation() <= this.getCoordZ())
                             if (Map.noWorkerHere(i, j))
                                 return true;
-                            if (!Map.noWorkerHere(i, j))          //controllo separato per verificare i casi in cui può spostare il worker avversario
+                            if (!Map.noWorkerHere(i, j) && (!Map.getWorkerInCell(i, j).getIdWorker().substring(0, 3).equals(getIdWorker().substring(0, 3))))          //controllo separato per verificare i casi in cui può spostare il worker avversario
                                 if (this.canPush(i, j))
                                     return true;
                     }
@@ -183,7 +183,7 @@ public class WorkerMinotaur extends Worker {
                         if (Map.getCellBlockType(i, j).getAbbreviation() <= this.getCoordZ() + 1)
                             if (Map.noWorkerHere(i, j))
                                 return true;
-                            if (!Map.noWorkerHere(i, j))          //controllo separato per verificare i casi in cui può spostare il worker avversario
+                            if (!Map.noWorkerHere(i, j) && (!Map.getWorkerInCell(i, j).getIdWorker().substring(0, 3).equals(getIdWorker().substring(0, 3))))          //controllo separato per verificare i casi in cui può spostare il worker avversario
                                 if (this.canPush(i, j))
                                     return true;
                     }
