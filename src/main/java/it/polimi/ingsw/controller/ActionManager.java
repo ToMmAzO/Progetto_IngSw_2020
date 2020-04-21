@@ -3,9 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.God;
-import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.model.Workers.Worker;
-
 
 import java.util.Scanner;
 

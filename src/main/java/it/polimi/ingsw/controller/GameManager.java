@@ -78,8 +78,8 @@ public class GameManager {
                     View.printWorkersPositions(players.get(1));
                 }
             }
-            positioningWorkerOnMap(currPlayer, 1);
-            positioningWorkerOnMap(currPlayer, 2);
+            setWorkerOnMap(currPlayer, 1);
+            setWorkerOnMap(currPlayer, 2);
         }
         currPlayer = 0;
         while (!victory){
@@ -138,7 +138,7 @@ public class GameManager {
         View.printCardChosen(g);
     }
 
-    private static void positioningWorkerOnMap(int indexOfPlayer, int numberOfWorker){
+    private static void setWorkerOnMap(int indexOfPlayer, int numberOfWorker){
         System.out.print("Posizionamento lavoratore " + (numberOfWorker) + ". ");
         Scanner scanner = new Scanner(System.in);
         String[] coordString;

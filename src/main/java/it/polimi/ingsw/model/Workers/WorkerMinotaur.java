@@ -16,24 +16,28 @@ public class WorkerMinotaur extends Worker {
 
             if (i==this.getCoordX() && j!=this.getCoordY()){         //caso in cui il worker avversario è sulla stessa colonna di Minotauro
                 int temp = this.getCoordY() - j;
-                if(temp > 0){        //il worker avversario si trova a coord minori di Minotauro --> controllo se può spingerlo alla cella i-1
-                    if(ActionManager.validCoords(i-1,j) && Map.noWorkerHere(i-1,j) && Map.getCellBlockType(i-1,j) != BlockType.CUPOLA)
+                if(temp > 0){        //il worker avversario si trova a coord minori di Minotauro --> controllo se può spingerlo alla cella j-1
+                    int m = j-1;
+                    if(ActionManager.validCoords(i,m) && Map.noWorkerHere(i,m) && Map.getCellBlockType(i,m) != BlockType.CUPOLA)
                         return true;
                 }
-                if(temp < 0) {        //il worker avversario si trova a coord maggiori di Minotauro --> controllo se può spingerlo alla cella i+1
-                    if (ActionManager.validCoords(i + 1, j) && Map.noWorkerHere(i + 1, j) && (Map.getCellBlockType(i + 1, j) != BlockType.CUPOLA))
+                if(temp < 0) {        //il worker avversario si trova a coord maggiori di Minotauro --> controllo se può spingerlo alla cella j+1
+                    int m = j+1;
+                    if (ActionManager.validCoords(i,m) && Map.noWorkerHere(i,m) && (Map.getCellBlockType(i,m) != BlockType.CUPOLA))
                         return true;
                 }
             }
 
             if (i!=this.getCoordX() && j==this.getCoordY()){         //caso in cui il worker avversario è sulla stessa riga di Minotauro
                 int temp = this.getCoordX() - i;
-                if(temp > 0){        //il worker avversario si trova a coord minori di Minotauro --> controllo se può spingerlo alla cella j-1
-                    if(ActionManager.validCoords(i,j-1) && Map.noWorkerHere(i,j-1) && Map.getCellBlockType(i,j-1) != BlockType.CUPOLA)
+                if(temp > 0){        //il worker avversario si trova a coord minori di Minotauro --> controllo se può spingerlo alla cella i-1
+                    int m = i-1;
+                    if(ActionManager.validCoords(m,j) && Map.noWorkerHere(m,j) && Map.getCellBlockType(m,j) != BlockType.CUPOLA)
                         return true;
                 }
-                if(temp < 0) {        //il worker avversario si trova a coord maggiori di Minotauro --> controllo se può spingerlo alla cella j+1
-                    if (ActionManager.validCoords(i, j+1) && Map.noWorkerHere(i, j+1) && Map.getCellBlockType(i , j+1) != BlockType.CUPOLA)
+                if(temp < 0) {        //il worker avversario si trova a coord maggiori di Minotauro --> controllo se può spingerlo alla cella i+1
+                    int m = i+1;
+                    if (ActionManager.validCoords(m,j) && Map.noWorkerHere(m,j) && Map.getCellBlockType(m,j) != BlockType.CUPOLA)
                         return true;
                 }
             }
