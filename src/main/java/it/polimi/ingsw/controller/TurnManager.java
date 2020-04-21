@@ -76,11 +76,11 @@ public class TurnManager {
                 actionPrometheus(player);
                 break;
 
-            default:    //APOLLO, ATHENA, ATLAS, MINOTAUR
+            default://APOLLO, ATHENA, ATLAS, MINOTAUR
                 if(movement(player)){
                     break;
                 }
-                construction(player);
+                construction();
                 break;
         }
     }
@@ -140,7 +140,7 @@ public class TurnManager {
             System.out.println(workerSelected.getIdWorker() + " NON può muoversi una seconda volta!");
         }
 
-        construction(player);
+        construction();
     }
 
     private static void actionAtlas(Player player){
@@ -161,7 +161,7 @@ public class TurnManager {
 
                 workerSelected.buildBlock(true, coords[0], coords[1]);
             }else{
-                construction(player);
+                construction();
             }
         }else{
             System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
@@ -228,7 +228,7 @@ public class TurnManager {
                 if (!workerSelected.canBuild(true)) {
                     System.out.println(workerSelected.getIdWorker() + " NON può costruire 2 volte!");
                 }
-                construction(player);
+                construction();
             }
         } else {
             System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
@@ -252,7 +252,7 @@ public class TurnManager {
             GameManager.printPlayerInGame();
         }
 
-        construction(player);
+        construction();
     }
 
     private static void actionPrometheus(Player player){
@@ -263,7 +263,7 @@ public class TurnManager {
             answer = ActionManager.yesOrNo();
 
             if (answer.equals("yes")) {
-                construction(player);
+                construction();
                 setAllowHeightPrometheus(false);
             }
 
@@ -275,7 +275,7 @@ public class TurnManager {
             return;
         }
 
-        construction(player);
+        construction();
 
         setAllowHeightPrometheus(true);
     }
@@ -299,7 +299,7 @@ public class TurnManager {
         }
     }
 
-    private static void construction(Player player){
+    private static void construction(){
         int[] coords;
         if(workerSelected.canBuild()) {
             System.out.println("COSTRUZIONE: ");
