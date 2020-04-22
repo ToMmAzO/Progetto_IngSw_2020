@@ -36,8 +36,6 @@ public class ViewGame {
         ViewGame.setTurn(GameManager.getPlayers()[playerIndex], playerIndex);
     }
 
-
-
     private static void godChoice(int playerIndex){
         ViewModel.printCardsSelected();
         int cardNumber = 0;
@@ -77,19 +75,15 @@ public class ViewGame {
                 coordRow = Integer.parseInt(coordString[0]);
                 coordColumn = Integer.parseInt(coordString[1]);
                 if (ActionManager.validCoords(coordRow, coordColumn)){
-                    switch (numberOfWorker){
-                        case 1:{
-                            if (player.setWorker1(coordRow, coordColumn)){
+                    switch (numberOfWorker) {
+                        case 1 -> {
+                            if (player.setWorker1(coordRow, coordColumn)) {
                                 return;
-                            } else{
-                                break;
                             }
                         }
-                        case 2:{
-                            if (player.setWorker2(coordRow, coordColumn)){
+                        case 2 -> {
+                            if (player.setWorker2(coordRow, coordColumn)) {
                                 return;
-                            } else{
-                                break;
                             }
                         }
                     }
