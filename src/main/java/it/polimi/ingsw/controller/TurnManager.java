@@ -43,36 +43,19 @@ public class TurnManager {
 
     private static void selectAction(Player player){
         switch (player.getGodChoice()) {
-            case ARTEMIS:
-                actionArtemis(player);
-                break;
-
-            case ATLAS:
-                actionAtlas(player);
-                break;
-
-            case DEMETER:
-                actionDemeter(player);
-                break;
-
-            case HEPHAESTUS:
-                actionHephaestus(player);
-                break;
-
-            case PAN:
-                actionPan(player);
-                break;
-
-            case PROMETHEUS:
-                actionPrometheus(player);
-                break;
-
-            default://APOLLO, ATHENA, ATLAS, MINOTAUR
-                if(movement(player)){
+            case ARTEMIS -> actionArtemis(player);
+            case ATLAS -> actionAtlas(player);
+            case DEMETER -> actionDemeter(player);
+            case HEPHAESTUS -> actionHephaestus(player);
+            case PAN -> actionPan(player);
+            case PROMETHEUS -> actionPrometheus(player);
+            //APOLLO, ATHENA, ATLAS, MINOTAUR
+            default -> {
+                if (movement(player)) {
                     break;
                 }
                 construction();
-                break;
+            }
         }
     }
 

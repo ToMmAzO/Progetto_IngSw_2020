@@ -19,7 +19,7 @@ public class GameManager {
         return numberOfPlayers;
     }
 
-    public static Player[] getPlayers(){
+    public static Player[] getPlayersInGame(){
         if(players.size() == 1){
             return new Player[]{players.get(0)};
         } else if(players.size() == 2){

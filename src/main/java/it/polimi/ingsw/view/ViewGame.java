@@ -27,13 +27,13 @@ public class ViewGame {
         }
         GameManager.addFirstPlayer(nickname, numberChosen);
         godChoice(playerIndex);
-        setTurn(GameManager.getPlayers()[0], 0);
+        setTurn(GameManager.getPlayersInGame()[0], 0);
     }
 
     public static void joinGame(String nickname){
         int playerIndex = GameManager.addPlayer(nickname);
         godChoice(playerIndex);
-        ViewGame.setTurn(GameManager.getPlayers()[playerIndex], playerIndex);
+        ViewGame.setTurn(GameManager.getPlayersInGame()[playerIndex], playerIndex);
     }
 
     private static void godChoice(int playerIndex){
@@ -54,9 +54,9 @@ public class ViewGame {
     private static void setTurn(Player player, int indexOfPlayer){
         ViewModel.printMap();
         if (indexOfPlayer > 0){
-            ViewModel.printWorkersPositions(GameManager.getPlayers()[0]);
+            ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[0]);
             if (indexOfPlayer > 1) {
-                ViewModel.printWorkersPositions(GameManager.getPlayers()[1]);
+                ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[1]);
             }
         }
         setWorker(player, 1);
