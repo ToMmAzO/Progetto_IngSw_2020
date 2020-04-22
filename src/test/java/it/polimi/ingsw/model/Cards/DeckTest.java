@@ -1,13 +1,13 @@
 package it.polimi.ingsw.model.Cards;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class DeckTest {
+class DeckTest {
 
     @Test
-    public void Deck() {
+    void deck() {
         new Deck(3);
         God[] godsSelected = Deck.getCardsSelected();
         assertNotEquals(godsSelected[0], godsSelected[1]);

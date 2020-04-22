@@ -2,14 +2,14 @@ package it.polimi.ingsw.model.Player;
 
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.God;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class PlayerTest {
+class PlayerTest {
 
     @Test
-    public void Player(){
+    void player() {
         Player p1 = new Player("player1");
         Player p2 = new Player("player2");
         Player p3 = new Player("player3");

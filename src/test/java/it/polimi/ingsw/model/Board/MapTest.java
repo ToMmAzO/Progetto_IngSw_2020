@@ -3,14 +3,14 @@ package it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Workers.Worker;
 import it.polimi.ingsw.model.Workers.WorkerApollo;
 import it.polimi.ingsw.model.Workers.WorkerArtemis;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class MapTest {
+class MapTest {
 
     @Test
-    public void Map() {
+    void map() {
         new Map();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
