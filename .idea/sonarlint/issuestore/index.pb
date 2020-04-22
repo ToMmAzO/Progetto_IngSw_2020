@@ -62,8 +62,6 @@ f
 6src/main/java/it/polimi/ingsw/model/Player/Player.java,9\e\9e27ac591a7ea82c59f6d2c9f77b18ad9e5138f9
 g
 7src/main/java/it/polimi/ingsw/model/Workers/Worker.java,d\2\d239881cf271fed2cc5c59526b97828031450245
-\
-,src/main/java/it/polimi/ingsw/view/View.java,8\2\829d4d5d3a8233b554d38c744c9b8e1efb0ba272
 E
 src/uml/Santorini.mdj,e\a\eabfc3e3d0d21f915ac72c60c0260b0ba10877a1
 f
