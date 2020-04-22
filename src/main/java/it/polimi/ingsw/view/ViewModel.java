@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Player.Player;
 
-public class View {
+public class ViewModel {
 
     public static void printCardsSelected(){
         God[] x = Deck.getCardsSelected();

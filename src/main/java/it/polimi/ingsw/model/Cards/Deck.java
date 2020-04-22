@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.Cards;
 
+import it.polimi.ingsw.controller.GameManager;
+
 public class Deck {
 
     private static God[] godSelected;
@@ -32,6 +34,10 @@ public class Deck {
     public static God getCardToPlayer(int indexOfCardSelected){
         availability[indexOfCardSelected-1] = false;
         return godSelected[indexOfCardSelected-1];
+    }
+
+    public static boolean isAvailable(int cardNumber) {
+        return (cardNumber >= 1 && cardNumber <= GameManager.getNumberOfPlayers()) && (Deck.getAvailability()[cardNumber - 1]);
     }
 
     private static int[] extractCasualNumbers(int numberOfNumbers){

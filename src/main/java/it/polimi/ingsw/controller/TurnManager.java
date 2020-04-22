@@ -3,9 +3,8 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.model.Workers.Worker;
-import it.polimi.ingsw.view.View;
-
-import java.util.Scanner;
+import it.polimi.ingsw.view.ViewModel;
+import it.polimi.ingsw.view.ViewTurn;
 
 public class TurnManager {
 
@@ -14,18 +13,10 @@ public class TurnManager {
     static boolean allowHeightPrometheus = true;
 
     public static boolean startTurn(Player player){
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Scegli che worker usare: " + player.getWorkerSelected(1).getIdWorker() +
-                " oppure " + player.getWorkerSelected(2).getIdWorker() + ". ");
-        int selectionWorker = 0;
-        while (selectionWorker != 1 && selectionWorker != 2){
-            try{
-                System.out.print("Scrivi 1 oppure 2: ");
-                selectionWorker= Integer.parseInt((scanner.nextLine()));
-            } catch(IllegalArgumentException e){
-                System.out.print("Formato Input scorretto! ");
-            }
-        }
+        return verifyRegularity(player, ViewTurn.turn(player));
+    }
+
+    public static boolean verifyRegularity(Player player, int selectionWorker){
         workerSelected = player.getWorkerSelected(selectionWorker);
         if(workerSelected.canMove()){
             selectAction(player);
@@ -126,13 +117,13 @@ public class TurnManager {
 
                 if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
                     workerSelected.changePosition(coords[0], coords[1]);
-                    View.printMap();
+                    ViewModel.printMap();
                     GameManager.printPlayerInGame();
                     GameManager.setVictory();
                     return;
                 }else{
                     workerSelected.changePosition(coords[0], coords[1]);
-                    View.printMap();
+                    ViewModel.printMap();
                     GameManager.printPlayerInGame();
                 }
             }
@@ -186,7 +177,7 @@ public class TurnManager {
 
             workerSelected.buildBlock(coords[0], coords[1]);
 
-            View.printMap();
+            ViewModel.printMap();
             GameManager.printPlayerInGame();
 
             System.out.println("Vuoi costruire ancora? (Yes o No)");
@@ -242,13 +233,13 @@ public class TurnManager {
 
         if((workerSelected.getCoordZ() == 3 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 1) || (workerSelected.getCoordZ() == 3 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0) || (workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0) || (workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3)){
             workerSelected.changePosition(coords[0], coords[1]);
-            View.printMap();
+            ViewModel.printMap();
             GameManager.printPlayerInGame();
             GameManager.setVictory();
             return;
         }else{
             workerSelected.changePosition(coords[0], coords[1]);
-            View.printMap();
+            ViewModel.printMap();
             GameManager.printPlayerInGame();
         }
 
@@ -287,13 +278,13 @@ public class TurnManager {
 
         if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
             workerSelected.changePosition(coords[0], coords[1]);
-            View.printMap();
+            ViewModel.printMap();
             GameManager.printPlayerInGame();
             GameManager.setVictory();
             return true;
         }else{
             workerSelected.changePosition(coords[0], coords[1]);
-            View.printMap();
+            ViewModel.printMap();
             GameManager.printPlayerInGame();
             return false;
         }
