@@ -2,8 +2,7 @@ package it.polimi.ingsw.model.Cards;
 
 import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.Assert.*;
 
 public class DeckTest {
 
@@ -15,13 +14,14 @@ public class DeckTest {
         assertNotEquals(godsSelected[1], godsSelected[2]);
         assertNotEquals(godsSelected[2], godsSelected[0]);
         for (int i = 0; i < 3; i++){
-            assertEquals(true, Deck.getAvailability()[i]);
+            assertTrue(Deck.getAvailability()[i]);
         }
         for (int i = 0; i < 3; i++){
             God god = godsSelected[i];
             God godChosen = Deck.getCardToPlayer(i+1);
             assertEquals(god,godChosen);
-            assertEquals(false, Deck.getAvailability()[i]);
+            assertFalse(Deck.getAvailability()[i]);
         }
     }
+
 }
