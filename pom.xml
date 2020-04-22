@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>it.polimi.ingsw</groupId>
-  <artifactId>GC10</artifactId>
+  <artifactId>ing-sw-2020-Pozzi-Quagliana-Simeoni</artifactId>  <!-- Prima GC10  -->
   <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>  <!-- Nuovo (Lollo) -->
 
   <name>GC10</name>
   <!-- FIXME change it to the project's website -->
@@ -14,23 +16,14 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>  <!-- Prima 1.7 -->
-    <maven.compiler.target>1.8</maven.compiler.target>  <!-- Prima 1.7 -->
+    <maven.compiler.source>1.14</maven.compiler.source>  <!-- Prima 1.7 -->
+    <maven.compiler.target>1.14</maven.compiler.target>  <!-- Prima 1.7 -->
 
-    <junit-jupiter.version>5.1.0</junit-jupiter.version>
-    <!-- optional : if we want to use a junit4 specific version -->
-    <junit.version>4.11</junit.version>
+    <junit-jupiter.version>5.6.2</junit-jupiter.version>
 
-    <maven.compiler.release>7</maven.compiler.release>
-    <java.version>1.9</java.version>
+    <maven.compiler.release>14</maven.compiler.release>
+    <java.version>1.14</java.version>
   </properties>
-
-  <!-- Nuovo -->
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.5.RELEASE</version>
-  </parent>
 
   <dependencies>
     <dependency>
@@ -39,17 +32,18 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>RELEASE</version>
-      <scope>test</scope>
-    </dependency>
+
     <!-- Nuovo -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.4.0</version>
+      <version>5.6.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.6.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -57,28 +51,24 @@
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
-        <!-- Nuovo -->
+        <!-- Nuovo (Lollo) -->
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.0</version>
+          <version>3.0.0-M4</version>
         </plugin>
-        <!-- Nuovo -->
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
-          </configuration>
-        </plugin>
+
         <!-- Nuovo -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
           <configuration>
-            <release>8</release>
+            <source>14</source>
+            <target>14</target>
           </configuration>
         </plugin>
+
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>

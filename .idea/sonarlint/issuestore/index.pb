@@ -66,3 +66,5 @@ g
 ,src/main/java/it/polimi/ingsw/view/View.java,8\2\829d4d5d3a8233b554d38c744c9b8e1efb0ba272
 E
 src/uml/Santorini.mdj,e\a\eabfc3e3d0d21f915ac72c60c0260b0ba10877a1
+f
+6src/test/java/it/polimi/ingsw/model/Board/MapTest.java,9\d\9d2ad77b2f5798f42ef6527ff73b76e5f86046db
