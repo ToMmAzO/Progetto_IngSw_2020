@@ -28,36 +28,44 @@ public class ViewTurn {
 
     public static int[] insertCoordinateMovement(Worker w, God g){
         Scanner scanner = new Scanner(System.in);
-        String[] coordString = {"0", "0"};      //prova
+        String[] coordString;      //prova
+        int coordX, coordY;
 
         System.out.println("MOVIMENTO: ");
-        do {
+        while(true){
             try{
                 System.out.print("Inserisci delle coordinate x, y: ");
                 coordString = scanner.nextLine().replace(" ", "").split(",");
+                coordX = Integer.parseInt(coordString[0]);
+                coordY = Integer.parseInt(coordString[1]);
+                if(ActionManager.verifyCoordinateMovement(w, g, coordX, coordY)){
+                    return new int[]{coordX, coordY};
+                }
             } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                 System.out.print("Formato Input scorretto! ");
             }
-        } while(ActionManager.verifyCoordinateMovement(w, g, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1])));
-
-        return new int[]{Integer.parseInt(coordString[0], Integer.parseInt(coordString[1]))};
+        }
     }
 
     public static int[] insertCoordinateConstruction(Worker w){
         Scanner scanner = new Scanner(System.in);
-        String[] coordString = {"0", "0"};      //prova
+        String[] coordString;      //prova
+        int coordX, coordY;
 
         System.out.println("COSTRUZIONE: ");
-        do {
+        while(true){
             try{
                 System.out.print("Inserisci delle coordinate x, y: ");
                 coordString = scanner.nextLine().replace(" ", "").split(",");
+                coordX = Integer.parseInt(coordString[0]);
+                coordY = Integer.parseInt(coordString[1]);
+                if(ActionManager.verifyCoordinateConstruction(w, coordX, coordY)){
+                    return new int[]{coordX, coordY};
+                }
             } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                 System.out.print("Formato Input scorretto! ");
             }
-        } while(ActionManager.verifyCoordinateConstruction(w, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1])));
-
-        return new int[]{Integer.parseInt(coordString[0], Integer.parseInt(coordString[1]))};
+        }
     }
 
     public static String yesOrNo(){
