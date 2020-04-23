@@ -56,19 +56,10 @@ public class GameManager {
         ViewModel.printCardChosen(g);
     }
 
-    public static void firstTurn(Player player, int indexOfPlayer){
-        ViewModel.printMap();
-        if (indexOfPlayer > 0){
-            ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[0]);
-            if (indexOfPlayer > 1) {
-                ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[1]);
-            }
-        }
-        ViewGame.setWorker(player, 1);
-        ViewGame.setWorker(player, 2);
-    }
-
     public static void startGame(){
+        for (int i = 0; i < players.size(); i++){
+            firstTurn(i);
+        }
         int currPlayer = 0;
         while (!victory){
             System.out.println("\n*VISUALE " + players.get(currPlayer).getNickname() + "*\n");
@@ -107,6 +98,18 @@ public class GameManager {
                 break;
             }
         }
+    }
+
+    private static void firstTurn(int indexOfPlayer){
+        ViewModel.printMap();
+        if (indexOfPlayer > 0){
+            ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[0]);
+            if (indexOfPlayer > 1) {
+                ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[1]);
+            }
+        }
+        ViewGame.setWorker(players.get(indexOfPlayer), 1);
+        ViewGame.setWorker(players.get(indexOfPlayer), 2);
     }
 
     private static int nextPlayer(int indexOfActualPlayer){

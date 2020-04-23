@@ -9,7 +9,6 @@ public class Prova {
         ViewGame.joinGameFirst("Player 1");
         ViewGame.joinGame("Player 2");
         ViewGame.joinGame("Player 3");
-
         GameManager.startGame();
     }
 

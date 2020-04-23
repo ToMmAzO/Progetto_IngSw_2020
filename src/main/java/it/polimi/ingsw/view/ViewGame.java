@@ -25,13 +25,11 @@ public class ViewGame {
         }
         GameManager.addFirstPlayer(nickname, numberChosen);
         ViewGame.godChoice(0);
-        GameManager.firstTurn(GameManager.getPlayersInGame()[0], 0);
     }
 
     public static void joinGame(String nickname){
         int playerIndex = GameManager.addPlayer(nickname);
         ViewGame.godChoice(playerIndex);
-        GameManager.firstTurn(GameManager.getPlayersInGame()[playerIndex], playerIndex);
     }
 
     public static void setWorker(Player player, int numberOfWorker){
