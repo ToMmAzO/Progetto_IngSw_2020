@@ -63,7 +63,7 @@ public class GameManager {
             for (Player player : players) {
                 ViewModel.printWorkersPositions(player);
             }
-            if (TurnManager.startTurn((players.get(currPlayer)))){
+             if (TurnManager.startTurn((players.get(currPlayer)))){
                 if(!victory){
                     currPlayer = nextPlayer(currPlayer);
                 }

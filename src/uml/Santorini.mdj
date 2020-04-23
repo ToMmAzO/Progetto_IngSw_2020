@@ -6377,7 +6377,7 @@
 											"top": 181,
 											"width": 381.72265625,
 											"height": 13,
-											"text": "-positioningWorkerOnMap(int indexOfPlayer, int numberOfWorker)",
+											"text": "-setWorkerOnMap(int indexOfPlayer, int numberOfWorker)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -9695,7 +9695,8 @@
 								"$ref": "AAAAAAFwyjzuJMVT6sE="
 							},
 							"name": "godChoise",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -10965,7 +10966,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFxj6kLC6ZoBVc="
 									},
-									"name": "int x"
+									"name": "int x",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -11711,7 +11713,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFxfnsWc++s1Pc="
 							},
-							"name": "positioningWorkerOnMap",
+							"name": "setWorkerOnMap",
 							"visibility": "private",
 							"parameters": [
 								{
@@ -11720,8 +11722,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFxfnsWc++nrEY="
 									},
-									"name": "int indexOfPlayer",
-									"type": ""
+									"name": "int indexOfPlayer"
 								},
 								{
 									"_type": "UMLParameter",
@@ -11729,8 +11730,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFxfnsWc++nrEY="
 									},
-									"name": "int numberOfWorker",
-									"type": ""
+									"name": "int numberOfWorker"
 								}
 							]
 						},

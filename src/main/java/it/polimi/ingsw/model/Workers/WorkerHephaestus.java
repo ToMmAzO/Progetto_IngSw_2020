@@ -20,7 +20,7 @@ public class WorkerHephaestus extends Worker {
                     }
                 }
             }
-            return true;
+            return false;
         }else{
             return super.canBuild();
         }
