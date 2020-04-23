@@ -69,23 +69,14 @@ public class TurnManager {
             answer = ViewTurn.yesOrNo();
 
             if(answer.equals("yes")) {
-                System.out.println("MOVIMENTO: ");
                 coords = ViewTurn.insertCoordinateMovement(workerSelected, player.getGodChoice());
                 while (x == coords[0] && y == coords[1]) {
                     System.out.println("Inserisci delle coordinate DIVERSE da quelle di partenza!");
                     coords = ViewTurn.insertCoordinateMovement(workerSelected, player.getGodChoice());
                 }
 
-                if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
-                    workerSelected.changePosition(coords[0], coords[1]);
-                    ViewModel.printMap();
-                    GameManager.printPlayerInGame();
-                    GameManager.setVictory();
+                if(movement(coords)){
                     return;
-                }else{
-                    workerSelected.changePosition(coords[0], coords[1]);
-                    ViewModel.printMap();
-                    GameManager.printPlayerInGame();
                 }
             }
         }else{
@@ -112,7 +103,6 @@ public class TurnManager {
             answer = ViewTurn.yesOrNo();
 
             if(answer.equals("yes")){
-                System.out.println("COSTRUZIONE: ");
                 coords =  ViewTurn.insertCoordinateConstruction(workerSelected);
 
                 workerSelected.buildBlock(true, coords[0], coords[1]);
@@ -134,29 +124,31 @@ public class TurnManager {
         }
 
         if(workerSelected.canBuild()) {
-            System.out.println("COSTRUZIONE: ");
             coords =  ViewTurn.insertCoordinateConstruction(workerSelected);
 
             x = coords[0];
             y = coords[1];
 
-            workerSelected.buildBlock(coords[0], coords[1]);
+            construction(coords);
 
             ViewModel.printMap();
             GameManager.printPlayerInGame();
 
-            System.out.println("Vuoi costruire ancora? (Yes o No)");
-            answer = ViewTurn.yesOrNo();
+            if(workerSelected.canBuild(x, y)){
+                System.out.println("Vuoi costruire ancora? (Yes o No)");
+                answer = ViewTurn.yesOrNo();
 
-            if(answer.equals("yes")){
-                System.out.println("COSTRUZIONE: ");
-                coords =  ViewTurn.insertCoordinateConstruction(workerSelected);
-                while (x == coords[0] && y == coords[1]) {
-                    System.out.println("Inserisci delle coordinate DIVERSE da quelle dove hai costruito prima!");
-                    coords = ViewTurn.insertCoordinateConstruction(workerSelected);
+                if(answer.equals("yes")){
+                    coords =  ViewTurn.insertCoordinateConstruction(workerSelected);
+                    while (x == coords[0] && y == coords[1]) {
+                        System.out.println("Inserisci delle coordinate DIVERSE da quelle dove hai costruito prima!");
+                        coords = ViewTurn.insertCoordinateConstruction(workerSelected);
+                    }
+
+                    construction(coords);
                 }
-
-                workerSelected.buildBlock(coords[0], coords[1]);
+            }else{
+                System.out.println(workerSelected.getIdWorker() + " NON può costruire una seconda volta!");
             }
         }else{
             System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
@@ -257,7 +249,6 @@ public class TurnManager {
     }
 
     private static boolean movement(int[] coords){
-        System.out.println("MOVIMENTO: ");
         if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
             workerSelected.changePosition(coords[0], coords[1]);
             ViewModel.printMap();
@@ -273,7 +264,6 @@ public class TurnManager {
     }
 
     private static void construction(int[] coords){
-        System.out.println("COSTRUZIONE: ");
         workerSelected.buildBlock(coords[0], coords[1]);
     }
 

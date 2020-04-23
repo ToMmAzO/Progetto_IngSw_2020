@@ -92,6 +92,10 @@ public abstract class Worker {
         return false;
     }
 
+    public boolean canBuild(int x, int y) {      //DEMETER
+        return true;
+    }
+
     public boolean canBuild(boolean buildAgain) {       //HEPHAESTUS
         return true;
     }

@@ -5,8 +5,6 @@ import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Workers.Worker;
 
-import java.util.Scanner;
-
 public class ActionManager {
 
     public static boolean isAround(int x, int y, int newX, int newY){
@@ -296,5 +294,5 @@ public class ActionManager {
         }
         return false;
     }
-    
+
 }

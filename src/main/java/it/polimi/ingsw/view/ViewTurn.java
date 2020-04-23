@@ -30,6 +30,7 @@ public class ViewTurn {
         Scanner scanner = new Scanner(System.in);
         String[] coordString = {"0", "0"};      //prova
 
+        System.out.println("MOVIMENTO: ");
         do {
             try{
                 System.out.print("Inserisci delle coordinate x, y: ");
@@ -46,6 +47,7 @@ public class ViewTurn {
         Scanner scanner = new Scanner(System.in);
         String[] coordString = {"0", "0"};      //prova
 
+        System.out.println("COSTRUZIONE: ");
         do {
             try{
                 System.out.print("Inserisci delle coordinate x, y: ");
