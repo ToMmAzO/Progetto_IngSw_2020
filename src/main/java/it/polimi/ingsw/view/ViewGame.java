@@ -30,7 +30,7 @@ public class ViewGame {
         setTurn(GameManager.getPlayersInGame()[0], 0);
     }
 
-    public static void joinGame(String nickname){
+    public static void joinGame(String nickname){           //GameManager
         int playerIndex = GameManager.addPlayer(nickname);
         godChoice(playerIndex);
         ViewGame.setTurn(GameManager.getPlayersInGame()[playerIndex], playerIndex);
@@ -51,7 +51,7 @@ public class ViewGame {
         ViewModel.printCardChosen(g);
     }
 
-    private static void setTurn(Player player, int indexOfPlayer){
+    private static void setTurn(Player player, int indexOfPlayer){          //GameManager
         ViewModel.printMap();
         if (indexOfPlayer > 0){
             ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[0]);
