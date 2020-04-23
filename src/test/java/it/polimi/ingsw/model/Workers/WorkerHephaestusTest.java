@@ -33,8 +33,8 @@ class WorkerHephaestusTest {
         Map.setCellBlockType(0, 1, BlockType.GROUND);
         Map.setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.setCellBlockType(1, 1, BlockType.BLOCK1);
-        worker1.buildBlock(false,1,0);
-        assertEquals(Map.getCellBlockType(1, 0), BlockType.BLOCK2);
+        worker1.buildBlock(true,1,0);
+        assertNotEquals(Map.getCellBlockType(1, 0), BlockType.BLOCK2);
 
         worker1.buildBlock(true,1,1);
         assertEquals(Map.getCellBlockType(1, 1), BlockType.BLOCK3);
