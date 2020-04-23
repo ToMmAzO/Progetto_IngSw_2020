@@ -13,8 +13,6 @@ public class WorkerAtlas extends Worker {
     public void buildBlock(boolean buildCupola, int buildX, int buildY) {
         if(buildCupola){
             Map.setCellBlockType(buildX, buildY, BlockType.CUPOLA);
-        }else {
-            super.buildBlock(buildX, buildY);
         }
     }
 
