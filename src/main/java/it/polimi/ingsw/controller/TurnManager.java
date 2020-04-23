@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.model.Workers.Worker;
@@ -105,7 +106,7 @@ public class TurnManager {
             if(answer.equals("yes")){
                 coords =  ViewTurn.insertCoordinateConstruction(workerSelected);
 
-                workerSelected.buildBlock(true, coords[0], coords[1]);
+                workerSelected.buildBlock(true, coords[0], coords[1]);     //DUBBIO: se la gestiamo così non basta fare Map.setCellBlockType(coords[0],coords[1], BlockType.CUPOLA);  ??
             }else{
                 construction(ViewTurn.insertCoordinateConstruction(workerSelected));
             }
