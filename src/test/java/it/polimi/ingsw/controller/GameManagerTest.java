@@ -15,12 +15,11 @@ class GameManagerTest {
     }
 
     @AfterEach
-    void cleanUp(){
-
+    void tearDown(){
     }
 
     @Test
-    void addFirstPlayer() {
+    void addFirstPlayerTest() {
         assertEquals(3, Deck.getCardsSelected().length);
         for (int i = 0; i < 3; i++){
             assertTrue(Deck.getAvailability()[i]);
@@ -31,7 +30,7 @@ class GameManagerTest {
     }
 
     @Test
-    void addPlayer() {
+    void addPlayerTest() {
         GameManager.addPlayer("Player 2");
         assertEquals("Player 2", GameManager.getPlayersInGame()[1].getNickname());
         assertEquals(2, GameManager.getPlayersInGame().length);
@@ -45,7 +44,7 @@ class GameManagerTest {
     }
 
     @Test
-    void choiceOfCard() {
+    void choiceOfCardTest() {
         GameManager.addPlayer("Player 2");
         GameManager.addPlayer("Player 3");
 
@@ -63,7 +62,7 @@ class GameManagerTest {
     }
 
     @Test
-    void deletePlayer() {
+    void deletePlayerTest() {
         GameManager.addPlayer("Player 2");
         GameManager.addPlayer("Player 3");
 

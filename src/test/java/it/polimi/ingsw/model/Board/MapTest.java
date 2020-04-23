@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MapTest {
 
     @Test
-    void map() {
+    void mapTest() {
         new Map();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {

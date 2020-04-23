@@ -3,7 +3,6 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.controller.ActionManager;
 import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.model.Cards.Deck;
-import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Player.Player;
 
 import java.util.Scanner;
@@ -13,7 +12,6 @@ public class ViewGame {
     private static final Scanner scanner= new Scanner(System.in);
 
     public static void joinGameFirst(String nickname){
-        int playerIndex = 0;
         System.out.println("Sei il primo giocatore ad unirsi alla lobby.");
         System.out.print("Scegli quanti giocatori avrà la partita. ");
         int numberChosen = 0;
@@ -26,44 +24,17 @@ public class ViewGame {
             }
         }
         GameManager.addFirstPlayer(nickname, numberChosen);
-        godChoice(playerIndex);
-        setTurn(GameManager.getPlayersInGame()[0], 0);
+        ViewGame.godChoice(0);
+        GameManager.firstTurn(GameManager.getPlayersInGame()[0], 0);
     }
 
-    public static void joinGame(String nickname){           //GameManager
+    public static void joinGame(String nickname){
         int playerIndex = GameManager.addPlayer(nickname);
-        godChoice(playerIndex);
-        ViewGame.setTurn(GameManager.getPlayersInGame()[playerIndex], playerIndex);
+        ViewGame.godChoice(playerIndex);
+        GameManager.firstTurn(GameManager.getPlayersInGame()[playerIndex], playerIndex);
     }
 
-    private static void godChoice(int playerIndex){
-        ViewModel.printCardsSelected();
-        int cardNumber = 0;
-        while (!Deck.isAvailable(cardNumber)){
-            try{
-                System.out.print("Scegli il numero di una delle " + GameManager.getNumberOfPlayers() + " carte ancora disponibili: ");
-                cardNumber= Integer.parseInt((scanner.nextLine()));
-            } catch(IllegalArgumentException e){
-                System.out.print("Formato Input scorretto! ");
-            }
-        }
-        God g = GameManager.choiceOfCard(playerIndex, cardNumber);
-        ViewModel.printCardChosen(g);
-    }
-
-    private static void setTurn(Player player, int indexOfPlayer){          //GameManager
-        ViewModel.printMap();
-        if (indexOfPlayer > 0){
-            ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[0]);
-            if (indexOfPlayer > 1) {
-                ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[1]);
-            }
-        }
-        setWorker(player, 1);
-        setWorker(player, 2);
-    }
-
-    private static void setWorker(Player player, int numberOfWorker){
+    public static void setWorker(Player player, int numberOfWorker){
         System.out.print("Posizionamento lavoratore " + (numberOfWorker) + ". ");
         String[] coordString;
         int coordRow;
@@ -95,6 +66,20 @@ public class ViewGame {
                 System.out.print("Formato Input scorretto! ");
             }
         }
+    }
+
+    private static void godChoice(int playerIndex){
+        ViewModel.printCardsSelected();
+        int cardNumber = 0;
+        while (!Deck.isAvailable(cardNumber)){
+            try{
+                System.out.print("Scegli il numero di una delle " + GameManager.getNumberOfPlayers() + " carte ancora disponibili: ");
+                cardNumber= Integer.parseInt((scanner.nextLine()));
+            } catch(IllegalArgumentException e){
+                System.out.print("Formato Input scorretto! ");
+            }
+        }
+        GameManager.choiceOfCard(playerIndex, cardNumber);
     }
 
 }

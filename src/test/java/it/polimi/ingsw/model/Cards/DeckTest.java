@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DeckTest {
 
     @Test
-    void deck() {
+    void deckTest() {
         new Deck(3);
         God[] godsSelected = Deck.getCardsSelected();
         assertNotEquals(godsSelected[0], godsSelected[1]);

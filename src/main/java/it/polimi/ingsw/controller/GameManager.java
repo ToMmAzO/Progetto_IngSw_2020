@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Player.Player;
+import it.polimi.ingsw.view.ViewGame;
 import it.polimi.ingsw.view.ViewModel;
 
 import java.util.ArrayList;
@@ -49,10 +50,22 @@ public class GameManager {
         return players.size()-1;
     }
 
-    public static God choiceOfCard(int indexOfPlayer, int cardNumber){
+    public static void choiceOfCard(int indexOfPlayer, int cardNumber){
         God g = Deck.getCardToPlayer(cardNumber);
         players.get(indexOfPlayer).setGodChoice(g);
-        return g;
+        ViewModel.printCardChosen(g);
+    }
+
+    public static void firstTurn(Player player, int indexOfPlayer){
+        ViewModel.printMap();
+        if (indexOfPlayer > 0){
+            ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[0]);
+            if (indexOfPlayer > 1) {
+                ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[1]);
+            }
+        }
+        ViewGame.setWorker(player, 1);
+        ViewGame.setWorker(player, 2);
     }
 
     public static void startGame(){

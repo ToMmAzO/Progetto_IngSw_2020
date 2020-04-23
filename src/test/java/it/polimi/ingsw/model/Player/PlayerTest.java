@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerTest {
 
     @Test
-    void player() {
+    void playerTest() {
         Player p1 = new Player("player1");
         Player p2 = new Player("player2");
         Player p3 = new Player("player3");
