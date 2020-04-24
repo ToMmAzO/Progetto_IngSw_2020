@@ -11,11 +11,10 @@ public class ViewTurn {
 
     private static final Scanner scanner= new Scanner(System.in);
 
-    public static int turn(Player player){
+    public static int workerChoice(Player player){
         int selectionWorker = 0;
-
         System.out.print("Scegli che worker usare: " + player.getWorkerSelected(1).getIdWorker() + " oppure " + player.getWorkerSelected(2).getIdWorker() + ". ");
-        while (selectionWorker != 1 && selectionWorker != 2){
+        while(selectionWorker != 1 && selectionWorker != 2){
             try{
                 System.out.print("Scrivi 1 oppure 2: ");
                 selectionWorker= Integer.parseInt((scanner.nextLine()));
@@ -27,11 +26,8 @@ public class ViewTurn {
     }
 
     public static int[] insertCoordinateMovement(Worker w, God g){
-        Scanner scanner = new Scanner(System.in);
-        String[] coordString;      //prova
+        String[] coordString;
         int coordX, coordY;
-
-        System.out.println("MOVIMENTO: ");
         while(true){
             try{
                 System.out.print("Inserisci delle coordinate x, y: ");
@@ -48,11 +44,8 @@ public class ViewTurn {
     }
 
     public static int[] insertCoordinateConstruction(Worker w){
-        Scanner scanner = new Scanner(System.in);
-        String[] coordString;      //prova
+        String[] coordString;
         int coordX, coordY;
-
-        System.out.println("COSTRUZIONE: ");
         while(true){
             try{
                 System.out.print("Inserisci delle coordinate x, y: ");
@@ -69,7 +62,6 @@ public class ViewTurn {
     }
 
     public static String yesOrNo(){
-        Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine().toLowerCase().replace(" ", "");
         while (!answer.equals("yes") && !answer.equals("no")){
             System.out.println("Puoi rispondere solo con yes o no!");

@@ -43,7 +43,7 @@ public class GameManager {
     }
 
     public static int addPlayer(String nickname){
-        System.out.print("Sei il giocatore numero " + (players.size()+1) + " .");
+        System.out.print("Sei il giocatore numero " + (players.size()+1) + ". ");
         System.out.println("Attendi che " + players.get(players.size()-1).getNickname() + " concluda la sua configurazione.");
         players.add(new Player(nickname));
         System.out.println("Avrai il colore " + players.get(players.size()-1).getColor().toString() + ".\n");
@@ -67,7 +67,7 @@ public class GameManager {
             for (Player player : players) {
                 ViewModel.printWorkersPositions(player);
             }
-             if (TurnManager.startTurn((players.get(currPlayer)))){
+            if (TurnManager.startTurn((players.get(currPlayer)))){
                 if(!victory){
                     currPlayer = nextPlayer(currPlayer);
                 }
