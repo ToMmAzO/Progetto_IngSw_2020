@@ -85,4 +85,14 @@ class WorkerMinotaurTest {
 
     }
 
+    @Test
+    void canPushTest1(){
+        new Map();
+        WorkerMinotaur worker1 = new WorkerMinotaur("RED1",0,0);
+        WorkerAtlas worker2 = new WorkerAtlas("YEL1",0,1);
+        worker2.setCoordZ(1);
+        Map.setCellBlockType(0, 2, BlockType.BLOCK2);
+        assertTrue(worker1.canPush(0,1));
+    }
+
 }
