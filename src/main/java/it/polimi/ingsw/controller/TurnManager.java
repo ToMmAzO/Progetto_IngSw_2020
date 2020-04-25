@@ -104,7 +104,9 @@ public class TurnManager {
                 coords = ViewTurn.insertCoordinateConstruction(workerSelected);
                 workerSelected.buildBlock(true, coords[0], coords[1]);//DUBBIO: se la gestiamo così non basta fare Map.setCellBlockType(coords[0],coords[1], BlockType.CUPOLA)??
             } else{
-                construction(ViewTurn.insertCoordinateConstruction(workerSelected));
+                coords = ViewTurn.insertCoordinateConstruction(workerSelected);
+                workerSelected.buildBlock(false, coords[0], coords[1]);
+                //construction(ViewTurn.insertCoordinateConstruction(workerSelected));
             }
         } else{
             System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
@@ -204,6 +206,7 @@ public class TurnManager {
             System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
         }
         actionDefault(player);
+        setAllowHeightPrometheus(true);
     }
 
     private static void actionDefault(Player player) {

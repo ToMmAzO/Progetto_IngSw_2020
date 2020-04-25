@@ -81,7 +81,7 @@ class GameManagerTest {
         GameManager.getPlayersInGame()[2].setWorker2(0, 4);
 
         GameManager.deletePlayer(GameManager.getPlayersInGame()[0]);
-        assertEquals(2, GameManager.getPlayersInGame().length);
+         assertEquals(2, GameManager.getPlayersInGame().length);
         assertEquals("Player 2", GameManager.getPlayersInGame()[0].getNickname());
         assertEquals("Player 3", GameManager.getPlayersInGame()[1].getNickname());
 

@@ -19,14 +19,14 @@ class WorkerAtlasTest {
         worker1.buildBlock(true,0,1);
         assertEquals(Map.getCellBlockType(0, 1), BlockType.CUPOLA);
 
-        /*worker1.buildBlock(false,1,0);
+        worker1.buildBlock(false,1,0);
         assertEquals(Map.getCellBlockType(1, 0), BlockType.BLOCK3);
 
         worker1.buildBlock(false,1,1);
         assertEquals(Map.getCellBlockType(1, 1), BlockType.BLOCK2);
 
         worker1.buildBlock(false,1,0);
-        assertEquals(Map.getCellBlockType(1, 0), BlockType.CUPOLA);*/
+        assertEquals(Map.getCellBlockType(1, 0), BlockType.CUPOLA);
 
     }
 
