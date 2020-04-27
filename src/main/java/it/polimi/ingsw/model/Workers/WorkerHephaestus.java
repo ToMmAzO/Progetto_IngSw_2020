@@ -34,6 +34,8 @@ public class WorkerHephaestus extends Worker {
             }else{      // per forza = a BLOCK1 per il controllo della canBuild
                 Map.setCellBlockType(buildX, buildY, BlockType.BLOCK3);
             }
+        } else{
+            super.buildBlock(buildX, buildY);
         }
     }
 

@@ -102,11 +102,10 @@ public class TurnManager {
             String answer = ViewTurn.yesOrNo();
             if(answer.equals("yes")){
                 coords = ViewTurn.insertCoordinateConstruction(workerSelected);
-                workerSelected.buildBlock(true, coords[0], coords[1]);//DUBBIO: se la gestiamo così non basta fare Map.setCellBlockType(coords[0],coords[1], BlockType.CUPOLA)??
+                workerSelected.buildBlock(true, coords[0], coords[1]);
             } else{
                 coords = ViewTurn.insertCoordinateConstruction(workerSelected);
                 workerSelected.buildBlock(false, coords[0], coords[1]);
-                //construction(ViewTurn.insertCoordinateConstruction(workerSelected));
             }
         } else{
             System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
@@ -164,7 +163,8 @@ public class TurnManager {
                 if(!workerSelected.canBuild(true)) {
                     System.out.println(workerSelected.getIdWorker() + " NON può costruire 2 blocchi!");
                 }
-                construction(ViewTurn.insertCoordinateConstruction(workerSelected));
+                coords = ViewTurn.insertCoordinateConstruction(workerSelected);
+                workerSelected.buildBlock(false, coords[0], coords[1]);
             }
         } else{
             System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
