@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.ActionManager;
 import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Player.Player;
+import it.polimi.ingsw.network.server.Connection;
 
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ public class ViewGame {
     private static final Scanner scanner= new Scanner(System.in);
 
     public static void joinGameFirst(String nickname){
-        System.out.println("Sei il primo giocatore ad unirsi alla lobby.");
+        System.out.print("Sei il primo giocatore ad unirsi alla lobby.");
         System.out.print("Scegli quanti giocatori avrà la partita. ");
         int numberChosen = 0;
         while (numberChosen != 2 && numberChosen != 3){
