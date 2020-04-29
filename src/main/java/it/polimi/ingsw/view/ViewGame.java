@@ -67,7 +67,7 @@ public class ViewGame {
     }
 
     private static void godChoice(int playerIndex){
-        ViewModel.printCardsSelected();
+        Deck.printCards();
         int cardNumber = 0;
         while (!Deck.isAvailable(cardNumber)){
             try{

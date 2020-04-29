@@ -38,4 +38,24 @@ public class Map {
     public static boolean noWorkerHere(int row, int column){
         return map[row][column].getWorkerPresence() == null;
     }
+
+    public static void print(){
+        System.out.printf("   |   %d  |   %d  |   %d  |   %d  |   %d  |\n", 0, 1, 2, 3, 4);
+        System.out.println("---|------|------|------|------|------|");
+        for (int i = 0; i < 5; i++){
+            System.out.printf("%d  |", i);
+            for (int j = 0; j < 5; j++){
+                if(noWorkerHere(i, j)){
+                    if(getCellBlockType(i, j) == BlockType.GROUND){
+                        System.out.printf("%7c", '|');
+                    } else{
+                        System.out.printf("%s|", getCellBlockType(i, j).toString());
+                    }
+                } else{
+                    System.out.printf("|%s||", getWorkerInCell(i, j).getIdWorker());
+                }
+            }
+            System.out.println("\n---|------|------|------|------|------|");
+        }
+    }
 }

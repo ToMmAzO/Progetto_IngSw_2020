@@ -1,12 +1,11 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.controller.GameManager;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -15,61 +14,26 @@ public class Server {
     private static final int PORT= 12345;
     private final ServerSocket serverSocket;
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
-    private final List<Connection> connections = new ArrayList<>();
-    private final Map<String, Connection> waitingConnection = new HashMap<>();
-
-    /*
-    private final Map<Connection, Connection> playingConnection = new HashMap<>();
-    */
+    private final List<SocketClientConnection> connections = new ArrayList<>();
+    private final Map<String, SocketClientConnection> playerConnection = new HashMap<>();
 
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
     }
 
-    private synchronized void registerConnection(Connection c){
+    private synchronized void registerConnection(SocketClientConnection c){
         connections.add(c);
     }
 
-    public synchronized void deregisterConnection(Connection c){
+    public synchronized void deregisterConnection(SocketClientConnection c){
         connections.remove(c);
-        /*
-        Connection opponent = playingConnection.get(c);
-        if(opponent != null){
-            opponent.closeConnection();
-            playingConnection.remove(c);
-            playingConnection.remove(opponent);
-        }
-        */
     }
 
-    public synchronized void lobby(Connection c, String name){
-        waitingConnection.put(name, c);
+    public synchronized void lobby(SocketClientConnection c, String name){
+        playerConnection.put(name, c);
+        if(playerConnection.size() == GameManager.getNumberOfPlayers()){
 
-        /*
-        da void ----> a boolean
-        return waitingConnection.size() == 1;
-        */
-
-        /*
-        if(waitingConnection.size() == 2){
-            List<String> keys = new ArrayList<>(waitingConnection.keySet());
-            Connection c1 = waitingConnection.get(keys.get(0));
-            Connection c2 = waitingConnection.get(keys.get(1));
-
-
-            RemoteView player1 = new RemoteView(new Player(keys.get(0)), keys.get(1), c1);
-            RemoteView player2 = new RemoteView(new Player(keys.get(1)), keys.get(0), c2);
-            Model model = new Model();
-            Controller controller = new Controller(model);
-            model.addObserver(player1);
-            model.addObserver(player2);
-            player1.addObserver(controller);
-            player2.addObserver(controller);
-            playingConnection.put(c1, c2);
-            playingConnection.put(c2, c1);
-            waitingConnection.clear();
         }
-        */
     }
 
     public void run(){
@@ -77,7 +41,7 @@ public class Server {
         while(true){
             try{
                 Socket socket = serverSocket.accept();
-                Connection connection = new Connection(socket, this);
+                SocketClientConnection connection = new SocketClientConnection(socket, this);
                 registerConnection(connection);
                 executor.submit(connection);
             } catch(IOException e){

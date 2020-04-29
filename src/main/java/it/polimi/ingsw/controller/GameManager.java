@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.view.ViewGame;
-import it.polimi.ingsw.view.ViewModel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -53,7 +52,7 @@ public class GameManager {
     public static void choiceOfCard(int indexOfPlayer, int cardNumber){
         God g = Deck.getCardToPlayer(cardNumber);
         players.get(indexOfPlayer).setGodChoice(g);
-        ViewModel.printCardChosen(g);
+        God.printCardChosen(g);
     }
 
     public static void startGame(){
@@ -63,9 +62,9 @@ public class GameManager {
         int currPlayer = 0;
         while (!victory){
             System.out.println("\n*VISUALE " + players.get(currPlayer).getNickname() + "*\n");
-            ViewModel.printMap();
+            Map.print();
             for (Player player : players) {
-                ViewModel.printWorkersPositions(player);
+                player.printWorkersPositions();
             }
             if (TurnManager.startTurn((players.get(currPlayer)))){
                 if(!victory){
@@ -101,11 +100,11 @@ public class GameManager {
     }
 
     private static void firstTurn(int indexOfPlayer){
-        ViewModel.printMap();
+        Map.print();
         if (indexOfPlayer > 0){
-            ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[0]);
+            GameManager.getPlayersInGame()[0].printWorkersPositions();
             if (indexOfPlayer > 1) {
-                ViewModel.printWorkersPositions(GameManager.getPlayersInGame()[1]);
+                GameManager.getPlayersInGame()[1].printWorkersPositions();
             }
         }
         ViewGame.setWorker(players.get(indexOfPlayer), 1);
@@ -145,7 +144,7 @@ public class GameManager {
 
     protected static void printPlayerInGame(){
         for (Player currPlayer : players) {
-            ViewModel.printWorkersPositions(currPlayer);
+            currPlayer.printWorkersPositions();
         }
     }
 

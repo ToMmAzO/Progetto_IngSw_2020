@@ -20,8 +20,11 @@ public enum God {
         }
     };
 
-    public String getGodDescription(God god){
+    public static String getGodDescription(God god){
         return godDescription.get(god);
     }
 
+    public static void printCardChosen(God god){
+        System.out.println("Hai il potere di " + god.toString() + ": " + getGodDescription(god));
+    }
 }

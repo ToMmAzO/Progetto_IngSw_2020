@@ -3,7 +3,6 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.model.Workers.Worker;
-import it.polimi.ingsw.view.ViewModel;
 import it.polimi.ingsw.view.ViewTurn;
 
 public class TurnManager {
@@ -129,7 +128,7 @@ public class TurnManager {
                 System.out.println("Vuoi costruire ancora? (Yes o No)");
                 String answer = ViewTurn.yesOrNo();
                 if(answer.equals("yes")){
-                    ViewModel.printMap();
+                    Map.print();
                     GameManager.printPlayerInGame();
                     coords =  ViewTurn.insertCoordinateConstruction(workerSelected);
                     while(x == coords[0] && y == coords[1]) {
@@ -177,13 +176,13 @@ public class TurnManager {
         coords =  ViewTurn.insertCoordinateMovement(workerSelected, player.getGodChoice());
         if((workerSelected.getCoordZ() == 3 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 1) || (workerSelected.getCoordZ() == 3 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0) || (workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0) || (workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3)){
             workerSelected.changePosition(coords[0], coords[1]);
-            ViewModel.printMap();
+            Map.print();
             GameManager.printPlayerInGame();
             GameManager.setVictory();
             return;
         } else{
             workerSelected.changePosition(coords[0], coords[1]);
-            ViewModel.printMap();
+            Map.print();
             GameManager.printPlayerInGame();
         }
         System.out.println("COSTRUZIONE:");
@@ -225,13 +224,13 @@ public class TurnManager {
     private static boolean movement(int[] coords){
         if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
             workerSelected.changePosition(coords[0], coords[1]);
-            ViewModel.printMap();
+            Map.print();
             GameManager.printPlayerInGame();
             GameManager.setVictory();
             return true;
         } else{
             workerSelected.changePosition(coords[0], coords[1]);
-            ViewModel.printMap();
+            Map.print();
             GameManager.printPlayerInGame();
             return false;
         }

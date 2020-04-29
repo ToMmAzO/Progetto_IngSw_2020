@@ -85,4 +85,11 @@ public class Player {
         return workers[number - 1];
     }
 
+    public void printWorkersPositions(){
+        System.out.printf("%s: %s (livello %s), %s (livello %s).\n", getNickname(),
+                getWorkerSelected(1).getIdWorker(), getWorkerSelected(1).getCoordZ(),
+                getWorkerSelected(2).getIdWorker(), getWorkerSelected(2).getCoordZ()
+        );
+    }
+
 }

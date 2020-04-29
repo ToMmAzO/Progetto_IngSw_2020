@@ -63,4 +63,16 @@ public class Deck {
         return casual;
     }
 
+    public static void printCards(){
+        System.out.println("La partita avrà le seguenti carte divinità:");
+        for (int i = 0; i < godSelected.length; i++){
+            System.out.println("Carta " + (i+1) + " --> " + godSelected[i].toString() + ": " + God.getGodDescription(godSelected[i]));
+            if (availability[i]){
+                System.out.println("            La carta è ancora disponibile.");
+            } else {
+                System.out.println("            La carta non è più disponibile.");
+            }
+        }
+    }
+
 }
