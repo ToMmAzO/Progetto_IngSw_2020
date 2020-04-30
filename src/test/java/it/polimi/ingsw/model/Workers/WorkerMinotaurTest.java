@@ -3,15 +3,20 @@ package it.polimi.ingsw.model.Workers;
 import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class WorkerMinotaurTest {
 
+    @BeforeEach
+    void setUp(){
+        new Map();
+    }
+
     @Test
     void canMoveTest1(){     //worker1 is blocked by other workers
-        new Map();
         WorkerMinotaur worker1 = new WorkerMinotaur("RED1",0,0);
         WorkerAtlas worker2 = new WorkerAtlas("YEL1",0,1);
         WorkerAtlas worker3 = new WorkerAtlas("YEL2",1,0);
@@ -22,25 +27,23 @@ class WorkerMinotaurTest {
 
     @Test
     void canMoveTest2(){    //worker1 is blocked by BlockTypes
-        new Map();
         WorkerMinotaur worker1 = new WorkerMinotaur("RED1",0,0);
-        Map.setCellBlockType(0, 1, BlockType.BLOCK2);
-        Map.setCellBlockType(1, 0, BlockType.BLOCK2);
-        Map.setCellBlockType(1, 1, BlockType.BLOCK2);
+        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK2);
+        Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK2);
 
         assertFalse(worker1.canMove());
 
-        Map.setCellBlockType(1, 1, BlockType.BLOCK1);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
         assertTrue(worker1.canMove());
     }
 
     @Test
     void canMoveTest3(){    //worker1 is blocked by allowHeight
-        new Map();
         WorkerMinotaur worker1 = new WorkerMinotaur("RED1",0,0);
-        Map.setCellBlockType(0, 1, BlockType.BLOCK1);
-        Map.setCellBlockType(1, 0, BlockType.BLOCK1);
-        Map.setCellBlockType(1, 1, BlockType.BLOCK1);
+        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
+        Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
         TurnManager.setAllowHeight(false);
 
         assertFalse(worker1.canMove());
@@ -49,7 +52,6 @@ class WorkerMinotaurTest {
 
     @Test
     void changePositionTest1(){     //worker1 is blocked by other workers
-        new Map();
         WorkerMinotaur worker1 = new WorkerMinotaur("RED1",0,0);
         WorkerAtlas worker2 = new WorkerAtlas("YEL1",0,1);
         WorkerAtlas worker3 = new WorkerAtlas("YEL2",1,0);
@@ -66,11 +68,10 @@ class WorkerMinotaurTest {
 
     @Test
     void changePositionTest2(){
-        new Map();
         WorkerMinotaur worker1 = new WorkerMinotaur("RED1",0,0);
-        Map.setCellBlockType(0, 1, BlockType.BLOCK1);
-        Map.setCellBlockType(1, 0, BlockType.BLOCK2);
-        Map.setCellBlockType(1, 1, BlockType.BLOCK1);
+        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
+        Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
 
         worker1.changePosition(1,0);
         assertEquals(worker1.getCoordX(),1);
@@ -87,11 +88,10 @@ class WorkerMinotaurTest {
 
     @Test
     void canPushTest1(){
-        new Map();
         WorkerMinotaur worker1 = new WorkerMinotaur("RED1",0,0);
         WorkerAtlas worker2 = new WorkerAtlas("YEL1",0,1);
         worker2.setCoordZ(1);
-        Map.setCellBlockType(0, 2, BlockType.BLOCK2);
+        Map.getInstance().setCellBlockType(0, 2, BlockType.BLOCK2);
         assertTrue(worker1.canPush(0,1));
     }
 

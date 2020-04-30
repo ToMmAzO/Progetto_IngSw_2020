@@ -40,11 +40,11 @@ public class Client {
                     if(inputObject instanceof String){
                         System.out.println((String)inputObject);
                     } else if(inputObject instanceof Deck){
-                        Deck.printCards();
+                        ((Deck)inputObject).printCards();
                     } else if(inputObject instanceof God) {
                         God.printCardChosen(((God)inputObject));
                     } else if(inputObject instanceof Map){
-                        Map.print();
+                        ((Map)inputObject).print();
                     } else if(inputObject instanceof Player) {
                         ((Player)inputObject).printWorkersPositions();
                     } else{

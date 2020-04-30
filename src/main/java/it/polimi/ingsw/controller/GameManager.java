@@ -50,7 +50,7 @@ public class GameManager {
     }
 
     public static void choiceOfCard(int indexOfPlayer, int cardNumber){
-        God g = Deck.getCardToPlayer(cardNumber);
+        God g = Deck.getInstance().getCardToPlayer(cardNumber);
         players.get(indexOfPlayer).setGodChoice(g);
         God.printCardChosen(g);
     }
@@ -62,7 +62,8 @@ public class GameManager {
         int currPlayer = 0;
         while (!victory){
             System.out.println("\n*VISUALE " + players.get(currPlayer).getNickname() + "*\n");
-            Map.print();
+            Map map = Map.getInstance();
+            map.print();
             for (Player player : players) {
                 player.printWorkersPositions();
             }
@@ -90,8 +91,9 @@ public class GameManager {
             Player currPlayer = i.next();
             if (currPlayer.equals(player)) {
                 System.out.println("Hai perso!");
-                Map.deleteWorkerInCell(currPlayer.getWorkerSelected(1));
-                Map.deleteWorkerInCell(currPlayer.getWorkerSelected(2));
+                Map map = Map.getInstance();
+                map.deleteWorkerInCell(currPlayer.getWorkerSelected(1));
+                map.deleteWorkerInCell(currPlayer.getWorkerSelected(2));
                 i.remove();
                 System.out.println("\n*CONNESSIONE CLIENT CHIUSA*\n");
                 break;
@@ -100,7 +102,8 @@ public class GameManager {
     }
 
     private static void firstTurn(int indexOfPlayer){
-        Map.print();
+        Map map = Map.getInstance();
+        map.print();
         if (indexOfPlayer > 0){
             GameManager.getPlayersInGame()[0].printWorkersPositions();
             if (indexOfPlayer > 1) {

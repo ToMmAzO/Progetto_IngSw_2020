@@ -10,9 +10,9 @@ class GameManagerTest {
     @Test
     void GameFlowTest1() {
         GameManager.addFirstPlayer("Player 1", 2);
-        assertEquals(2, Deck.getCardsSelected().length);
+        assertEquals(2, Deck.getInstance().getCardsSelected().length);
         for (int i = 0; i < 2; i++){
-            assertTrue(Deck.getAvailability()[i]);
+            assertTrue(Deck.getInstance().getAvailability()[i]);
         }
         assertEquals(2, GameManager.getNumberOfPlayers());
         assertEquals("Player 1", GameManager.getPlayersInGame()[0].getNickname());
@@ -23,12 +23,12 @@ class GameManagerTest {
         assertEquals(2, GameManager.getPlayersInGame().length);
 
         GameManager.choiceOfCard(0, 2);
-        assertFalse(Deck.isAvailable(2));
-        assertEquals(Deck.getCardToPlayer(2), GameManager.getPlayersInGame()[0].getGodChoice());
+        assertFalse(Deck.getInstance().isAvailable(2));
+        assertEquals(Deck.getInstance().getCardToPlayer(2), GameManager.getPlayersInGame()[0].getGodChoice());
 
         GameManager.choiceOfCard(1, 1);
-        assertFalse(Deck.isAvailable(1));
-        assertEquals(Deck.getCardToPlayer(1), GameManager.getPlayersInGame()[1].getGodChoice());
+        assertFalse(Deck.getInstance().isAvailable(1));
+        assertEquals(Deck.getInstance().getCardToPlayer(1), GameManager.getPlayersInGame()[1].getGodChoice());
 
         GameManager.getPlayersInGame()[0].setWorker1(0, 0);
         GameManager.getPlayersInGame()[0].setWorker2(1, 1);
@@ -45,9 +45,9 @@ class GameManagerTest {
     @Test
     void GameFlowTest2() {
         GameManager.addFirstPlayer("Player 1", 3);
-        assertEquals(3, Deck.getCardsSelected().length);
+        assertEquals(3, Deck.getInstance().getCardsSelected().length);
         for (int i = 0; i < 3; i++){
-            assertTrue(Deck.getAvailability()[i]);
+            assertTrue(Deck.getInstance().getAvailability()[i]);
         }
         assertEquals(3, GameManager.getNumberOfPlayers());
         assertEquals("Player 1", GameManager.getPlayersInGame()[0].getNickname());
@@ -62,16 +62,16 @@ class GameManagerTest {
         assertEquals(3, GameManager.getPlayersInGame().length);
 
         GameManager.choiceOfCard(0, 2);
-        assertFalse(Deck.isAvailable(2));
-        assertEquals(Deck.getCardToPlayer(2), GameManager.getPlayersInGame()[0].getGodChoice());
+        assertFalse(Deck.getInstance().isAvailable(2));
+        assertEquals(Deck.getInstance().getCardToPlayer(2), GameManager.getPlayersInGame()[0].getGodChoice());
 
         GameManager.choiceOfCard(1, 3);
-        assertFalse(Deck.isAvailable(3));
-        assertEquals(Deck.getCardToPlayer(3), GameManager.getPlayersInGame()[1].getGodChoice());
+        assertFalse(Deck.getInstance().isAvailable(3));
+        assertEquals(Deck.getInstance().getCardToPlayer(3), GameManager.getPlayersInGame()[1].getGodChoice());
 
         GameManager.choiceOfCard(2, 1);
-        assertFalse(Deck.isAvailable(1));
-        assertEquals(Deck.getCardToPlayer(1), GameManager.getPlayersInGame()[2].getGodChoice());
+        assertFalse(Deck.getInstance().isAvailable(1));
+        assertEquals(Deck.getInstance().getCardToPlayer(1), GameManager.getPlayersInGame()[2].getGodChoice());
 
         GameManager.getPlayersInGame()[0].setWorker1(0, 0);
         GameManager.getPlayersInGame()[0].setWorker2(1, 1);

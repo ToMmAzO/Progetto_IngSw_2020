@@ -15,13 +15,13 @@ public class WorkerArtemis extends Worker {
     public boolean canMove(int x, int y) {
         for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
             for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
-                if (!(i == getCoordX() && j == getCoordY()) && !(i == x && j == y) && ActionManager.validCoords(i, j) && Map.noWorkerHere(i, j) && Map.getCellBlockType(i, j) != BlockType.CUPOLA){
+                if (!(i == getCoordX() && j == getCoordY()) && !(i == x && j == y) && ActionManager.validCoords(i, j) && Map.getInstance().noWorkerHere(i, j) && Map.getInstance().getCellBlockType(i, j) != BlockType.CUPOLA){
                     if(TurnManager.cannotGoUp()){
-                        if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
+                        if(Map.getInstance().getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
                             return true;
                         }
                     }else{
-                        if(Map.getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
+                        if(Map.getInstance().getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
                             return true;
                         }
                     }

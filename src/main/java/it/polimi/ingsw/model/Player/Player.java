@@ -33,7 +33,7 @@ public class Player {
 
     public boolean setWorker1(int row, int column) {
         String id = color.toString().substring(0, 3).concat("1");
-        if(Map.noWorkerHere(row, column)) {
+        if(Map.getInstance().noWorkerHere(row, column)) {
             switch (this.getGodChoice()) {
                 case PAN -> workers[0] = new WorkerPan(id, row, column);
                 case ATLAS -> workers[0] = new WorkerAtlas(id, row, column);
@@ -52,7 +52,7 @@ public class Player {
 
     public boolean setWorker2(int row, int column) {
         String id = color.toString().substring(0, 3).concat("2");
-        if(Map.noWorkerHere(row, column)) {
+        if(Map.getInstance().noWorkerHere(row, column)) {
             switch (this.getGodChoice()) {
                 case PAN -> workers[1] = new WorkerPan(id, row, column);
                 case ATLAS -> workers[1] = new WorkerAtlas(id, row, column);

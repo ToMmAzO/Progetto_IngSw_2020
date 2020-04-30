@@ -128,7 +128,7 @@ public class TurnManager {
                 System.out.println("Vuoi costruire ancora? (Yes o No)");
                 String answer = ViewTurn.yesOrNo();
                 if(answer.equals("yes")){
-                    Map.print();
+                    Map.getInstance().print();
                     GameManager.printPlayerInGame();
                     coords =  ViewTurn.insertCoordinateConstruction(workerSelected);
                     while(x == coords[0] && y == coords[1]) {
@@ -174,15 +174,18 @@ public class TurnManager {
         int[] coords;
         System.out.println("MOVIMENTO:");
         coords =  ViewTurn.insertCoordinateMovement(workerSelected, player.getGodChoice());
-        if((workerSelected.getCoordZ() == 3 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 1) || (workerSelected.getCoordZ() == 3 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0) || (workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0) || (workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3)){
+        if((workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 1)
+                || (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0)
+                || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0)
+                || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3)){
             workerSelected.changePosition(coords[0], coords[1]);
-            Map.print();
+            Map.getInstance().print();
             GameManager.printPlayerInGame();
             GameManager.setVictory();
             return;
         } else{
             workerSelected.changePosition(coords[0], coords[1]);
-            Map.print();
+            Map.getInstance().print();
             GameManager.printPlayerInGame();
         }
         System.out.println("COSTRUZIONE:");
@@ -222,15 +225,15 @@ public class TurnManager {
     }
 
     private static boolean movement(int[] coords){
-        if(workerSelected.getCoordZ() == 2 && Map.getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
+        if(workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
             workerSelected.changePosition(coords[0], coords[1]);
-            Map.print();
+            Map.getInstance().print();
             GameManager.printPlayerInGame();
             GameManager.setVictory();
             return true;
         } else{
             workerSelected.changePosition(coords[0], coords[1]);
-            Map.print();
+            Map.getInstance().print();
             GameManager.printPlayerInGame();
             return false;
         }

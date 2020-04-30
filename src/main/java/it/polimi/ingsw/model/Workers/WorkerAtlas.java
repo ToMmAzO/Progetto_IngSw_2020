@@ -12,7 +12,7 @@ public class WorkerAtlas extends Worker {
     @Override
     public void buildBlock(boolean buildCupola, int buildX, int buildY) {
         if(buildCupola){
-            Map.setCellBlockType(buildX, buildY, BlockType.CUPOLA);
+            Map.getInstance().setCellBlockType(buildX, buildY, BlockType.CUPOLA);
         } else{
             super.buildBlock(buildX,buildY);
         }

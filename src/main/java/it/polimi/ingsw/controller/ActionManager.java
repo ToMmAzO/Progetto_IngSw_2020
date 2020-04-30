@@ -19,22 +19,22 @@ public class ActionManager {
         if(validCoords(coordX, coordY)){
             if(isAround(w.getCoordX(), w.getCoordY(), coordX, coordY)){
                 if(w.getCoordX() != coordX || w.getCoordY() != coordY){
-                    if(Map.noWorkerHere(coordX, coordY)){
-                        if(Map.getCellBlockType(coordX, coordY) != BlockType.CUPOLA){
+                    if(Map.getInstance().noWorkerHere(coordX, coordY)){
+                        if(Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA){
                             if(TurnManager.cannotGoUp()){
-                                if(Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()){
+                                if(Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()){
                                     return true;
                                 } else{
                                     System.out.print("ATTENTO, c'è attivo il potere di ATHENA! ");
                                 }
                             } else{
                                 if(g == God.PROMETHEUS && TurnManager.cannotGoUpPrometheus()){
-                                    if(Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()){
+                                    if(Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()){
                                         return true;
                                     } else{
                                         System.out.print("ATTENTO, hai appena costruito e sei PROMETHEUS! ");
                                     }
-                                }else if(Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1){
+                                }else if(Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1){
                                     return true;
                                 } else{
                                     System.out.print("ATTENTO, non puoi salire di due livelli! ");
@@ -45,16 +45,16 @@ public class ActionManager {
                         }
                     } else{
                         if(g == God.APOLLO){
-                            if(!Map.getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))){
-                                if(Map.getCellBlockType(coordX, coordY) != BlockType.CUPOLA){
+                            if(!Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))){
+                                if(Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA){
                                     if(TurnManager.cannotGoUp()){
-                                        if(Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()){
+                                        if(Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()){
                                             return true;
                                         } else{
                                             System.out.print("ATTENTO, c'è attivo il potere di ATHENA! ");
                                         }
                                     } else{
-                                        if(Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1){
+                                        if(Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1){
                                             return true;
                                         } else{
                                             System.out.print("ATTENTO, non puoi salire di due livelli! ");
@@ -68,10 +68,10 @@ public class ActionManager {
                             }
                         }
                         if(g == God.MINOTAUR){
-                            if(!Map.getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))){
-                                if(Map.getCellBlockType(coordX, coordY) != BlockType.CUPOLA){
+                            if(!Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))){
+                                if(Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA){
                                     if(TurnManager.cannotGoUp()){
-                                        if(Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()){
+                                        if(Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()){
                                             if (w.canPush(coordX, coordY)){
                                                 return true;
                                             } else{
@@ -81,7 +81,7 @@ public class ActionManager {
                                             System.out.print("ATTENTO, c'è attivo il potere di ATHENA! ");
                                         }
                                     } else{
-                                        if(Map.getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1){
+                                        if(Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1){
                                             if(w.canPush(coordX, coordY)){
                                                 return true;
                                             } else{
@@ -118,8 +118,8 @@ public class ActionManager {
         if(validCoords(coordX, coordY)){
             if(isAround(w.getCoordX(), w.getCoordY(), coordX, coordY)){
                 if(w.getCoordX() != coordX || w.getCoordY() != coordY){
-                    if(Map.noWorkerHere(coordX, coordY)){
-                        if(Map.getCellBlockType(coordX, coordY) != BlockType.CUPOLA){
+                    if(Map.getInstance().noWorkerHere(coordX, coordY)){
+                        if(Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA){
                             return true;
                         } else{
                             System.out.print("ATTENTO, c'è una cupola! ");

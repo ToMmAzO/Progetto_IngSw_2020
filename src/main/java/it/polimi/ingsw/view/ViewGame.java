@@ -67,9 +67,9 @@ public class ViewGame {
     }
 
     private static void godChoice(int playerIndex){
-        Deck.printCards();
+        Deck.getInstance().printCards();
         int cardNumber = 0;
-        while (!Deck.isAvailable(cardNumber)){
+        while (!Deck.getInstance().isAvailable(cardNumber)){
             try{
                 System.out.print("Scegli il numero di una delle " + GameManager.getNumberOfPlayers() + " carte ancora disponibili: ");
                 cardNumber= Integer.parseInt((scanner.nextLine()));
