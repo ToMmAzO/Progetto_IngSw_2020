@@ -3,7 +3,6 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.model.Workers.Worker;
-import it.polimi.ingsw.view.ViewTurn;
 
 public class TurnManager {
 
@@ -12,7 +11,7 @@ public class TurnManager {
     private static boolean allowHeightPrometheus = true;
 
     public static boolean startTurn(Player player){
-        if(verifyRegularity(player, ViewTurn.workerChoice(player))){
+        if(verifyRegularity(player, ActionManager.workerChoice(player))){
             selectAction(player);
             workerSelected = null;
             return true;
@@ -62,17 +61,17 @@ public class TurnManager {
         int startX = workerSelected.getCoordX();
         int startY = workerSelected.getCoordY();
         System.out.println("MOVIMENTO:");
-        if(movement(ViewTurn.insertCoordinateMovement(workerSelected, player.getGodChoice()))){
+        if(movement(ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice()))){
             return;
         }
         if(workerSelected.canMove(startX, startY)){
             System.out.println("Vuoi muovere ancora? (Yes o No)");
-            String answer = ViewTurn.yesOrNo();
+            String answer = ActionManager.yesOrNo();
             if(answer.equals("yes")) {
-                coords = ViewTurn.insertCoordinateMovement(workerSelected, player.getGodChoice());
+                coords = ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
                 while(startX == coords[0] && startY == coords[1]) {
                     System.out.print("Non puoi tornare indietro! ");
-                    coords = ViewTurn.insertCoordinateMovement(workerSelected, player.getGodChoice());
+                    coords = ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
                 }
                 if(movement(coords)){
                     return;
@@ -83,7 +82,7 @@ public class TurnManager {
         }
         if(workerSelected.canBuild()) {
             System.out.println("COSTRUZIONE:");
-            construction(ViewTurn.insertCoordinateConstruction(workerSelected));
+            construction(ActionManager.insertCoordinateConstruction(workerSelected));
         } else{
             System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
         }
@@ -92,18 +91,18 @@ public class TurnManager {
     private static void actionAtlas(Player player){
         int[] coords;
         System.out.println("MOVIMENTO:");
-        if(movement(ViewTurn.insertCoordinateMovement(workerSelected, player.getGodChoice()))){
+        if(movement(ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice()))){
             return;
         }
         if(workerSelected.canBuild()){
             System.out.println("COSTRUZIONE:");
             System.out.println("Vuoi costruire una CUPOLA? (Yes o No)");
-            String answer = ViewTurn.yesOrNo();
+            String answer = ActionManager.yesOrNo();
             if(answer.equals("yes")){
-                coords = ViewTurn.insertCoordinateConstruction(workerSelected);
+                coords = ActionManager.insertCoordinateConstruction(workerSelected);
                 workerSelected.buildBlock(true, coords[0], coords[1]);
             } else{
-                coords = ViewTurn.insertCoordinateConstruction(workerSelected);
+                coords = ActionManager.insertCoordinateConstruction(workerSelected);
                 workerSelected.buildBlock(false, coords[0], coords[1]);
             }
         } else{
@@ -115,25 +114,25 @@ public class TurnManager {
         int[] coords;
         int x, y;
         System.out.println("MOVIMENTO:");
-        if(movement(ViewTurn.insertCoordinateMovement(workerSelected, player.getGodChoice()))){
+        if(movement(ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice()))){
             return;
         }
         if(workerSelected.canBuild()) {
             System.out.println("COSTRUZIONE:");
-            coords = ViewTurn.insertCoordinateConstruction(workerSelected);
+            coords = ActionManager.insertCoordinateConstruction(workerSelected);
             x = coords[0];
             y = coords[1];
             construction(coords);
             if(workerSelected.canBuild(x, y)){
                 System.out.println("Vuoi costruire ancora? (Yes o No)");
-                String answer = ViewTurn.yesOrNo();
+                String answer = ActionManager.yesOrNo();
                 if(answer.equals("yes")){
                     Map.getInstance().print();
                     GameManager.printPlayerInGame();
-                    coords =  ViewTurn.insertCoordinateConstruction(workerSelected);
+                    coords =  ActionManager.insertCoordinateConstruction(workerSelected);
                     while(x == coords[0] && y == coords[1]) {
                         System.out.print("Non puoi costruire nello stesso punto di prima! ");
-                        coords = ViewTurn.insertCoordinateConstruction(workerSelected);
+                        coords = ActionManager.insertCoordinateConstruction(workerSelected);
                     }
                     construction(coords);
                 }
@@ -148,21 +147,21 @@ public class TurnManager {
     private static void actionHephaestus(Player player){
         int[] coords;
         System.out.println("MOVIMENTO:");
-        if(movement(ViewTurn.insertCoordinateMovement(workerSelected, player.getGodChoice()))){
+        if(movement(ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice()))){
             return;
         }
         if(workerSelected.canBuild()) {
             System.out.println("COSTRUZIONE:");
             System.out.println("Vuoi costruire 2 blocchi? (Yes o No)");
-            String answer = ViewTurn.yesOrNo();
+            String answer = ActionManager.yesOrNo();
             if((answer.equals("yes")) && workerSelected.canBuild(true)) {
-                coords = ViewTurn.insertCoordinateConstruction(workerSelected);
+                coords = ActionManager.insertCoordinateConstruction(workerSelected);
                 workerSelected.buildBlock(true, coords[0], coords[1]);
             } else {
                 if(!workerSelected.canBuild(true)) {
                     System.out.println(workerSelected.getIdWorker() + " NON può costruire 2 blocchi!");
                 }
-                coords = ViewTurn.insertCoordinateConstruction(workerSelected);
+                coords = ActionManager.insertCoordinateConstruction(workerSelected);
                 workerSelected.buildBlock(false, coords[0], coords[1]);
             }
         } else{
@@ -173,7 +172,7 @@ public class TurnManager {
     private static void actionPan(Player player){
         int[] coords;
         System.out.println("MOVIMENTO:");
-        coords =  ViewTurn.insertCoordinateMovement(workerSelected, player.getGodChoice());
+        coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
         if((workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 1)
                 || (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0)
                 || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0)
@@ -190,7 +189,7 @@ public class TurnManager {
         }
         System.out.println("COSTRUZIONE:");
         if(workerSelected.canBuild()) {
-            construction(ViewTurn.insertCoordinateConstruction(workerSelected));
+            construction(ActionManager.insertCoordinateConstruction(workerSelected));
         } else{
             System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
         }
@@ -199,9 +198,9 @@ public class TurnManager {
     private static void actionPrometheus(Player player){
         if(workerSelected.canBuild()) {
             System.out.println("Vuoi costruire prima di muoverti? (Yes o No)");
-            String answer = ViewTurn.yesOrNo();
+            String answer = ActionManager.yesOrNo();
             if (answer.equals("yes")) {
-                construction(ViewTurn.insertCoordinateConstruction(workerSelected));
+                construction(ActionManager.insertCoordinateConstruction(workerSelected));
                 setAllowHeightPrometheus(false);
             }
         } else{
@@ -213,12 +212,12 @@ public class TurnManager {
 
     private static void actionDefault(Player player) {
         System.out.println("MOVIMENTO:");
-        if (movement(ViewTurn.insertCoordinateMovement(workerSelected, player.getGodChoice()))) {
+        if (movement(ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice()))) {
             return;
         }
         System.out.println("COSTRUZIONE:");
         if(workerSelected.canBuild()) {
-            construction(ViewTurn.insertCoordinateConstruction(workerSelected));
+            construction(ActionManager.insertCoordinateConstruction(workerSelected));
         } else{
             System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
         }

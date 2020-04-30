@@ -4,14 +4,15 @@ import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Player.Player;
-import it.polimi.ingsw.view.ViewGame;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class GameManager {
 
     private static final ArrayList<Player> players = new ArrayList<>();
+    private static final Scanner scanner= new Scanner(System.in);
     private static int numberOfPlayers;
     private static boolean victory = false;
 
@@ -110,8 +111,8 @@ public class GameManager {
                 GameManager.getPlayersInGame()[1].printWorkersPositions();
             }
         }
-        ViewGame.setWorker(players.get(indexOfPlayer), 1);
-        ViewGame.setWorker(players.get(indexOfPlayer), 2);
+        setWorker(players.get(indexOfPlayer), 1);
+        setWorker(players.get(indexOfPlayer), 2);
     }
 
     private static int nextPlayer(int indexOfActualPlayer){
@@ -151,4 +152,72 @@ public class GameManager {
         }
     }
 
+    public static void joinGameFirst(String nickname){
+        System.out.println("Sei il primo giocatore ad unirsi alla lobby.");
+        System.out.print("Scegli quanti giocatori avrà la partita. ");
+        int numberChosen = 0;
+        while (numberChosen != 2 && numberChosen != 3){
+            try{
+                System.out.print("Scrivi 2 oppure 3: ");
+                numberChosen= Integer.parseInt((scanner.nextLine()));
+            } catch(IllegalArgumentException e){
+                System.out.print("Formato Input scorretto! ");
+            }
+        }
+        addFirstPlayer(nickname, numberChosen);
+        godChoice(0);
+    }
+
+    public static void joinGame(String nickname){
+        int playerIndex = addPlayer(nickname);
+        godChoice(playerIndex);
+    }
+
+    public static void setWorker(Player player, int numberOfWorker){
+        System.out.print("Posizionamento lavoratore " + (numberOfWorker) + ". ");
+        String[] coordString;
+        int coordRow;
+        int coordColumn;
+        while (true){
+            try{
+                System.out.print("Inserisci delle coordinate x, y: ");
+                coordString = scanner.nextLine().replace(" ", "").split(",");
+                coordRow = Integer.parseInt(coordString[0]);
+                coordColumn = Integer.parseInt(coordString[1]);
+                if (ActionManager.validCoords(coordRow, coordColumn)){
+                    switch (numberOfWorker) {
+                        case 1 -> {
+                            if (player.setWorker1(coordRow, coordColumn)) {
+                                return;
+                            }
+                        }
+                        case 2 -> {
+                            if (player.setWorker2(coordRow, coordColumn)) {
+                                return;
+                            }
+                        }
+                    }
+                    System.out.print("È già presente un lavoratore quì! ");
+                } else{
+                    System.out.print("Puoi inserire solo interi da 0 a 4! ");
+                }
+            } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                System.out.print("Formato Input scorretto! ");
+            }
+        }
+    }
+
+    private static void godChoice(int playerIndex){
+        Deck.getInstance().printCards();
+        int cardNumber = 0;
+        while (!Deck.getInstance().isAvailable(cardNumber)){
+            try{
+                System.out.print("Scegli il numero di una delle " + getNumberOfPlayers() + " carte ancora disponibili: ");
+                cardNumber= Integer.parseInt((scanner.nextLine()));
+            } catch(IllegalArgumentException e){
+                System.out.print("Formato Input scorretto! ");
+            }
+        }
+        choiceOfCard(playerIndex, cardNumber);
+    }
 }
