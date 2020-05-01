@@ -41,6 +41,8 @@ public class Server {
         while(true){
             try{
                 Socket socket = serverSocket.accept();
+
+
                 SocketClientConnection connection = new SocketClientConnection(socket, this);
                 registerConnection(connection);
                 executor.submit(connection);

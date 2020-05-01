@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class SocketClientConnection extends Observable<String> implements Runnable {
+public class SocketClientConnection extends Observable<String> implements ClientConnection, Runnable {
 
     private final Socket socket;
     private ObjectOutputStream out;
@@ -35,6 +35,7 @@ public class SocketClientConnection extends Observable<String> implements Runnab
 
     }
 
+    @Override
     public synchronized void closeConnection(){
         send("Connection closed!");
         try{
@@ -52,6 +53,7 @@ public class SocketClientConnection extends Observable<String> implements Runnab
         System.out.println("Done!");
     }
 
+    @Override
     public void asyncSend(final Object message){
         new Thread(() -> send(message)).start();
     }
