@@ -119,13 +119,21 @@ public class ActionManager {
         return false;
     }
 
-    public static boolean verifyCoordinateConstruction(Worker w, int coordX, int coordY){
+    public static boolean verifyCoordinateConstruction(Worker w, boolean doubleConstruction, int coordX, int coordY){
         if(validCoords(coordX, coordY)){
             if(isAround(w.getCoordX(), w.getCoordY(), coordX, coordY)){
                 if(w.getCoordX() != coordX || w.getCoordY() != coordY){
                     if(Map.getInstance().noWorkerHere(coordX, coordY)){
                         if(Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA){
-                            return true;
+                            if(doubleConstruction) {
+                                if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() < 2) {
+                                    return true;
+                                } else{
+                                    System.out.print("ATTENTO, sei Hephaestus! ");
+                                }
+                            }else{
+                                return true;
+                            }
                         } else{
                             System.out.print("ATTENTO, c'è una cupola! ");
                         }
@@ -185,7 +193,7 @@ public class ActionManager {
                 coordString = scanner.nextLine().replace(" ", "").split(",");
                 coordX = Integer.parseInt(coordString[0]);
                 coordY = Integer.parseInt(coordString[1]);
-                if(verifyCoordinateConstruction(w, coordX, coordY)){
+                if(verifyCoordinateConstruction(w, false, coordX, coordY)){
                     return new int[]{coordX, coordY};
                 }
             } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){

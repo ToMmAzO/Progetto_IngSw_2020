@@ -281,7 +281,7 @@ public class RemoteView {
                         coordX = Integer.parseInt(coordString[0]);
                         coordY = Integer.parseInt(coordString[1]);
                         if (startX == coordX && startY == coordY) {
-                            System.out.print("Non puoi tornare indietro! ");
+                            System.out.print("ATTENTO, non puoi tornare indietro! ");
                         } else {
                             if (ActionManager.verifyCoordinateMovement(workerSelected, player.getGodChoice(), coordX, coordY)) {
                                 if (TurnManager.movement(coordX, coordY)) {
@@ -301,7 +301,7 @@ public class RemoteView {
                             String[] coordString = message.getContent().replace(" ", "").split(",");
                             coordX = Integer.parseInt(coordString[0]);
                             coordY = Integer.parseInt(coordString[1]);
-                            if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){
+                            if(ActionManager.verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
                                 TurnManager.construction(coordX, coordY);
                             }
                         } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
@@ -353,7 +353,7 @@ public class RemoteView {
                         String[] coordString = message.getContent().replace(" ", "").split(",");
                         coordX = Integer.parseInt(coordString[0]);
                         coordY = Integer.parseInt(coordString[1]);
-                        if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){                            //return new int[]{coordX, coordY};
+                        if(ActionManager.verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){                            //return new int[]{coordX, coordY};
                             workerSelected.buildBlock(true, coordX, coordY);
                         }
                     } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
@@ -366,7 +366,7 @@ public class RemoteView {
                         String[] coordString = message.getContent().replace(" ", "").split(",");
                         coordX = Integer.parseInt(coordString[0]);
                         coordY = Integer.parseInt(coordString[1]);
-                        if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){                            //return new int[]{coordX, coordY};
+                        if(ActionManager.verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){                            //return new int[]{coordX, coordY};
                             workerSelected.buildBlock(false, coordX, coordY);
                         }
                     } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
@@ -405,7 +405,7 @@ public class RemoteView {
                             String[] coordString = message.getContent().replace(" ", "").split(",");
                             coordX = Integer.parseInt(coordString[0]);
                             coordY = Integer.parseInt(coordString[1]);
-                            if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){
+                            if(ActionManager.verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
                                 buildX = coordX;
                                 buildY = coordY;
                                 TurnManager.construction(coordX, coordY);
@@ -435,9 +435,9 @@ public class RemoteView {
                         coordX = Integer.parseInt(coordString[0]);
                         coordY = Integer.parseInt(coordString[1]);
                         if (buildX == coordX && buildY == coordY) {
-                            System.out.print("Non puoi costruire nello stesso punto di prima!");
+                            System.out.print("ATTENTO, non puoi costruire nello stesso punto di prima!");
                         } else {
-                            if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){
+                            if(ActionManager.verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
                                 TurnManager.construction(coordX, coordY);
                             }
                         }
@@ -493,7 +493,7 @@ public class RemoteView {
                         String[] coordString = message.getContent().replace(" ", "").split(",");
                         coordX = Integer.parseInt(coordString[0]);
                         coordY = Integer.parseInt(coordString[1]);
-                        if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){                            //return new int[]{coordX, coordY};
+                        if(ActionManager.verifyCoordinateConstruction(workerSelected, true, coordX, coordY)){                            //return new int[]{coordX, coordY};
                             workerSelected.buildBlock(true, coordX, coordY);
                         }
                     } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
@@ -506,7 +506,7 @@ public class RemoteView {
                         String[] coordString = message.getContent().replace(" ", "").split(",");
                         coordX = Integer.parseInt(coordString[0]);
                         coordY = Integer.parseInt(coordString[1]);
-                        if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){                            //return new int[]{coordX, coordY};
+                        if(ActionManager.verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){                            //return new int[]{coordX, coordY};
                             workerSelected.buildBlock(false, coordX, coordY);
                         }
                     } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
