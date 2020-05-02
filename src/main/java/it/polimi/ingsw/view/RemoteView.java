@@ -336,16 +336,45 @@ public class RemoteView {
                     }
                 }
                 case QUESTION_ATLAS -> {
-                    String answer = message.getContent().toLowerCase().replace(" ", "");
-                    if(answer.equals("yes")) {
-                        if(workerSelected.canMove(startX, startY)){
-                            //send message second_move;
-                        }else{
-                            clientConnection.asyncSend("Mi dispiace! "workerSelected.getIdWorker() + " NON può muoversi una seconda volta!");
+                    if(workerSelected.canBuild()){
+                        String answer = message.getContent().toLowerCase().replace(" ", "");
+                        if(answer.equals("yes")) {
+                            //send message construction_cupola;
+                        } else{
+                            //send message construction;
                         }
+                    } else{
+                        System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
+                        //send message next turn;
                     }
-                    //send message construction;
                 }
+                case CONSTRUCTION_CUPOLA -> {
+                    try {
+                        String[] coordString = message.getContent().replace(" ", "").split(",");
+                        coordX = Integer.parseInt(coordString[0]);
+                        coordY = Integer.parseInt(coordString[1]);
+                        if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){                            //return new int[]{coordX, coordY};
+                            workerSelected.buildBlock(true, coordX, coordY);
+                        }
+                    } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                        clientConnection.asyncSend("Formato Input scorretto!");
+                    }
+                    //send message next turn;
+                }
+                case CONSTRUCTION -> {
+                    try {
+                        String[] coordString = message.getContent().replace(" ", "").split(",");
+                        coordX = Integer.parseInt(coordString[0]);
+                        coordY = Integer.parseInt(coordString[1]);
+                        if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){                            //return new int[]{coordX, coordY};
+                            workerSelected.buildBlock(false, coordX, coordY);
+                        }
+                    } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                        clientConnection.asyncSend("Formato Input scorretto!");
+                    }
+                    //send message next turn;
+                }
+            }
         }
 
     }
