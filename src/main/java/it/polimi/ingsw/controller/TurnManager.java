@@ -9,8 +9,8 @@ public class TurnManager {
     private static Worker workerSelected;
     private static boolean allowHeight = true;
     private static boolean allowHeightPrometheus = true;
-    private static int selectionWorker;
 
+    /*
     public static boolean startTurn(Player player){
         if(verifyRegularity(player)){       //ActionManager.workerChoice(player)
             selectAction(player);
@@ -22,29 +22,32 @@ public class TurnManager {
             return false;
         }
     }
+    */
 
-    public static boolean verifyRegularity(Player player){
-        workerSelected = player.getWorkerSelected(selectionWorker);
+    public static boolean verifyRegularity(Player player, int workerChosen){
+        workerSelected = player.getWorkerSelected(workerChosen);
         if(workerSelected.canMove()){
             return true;
         } else{
             System.out.println(workerSelected.getIdWorker() + " non può muoversi! Seleziono l'altro Worker.");      //il controller può scrivere?
-            if(selectionWorker == 1){
-                selectionWorker ++;
+            if(workerChosen == 1){
+                workerChosen ++;
             } else{
-                selectionWorker --;
+                workerChosen --;
             }
-            workerSelected = player.getWorkerSelected((selectionWorker));
+            workerSelected = player.getWorkerSelected((workerChosen));
             System.out.println("Il worker selezionato è: "+ workerSelected.getIdWorker() + ".");
             if(workerSelected.canMove()){
                 return true;
             } else{
                 System.out.println("Nemmeno " + workerSelected.getIdWorker() + " può muoversi!");
+                workerSelected = null;
                 return false;
             }
         }
     }
 
+    /*
     private static void selectAction(Player player){
         switch (player.getGodChoice()){
             case ARTEMIS -> actionArtemis(player);
@@ -56,6 +59,7 @@ public class TurnManager {
             default -> actionDefault(player);//APOLLO, ATHENA, ATLAS, MINOTAUR
         }
     }
+    */
 
     private static void actionArtemis(Player player){
         int[] coords;
@@ -259,12 +263,5 @@ public class TurnManager {
         return !allowHeightPrometheus;
     }
 
-    public int getSelectionWorker() {
-        return selectionWorker;
-    }
-
-    public static void setSelectionWorker(int selectionWorker) {
-        TurnManager.selectionWorker = selectionWorker;
-    }
 }
 

@@ -1,19 +1,19 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.controller.ActionManager;
 import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.Cards.Deck;
+import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.network.message.ClientMessage;
 import it.polimi.ingsw.network.server.ClientConnection;
 
-public class View {
+public class RemoteView {
 
     private final ClientConnection clientConnection;
     private final String nickname;
 
-    public View(String nickname, ClientConnection c) {
+    public RemoteView(String nickname, ClientConnection c) {
         this.nickname = nickname;
         this.clientConnection = c;
         new MessageReceiver();
@@ -72,27 +72,19 @@ public class View {
                         } else{
                             GameManager.setWorker(player, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]), 2);
                         }
-                        //fine turno, aggiornare il client dopo ogni posizionamento avversario
+                        //fine turno, aggiornare il client dopo ogni posizionamento avversario e mandare "il gioco comincia"
+                        //send message workerchoice
                     } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                         clientConnection.asyncSend("Formato Input scorretto!");
                     }
                 }
-
-                //-----------------------------------------------------------
-
-                case WORKER_CHOICE -> {
-                    try {
-                        int selectionWorker = Integer.parseInt(message.getContent());
-                        if(selectionWorker == 1 || selectionWorker == 2){
-                            TurnManager.setSelectionWorker(selectionWorker);
-                            //pima mossa del turno
-                        } else{
-                            clientConnection.asyncSend("Numero scorretto! Scrivi 1 oppure 2: ");
-                        }
-                    } catch(IllegalArgumentException e){
-                        clientConnection.asyncSend("Formato Input scorretto! Scrivi 1 oppure 2: ");
-                    }
+                default -> {
+                    turn(message);
                 }
+            }
+        }
+
+        /*
                 case MOVEMENT -> {
                     int coordX, coordY;
                     try {
@@ -119,15 +111,113 @@ public class View {
                         clientConnection.asyncSend("Formato Input scorretto!");
                     }
                 }
-                case YES_OR_NO -> {
+        */
+
+        private void turn(ClientMessage message){
+            switch (message.getGameState()) {
+                case WORKER_CHOICE -> {
+                    try {
+                        int selectionWorker = Integer.parseInt(message.getContent());
+                        if(selectionWorker == 1 || selectionWorker == 2){
+                            if(TurnManager.verifyRegularity(player, selectionWorker)){
+                                if(player.getGodChoice() == God.PROMETHEUS){
+                                    //send message questionprometheus
+                                } else{
+                                    //send message movement
+                                }
+                            } else{
+                                GameManager.deletePlayer(player);
+                            }
+                        } else{
+                            clientConnection.asyncSend("Numero scorretto! Scrivi 1 oppure 2: ");
+                        }
+                    } catch(IllegalArgumentException e){
+                        clientConnection.asyncSend("Formato Input scorretto! Scrivi 1 oppure 2: ");
+                    }
+                }
+                case PREBUILD_PROMETHEUS -> {
+
+                    //send message movement
+                }
+                case MOVEMENT -> {
+
+                    switch (player.getGodChoice()) {
+                        case ARTEMIS -> {
+                            //send message questionartemis
+                        }
+                        case ATLAS -> {
+                            //send message questionatlas
+                        }
+                        case HEPHAESTUS -> {
+                            //send message questionhephaestus
+                        }
+                        default -> {
+                            //send message construction
+                        }
+                    }
+                }
+                case SECOND_MOVE -> {
+
+                    //send message construction
+                }
+                case CONSTRUCTION_CUPOLA -> {
+
+                    //send message stopturn
+                }
+                case DOUBLE_CONSTRUCTION -> {
+
+                    //send message stopturn
+                }
+                case CONSTRUCTION -> {
+
+                    if (player.getGodChoice() == God.DEMETER) {
+                        //send message questiondemeter
+                    } else {
+                        //send message stopturn
+                    }
+                }
+                case SECOND_CONSTRUCTION -> {
+
+                    //send message stopturn
+                }
+                default -> {
                     String answer = message.getContent().toLowerCase().replace(" ", "");
-                    if (!answer.equals("yes") && !answer.equals("no")){
-                        System.out.println("Puoi rispondere solo con yes o no!");
-                    }else {
-                        //return answer;
+                    if (answer.equals("yes")) {
+                        switch (message.getGameState()) {
+                            case QUESTION_PROMETHEUS -> {
+                                //send message prebuildprometheus
+                            }
+                            case QUESTION_ARTEMIS -> {
+                                //send message movement2
+                            }
+                            case QUESTION_ATLAS -> {
+                                //send message constructioncupola
+                            }
+                            case QUESTION_HEPHAESTUS -> {
+                                //send message constructiondouble
+                            }
+                            case QUESTION_DEMETER -> {
+                                //send message construction2
+                            }
+                        }
+                    } else if (answer.equals("no")) {
+                        switch (message.getGameState()) {
+                            case QUESTION_PROMETHEUS -> {
+                                //send message movement
+                            }
+                            case QUESTION_DEMETER -> {
+                                //send message stopturn
+                            }
+                            default -> {//QUESTION_ARTEMIS, QUESTION_ATLAS, QUESTION_HEPHAESTUS
+                                //send message construction
+                            }
+                        }
+                    } else {
+                        clientConnection.asyncSend("Puoi rispondere solo con yes o no!");
                     }
                 }
             }
+
         }
 
     }

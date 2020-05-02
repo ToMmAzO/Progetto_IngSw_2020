@@ -16,4 +16,5 @@ public class Message_Construction extends Message{
         Map.getInstance().print();
         System.out.println("COSTRUZIONE: \nInserisci delle cordinate (x, y):");
     }
+
 }

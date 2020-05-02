@@ -3,9 +3,9 @@ package it.polimi.ingsw.network.message;
 import it.polimi.ingsw.enumerations.GameState;
 import it.polimi.ingsw.model.Board.Map;
 
-public class Message_Movement extends Message{
+public class Message_WorkerChoice extends Message{
 
-    private final GameState gameState = GameState.MOVEMENT;
+    private final GameState gameState = GameState.WORKER_CHOICE;
 
     public GameState getGameState(){
         return gameState;
@@ -14,7 +14,7 @@ public class Message_Movement extends Message{
     @Override
     public void printMessage(){
         Map.getInstance().print();
-        System.out.println("MOVIMENTO: \nInserisci delle cordinate (x, y):");
+        System.out.print("Scegli quale dei tuoi worker usare, scrivi 1 oppure 2.");
     }
 
 }

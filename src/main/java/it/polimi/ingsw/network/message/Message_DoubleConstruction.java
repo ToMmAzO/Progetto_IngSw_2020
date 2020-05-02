@@ -3,9 +3,9 @@ package it.polimi.ingsw.network.message;
 import it.polimi.ingsw.enumerations.GameState;
 import it.polimi.ingsw.model.Board.Map;
 
-public class Message_WokerChoice extends Message{
+public class Message_DoubleConstruction extends Message{
 
-    private final GameState gameState = GameState.WORKER_CHOICE;
+    private final GameState gameState = GameState.DOUBLE_CONSTRUCTION;
 
     public GameState getGameState(){
         return gameState;
@@ -14,6 +14,7 @@ public class Message_WokerChoice extends Message{
     @Override
     public void printMessage(){
         Map.getInstance().print();
-        System.out.print("Scegli che worker usare: " + player.getWorkerSelected(1).getIdWorker() + " oppure " + player.getWorkerSelected(2).getIdWorker() + ". ");
+        System.out.println("Inserisci delle cordinate (x, y).");
     }
+
 }
