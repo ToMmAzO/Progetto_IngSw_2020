@@ -517,6 +517,46 @@ public class RemoteView {
             }
         }
 
+        private void actionPan(ClientMessage message, Player player, Worker workerSelected){
+            int coordX, coordY;
+
+            switch (message.getGameState()) {
+                case MOVEMENT -> {
+                    try {
+                        String[] coordString = message.getContent().replace(" ", "").split(",");
+                        coordX = Integer.parseInt(coordString[0]);
+                        coordY = Integer.parseInt(coordString[1]);
+                        if (ActionManager.verifyCoordinateMovement(workerSelected, player.getGodChoice(), coordX, coordY)) {
+                            if (TurnManager.movementPan(coordX, coordY)) {
+                                //send message win;
+                            } else {
+                                //send message construction;
+                            }
+                        }
+                    } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+                        clientConnection.asyncSend("Formato Input scorretto!");
+                    }
+                }
+                case CONSTRUCTION -> {
+                    if(workerSelected.canBuild()){
+                        try {
+                            String[] coordString = message.getContent().replace(" ", "").split(",");
+                            coordX = Integer.parseInt(coordString[0]);
+                            coordY = Integer.parseInt(coordString[1]);
+                            if(ActionManager.verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
+                                TurnManager.construction(coordX, coordY);
+                            }
+                        } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                            clientConnection.asyncSend("Formato Input scorretto!");
+                        }
+                    } else{
+                        System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
+                    }
+                    //send message next turn;
+                }
+            }
+        }
+
     }
 
 }

@@ -178,19 +178,8 @@ public class TurnManager {
         int[] coords;
         System.out.println("MOVIMENTO:");
         coords =  ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice());
-        if((workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 1)
-                || (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0)
-                || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 0)
-                || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3)){
-            workerSelected.changePosition(coords[0], coords[1]);
-            Map.getInstance().print();
-            GameManager.printPlayerInGame();
-            GameManager.setVictory();
+        if(movementPan(ActionManager.insertCoordinateMovement(workerSelected, player.getGodChoice()))){
             return;
-        } else{
-            workerSelected.changePosition(coords[0], coords[1]);
-            Map.getInstance().print();
-            GameManager.printPlayerInGame();
         }
         System.out.println("COSTRUZIONE:");
         if(workerSelected.canBuild()) {
@@ -230,6 +219,24 @@ public class TurnManager {
 
     public static boolean movement(int x, int y){
         if(workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3) {
+            workerSelected.changePosition(x, y);
+            Map.getInstance().print();
+            GameManager.printPlayerInGame();
+            GameManager.setVictory();
+            return true;
+        } else{
+            workerSelected.changePosition(x, y);
+            Map.getInstance().print();
+            GameManager.printPlayerInGame();
+            return false;
+        }
+    }
+
+    public static boolean movementPan(int x, int y){
+        if((workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 1)
+                || (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)
+                || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)
+                || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3)){
             workerSelected.changePosition(x, y);
             Map.getInstance().print();
             GameManager.printPlayerInGame();
