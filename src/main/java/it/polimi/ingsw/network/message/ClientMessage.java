@@ -1,16 +1,18 @@
 package it.polimi.ingsw.network.message;
 
+import it.polimi.ingsw.enumerations.GameState;
+
 public class ClientMessage {
 
-    private Target target;
+    private GameState gameState;
     private String content;
 
-    public void setTarget(Target target) {
-        this.target = target;
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 
-    public Target getTarget() {
-        return target;
+    public GameState getGameState() {
+        return gameState;
     }
 
     public void setContent(String content) {

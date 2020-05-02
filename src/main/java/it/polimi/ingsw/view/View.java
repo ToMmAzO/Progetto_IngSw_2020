@@ -22,7 +22,7 @@ public class View {
         private Player player;
 
         public void read(ClientMessage message) {
-            switch (message.getTarget()) {
+            switch (message.getGameState()) {
                 case WELCOME_FIRST -> {
                     try {
                         int numberChosen = Integer.parseInt(message.getContent());

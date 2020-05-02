@@ -1,11 +1,13 @@
 package it.polimi.ingsw.network.message;
 
+import it.polimi.ingsw.enumerations.GameState;
+
 public class Message_Welcome extends Message{
 
-    private final Target target = Target.WELCOME;
+    private final GameState gameState = GameState.WELCOME;
 
-    public Target getTarget(){
-        return target;
+    public GameState getGameState(){
+        return gameState;
     }
 
     @Override

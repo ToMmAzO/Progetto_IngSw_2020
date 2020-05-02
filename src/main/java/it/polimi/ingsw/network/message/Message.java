@@ -1,8 +1,10 @@
 package it.polimi.ingsw.network.message;
 
+import it.polimi.ingsw.enumerations.GameState;
+
 public abstract class Message {
 
-    public Target getTarget(){
+    public GameState getGameState(){
         return null;
     }
 
