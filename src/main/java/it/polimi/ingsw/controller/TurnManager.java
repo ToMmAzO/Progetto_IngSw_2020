@@ -228,23 +228,23 @@ public class TurnManager {
         }
     }
 
-    private static boolean movement(int[] coords){
-        if(workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(coords[0], coords[1]).getAbbreviation() == 3) {
-            workerSelected.changePosition(coords[0], coords[1]);
+    public static boolean movement(int x, int y){
+        if(workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3) {
+            workerSelected.changePosition(x, y);
             Map.getInstance().print();
             GameManager.printPlayerInGame();
             GameManager.setVictory();
             return true;
         } else{
-            workerSelected.changePosition(coords[0], coords[1]);
+            workerSelected.changePosition(x, y);
             Map.getInstance().print();
             GameManager.printPlayerInGame();
             return false;
         }
     }
 
-    private static void construction(int[] coords){
-        workerSelected.buildBlock(coords[0], coords[1]);
+    public static void construction(int x, int y){
+        workerSelected.buildBlock(x, y);
     }
 
     public static void setAllowHeight(boolean allowHeight) {
