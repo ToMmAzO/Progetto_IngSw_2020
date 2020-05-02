@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.controller.ActionManager;
 import it.polimi.ingsw.controller.GameManager;
+import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.network.message.ClientMessage;
@@ -73,6 +75,56 @@ public class View {
                         //fine turno, aggiornare il client dopo ogni posizionamento avversario
                     } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                         clientConnection.asyncSend("Formato Input scorretto!");
+                    }
+                }
+
+                //-----------------------------------------------------------
+
+                case WORKER_CHOICE -> {
+                    try {
+                        int selectionWorker = Integer.parseInt(message.getContent());
+                        if(selectionWorker == 1 || selectionWorker == 2){
+                            TurnManager.setSelectionWorker(selectionWorker);
+                            //pima mossa del turno
+                        } else{
+                            clientConnection.asyncSend("Numero scorretto! Scrivi 1 oppure 2: ");
+                        }
+                    } catch(IllegalArgumentException e){
+                        clientConnection.asyncSend("Formato Input scorretto! Scrivi 1 oppure 2: ");
+                    }
+                }
+                case MOVEMENT -> {
+                    int coordX, coordY;
+                    try {
+                        String[] coordString = message.getContent().replace(" ", "").split(",");
+                        coordX = Integer.parseInt(coordString[0]);
+                        coordY = Integer.parseInt(coordString[1]);
+                        if(ActionManager.verifyCoordinateMovement(player.getWorkerSelected(selectionWorker), player.getGodChoice(), coordX, coordY)){
+                            //return new int[]{coordX, coordY};
+                        }
+                    } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                        clientConnection.asyncSend("Formato Input scorretto!");
+                    }
+                }
+                case CONSTRUCTION -> {
+                    int coordX, coordY;
+                    try {
+                        String[] coordString = message.getContent().replace(" ", "").split(",");
+                        coordX = Integer.parseInt(coordString[0]);
+                        coordY = Integer.parseInt(coordString[1]);
+                        if(ActionManager.verifyCoordinateConstruction(player.getWorkerSelected(selectionWorker), coordX, coordY)){                            //return new int[]{coordX, coordY};
+                            //return new int[]{coordX, coordY};
+                        }
+                    } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                        clientConnection.asyncSend("Formato Input scorretto!");
+                    }
+                }
+                case YES_OR_NO -> {
+                    String answer = message.getContent().toLowerCase().replace(" ", "");
+                    if (!answer.equals("yes") && !answer.equals("no")){
+                        System.out.println("Puoi rispondere solo con yes o no!");
+                    }else {
+                        //return answer;
                     }
                 }
             }

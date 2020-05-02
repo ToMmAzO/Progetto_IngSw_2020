@@ -9,9 +9,10 @@ public class TurnManager {
     private static Worker workerSelected;
     private static boolean allowHeight = true;
     private static boolean allowHeightPrometheus = true;
+    private static int selectionWorker;
 
     public static boolean startTurn(Player player){
-        if(verifyRegularity(player, ActionManager.workerChoice(player))){
+        if(verifyRegularity(player)){       //ActionManager.workerChoice(player)
             selectAction(player);
             workerSelected = null;
             return true;
@@ -22,12 +23,12 @@ public class TurnManager {
         }
     }
 
-    public static boolean verifyRegularity(Player player, int selectionWorker){
+    public static boolean verifyRegularity(Player player){
         workerSelected = player.getWorkerSelected(selectionWorker);
         if(workerSelected.canMove()){
             return true;
         } else{
-            System.out.println(workerSelected.getIdWorker() + " non può muoversi! Seleziono l'altro Worker.");
+            System.out.println(workerSelected.getIdWorker() + " non può muoversi! Seleziono l'altro Worker.");      //il controller può scrivere?
             if(selectionWorker == 1){
                 selectionWorker ++;
             } else{
@@ -256,6 +257,14 @@ public class TurnManager {
 
     public static boolean cannotGoUpPrometheus() {
         return !allowHeightPrometheus;
+    }
+
+    public int getSelectionWorker() {
+        return selectionWorker;
+    }
+
+    public static void setSelectionWorker(int selectionWorker) {
+        TurnManager.selectionWorker = selectionWorker;
     }
 }
 
