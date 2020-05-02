@@ -2,7 +2,9 @@ package it.polimi.ingsw.model.Cards;
 
 import it.polimi.ingsw.controller.GameManager;
 
-public class Deck {
+import java.io.Serializable;
+
+public class Deck implements Serializable {
 
     private static Deck deck = null;
     private final God[] godSelected;

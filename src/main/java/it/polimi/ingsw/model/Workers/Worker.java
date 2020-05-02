@@ -5,7 +5,9 @@ import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
 
-public abstract class Worker {
+import java.io.Serializable;
+
+public abstract class Worker implements Serializable {
 
     private final String idWorker;
     private int coordX, coordY, coordZ;

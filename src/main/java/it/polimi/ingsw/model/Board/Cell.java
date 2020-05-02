@@ -2,7 +2,9 @@ package it.polimi.ingsw.model.Board;
 
 import it.polimi.ingsw.model.Workers.Worker;
 
-public class Cell {
+import java.io.Serializable;
+
+public class Cell implements Serializable {
 
     private BlockType block;
     private Worker workerPresence;

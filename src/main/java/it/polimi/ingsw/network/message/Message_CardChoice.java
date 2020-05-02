@@ -13,7 +13,6 @@ public class Message_CardChoice extends Message{
 
     @Override
     public void printMessage(){
-        Deck.getInstance().printCards();
         System.out.print("Scegli il numero di una delle carte ancora disponibili: ");
     }
 
