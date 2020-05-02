@@ -116,7 +116,7 @@ public class RemoteView {
         */
 
         private void turn(ClientMessage message){
-            Worker workerSelected;
+            Worker workerSelected = null;
 
             switch (message.getGameState()) {
                 case WORKER_CHOICE -> {
@@ -270,7 +270,7 @@ public class RemoteView {
                         if(workerSelected.canMove(startX, startY)){
                             //send message second_move;
                         }else{
-                            clientConnection.asyncSend("Mi dispiace! "workerSelected.getIdWorker() + " NON può muoversi una seconda volta!");
+                            clientConnection.asyncSend("Mi dispiace! " + workerSelected.getIdWorker() + " NON può muoversi una seconda volta!");
                         }
                     }
                     //send message construction;
@@ -301,7 +301,7 @@ public class RemoteView {
                             String[] coordString = message.getContent().replace(" ", "").split(",");
                             coordX = Integer.parseInt(coordString[0]);
                             coordY = Integer.parseInt(coordString[1]);
-                            if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){                            //return new int[]{coordX, coordY};
+                            if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){
                                 TurnManager.construction(coordX, coordY);
                             }
                         } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
@@ -349,6 +349,146 @@ public class RemoteView {
                     }
                 }
                 case CONSTRUCTION_CUPOLA -> {
+                    try {
+                        String[] coordString = message.getContent().replace(" ", "").split(",");
+                        coordX = Integer.parseInt(coordString[0]);
+                        coordY = Integer.parseInt(coordString[1]);
+                        if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){                            //return new int[]{coordX, coordY};
+                            workerSelected.buildBlock(true, coordX, coordY);
+                        }
+                    } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                        clientConnection.asyncSend("Formato Input scorretto!");
+                    }
+                    //send message next turn;
+                }
+                case CONSTRUCTION -> {
+                    try {
+                        String[] coordString = message.getContent().replace(" ", "").split(",");
+                        coordX = Integer.parseInt(coordString[0]);
+                        coordY = Integer.parseInt(coordString[1]);
+                        if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){                            //return new int[]{coordX, coordY};
+                            workerSelected.buildBlock(false, coordX, coordY);
+                        }
+                    } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                        clientConnection.asyncSend("Formato Input scorretto!");
+                    }
+                    //send message next turn;
+                }
+            }
+        }
+
+        private void actionDemeter(ClientMessage message, Player player, Worker workerSelected){
+            int coordX, coordY;
+            int buildX = 0;
+            int buildY = 0;
+
+            switch (message.getGameState()) {
+                case MOVEMENT -> {
+                    try {
+                        String[] coordString = message.getContent().replace(" ", "").split(",");
+                        coordX = Integer.parseInt(coordString[0]);
+                        coordY = Integer.parseInt(coordString[1]);
+                        if(ActionManager.verifyCoordinateMovement(workerSelected, player.getGodChoice(), coordX, coordY)){
+                            if(TurnManager.movement(coordX, coordY)){
+                                //send message win;
+                            }else{
+                                //send message construction;
+                            }
+                        }
+                    } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                        clientConnection.asyncSend("Formato Input scorretto!");
+                    }
+                }
+                case CONSTRUCTION -> {
+                    if(workerSelected.canBuild()){
+                        try {
+                            String[] coordString = message.getContent().replace(" ", "").split(",");
+                            coordX = Integer.parseInt(coordString[0]);
+                            coordY = Integer.parseInt(coordString[1]);
+                            if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){
+                                buildX = coordX;
+                                buildY = coordY;
+                                TurnManager.construction(coordX, coordY);
+                            }
+                        } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                            clientConnection.asyncSend("Formato Input scorretto!");
+                        }
+                    } else{
+                        System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
+                    }
+                    //send message next turn;
+                }
+                case QUESTION_DEMETER -> {
+                    String answer = message.getContent().toLowerCase().replace(" ", "");
+                    if(answer.equals("yes")) {
+                        if(workerSelected.canMove(buildX, buildY)){
+                            //send message second_construction;
+                        }else{
+                            clientConnection.asyncSend("Mi dispiace! " + workerSelected.getIdWorker() + " NON può costruire una seconda volta!");
+                        }
+                    }
+                    //send message next turn;
+                }
+                case SECOND_CONSTRUCTION -> {
+                    try {
+                        String[] coordString = message.getContent().replace(" ", "").split(",");
+                        coordX = Integer.parseInt(coordString[0]);
+                        coordY = Integer.parseInt(coordString[1]);
+                        if (buildX == coordX && buildY == coordY) {
+                            System.out.print("Non puoi costruire nello stesso punto di prima!");
+                        } else {
+                            if(ActionManager.verifyCoordinateConstruction(workerSelected, coordX, coordY)){
+                                TurnManager.construction(coordX, coordY);
+                            }
+                        }
+                    }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                        clientConnection.asyncSend("Formato Input scorretto!");
+                    }
+                    //send message next turn;
+                }
+            }
+
+        }
+
+        private void actionHephaestus(ClientMessage message, Player player, Worker workerSelected){
+            int coordX, coordY;
+
+            switch (message.getGameState()) {
+                case MOVEMENT -> {
+                    try {
+                        String[] coordString = message.getContent().replace(" ", "").split(",");
+                        coordX = Integer.parseInt(coordString[0]);
+                        coordY = Integer.parseInt(coordString[1]);
+                        if(ActionManager.verifyCoordinateMovement(workerSelected, player.getGodChoice(), coordX, coordY)){
+                            if(TurnManager.movement(coordX, coordY)){
+                                //send message win;
+                            }else{
+                                //send message construction;
+                            }
+                        }
+                    } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                        clientConnection.asyncSend("Formato Input scorretto!");
+                    }
+                }
+                case QUESTION_HEPHAESTUS -> {
+                    if(workerSelected.canBuild()){
+                        String answer = message.getContent().toLowerCase().replace(" ", "");
+                        if(answer.equals("yes")) {
+                            if(workerSelected.canBuild(true)) {
+                                //send message double_construction;
+                            } else {
+                                clientConnection.asyncSend(workerSelected.getIdWorker() + " NON può costruire 2 blocchi!");
+                                //send message construction;
+                            }
+                        } else{
+                            //send message construction;
+                        }
+                    } else{
+                        System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
+                        //send message next turn;
+                    }
+                }
+                case DOUBLE_CONSTRUCTION -> {
                     try {
                         String[] coordString = message.getContent().replace(" ", "").split(",");
                         coordX = Integer.parseInt(coordString[0]);
