@@ -48,6 +48,7 @@ public class TurnManager {
     }
 
     /*
+
     private static void selectAction(Player player){
         switch (player.getGodChoice()){
             case ARTEMIS -> actionArtemis(player);
@@ -59,7 +60,6 @@ public class TurnManager {
             default -> actionDefault(player);//APOLLO, ATHENA, ATLAS, MINOTAUR
         }
     }
-    */
 
     private static void actionArtemis(Player player){
         int[] coords;
@@ -216,6 +216,8 @@ public class TurnManager {
             System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
         }
     }
+
+     */
 
     public static boolean movement(int x, int y){
         if(workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3) {
