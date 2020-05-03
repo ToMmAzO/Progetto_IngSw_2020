@@ -27,7 +27,7 @@ public class TurnManager {
     */
 
     public static boolean verifyRegularity(Player player, int workerChosen){
-        workerSelected = player.getWorkerSelected(workerChosen);
+        setWorkerSelected(player.getWorkerSelected(workerChosen));
         if(workerSelected.canMove()){
             return true;
         } else{
@@ -37,7 +37,7 @@ public class TurnManager {
             } else{
                 workerChosen --;
             }
-            workerSelected = player.getWorkerSelected((workerChosen));
+            setWorkerSelected(player.getWorkerSelected(workerChosen));
             System.out.println("Il worker selezionato è: "+ workerSelected.getIdWorker() + ".");
             if(workerSelected.canMove()){
                 return true;
@@ -274,5 +274,44 @@ public class TurnManager {
         return !allowHeightPrometheus;
     }
 
+    public static Worker getWorkerSelected() {
+        return workerSelected;
+    }
+
+    public static void setWorkerSelected(Worker workerSelected) {
+        TurnManager.workerSelected = workerSelected;
+    }
+
+    public static int getStartX() {
+        return startX;
+    }
+
+    public static void setStartX(int startX) {
+        TurnManager.startX = startX;
+    }
+
+    public static int getStartY() {
+        return startY;
+    }
+
+    public static void setStartY(int startY) {
+        TurnManager.startY = startY;
+    }
+
+    public static int getBuildX() {
+        return buildX;
+    }
+
+    public static void setBuildX(int buildX) {
+        TurnManager.buildX = buildX;
+    }
+
+    public static int getBuildY() {
+        return buildY;
+    }
+
+    public static void setBuildY(int buildY) {
+        TurnManager.buildY = buildY;
+    }
 }
 
