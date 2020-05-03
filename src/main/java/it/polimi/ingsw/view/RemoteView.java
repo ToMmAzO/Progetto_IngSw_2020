@@ -187,8 +187,14 @@ public class RemoteView {
                             TurnManager.setStartY(TurnManager.getWorkerSelected().getCoordX());
                         }
 
-                        if (TurnManager.movement(coordX, coordY)) {     //PAN
-                            GameManager.setVictory();
+                        if (TurnManager.movement(coordX, coordY)) {
+                            if(player.getGodChoice() == God.PAN){
+                                if(TurnManager.movementPan(coordX, coordY)) {
+                                    GameManager.setVictory();
+                                }
+                            }else{
+                                GameManager.setVictory();
+                            }
                         } else {
                             switch (player.getGodChoice()) {
                                 case ARTEMIS -> {
