@@ -9,6 +9,8 @@ public class TurnManager {
     private static Worker workerSelected;
     private static boolean allowHeight = true;
     private static boolean allowHeightPrometheus = true;
+    private static int startX, startY;
+    private static int buildX, buildY;
 
     /*
     public static boolean startTurn(Player player){

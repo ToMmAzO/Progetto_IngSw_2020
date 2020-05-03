@@ -116,10 +116,7 @@ public class RemoteView {
         */
 
         private void turn(ClientMessage message){
-            Worker workerSelected;
             int coordX, coordY;
-            int startX, startY;
-            int buildX, buildY;
 
             switch (message.getGameState()) {
                 case WORKER_CHOICE -> {
@@ -127,7 +124,6 @@ public class RemoteView {
                         int selectionWorker = Integer.parseInt(message.getContent());
                         if(selectionWorker == 1 || selectionWorker == 2){
                             if(TurnManager.verifyRegularity(player, selectionWorker)){
-                                workerSelected = player.getWorkerSelected(selectionWorker);
                                 //send message action (es. E' il tuo turno!)
 
                                 /*if(player.getGodChoice() == God.PROMETHEUS){
@@ -185,8 +181,8 @@ public class RemoteView {
                                 startY = workerSelected.getCoordY();
                             }
 
-                            if (TurnManager.movement(coordX, coordY)) {
-                                //send message win;
+                            if (TurnManager.movement(coordX, coordY)) {     //PAN
+                                GameManager.setVictory();
                             } else {
                                 switch (player.getGodChoice()) {
                                     case ARTEMIS -> {
@@ -214,11 +210,11 @@ public class RemoteView {
                         coordX = Integer.parseInt(coordString[0]);
                         coordY = Integer.parseInt(coordString[1]);
                         if (startX == coordX && startY == coordY) {
-                            System.out.print("ATTENTO, non puoi tornare indietro! ");
+                            clientConnection.asyncSend("ATTENTO, non puoi tornare indietro! ");
                         } else {
                             if (ActionManager.verifyCoordinateMovement(workerSelected, player.getGodChoice(), coordX, coordY)) {
                                 if (TurnManager.movement(coordX, coordY)) {
-                                    //send message win;
+                                    GameManager.setVictory();
                                 } else {
                                     //send message construction;
                                 }
@@ -261,21 +257,20 @@ public class RemoteView {
                             coordX = Integer.parseInt(coordString[0]);
                             coordY = Integer.parseInt(coordString[1]);
                             if(ActionManager.verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
+                                TurnManager.construction(coordX, coordY);
                                 if (player.getGodChoice() == God.DEMETER) {
                                     buildX = coordX;
                                     buildY = coordY;
+                                    //send message questiondemeter
+                                } else {
+                                    //send message stopturn
                                 }
-                                TurnManager.construction(coordX, coordY);
                             }
                         } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                             clientConnection.asyncSend("Formato Input scorretto!");
                         }
                     } else{
                         System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
-                    }
-                    if (player.getGodChoice() == God.DEMETER) {
-                        //send message questiondemeter
-                    } else {
                         //send message stopturn
                     }
                 }
@@ -328,7 +323,13 @@ public class RemoteView {
                                 }
                             }
                             case QUESTION_PROMETHEUS -> {
-                                //send message prebuild;
+                                if(workerSelected.canBuild()) {
+                                    //send message prebuild;
+                                } else{
+                                    System.out.println(workerSelected.getIdWorker() + " NON può costruire!");
+                                    //send message movement;
+                                }
+
                             }
                         }
                     } else if (answer.equals("no")) {
