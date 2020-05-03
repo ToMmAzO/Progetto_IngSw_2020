@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.enumerations.GameState;
-import it.polimi.ingsw.model.Board.Map;
 
 public class Message_Movement extends Message{
 
@@ -13,7 +12,6 @@ public class Message_Movement extends Message{
 
     @Override
     public void printMessage(){
-        Map.getInstance().print();
         System.out.println("MOVIMENTO: \nInserisci delle cordinate (x, y):");
     }
 

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.network.server;
 
-import it.polimi.ingsw.network.observer.Observable;
+import it.polimi.ingsw.enumerations.GameState;
+import it.polimi.ingsw.network.message.ClientMessage;
+import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.view.RemoteView;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -8,12 +11,13 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class SocketClientConnection extends Observable<String> implements ClientConnection, Runnable {
+public class SocketClientConnection implements Runnable {
 
     private final Socket socket;
     private ObjectOutputStream out;
     private final Server server;
     private boolean active = true;
+    private GameState currGameState;
 
     public SocketClientConnection(Socket socket, Server server){
         this.socket = socket;
@@ -32,10 +36,8 @@ public class SocketClientConnection extends Observable<String> implements Client
         } catch(IOException e){
             System.err.println(e.getMessage());
         }
-
     }
 
-    @Override
     public synchronized void closeConnection(){
         send("Connection closed!");
         try{
@@ -53,8 +55,10 @@ public class SocketClientConnection extends Observable<String> implements Client
         System.out.println("Done!");
     }
 
-    @Override
     public void asyncSend(final Object message){
+        if(message instanceof Message){
+            currGameState = ((Message) message).getGameState();
+        }
         new Thread(() -> send(message)).start();
     }
 
@@ -66,10 +70,14 @@ public class SocketClientConnection extends Observable<String> implements Client
             send("Welcome!\nWhat is your name?");
             String read = in.nextLine();
             String name = read;
+            RemoteView viewSocket = new RemoteView(name, this);
             server.lobby(this, name);
+            ClientMessage message = new ClientMessage();
             while(isActive()){
                 read = in.nextLine();
-                notify(read);
+                message.setGameState(currGameState);
+                message.setContent(read);
+                viewSocket.messageReceiver(message);
             }
         } catch (IOException | NoSuchElementException e) {
             System.err.println("Error!" + e.getMessage());

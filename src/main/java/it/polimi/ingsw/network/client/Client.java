@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Player.Player;
+import it.polimi.ingsw.network.message.Message;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,13 +17,12 @@ public class Client {
 
     private final String ip;
     private final int port;
+    private boolean active = true;
 
     public Client(String ip, int port){
         this.ip = ip;
         this.port = port;
     }
-
-    private boolean active = true;
 
     public synchronized boolean isActive(){
         return active;
@@ -37,15 +37,17 @@ public class Client {
             try{
                 while(isActive()){
                     Object inputObject = socketIn.readObject();
-                    if(inputObject instanceof String){
+                    if(inputObject instanceof Message){
+                        ((Message)inputObject).printMessage();
+                    } else if(inputObject instanceof String){
                         System.out.println((String)inputObject);
                     } else if(inputObject instanceof Deck){
                         ((Deck)inputObject).printCards();
-                    } else if(inputObject instanceof God) {
+                    } else if(inputObject instanceof God){
                         God.printCardChosen(((God)inputObject));
                     } else if(inputObject instanceof Map){
                         ((Map)inputObject).print();
-                    } else if(inputObject instanceof Player) {
+                    } else if(inputObject instanceof Player){
                         ((Player)inputObject).printWorkersPositions();
                     } else{
                         throw new IllegalArgumentException();

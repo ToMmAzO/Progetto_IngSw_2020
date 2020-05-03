@@ -2,7 +2,9 @@ package it.polimi.ingsw.model.Board;
 
 import it.polimi.ingsw.model.Workers.Worker;
 
-public class Map {
+import java.io.Serializable;
+
+public class Map implements Serializable {
 
     private static Map board = null;
     private final Cell[][] map;

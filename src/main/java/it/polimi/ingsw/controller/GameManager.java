@@ -66,18 +66,19 @@ public class GameManager {
         }
     }
 
+    /*
     //si inserisce un attributo currplayer privato e si passa quello a start turn
     //currplayer alla fine del turno viene aggiornato normalmente con nextplayer
     public static void startGame(){//diventa start turn
-       /*
+
         for (int i = 0; i < players.size(); i++){
             firstTurn(i);
         }
 
-        */
+
         int currPlayer = 0;
         while (!victory){//via il currplayer e il while
-            /*
+
             stampa visuale
 
             Map map = Map.getInstance();
@@ -86,7 +87,7 @@ public class GameManager {
                 player.printWorkersPositions();
             }
 
-             */
+
 
             if (TurnManager.startTurn((players.get(currPlayer)))){
                 if(!victory){
@@ -105,6 +106,7 @@ public class GameManager {
         }
         endGame(players.get(currPlayer));
     }
+    */
 
     public static void deletePlayer(Player player){
         Iterator<Player> i = players.iterator();

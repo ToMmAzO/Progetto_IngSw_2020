@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.server;
 
-import it.polimi.ingsw.controller.GameManager;
+import it.polimi.ingsw.network.message.Message_Welcome;
+import it.polimi.ingsw.network.message.Message_WelcomeFirst;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -30,10 +31,14 @@ public class Server {
     }
 
     public synchronized void lobby(SocketClientConnection c, String name){
-        playerConnection.put(name, c);
-        if(playerConnection.size() == GameManager.getNumberOfPlayers()){
-
+        if(playerConnection.isEmpty()){
+            playerConnection.put(name, c);
+            c.asyncSend(new Message_WelcomeFirst());
+        } else {
+            playerConnection.put(name, c);
+            c.asyncSend(new Message_Welcome());
         }
+        //va gestita la coda e migliorata la lobby
     }
 
     public void run(){
@@ -41,8 +46,6 @@ public class Server {
         while(true){
             try{
                 Socket socket = serverSocket.accept();
-
-
                 SocketClientConnection connection = new SocketClientConnection(socket, this);
                 registerConnection(connection);
                 executor.submit(connection);
