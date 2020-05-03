@@ -15,7 +15,7 @@ public class Server {
     private static final int PORT= 12345;
     private final ServerSocket serverSocket;
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
-    private final List<SocketClientConnection> connections = new ArrayList<>();
+    private final List<SocketClientConnection> connections = new ArrayList<>();                //DOMANDA: non è sufficiente la hashMap?
     private final Map<String, SocketClientConnection> playerConnection = new HashMap<>();
 
     public Server() throws IOException {
