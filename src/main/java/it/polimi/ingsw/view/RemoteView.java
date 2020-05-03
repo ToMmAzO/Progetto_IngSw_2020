@@ -7,7 +7,6 @@ import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Player.Player;
-import it.polimi.ingsw.model.Workers.Worker;
 import it.polimi.ingsw.network.message.ClientMessage;
 import it.polimi.ingsw.network.message.Message_CardChoice;
 import it.polimi.ingsw.network.message.Message_SetWorker;
@@ -25,7 +24,7 @@ public class RemoteView {
         this.clientConnection = c;
     }
 
-    public void messageReceiver(ClientMessage message) {
+    public void messageReceiver(ClientMessage message){
         switch (message.getGameState()) {
             case WELCOME_FIRST -> {
                 try {
