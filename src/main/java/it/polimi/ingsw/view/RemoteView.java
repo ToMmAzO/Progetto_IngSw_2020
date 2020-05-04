@@ -7,10 +7,7 @@ import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Player.Player;
-import it.polimi.ingsw.network.message.ClientMessage;
-import it.polimi.ingsw.network.message.Message_CardChoice;
-import it.polimi.ingsw.network.message.Message_SetWorker;
-import it.polimi.ingsw.network.message.Message_WorkerChoice;
+import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.SocketClientConnection;
 
 public class RemoteView {
@@ -85,9 +82,7 @@ public class RemoteView {
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
             }
-            default -> {
-                turn(message);
-            }
+            default -> turn(message);
         }
     }
 
@@ -131,12 +126,13 @@ public class RemoteView {
                         if(TurnManager.verifyRegularity(player, selectionWorker)){
                             //send message action (es. E' il tuo turno!)
 
-                                /*if(player.getGodChoice() == God.PROMETHEUS){
-                                    //send message questionprometheus
-                                } else{
-                                    //send message movement
-                                }
-                                 */
+                            if(player.getGodChoice() == God.PROMETHEUS){
+                                clientConnection.asyncSend(Map.getInstance());
+                                clientConnection.asyncSend(new Message_QuestionPrometheus());
+                            } else{
+                                clientConnection.asyncSend(Map.getInstance());
+                                clientConnection.asyncSend(new Message_Movement());
+                            }
                         } else{
                             GameManager.deletePlayer(player);
                         }
@@ -170,10 +166,11 @@ public class RemoteView {
                         TurnManager.construction(coordX, coordY);
                         TurnManager.setAllowHeightPrometheus(false);
                     }
+                    clientConnection.asyncSend(Map.getInstance());
+                    clientConnection.asyncSend(new Message_Movement());
                 } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
-                //send message movement
             }
             case MOVEMENT -> {
                 try {
@@ -186,27 +183,31 @@ public class RemoteView {
                             TurnManager.setStartY(TurnManager.getWorkerSelected().getCoordX());
                         }
 
-                        if (TurnManager.movement(coordX, coordY)) {
-                            if(player.getGodChoice() == God.PAN){
-                                if(TurnManager.movementPan(coordX, coordY)) {
-                                    GameManager.setVictory();
-                                }
-                            }else{
+                        if(player.getGodChoice() == God.PAN){
+                            if(TurnManager.movementPan(coordX, coordY)) {
                                 GameManager.setVictory();
                             }
-                        } else {
-                            switch (player.getGodChoice()) {
-                                case ARTEMIS -> {
-                                    //send message questionartemis
-                                }
-                                case ATLAS -> {
-                                    //send message questionatlas
-                                }
-                                case HEPHAESTUS -> {
-                                    //send message questionhephaestus
-                                }
-                                default -> {
-                                    //send message construction
+                        }else{
+                            if (TurnManager.movement(coordX, coordY)) {
+                                GameManager.setVictory();
+                            } else {
+                                switch (player.getGodChoice()) {
+                                    case ARTEMIS -> {
+                                        clientConnection.asyncSend(Map.getInstance());
+                                        clientConnection.asyncSend(new Message_QuestionArtemis());
+                                    }
+                                    case ATLAS -> {
+                                        clientConnection.asyncSend(Map.getInstance());
+                                        clientConnection.asyncSend(new Message_QuestionAtlas());
+                                    }
+                                    case HEPHAESTUS -> {
+                                        clientConnection.asyncSend(Map.getInstance());
+                                        clientConnection.asyncSend(new Message_QuestionHephaestus());
+                                    }
+                                    default -> {
+                                        clientConnection.asyncSend(Map.getInstance());
+                                        clientConnection.asyncSend(new Message_Construction());
+                                    }
                                 }
                             }
                         }
@@ -227,7 +228,8 @@ public class RemoteView {
                             if (TurnManager.movement(coordX, coordY)) {
                                 GameManager.setVictory();
                             } else {
-                                //send message construction;
+                                clientConnection.asyncSend(Map.getInstance());
+                                clientConnection.asyncSend(new Message_Construction());
                             }
                         }
                     }
@@ -243,10 +245,10 @@ public class RemoteView {
                     if(ActionManager.verifyCoordinateConstruction(TurnManager.getWorkerSelected(), false, coordX, coordY)){                            //return new int[]{coordX, coordY};
                         TurnManager.getWorkerSelected().buildBlock(true, coordX, coordY);
                     }
+                    //STOP TURN
                 } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
-                //send message stopturn
             }
             case DOUBLE_CONSTRUCTION -> {
                 try {
@@ -256,10 +258,10 @@ public class RemoteView {
                     if(ActionManager.verifyCoordinateConstruction(TurnManager.getWorkerSelected(), true, coordX, coordY)){                            //return new int[]{coordX, coordY};
                         TurnManager.getWorkerSelected().buildBlock(true, coordX, coordY);
                     }
+                    //STOP TURN
                 } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
-                //send message stopturn
             }
             case CONSTRUCTION -> {
                 if(TurnManager.getWorkerSelected().canBuild()){
@@ -272,11 +274,11 @@ public class RemoteView {
                             if (player.getGodChoice() == God.DEMETER) {
                                 TurnManager.setBuildX(coordX);
                                 TurnManager.setBuildY(coordY);
-                                //send message questiondemeter
-                            } else {
-                                //send message stopturn
+                                clientConnection.asyncSend(Map.getInstance());
+                                clientConnection.asyncSend(new Message_QuestionDemeter());
                             }
                         }
+                        //STOP TURN
                     } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                         clientConnection.asyncSend("Formato Input scorretto!");
                     }
@@ -296,11 +298,11 @@ public class RemoteView {
                         if(ActionManager.verifyCoordinateConstruction(TurnManager.getWorkerSelected(), false, coordX, coordY)){
                             TurnManager.construction(coordX, coordY);
                         }
+                        //STOP TURN
                     }
                 }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
-                //send message stopturn
             }
             default -> {
                 String answer = message.getContent().toLowerCase().replace(" ", "");
@@ -308,51 +310,61 @@ public class RemoteView {
                     switch (message.getGameState()) {
                         case QUESTION_ARTEMIS -> {
                             if(TurnManager.getWorkerSelected().canMove(TurnManager.getStartX(), TurnManager.getStartY())){
-                                //send message second_move;
+                                clientConnection.asyncSend(Map.getInstance());
+                                clientConnection.asyncSend(new Message_SecondMove());
                             }else{
                                 clientConnection.asyncSend("Mi dispiace! " + TurnManager.getWorkerSelected().getIdWorker() + " NON può muoversi una seconda volta!");
-                                //send message construction;
+                                clientConnection.asyncSend(Map.getInstance());
+                                clientConnection.asyncSend(new Message_Construction());
                             }
                         }
                         case QUESTION_ATLAS -> {
-                            //send message construction_cupola;
+                            clientConnection.asyncSend(Map.getInstance());
+                            clientConnection.asyncSend(new Message_ConstructionCupola());
                         }
                         case QUESTION_DEMETER -> {
                             if(TurnManager.getWorkerSelected().canBuild(TurnManager.getBuildX(), TurnManager.getBuildY())){
-                                //send message second_construction;
+                                clientConnection.asyncSend(Map.getInstance());
+                                clientConnection.asyncSend(new Message_SecondConstruction());
                             }else{
                                 clientConnection.asyncSend("Mi dispiace! " + TurnManager.getWorkerSelected().getIdWorker() + " NON può costruire una seconda volta!");
-                                //send message stopturn
+                                //STOP TURN
                             }
                         }
                         case QUESTION_HEPHAESTUS -> {
                             if(TurnManager.getWorkerSelected().canBuild(true)) {
-                                //send message double_construction;
+                                clientConnection.asyncSend(Map.getInstance());
+                                clientConnection.asyncSend(new Message_DoubleConstruction());
                             } else {
                                 clientConnection.asyncSend(TurnManager.getWorkerSelected().getIdWorker() + " NON può costruire 2 blocchi!");
-                                //send message construction;
+                                clientConnection.asyncSend(Map.getInstance());
+                                clientConnection.asyncSend(new Message_Construction());
                             }
                         }
                         case QUESTION_PROMETHEUS -> {
                             if(TurnManager.getWorkerSelected().canBuild()) {
-                                //send message prebuild;
+                                clientConnection.asyncSend(Map.getInstance());
+                                clientConnection.asyncSend(new Message_PrebuildPrometheus());
                             } else{
                                 System.out.println(TurnManager.getWorkerSelected().getIdWorker() + " NON può costruire!");
-                                //send message movement;
+                                clientConnection.asyncSend(Map.getInstance());
+                                clientConnection.asyncSend(new Message_Movement());
                             }
 
                         }
                     }
                 } else if (answer.equals("no")) {
                     switch (message.getGameState()) {
-                        case QUESTION_PROMETHEUS -> {
-                            //send message movement
-                        }
                         case QUESTION_DEMETER -> {
-                            //send message stopturn
+                            //STOP TURN
                         }
-                        default -> {//QUESTION_ARTEMIS, QUESTION_ATLAS, QUESTION_HEPHAESTUS
-                            //send message construction
+                        case QUESTION_PROMETHEUS -> {
+                            clientConnection.asyncSend(Map.getInstance());
+                            clientConnection.asyncSend(new Message_Movement());
+                        }
+                        default -> {    //QUESTION_ARTEMIS, QUESTION_ATLAS, QUESTION_HEPHAESTUS
+                            clientConnection.asyncSend(Map.getInstance());
+                            clientConnection.asyncSend(new Message_Construction());
                         }
                     }
                 } else {
