@@ -1,15 +1,18 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.Cards.Deck;
+import it.polimi.ingsw.model.Player.Player;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameManagerTest {
 
+
     @Test
     void GameFlowTest1() {
-        GameManager.addFirstPlayer("Player 1", 2);
+        Player player1 = new Player("Player 1");
+        GameManager.addFirstPlayer(player1, 2);
         assertEquals(2, Deck.getInstance().getCardsSelected().length);
         for (int i = 0; i < 2; i++){
             assertTrue(Deck.getInstance().getAvailability()[i]);
@@ -18,7 +21,8 @@ class GameManagerTest {
         assertEquals("Player 1", GameManager.getPlayersInGame()[0].getNickname());
         assertEquals(1, GameManager.getPlayersInGame().length);
 
-        GameManager.addPlayer("Player 2");
+        Player player2 = new Player("Player 2");
+        GameManager.addPlayer(player2);
         assertEquals("Player 2", GameManager.getPlayersInGame()[1].getNickname());
         assertEquals(2, GameManager.getPlayersInGame().length);
 
@@ -44,7 +48,8 @@ class GameManagerTest {
 
     @Test
     void GameFlowTest2() {
-        GameManager.addFirstPlayer("Player 1", 3);
+        Player player1 = new Player("Player 1");
+        GameManager.addFirstPlayer(player1, 3);
         assertEquals(3, Deck.getInstance().getCardsSelected().length);
         for (int i = 0; i < 3; i++){
             assertTrue(Deck.getInstance().getAvailability()[i]);
@@ -53,11 +58,13 @@ class GameManagerTest {
         assertEquals("Player 1", GameManager.getPlayersInGame()[0].getNickname());
         assertEquals(1, GameManager.getPlayersInGame().length);
 
-        GameManager.addPlayer("Player 2");
+        Player player2 = new Player("Player 2");
+        GameManager.addPlayer(player2);
         assertEquals("Player 2", GameManager.getPlayersInGame()[1].getNickname());
         assertEquals(2, GameManager.getPlayersInGame().length);
 
-        GameManager.addPlayer("Player 3");
+        Player player3 = new Player("Player 3");
+        GameManager.addPlayer(player3);
         assertEquals("Player 3", GameManager.getPlayersInGame()[2].getNickname());
         assertEquals(3, GameManager.getPlayersInGame().length);
 
