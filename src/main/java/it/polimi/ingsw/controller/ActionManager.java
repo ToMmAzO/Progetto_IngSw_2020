@@ -3,14 +3,9 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.Board.BlockType;
 import it.polimi.ingsw.model.Board.Map;
 import it.polimi.ingsw.model.Cards.God;
-import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.model.Workers.Worker;
 
-import java.util.Scanner;
-
 public class ActionManager {
-
-    private static final Scanner scanner= new Scanner(System.in);
 
     public static boolean isAround(int x, int y, int newX, int newY){
         return newX >= x - 1 && newX <= x + 1 && newY >= y - 1 && newY <= y + 1;
@@ -152,62 +147,4 @@ public class ActionManager {
         return false;
     }
 
-    public static int workerChoice(Player player){
-        int selectionWorker = 0;
-        System.out.print("Scegli che worker usare: " + player.getWorkerSelected(1).getIdWorker() + " oppure " + player.getWorkerSelected(2).getIdWorker() + ". ");
-        while(selectionWorker != 1 && selectionWorker != 2){
-            try{
-                System.out.print("Scrivi 1 oppure 2: ");
-                selectionWorker= Integer.parseInt((scanner.nextLine()));
-            } catch(IllegalArgumentException e){
-                System.out.print("Formato Input scorretto! ");
-            }
-        }
-        return selectionWorker;
-    }
-
-    public static int[] insertCoordinateMovement(Worker w, God g){
-        String[] coordString;
-        int coordX, coordY;
-        while(true){
-            try{
-                System.out.print("Inserisci delle coordinate x, y: ");
-                coordString = scanner.nextLine().replace(" ", "").split(",");
-                coordX = Integer.parseInt(coordString[0]);
-                coordY = Integer.parseInt(coordString[1]);
-                if(verifyCoordinateMovement(w, g, coordX, coordY)){
-                    return new int[]{coordX, coordY};
-                }
-            } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-                System.out.print("Formato Input scorretto! ");
-            }
-        }
-    }
-
-    public static int[] insertCoordinateConstruction(Worker w){
-        String[] coordString;
-        int coordX, coordY;
-        while(true){
-            try{
-                System.out.print("Inserisci delle coordinate x, y: ");
-                coordString = scanner.nextLine().replace(" ", "").split(",");
-                coordX = Integer.parseInt(coordString[0]);
-                coordY = Integer.parseInt(coordString[1]);
-                if(verifyCoordinateConstruction(w, false, coordX, coordY)){
-                    return new int[]{coordX, coordY};
-                }
-            } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-                System.out.print("Formato Input scorretto! ");
-            }
-        }
-    }
-
-    public static String yesOrNo(){
-        String answer = scanner.nextLine().toLowerCase().replace(" ", "");
-        while (!answer.equals("yes") && !answer.equals("no")){
-            System.out.println("Puoi rispondere solo con yes o no!");
-            answer = scanner.nextLine();
-        }
-        return answer;
-    }
 }
