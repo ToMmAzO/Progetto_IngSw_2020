@@ -13,7 +13,6 @@ public class Message_SecondMove extends Message{
 
     @Override
     public void printMessage(){
-        Map.getInstance().print();
         System.out.println("Inserisci delle cordinate (x, y).");
     }
 
