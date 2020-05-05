@@ -13,7 +13,6 @@ public class Message_Construction extends Message{
 
     @Override
     public void printMessage(){
-        Map.getInstance().print();
         System.out.println("COSTRUZIONE: \nInserisci delle cordinate (x, y):");
     }
 

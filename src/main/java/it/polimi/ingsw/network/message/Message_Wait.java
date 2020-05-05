@@ -1,11 +1,10 @@
 package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.enumerations.GameState;
-import it.polimi.ingsw.model.Board.Map;
 
-public class Message_SecondMove extends Message{
+public class Message_Wait extends Message{
 
-    private final GameState gameState = GameState.SECOND_MOVE;
+    private final GameState gameState = GameState.WAIT;
 
     public GameState getGameState(){
         return gameState;
@@ -13,7 +12,7 @@ public class Message_SecondMove extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("Inserisci delle cordinate (x, y).");
+        System.out.println("Attendi gli altri giocatori.");
     }
 
 }

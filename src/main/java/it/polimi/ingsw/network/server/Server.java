@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.server;
 
-import it.polimi.ingsw.network.message.Message_Welcome;
-import it.polimi.ingsw.network.message.Message_WelcomeFirst;
+import it.polimi.ingsw.model.Player.Player;
+import it.polimi.ingsw.view.VirtualView;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,11 +15,16 @@ public class Server {
     private static final int PORT= 12345;
     private final ServerSocket serverSocket;
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
-    private final List<SocketClientConnection> connections = new ArrayList<>();                //DOMANDA: non è sufficiente la hashMap?
-    private final Map<String, SocketClientConnection> playerConnection = new HashMap<>();
+    private final List<SocketClientConnection> connections = new ArrayList<>();
+    private static boolean serverReady;
 
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
+        serverReady = true;
+    }
+
+    public static void blockServer(){
+        serverReady = false;
     }
 
     private synchronized void registerConnection(SocketClientConnection c){
@@ -30,13 +35,17 @@ public class Server {
         connections.remove(c);
     }
 
-    public synchronized void lobby(SocketClientConnection c, String name){
-        if(playerConnection.isEmpty()){
-            playerConnection.put(name, c);
-            c.asyncSend(new Message_WelcomeFirst());
-        } else {
-            playerConnection.put(name, c);
-            c.asyncSend(new Message_Welcome());
+    public synchronized void lobby(Player player, SocketClientConnection c){
+        if(serverReady){
+            if(VirtualView.mapEmpty()){
+                VirtualView.addPlayerConnection(player, c);
+                VirtualView.setCurrPlayer(player);
+            } else {
+                VirtualView.addPlayerConnection(player, c);
+            }
+        } else{
+            c.asyncSend("Sorry. È già in corso una partita, riprova più tardi.");
+            c.closeConnection();
         }
         //va gestita la coda e migliorata la lobby
     }

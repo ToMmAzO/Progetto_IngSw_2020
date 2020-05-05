@@ -13,7 +13,6 @@ public class Message_ConstructionCupola extends Message{
 
     @Override
     public void printMessage(){
-        Map.getInstance().print();
         System.out.println("Inserisci delle cordinate (x, y).");
     }
 
