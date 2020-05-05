@@ -38,14 +38,10 @@ public class TurnManager {
     public static boolean movement(int x, int y){
         if(workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3) {
             workerSelected.changePosition(x, y);
-            Map.getInstance().print();
-            GameManager.printPlayerInGame();
             GameManager.setVictory();
             return true;
         } else{
             workerSelected.changePosition(x, y);
-            Map.getInstance().print();
-            GameManager.printPlayerInGame();
             return false;
         }
     }
@@ -56,14 +52,10 @@ public class TurnManager {
                 || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)
                 || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3)){
             workerSelected.changePosition(x, y);
-            Map.getInstance().print();
-            GameManager.printPlayerInGame();
             GameManager.setVictory();
             return true;
         } else{
             workerSelected.changePosition(x, y);
-            Map.getInstance().print();
-            GameManager.printPlayerInGame();
             return false;
         }
     }

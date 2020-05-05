@@ -3,7 +3,6 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.controller.ActionManager;
 import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.controller.TurnManager;
-import it.polimi.ingsw.model.Cards.Deck;
 import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.network.message.*;
@@ -20,7 +19,7 @@ public class RemoteView {
     }
 
     public void messageReceiver(ClientMessage message){
-        if(VirtualView.verifyActivePlayer(player)){
+        if(GameManager.verifyActivePlayer(player)){
             readMessage(message);
         } else{
             clientConnection.asyncSend("Non è il tuo turno! Attendi.");
@@ -29,36 +28,19 @@ public class RemoteView {
 
     protected void readMessage(ClientMessage message){
         switch (message.getGameState()){
-            case WAIT -> clientConnection.asyncSend("Attendi!");
             case WELCOME_FIRST -> {
                 try {
                     int numberChosen = Integer.parseInt(message.getContent());
-                    if (numberChosen == 2 || numberChosen == 3) {
-                        GameManager.addFirstPlayer(player, numberChosen);
-                        clientConnection.asyncSend("Avrai il colore " + player.getColor().toString() + ".");
-                        clientConnection.asyncSend(new Message_Wait());
-                    } else {
-                        clientConnection.asyncSend("Numero scorretto, scrivi 2 oppure 3:");
-                    }
+                    GameManager.setNumberOfPlayers(numberChosen);
                 } catch (IllegalArgumentException e) {
                     clientConnection.asyncSend("Formato Input scorretto! Scrivi 2 oppure 3:");
                 }
             }
-            case WELCOME -> {
-                GameManager.addPlayer(player);
-                clientConnection.asyncSend(new Message_Wait());
-            }
+            case WAIT -> clientConnection.asyncSend("Attendi!");
             case CARD_CHOICE -> {
                 try {
                     int cardNumber = Integer.parseInt(message.getContent());
-                    if (Deck.getInstance().isAvailable(cardNumber)) {
-                        GameManager.choiceOfCard(player, cardNumber);
-                        clientConnection.asyncSend(player.getGodChoice());
-                        clientConnection.asyncSend(new Message_Wait());
-                        VirtualView.nextPlayer();
-                    } else {
-                        clientConnection.asyncSend("Carta non disponibile, scegline una disponibile.");
-                    }
+                    GameManager.choiceOfCard(cardNumber);
                 } catch (IllegalArgumentException e) {
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
@@ -66,16 +48,7 @@ public class RemoteView {
             case SET_WORKER -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
-                    if (player.getWorkerSelected(1) == null) {
-                        GameManager.setWorker(player, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]), 1);
-                        clientConnection.asyncSend(it.polimi.ingsw.model.Board.Map.getInstance());
-                        clientConnection.asyncSend(new Message_SetWorker());
-                    } else {
-                        GameManager.setWorker(player, Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]), 2);
-                        clientConnection.asyncSend(it.polimi.ingsw.model.Board.Map.getInstance());
-                        clientConnection.asyncSend(new Message_WorkerChoice());
-                    }
-                    //fine turno, aggiornare il client dopo ogni posizionamento avversario e mandare "il gioco comincia"
+                    GameManager.setWorker(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
@@ -83,6 +56,8 @@ public class RemoteView {
             default -> turn(message);
         }
     }
+
+    //da qua in poi modificare nel turn manager
 
     private void turn(ClientMessage message){
         int coordX, coordY;

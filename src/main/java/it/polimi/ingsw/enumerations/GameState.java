@@ -2,7 +2,7 @@ package it.polimi.ingsw.enumerations;
 
 public enum GameState {
 
-    WELCOME_FIRST, WELCOME, WAIT,
+    WELCOME_FIRST, WAIT,
     CARD_CHOICE, SET_WORKER,
     WORKER_CHOICE,
     QUESTION_PROMETHEUS, PREBUILD_PROMETHEUS,
