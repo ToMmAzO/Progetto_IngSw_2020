@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.model.Player.Player;
-import it.polimi.ingsw.view.VirtualView;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -23,8 +23,8 @@ public class Server {
         serverReady = true;
     }
 
-    public static void blockServer(){
-        serverReady = false;
+    public static void setServerAvailability(boolean choice){
+        serverReady = choice;
     }
 
     private synchronized void registerConnection(SocketClientConnection c){
@@ -35,19 +35,17 @@ public class Server {
         connections.remove(c);
     }
 
-    public synchronized void lobby(Player player, SocketClientConnection c){
+    public synchronized void lobby(Player player, SocketClientConnection c) throws InterruptedException {
         if(serverReady){
-            if(VirtualView.mapEmpty()){
-                VirtualView.addPlayerConnection(player, c);
-                VirtualView.setCurrPlayer(player);
-            } else {
-                VirtualView.addPlayerConnection(player, c);
+            if(GameManager.mapEmpty()) {
+                GameManager.setCurrPlayer(player);
             }
+            GameManager.addPlayerConnection(player, c);
         } else{
-            c.asyncSend("Sorry. È già in corso una partita, riprova più tardi.");
+            c.asyncSend("Il server non è ancora pronto per accettare nuovi giocatori, riprova più tardi.");
+            wait(10);
             c.closeConnection();
         }
-        //va gestita la coda e migliorata la lobby
     }
 
     public void run(){

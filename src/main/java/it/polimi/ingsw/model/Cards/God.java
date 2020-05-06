@@ -6,7 +6,7 @@ public enum God {
 
     APOLLO, ARTEMIS, ATHENA, ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS;
 
-    static HashMap<God, String> godDescription = new HashMap<God, String>(){
+    static HashMap<God, String> godDescription = new HashMap<>() {
         {
             put(APOLLO, "Il tuo lavoratore può spostarsi nella casella di un lavoratore avversario, mandandolo nella tua attuale casella.");
             put(ARTEMIS, "Il tuo lavoratore può spostarsi una volta in più, ma non può tornare nella casella in sui è partito.");

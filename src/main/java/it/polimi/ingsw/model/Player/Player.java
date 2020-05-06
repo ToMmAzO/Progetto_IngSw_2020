@@ -86,7 +86,7 @@ public class Player {
     }
 
     public void printWorkersPositions(){
-        System.out.printf("%s: %s (livello %s), %s (livello %s).\n", getNickname(),
+        System.out.printf("%s: %s (livello %d), %s (livello %d).\n", getNickname(),
                 getWorkerSelected(1).getIdWorker(), getWorkerSelected(1).getCoordZ(),
                 getWorkerSelected(2).getIdWorker(), getWorkerSelected(2).getCoordZ()
         );

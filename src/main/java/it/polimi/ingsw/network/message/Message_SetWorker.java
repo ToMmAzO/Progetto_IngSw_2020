@@ -12,7 +12,7 @@ public class Message_SetWorker extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("Posizionamento lavoratori. Inserisci delle cordinate (x, y):");
+        System.out.println("Posizionamento il lavoratore. Inserisci delle cordinate (x, y):");
     }
 
 }
