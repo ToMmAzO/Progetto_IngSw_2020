@@ -62,6 +62,18 @@ public class GameManager {
         GameManager.currPlayer = currPlayer;
     }
 
+    public static Player getCurrPlayer() {
+        return currPlayer;
+    }
+
+
+
+    public static SocketClientConnection getCurrConnection() {
+        return playerConnections.get(currPlayer);
+    }
+
+
+
     public static boolean verifyActivePlayer(Player player){
         return player == currPlayer;
     }

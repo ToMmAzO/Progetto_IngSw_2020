@@ -98,7 +98,7 @@ public abstract class Worker implements Serializable {
         return true;
     }
 
-    public boolean canBuild(boolean buildAgain) {       //HEPHAESTUS
+    public boolean canBuild(boolean buildTwoTimes) {       //HEPHAESTUS
         return true;
     }
 

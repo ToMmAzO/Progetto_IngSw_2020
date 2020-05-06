@@ -1,8 +1,10 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.Board.Map;
+import it.polimi.ingsw.model.Cards.God;
 import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.model.Workers.Worker;
+import it.polimi.ingsw.network.message.*;
 
 public class TurnManager {
 
@@ -13,55 +15,199 @@ public class TurnManager {
     private static int buildX, buildY;
 
     public static boolean verifyRegularity(Player player, int workerChosen){
-        setWorkerSelected(player.getWorkerSelected(workerChosen));
+        workerSelected = player.getWorkerSelected(workerChosen);
         if(workerSelected.canMove()){
             return true;
         } else{
-            System.out.println(workerSelected.getIdWorker() + " non può muoversi! Seleziono l'altro Worker.");      //il controller può scrivere?
+            GameManager.getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può muoversi! Seleziono l'altro Worker.");
             if(workerChosen == 1){
                 workerChosen ++;
             } else{
                 workerChosen --;
             }
-            setWorkerSelected(player.getWorkerSelected(workerChosen));
-            System.out.println("Il worker selezionato è: "+ workerSelected.getIdWorker() + ".");
+            workerSelected = player.getWorkerSelected(workerChosen);
+            GameManager.getCurrConnection().asyncSend("Il worker selezionato è: "+ workerSelected.getIdWorker() + ".");
             if(workerSelected.canMove()){
                 return true;
             } else{
-                System.out.println("Nemmeno " + workerSelected.getIdWorker() + " può muoversi!");
+                GameManager.getCurrConnection().asyncSend("Nemmeno " + workerSelected.getIdWorker() + " può muoversi!");
                 workerSelected = null;
                 return false;
             }
         }
     }
 
-    public static boolean movement(int x, int y){
-        if(workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3) {
-            workerSelected.changePosition(x, y);
-            GameManager.setVictory();
-            return true;
+    public static void workerChoice(int selectionWorker){
+        if(selectionWorker == 1 || selectionWorker == 2){
+            if(verifyRegularity(GameManager.getCurrPlayer(), selectionWorker)){
+                if(GameManager.getCurrPlayer().getGodChoice() == God.PROMETHEUS && workerSelected.canBuild()){
+                    GameManager.getCurrConnection().asyncSend(Map.getInstance());
+                    GameManager.getCurrConnection().asyncSend(new Message_QuestionPrometheus());
+                } else{
+                    GameManager.getCurrConnection().asyncSend(Map.getInstance());
+                    GameManager.getCurrConnection().asyncSend(new Message_Movement());
+                }
+            } else{
+                GameManager.deletePlayer(GameManager.getCurrPlayer());
+            }
         } else{
-            workerSelected.changePosition(x, y);
-            return false;
+            GameManager.getCurrConnection().asyncSend("Numero scorretto! Scrivi 1 oppure 2: ");
         }
     }
 
-    public static boolean movementPan(int x, int y){
-        if((workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 1)
+    public static void prebuildPrometheus(int coordX, int coordY){
+        if(ActionManager.verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
+            workerSelected.buildBlock(coordX, coordY);
+            GameManager.getCurrConnection().asyncSend(Map.getInstance());
+            setAllowHeightPrometheus(false);
+        }
+        if(workerSelected.canMove()) {
+            GameManager.getCurrConnection().asyncSend(new Message_Movement());
+        }else{
+            GameManager.getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può più muoversi!");
+            setAllowHeightPrometheus(true);
+            //STOP TURN
+        }
+    }
+
+    public static void movement(int coordX, int coordY){
+        if (ActionManager.verifyCoordinateMovement(workerSelected, GameManager.getCurrPlayer().getGodChoice(), coordX, coordY)) {
+            if(GameManager.getCurrPlayer().getGodChoice() == God.ARTEMIS){
+                startX = workerSelected.getCoordX();
+                startY = workerSelected.getCoordY();
+            }
+
+            if(GameManager.getCurrPlayer().getGodChoice() == God.PAN){          //brutto
+                if(winPan(coordX, coordY)) {
+                    workerSelected.changePosition(coordX, coordY);
+                    GameManager.getCurrConnection().asyncSend(Map.getInstance());
+                    GameManager.setVictory();
+                }
+            }else{
+                if (winDefault(coordX, coordY)) {
+                    workerSelected.changePosition(coordX, coordY);
+                    GameManager.getCurrConnection().asyncSend(Map.getInstance());
+                    GameManager.setVictory();
+                } else {
+                    workerSelected.changePosition(coordX, coordY);
+                    switch (GameManager.getCurrPlayer().getGodChoice()) {
+                        case ARTEMIS -> {
+                            if(workerSelected.canMove(startX, startY)) {
+                                GameManager.getCurrConnection().asyncSend(new Message_QuestionArtemis());
+                            } else {
+                                GameManager.getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può più muoversi!");
+                                GameManager.getCurrConnection().asyncSend(new Message_Construction());
+                            }
+                        }
+                        case ATLAS -> {
+                            if(workerSelected.canBuild()) {
+                                GameManager.getCurrConnection().asyncSend(new Message_QuestionAtlas());
+                            }else{
+                                GameManager.getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può costruire!");
+                                //STOP TURN
+                            }
+                        }
+                        case HEPHAESTUS -> {
+                            if(workerSelected.canBuild()) {
+                                GameManager.getCurrConnection().asyncSend(new Message_QuestionHephaestus());
+                            }else{
+                                GameManager.getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può costruire!");
+                                //STOP TURN
+                            }
+                        }
+                        default -> {
+                            if(workerSelected.canBuild()) {
+                                GameManager.getCurrConnection().asyncSend(new Message_Construction());
+                            }else{
+                                GameManager.getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può costruire!");
+                                //STOP TURN
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void secondMove(int coordX, int coordY){
+        if (startX == coordX && startY == coordY) {
+            GameManager.getCurrConnection().asyncSend("ATTENTO, non puoi tornare indietro! ");
+        } else {
+            if (ActionManager.verifyCoordinateMovement(workerSelected, GameManager.getCurrPlayer().getGodChoice(), coordX, coordY)) {
+                if (winDefault(coordX, coordY)) {
+                    workerSelected.changePosition(coordX, coordY);
+                    GameManager.getCurrConnection().asyncSend(Map.getInstance());
+                    GameManager.setVictory();
+                } else {
+                    workerSelected.changePosition(coordX, coordY);
+                    GameManager.getCurrConnection().asyncSend(Map.getInstance());
+                    if(workerSelected.canBuild()) {
+                        GameManager.getCurrConnection().asyncSend(new Message_Construction());
+                    }else{
+                        GameManager.getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può costruire!");
+                        //STOP TURN
+                    }
+                }
+            }
+        }
+    }
+
+    public static boolean winDefault(int x, int y){
+        return workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3;
+    }
+
+    public static boolean winPan(int x, int y){
+        return (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 1)
                 || (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)
                 || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)
-                || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3)){
-            workerSelected.changePosition(x, y);
-            GameManager.setVictory();
-            return true;
-        } else{
-            workerSelected.changePosition(x, y);
-            return false;
+                || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3);
+    }
+
+    public static void construction(int coordX, int coordY){
+        if(ActionManager.verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
+            workerSelected.buildBlock(coordX, coordY);
+            GameManager.getCurrConnection().asyncSend(Map.getInstance());
+            if (GameManager.getCurrPlayer().getGodChoice() == God.DEMETER) {
+                buildX = coordX;
+                buildY = coordY;
+                if(workerSelected.canBuild(buildX, buildY)) {
+                    GameManager.getCurrConnection().asyncSend(new Message_QuestionDemeter());
+                }else{
+                    GameManager.getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può più costruire!");
+                    //STOP TURN
+                }
+            }else{
+                //STOP TURN
+            }
         }
     }
 
-    public static void construction(int x, int y){
-        workerSelected.buildBlock(x, y);
+    public static void secondConstruction(int coordX, int coordY){
+        if (buildX == coordX && buildY == coordY) {
+            System.out.print("ATTENTO, non puoi costruire nello stesso punto di prima!");
+        } else {
+            if(ActionManager.verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
+                workerSelected.buildBlock(coordX, coordY);
+                GameManager.getCurrConnection().asyncSend(Map.getInstance());
+                //STOP TURN
+            }
+        }
+    }
+
+    public static void constructionCupola(int coordX, int coordY){
+        if(ActionManager.verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
+            workerSelected.buildBlock(true, coordX, coordY);
+            GameManager.getCurrConnection().asyncSend(Map.getInstance());
+            //STOP TURN
+        }
+    }
+
+    public static void duobleConstruction(int coordX, int coordY){
+        if(ActionManager.verifyCoordinateConstruction(workerSelected, true, coordX, coordY)){
+            workerSelected.buildBlock(true, coordX, coordY);
+            GameManager.getCurrConnection().asyncSend(Map.getInstance());
+            //STOP TURN
+        }
     }
 
     public static void setAllowHeight(boolean allowHeight) {
@@ -82,42 +228,6 @@ public class TurnManager {
 
     public static Worker getWorkerSelected() {
         return workerSelected;
-    }
-
-    public static void setWorkerSelected(Worker workerSelected) {
-        TurnManager.workerSelected = workerSelected;
-    }
-
-    public static int getStartX() {
-        return startX;
-    }
-
-    public static void setStartX(int startX) {
-        TurnManager.startX = startX;
-    }
-
-    public static int getStartY() {
-        return startY;
-    }
-
-    public static void setStartY(int startY) {
-        TurnManager.startY = startY;
-    }
-
-    public static int getBuildX() {
-        return buildX;
-    }
-
-    public static void setBuildX(int buildX) {
-        TurnManager.buildX = buildX;
-    }
-
-    public static int getBuildY() {
-        return buildY;
-    }
-
-    public static void setBuildY(int buildY) {
-        TurnManager.buildY = buildY;
     }
 }
 
