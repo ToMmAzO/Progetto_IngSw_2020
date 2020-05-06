@@ -15,7 +15,7 @@ public class Server {
     private static final int PORT= 12345;
     private final ServerSocket serverSocket;
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
-    private final List<SocketClientConnection> connections = new ArrayList<>();
+    private final ArrayList<SocketClientConnection> connections = new ArrayList<>();
     private static boolean serverReady;
 
     public Server() throws IOException {

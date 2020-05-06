@@ -140,19 +140,12 @@ public class GameManager {
     }
 
     public static void deletePlayer(Player player){
-        Iterator<Player> i = players.iterator();
-        while (i.hasNext()) {
-            Player currPlayer = i.next();
-            if (currPlayer.equals(player)) {
-                System.out.println("Hai perso!");
-                Map.getInstance().deleteWorkerInCell(currPlayer.getWorkerSelected(1));
-                Map.getInstance().deleteWorkerInCell(currPlayer.getWorkerSelected(2));
-                i.remove();
-                playerConnections.get(currPlayer).closeConnection();
-                playerConnections.remove(currPlayer);
-                break;
-            }
-        }
+        playerConnections.get(currPlayer).asyncSend("Hai perso!");
+        Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(1));
+        Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(2));
+        players.remove(player);
+        playerConnections.get(player).closeConnection();
+        playerConnections.remove(player);
     }
 
     public static void nextPlayer(Player player){
@@ -176,20 +169,17 @@ public class GameManager {
     }
 
     private static void endGame(Player winnerPlayer){
-        String winner = null;
-        Iterator<Player> i = players.iterator();
-        while (i.hasNext()) {
-            Player currPlayer = i.next();
-            if (currPlayer.equals(winnerPlayer)) {
-                winner = currPlayer.getNickname();
-                System.out.println("Congratulazioni, hai vinto la partita!");
-                i.remove();
-                break;
-            }
-        }
+        String winner = winnerPlayer.getNickname();
+        System.out.println("Congratulazioni, hai vinto la partita!");
+        players.remove(winnerPlayer);
+        playerConnections.get(winnerPlayer).closeConnection();
+        playerConnections.remove(winnerPlayer);
         if(players.size() > 1) {
             for (Player player : players) {
-                System.out.println("GAME OVER! " + winner + " ha vinto.");
+                System.out.println("GAME OVER! " + winner + " ha vinto la partita.");
+                players.remove(player);
+                playerConnections.get(player).closeConnection();
+                playerConnections.remove(player);
             }
         }
     }
