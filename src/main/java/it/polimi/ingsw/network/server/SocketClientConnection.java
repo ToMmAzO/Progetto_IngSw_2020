@@ -29,6 +29,13 @@ public class SocketClientConnection implements Runnable {
         return active;
     }
 
+    public void asyncSend(final Object message){
+        if(message instanceof Message){
+            currGameState = ((Message) message).getGameState();
+        }
+        new Thread(() -> send(message)).start();
+    }
+
     private synchronized void send(Object message){
         try{
             out.reset();
@@ -54,13 +61,6 @@ public class SocketClientConnection implements Runnable {
         System.out.println("Deregistering client...");
         server.deregisterConnection(this);
         System.out.println("Done!");
-    }
-
-    public void asyncSend(final Object message){
-        if(message instanceof Message){
-            currGameState = ((Message) message).getGameState();
-        }
-        new Thread(() -> send(message)).start();
     }
 
     @Override
