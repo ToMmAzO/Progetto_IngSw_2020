@@ -81,7 +81,7 @@ public class SocketClientConnection implements Runnable {
                 message.setContent(read);
                 viewSocket.messageReceiver(message);
             }
-        } catch (IOException | NoSuchElementException e) {
+        } catch (IOException | NoSuchElementException | InterruptedException e) {
             System.err.println("Error!" + e.getMessage());
         } finally{
             close();

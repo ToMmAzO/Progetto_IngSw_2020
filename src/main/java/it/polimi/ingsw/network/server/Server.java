@@ -35,17 +35,17 @@ public class Server {
         connections.remove(c);
     }
 
-    public synchronized void lobby(Player player, SocketClientConnection c){
+    public synchronized void lobby(Player player, SocketClientConnection c) throws InterruptedException {
         if(serverReady){
             if(GameManager.mapEmpty()) {
                 GameManager.setCurrPlayer(player);
             }
             GameManager.addPlayerConnection(player, c);
         } else{
-            c.asyncSend("Sorry. È già in corso una partita, riprova più tardi.");
+            c.asyncSend("Il server non è ancora pronto per accettare nuovi giocatori, riprova più tardi.");
+            wait(10);
             c.closeConnection();
         }
-        //va gestita la coda e migliorata la lobby
     }
 
     public void run(){
