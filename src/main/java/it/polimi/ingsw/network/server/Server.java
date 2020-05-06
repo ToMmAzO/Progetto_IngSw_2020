@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.player.Player;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -15,7 +14,6 @@ public class Server {
     private static final int PORT= 12345;
     private final ServerSocket serverSocket;
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
-    private final ArrayList<SocketClientConnection> connections = new ArrayList<>();
     private static boolean serverReady;
 
     public Server() throws IOException {
@@ -25,14 +23,6 @@ public class Server {
 
     public static void setServerAvailability(boolean choice){
         serverReady = choice;
-    }
-
-    private synchronized void registerConnection(SocketClientConnection c){
-        connections.add(c);
-    }
-
-    public synchronized void deregisterConnection(SocketClientConnection c){
-        connections.remove(c);
     }
 
     public synchronized void lobby(Player player, SocketClientConnection c) throws InterruptedException {
@@ -54,7 +44,6 @@ public class Server {
             try{
                 Socket socket = serverSocket.accept();
                 SocketClientConnection connection = new SocketClientConnection(socket, this);
-                registerConnection(connection);
                 executor.submit(connection);
             } catch(IOException e){
                 System.err.println("Connection error!");

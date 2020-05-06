@@ -59,7 +59,6 @@ public class SocketClientConnection implements Runnable {
     private void close(){
         closeConnection();
         System.out.println("Deregistering client...");
-        server.deregisterConnection(this);
         System.out.println("Done!");
     }
 
