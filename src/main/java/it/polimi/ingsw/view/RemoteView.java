@@ -2,7 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.controller.TurnManager;
-import it.polimi.ingsw.model.Player.Player;
+import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.SocketClientConnection;
 
@@ -100,7 +100,7 @@ public class RemoteView {
             case DOUBLE_CONSTRUCTION -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
-                    TurnManager.duobleConstruction(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                    TurnManager.doubleConstruction(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }

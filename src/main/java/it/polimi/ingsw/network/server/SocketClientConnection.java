@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.enumerations.GameState;
-import it.polimi.ingsw.model.Player.Player;
+import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.ClientMessage;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.view.RemoteView;

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Board.Map;
-import it.polimi.ingsw.model.Cards.God;
-import it.polimi.ingsw.model.Player.Player;
-import it.polimi.ingsw.model.Workers.Worker;
+import it.polimi.ingsw.model.board.Map;
+import it.polimi.ingsw.model.cards.God;
+import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.workers.Worker;
 import it.polimi.ingsw.network.message.*;
 
 public class TurnManager {
@@ -207,7 +207,7 @@ public class TurnManager {
         }
     }
 
-    public static void duobleConstruction(int coordX, int coordY){
+    public static void doubleConstruction(int coordX, int coordY){
         if(ActionManager.verifyCoordinateConstruction(workerSelected, true, coordX, coordY)){
             workerSelected.buildBlock(true, coordX, coordY);
             GameManager.getCurrConnection().asyncSend(Map.getInstance());

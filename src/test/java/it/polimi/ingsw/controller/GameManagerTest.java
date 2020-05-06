@@ -1,11 +1,5 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Cards.Deck;
-import it.polimi.ingsw.model.Player.Player;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class GameManagerTest {
 
 /*

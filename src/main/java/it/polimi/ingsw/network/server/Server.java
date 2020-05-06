@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameManager;
-import it.polimi.ingsw.model.Player.Player;
+import it.polimi.ingsw.model.player.Player;
 
 import java.io.IOException;
 import java.net.ServerSocket;

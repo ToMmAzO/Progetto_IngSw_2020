@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Board.Map;
-import it.polimi.ingsw.model.Cards.Deck;
-import it.polimi.ingsw.model.Player.Player;
+import it.polimi.ingsw.model.board.Map;
+import it.polimi.ingsw.model.cards.Deck;
+import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.network.server.SocketClientConnection;
@@ -112,7 +112,7 @@ public class GameManager {
         if (currPlayer.getWorkerSelected(1) == null) {
             if (ActionManager.validCoords(coordRow, coordColumn)) {
                 if (currPlayer.setWorker1(coordRow, coordColumn)) {
-                    playerConnections.get(currPlayer).asyncSend(it.polimi.ingsw.model.Board.Map.getInstance());
+                    playerConnections.get(currPlayer).asyncSend(it.polimi.ingsw.model.board.Map.getInstance());
                     playerConnections.get(currPlayer).asyncSend(new Message_SetWorker());
                 } else{
                     System.out.print("È già presente un lavoratore quì! ");
@@ -124,7 +124,7 @@ public class GameManager {
         } else{
             if (ActionManager.validCoords(coordRow, coordColumn)) {
                 if (currPlayer.setWorker2(coordRow, coordColumn)) {
-                    playerConnections.get(currPlayer).asyncSend(it.polimi.ingsw.model.Board.Map.getInstance());
+                    playerConnections.get(currPlayer).asyncSend(it.polimi.ingsw.model.board.Map.getInstance());
                     playerConnections.get(currPlayer).asyncSend(new Message_Wait());//message waitsetworker
                     nextPlayer(currPlayer);
 
