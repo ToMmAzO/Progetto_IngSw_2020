@@ -109,7 +109,12 @@ public class TurnManager {
                         }
                         case HEPHAESTUS -> {
                             if(workerSelected.canBuild()) {
-                                GameManager.getCurrConnection().asyncSend(new Message_QuestionHephaestus());
+                                if(TurnManager.getWorkerSelected().canBuild(true)) {
+                                    GameManager.getCurrConnection().asyncSend(new Message_QuestionHephaestus());
+                                } else {
+                                    GameManager.getCurrConnection().asyncSend(TurnManager.getWorkerSelected().getIdWorker() + " NON può costruire 2 blocchi!");
+                                    GameManager.getCurrConnection().asyncSend(new Message_Construction());
+                                }
                             }else{
                                 GameManager.getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può costruire!");
                                 //STOP TURN

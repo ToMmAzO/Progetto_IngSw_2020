@@ -128,14 +128,7 @@ public class RemoteView {
                         case QUESTION_ARTEMIS -> clientConnection.asyncSend(new Message_SecondMove());
                         case QUESTION_ATLAS -> clientConnection.asyncSend(new Message_ConstructionCupola());
                         case QUESTION_DEMETER -> clientConnection.asyncSend(new Message_SecondConstruction());
-                        case QUESTION_HEPHAESTUS -> {       //pensare
-                            if(TurnManager.getWorkerSelected().canBuild(true)) {
-                                clientConnection.asyncSend(new Message_DoubleConstruction());
-                            } else {
-                                clientConnection.asyncSend(TurnManager.getWorkerSelected().getIdWorker() + " NON può costruire 2 blocchi!");
-                                clientConnection.asyncSend(new Message_Construction());
-                            }
-                        }
+                        case QUESTION_HEPHAESTUS -> clientConnection.asyncSend(new Message_DoubleConstruction());
                         case QUESTION_PROMETHEUS -> clientConnection.asyncSend(new Message_PrebuildPrometheus());
                     }
                 } else if (answer.equals("no")) {
