@@ -17,7 +17,6 @@ public class GameManager {
     private static final HashMap<Player, SocketClientConnection> playerConnections = new HashMap<>();
     public static Player currPlayer;
     private static int numberOfPlayers;
-    private static boolean victory = false;
 
     public static boolean mapEmpty(){
         return playerConnections.isEmpty();
@@ -62,11 +61,11 @@ public class GameManager {
         GameManager.currPlayer = currPlayer;
     }
 
+
+
     public static Player getCurrPlayer() {
         return currPlayer;
     }
-
-
 
     public static SocketClientConnection getCurrConnection() {
         return playerConnections.get(currPlayer);
@@ -76,10 +75,6 @@ public class GameManager {
 
     public static boolean verifyActivePlayer(Player player){
         return player == currPlayer;
-    }
-
-    public static void setVictory(){
-        victory = true;
     }
 
     public static Player[] getPlayersInGame(){
@@ -96,6 +91,9 @@ public class GameManager {
         if (Deck.getInstance().isAvailable(cardNumber)) {
             currPlayer.setGodChoice(Deck.getInstance().getCardToPlayer(cardNumber));
             playerConnections.get(currPlayer).asyncSend(currPlayer.getGodChoice());
+
+            playerConnections.get(currPlayer).asyncSend(Map.getInstance());
+
             playerConnections.get(currPlayer).asyncSend(new Message_Wait());//message waitlobby
             nextPlayer(currPlayer);
 
@@ -168,7 +166,7 @@ public class GameManager {
         }
     }
 
-    private static void endGame(Player winnerPlayer){
+    public static void endGame(Player winnerPlayer){
         String winner = winnerPlayer.getNickname();
         System.out.println("Congratulazioni, hai vinto la partita!");
         players.remove(winnerPlayer);
@@ -182,6 +180,7 @@ public class GameManager {
                 playerConnections.remove(player);
             }
         }
+        //Server.setServerAvailability(true); ??? fine gioco, reset tutto tranne server
     }
 
 }

@@ -133,9 +133,7 @@ public class RemoteView {
                     }
                 } else if (answer.equals("no")) {
                     switch (message.getGameState()) {
-                        case QUESTION_DEMETER -> {
-                            //STOP TURN
-                        }
+                        case QUESTION_DEMETER -> {} //STOP TURN
                         case QUESTION_PROMETHEUS -> clientConnection.asyncSend(new Message_Movement());
                         default -> clientConnection.asyncSend(new Message_Construction());   //QUESTION_ARTEMIS, QUESTION_ATLAS, QUESTION_HEPHAESTUS
                     }

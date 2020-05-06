@@ -81,13 +81,13 @@ public class TurnManager {
                 if(winPan(coordX, coordY)) {
                     workerSelected.changePosition(coordX, coordY);
                     GameManager.getCurrConnection().asyncSend(Map.getInstance());
-                    GameManager.setVictory();
+                    GameManager.endGame(GameManager.getCurrPlayer());
                 }
             }else{
                 if (winDefault(coordX, coordY)) {
                     workerSelected.changePosition(coordX, coordY);
                     GameManager.getCurrConnection().asyncSend(Map.getInstance());
-                    GameManager.setVictory();
+                    GameManager.endGame(GameManager.getCurrPlayer());
                 } else {
                     workerSelected.changePosition(coordX, coordY);
                     switch (GameManager.getCurrPlayer().getGodChoice()) {
@@ -109,10 +109,10 @@ public class TurnManager {
                         }
                         case HEPHAESTUS -> {
                             if(workerSelected.canBuild()) {
-                                if(TurnManager.getWorkerSelected().canBuild(true)) {
+                                if(workerSelected.canBuild(true)) {
                                     GameManager.getCurrConnection().asyncSend(new Message_QuestionHephaestus());
                                 } else {
-                                    GameManager.getCurrConnection().asyncSend(TurnManager.getWorkerSelected().getIdWorker() + " NON può costruire 2 blocchi!");
+                                    GameManager.getCurrConnection().asyncSend(workerSelected.getIdWorker() + " NON può costruire 2 blocchi!");
                                     GameManager.getCurrConnection().asyncSend(new Message_Construction());
                                 }
                             }else{
@@ -142,7 +142,7 @@ public class TurnManager {
                 if (winDefault(coordX, coordY)) {
                     workerSelected.changePosition(coordX, coordY);
                     GameManager.getCurrConnection().asyncSend(Map.getInstance());
-                    GameManager.setVictory();
+                    GameManager.endGame(GameManager.getCurrPlayer());
                 } else {
                     workerSelected.changePosition(coordX, coordY);
                     GameManager.getCurrConnection().asyncSend(Map.getInstance());
@@ -181,7 +181,7 @@ public class TurnManager {
                     GameManager.getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può più costruire!");
                     //STOP TURN
                 }
-            }else{
+            } else {
                 //STOP TURN
             }
         }
@@ -231,8 +231,5 @@ public class TurnManager {
         return !allowHeightPrometheus;
     }
 
-    public static Worker getWorkerSelected() {
-        return workerSelected;
-    }
 }
 
