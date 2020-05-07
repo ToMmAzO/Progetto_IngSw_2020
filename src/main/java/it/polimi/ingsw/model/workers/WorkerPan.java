@@ -10,4 +10,5 @@ public class WorkerPan extends Worker {
     public void changePosition(int newX, int newY){
         super.changePosition(newX, newY);
     }
+
 }

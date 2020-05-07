@@ -31,9 +31,4 @@ public class WorkerArtemis extends Worker {
         return false;
     }
 
-    @Override
-    public void changePosition(int newX, int newY){         //classe inutile XD
-        super.changePosition(newX, newY);
-    }
-
 }

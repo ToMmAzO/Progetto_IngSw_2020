@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.workers;
 
 import it.polimi.ingsw.controller.ActionManager;
+import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 
@@ -34,6 +35,7 @@ public class WorkerHephaestus extends Worker {
             }else{      // per forza = a BLOCK1 per il controllo della canBuild
                 Map.getInstance().setCellBlockType(buildX, buildY, BlockType.BLOCK3);
             }
+            notify(GameManager.getInstance().getCurrPlayer());
         } else{
             super.buildBlock(buildX, buildY);
         }

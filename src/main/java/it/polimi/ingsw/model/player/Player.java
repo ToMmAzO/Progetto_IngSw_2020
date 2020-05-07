@@ -3,8 +3,9 @@ package it.polimi.ingsw.model.player;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.workers.*;
+import it.polimi.ingsw.observer.Observable;
 
-public class Player {
+public class Player extends Observable<God> {
 
     private final String nickname;
     private final Color color;
@@ -29,6 +30,7 @@ public class Player {
 
     public void setGodChoice(God god) {
         this.godChoice = god;
+        notify(god);
     }
 
     public boolean setWorker1(int row, int column) {

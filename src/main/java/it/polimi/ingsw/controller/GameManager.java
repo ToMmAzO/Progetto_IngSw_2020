@@ -18,7 +18,7 @@ public class GameManager {
     private final ArrayList<Player> players = new ArrayList<>();
     private final HashMap<Player, GameState> playerStates = new HashMap<>();
     private final HashMap<Player, SocketClientConnection> playerConnections = new HashMap<>();
-    public Player currPlayer;
+    private Player currPlayer;
     private int numberOfPlayers;
 
     public GameManager(){
@@ -40,18 +40,30 @@ public class GameManager {
             Server.setServerAvailability(false);
             players.add(0, player);
             playerConnections.put(player, c);
+
+
             setGameState(player, GameState.WELCOME_FIRST);
             c.asyncSend(new Message_WelcomeFirst());
+
+
         } else{
             players.add(player);
             playerConnections.put(player, c);
+
+
             setGameState(player, GameState.WAIT);
             c.asyncSend(new Message_Wait());
+
+
         }
         if (players.size() == getNumberOfPlayers()){
             Server.setServerAvailability(false);
+
+
             playerConnections.get(currPlayer).asyncSend(Deck.getInstance());
             playerConnections.get(currPlayer).asyncSend(new Message_CardChoice());
+
+
         }
     }
 
@@ -61,8 +73,12 @@ public class GameManager {
             new Deck(numberOfPlayers);
             new Map();
             Server.setServerAvailability(true);
+
+
             playerConnections.get(currPlayer).asyncSend("Avrai il colore " + currPlayer.getColor().toString() + ".");
             playerConnections.get(currPlayer).asyncSend(new Message_Wait());
+
+
         } else{
             playerConnections.get(currPlayer).asyncSend("Numero scorretto, scrivi 2 oppure 3:");
         }
@@ -76,8 +92,6 @@ public class GameManager {
         this.currPlayer = currPlayer;
     }
 
-
-
     public Player getCurrPlayer() {
         return currPlayer;
     }
@@ -86,35 +100,29 @@ public class GameManager {
         return playerConnections.get(currPlayer);
     }
 
-
-
-    public GameState getGameState(Player player){
-        return playerStates.get(player);
-    }
-
     public void setGameState(Player player, GameState gameState){
         playerStates.put(player, gameState);
     }
 
-
+    public GameState getGameState(Player player){
+        return playerStates.get(player);
+    }
 
     public boolean verifyActivePlayer(Player player){
         return player == currPlayer;
     }
 
     public Player[] getPlayersInGame(){
-        if(players.size() == 1){
-            return new Player[]{players.get(0)};
-        } else if(players.size() == 2){
-            return new Player[]{players.get(0), players.get(1)};
-        } else{
-            return new Player[]{players.get(0), players.get(1), players.get(2)};
-        }
+        Player[] listOfPlayer = new Player[players.size()];
+        listOfPlayer = players.toArray(listOfPlayer);
+        return listOfPlayer;
     }
 
     public void choiceOfCard(int cardNumber){
         if (Deck.getInstance().isAvailable(cardNumber)) {
             currPlayer.setGodChoice(Deck.getInstance().getCardToPlayer(cardNumber));
+
+
             playerConnections.get(currPlayer).asyncSend(currPlayer.getGodChoice());
 
             playerConnections.get(currPlayer).asyncSend(Map.getInstance());
@@ -125,6 +133,8 @@ public class GameManager {
             //problema per passaggio del turno (messaggi wait diversi per gestirli)
             playerConnections.get(currPlayer).asyncSend(Deck.getInstance());
             playerConnections.get(currPlayer).asyncSend(new Message_CardChoice());
+
+
         } else {
             playerConnections.get(currPlayer).asyncSend("Carta non disponibile, scegline una disponibile.");
         }
@@ -135,8 +145,12 @@ public class GameManager {
         if (currPlayer.getWorkerSelected(1) == null) {
             if (ActionManager.getInstance().validCoords(coordRow, coordColumn)) {
                 if (currPlayer.setWorker1(coordRow, coordColumn)) {
-                    playerConnections.get(currPlayer).asyncSend(it.polimi.ingsw.model.board.Map.getInstance());
+
+
+                    playerConnections.get(currPlayer).asyncSend(Map.getInstance());
                     playerConnections.get(currPlayer).asyncSend(new Message_SetWorker());
+
+
                 } else{
                     System.out.print("È già presente un lavoratore quì! ");
                 }
@@ -147,8 +161,12 @@ public class GameManager {
         } else{
             if (ActionManager.getInstance().validCoords(coordRow, coordColumn)) {
                 if (currPlayer.setWorker2(coordRow, coordColumn)) {
-                    playerConnections.get(currPlayer).asyncSend(it.polimi.ingsw.model.board.Map.getInstance());
+
+
+                    playerConnections.get(currPlayer).asyncSend(Map.getInstance());
                     playerConnections.get(currPlayer).asyncSend(new Message_Wait());//message waitsetworker
+
+
                     nextPlayer(currPlayer);
 
                     //passaggio turno???

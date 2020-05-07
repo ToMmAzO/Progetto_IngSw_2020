@@ -22,9 +22,4 @@ public class WorkerDemeter extends Worker {
         return false;
     }
 
-    @Override
-    public void buildBlock(int buildX, int buildY) {         //classe inutile XD
-        super.buildBlock(buildX, buildY);
-    }
-
 }
