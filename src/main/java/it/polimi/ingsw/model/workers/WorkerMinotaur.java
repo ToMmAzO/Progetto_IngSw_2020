@@ -12,7 +12,7 @@ public class WorkerMinotaur extends Worker {
     }
 
     @Override
-    public boolean canPush(int i, int j) {      //si potrebbe fare anche un for
+    public boolean canPush(int i, int j) {
         //ALTO SINISTRA
         if(i == getCoordX() - 1 && j == getCoordY() - 1){
             if (ActionManager.getInstance().validCoords(i - 1, j - 1) && Map.getInstance().noWorkerHere(i - 1, j - 1) && Map.getInstance().getCellBlockType(i - 1, j - 1) != BlockType.CUPOLA){
@@ -122,9 +122,13 @@ public class WorkerMinotaur extends Worker {
         if(i == getCoordX() + 1 && j == getCoordY() + 1){
             if (ActionManager.getInstance().validCoords(i + 1, j + 1) && Map.getInstance().noWorkerHere(i + 1, j + 1) && Map.getInstance().getCellBlockType(i + 1, j + 1) != BlockType.CUPOLA){
                 if(TurnManager.getInstance().cannotGoUp()){
-                    return Map.getInstance().getCellBlockType(i + 1, j + 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i, j).getCoordZ();
+                    if(Map.getInstance().getCellBlockType(i + 1, j + 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i, j).getCoordZ()){
+                        return true;
+                    }
                 }else{
-                    return Map.getInstance().getCellBlockType(i + 1, j + 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i, j).getCoordZ() + 1;
+                    if(Map.getInstance().getCellBlockType(i + 1, j + 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i,j).getCoordZ() + 1) {
+                        return true;
+                    }
                 }
             }
         }
@@ -173,7 +177,6 @@ public class WorkerMinotaur extends Worker {
                 Map.getInstance().getWorkerInCell(newX, newY).setCoordZ(Map.getInstance().getCellBlockType(newX - 1, newY - 1).getAbbreviation());
 
                 Map.getInstance().setWorkerInCell(newX - 1, newY - 1, Map.getInstance().getWorkerInCell(newX, newY));
-                //Map.deleteWorkerInCell(Map.getWorkerInCell(newX, newY));     //non necessaria(?) viene sovrascritto con il comando successivo
                 Map.getInstance().setWorkerInCell(newX, newY, this);
 
                 setCoordX(newX);
@@ -190,7 +193,6 @@ public class WorkerMinotaur extends Worker {
                 Map.getInstance().getWorkerInCell(newX, newY).setCoordZ(Map.getInstance().getCellBlockType(newX - 1, newY).getAbbreviation());
 
                 Map.getInstance().setWorkerInCell(newX - 1, newY, Map.getInstance().getWorkerInCell(newX, newY));
-                //Map.deleteWorkerInCell(Map.getWorkerInCell(newX, newY));     //non necessaria(?) viene sovrascritto con il comando successivo
                 Map.getInstance().setWorkerInCell(newX, newY, this);
 
                 setCoordX(newX);
@@ -207,7 +209,6 @@ public class WorkerMinotaur extends Worker {
                 Map.getInstance().getWorkerInCell(newX, newY).setCoordZ(Map.getInstance().getCellBlockType(newX - 1, newY + 1).getAbbreviation());
 
                 Map.getInstance().setWorkerInCell(newX - 1, newY + 1, Map.getInstance().getWorkerInCell(newX, newY));
-                //Map.deleteWorkerInCell(Map.getWorkerInCell(newX, newY));     //non necessaria(?) viene sovrascritto con il comando successivo
                 Map.getInstance().setWorkerInCell(newX, newY, this);
 
                 setCoordX(newX);
@@ -224,7 +225,6 @@ public class WorkerMinotaur extends Worker {
                 Map.getInstance().getWorkerInCell(newX, newY).setCoordZ(Map.getInstance().getCellBlockType(newX, newY - 1).getAbbreviation());
 
                 Map.getInstance().setWorkerInCell(newX, newY - 1, Map.getInstance().getWorkerInCell(newX, newY));
-                //Map.deleteWorkerInCell(Map.getWorkerInCell(newX, newY));     //non necessaria(?) viene sovrascritto con il comando successivo
                 Map.getInstance().setWorkerInCell(newX, newY, this);
 
                 setCoordX(newX);
@@ -241,7 +241,6 @@ public class WorkerMinotaur extends Worker {
                 Map.getInstance().getWorkerInCell(newX, newY).setCoordZ(Map.getInstance().getCellBlockType(newX, newY + 1).getAbbreviation());
 
                 Map.getInstance().setWorkerInCell(newX, newY + 1, Map.getInstance().getWorkerInCell(newX, newY));
-                //Map.deleteWorkerInCell(Map.getWorkerInCell(newX, newY));     //non necessaria(?) viene sovrascritto con il comando successivo
                 Map.getInstance().setWorkerInCell(newX, newY, this);
 
                 setCoordX(newX);
@@ -258,7 +257,6 @@ public class WorkerMinotaur extends Worker {
                 Map.getInstance().getWorkerInCell(newX, newY).setCoordZ(Map.getInstance().getCellBlockType(newX + 1, newY - 1).getAbbreviation());
 
                 Map.getInstance().setWorkerInCell(newX + 1, newY - 1, Map.getInstance().getWorkerInCell(newX, newY));
-                //Map.deleteWorkerInCell(Map.getWorkerInCell(newX, newY));     //non necessaria(?) viene sovrascritto con il comando successivo
                 Map.getInstance().setWorkerInCell(newX, newY, this);
 
                 setCoordX(newX);
@@ -275,7 +273,6 @@ public class WorkerMinotaur extends Worker {
                 Map.getInstance().getWorkerInCell(newX, newY).setCoordZ(Map.getInstance().getCellBlockType(newX + 1, newY).getAbbreviation());
 
                 Map.getInstance().setWorkerInCell(newX + 1, newY, Map.getInstance().getWorkerInCell(newX, newY));
-                //Map.deleteWorkerInCell(Map.getWorkerInCell(newX, newY));     //non necessaria(?) viene sovrascritto con il comando successivo
                 Map.getInstance().setWorkerInCell(newX, newY, this);
 
                 setCoordX(newX);
@@ -292,42 +289,12 @@ public class WorkerMinotaur extends Worker {
                 Map.getInstance().getWorkerInCell(newX, newY).setCoordZ(Map.getInstance().getCellBlockType(newX + 1, newY + 1).getAbbreviation());
 
                 Map.getInstance().setWorkerInCell(newX + 1, newY + 1, Map.getInstance().getWorkerInCell(newX, newY));
-                //Map.deleteWorkerInCell(Map.getWorkerInCell(newX, newY));     //non necessaria(?) viene sovrascritto con il comando successivo
                 Map.getInstance().setWorkerInCell(newX, newY, this);
 
                 setCoordX(newX);
                 setCoordY(newY);
                 setCoordZ(Map.getInstance().getCellBlockType(newX, newY).getAbbreviation());
             }
-
-            /*
-            int m = getCoordX() - 2;
-            int n = getCoordY() - 2;
-
-            for(int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
-                for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
-                    if(newX == i && newY == j) {
-                        Map.deleteWorkerInCell(this);
-
-                        Map.getWorkerInCell(newX, newY).setCoordX(m);
-                        Map.getWorkerInCell(newX, newY).setCoordY(n);
-                        Map.getWorkerInCell(newX, newY).setCoordZ(Map.getCellBlockType(m, n).getAbbreviation());
-
-                        Map.setWorkerInCell(m, n, Map.getWorkerInCell(newX, newY));
-                        //Map.deleteWorkerInCell(Map.getWorkerInCell(newX, newY));     //non necessaria(?) viene sovrascritto con il comando successivo
-                        Map.setWorkerInCell(newX, newY, this);
-
-                        setCoordX(newX);
-                        setCoordY(newY);
-                        setCoordZ(Map.getCellBlockType(newX, newY).getAbbreviation());
-                    }
-                    n = n + 2;
-                }
-                m = m + 2;
-            }
-
-             */
         }
     }
-
 }
