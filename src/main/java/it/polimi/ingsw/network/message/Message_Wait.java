@@ -12,7 +12,7 @@ public class Message_Wait extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("Attendi gli altri giocatori.");
+        System.out.println("Attendi.");
     }
 
 }
