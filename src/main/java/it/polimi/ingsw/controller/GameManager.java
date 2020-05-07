@@ -57,7 +57,7 @@ public class GameManager {
 
 
         }
-        if (players.size() == getNumberOfPlayers()){
+        if (players.size() == numberOfPlayers){
             Server.setServerAvailability(false);
 
 
@@ -66,6 +66,40 @@ public class GameManager {
 
 
         }
+    }
+
+
+    
+    //serve ancora quando abbiamo fatto???
+
+    public SocketClientConnection getCurrConnection() {
+        return playerConnections.get(currPlayer);
+    }
+
+    //???
+
+
+
+    public void setCurrPlayer(Player currPlayer) {
+        this.currPlayer = currPlayer;
+    }
+
+    public Player getCurrPlayer() {
+        return currPlayer;
+    }
+
+    public void setGameState(Player player, GameState gameState){
+        playerStates.put(player, gameState);
+    }
+
+    public GameState getGameState(Player player){
+        return playerStates.get(player);
+    }
+
+    public Player[] getPlayersInGame(){
+        Player[] listOfPlayer = new Player[players.size()];
+        listOfPlayer = players.toArray(listOfPlayer);
+        return listOfPlayer;
     }
 
     public void setNumberOfPlayers(int numberOfPlayers){
@@ -83,40 +117,6 @@ public class GameManager {
         } else{
             playerConnections.get(currPlayer).asyncSend("Numero scorretto, scrivi 2 oppure 3:");
         }
-    }
-
-    public int getNumberOfPlayers(){
-        return numberOfPlayers;
-    }
-
-    public void setCurrPlayer(Player currPlayer) {
-        this.currPlayer = currPlayer;
-    }
-
-    public Player getCurrPlayer() {
-        return currPlayer;
-    }
-
-
-
-    public SocketClientConnection getCurrConnection() {
-        return playerConnections.get(currPlayer);
-    }
-
-
-
-    public void setGameState(Player player, GameState gameState){
-        playerStates.put(player, gameState);
-    }
-
-    public GameState getGameState(Player player){
-        return playerStates.get(player);
-    }
-
-    public Player[] getPlayersInGame(){
-        Player[] listOfPlayer = new Player[players.size()];
-        listOfPlayer = players.toArray(listOfPlayer);
-        return listOfPlayer;
     }
 
     public void choiceOfCard(int cardNumber){
@@ -180,19 +180,6 @@ public class GameManager {
         }
     }
 
-    public void deletePlayer(Player player){
-
-
-        playerConnections.get(currPlayer).asyncSend("Hai perso!");
-
-
-        Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(1));
-        Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(2));
-        players.remove(player);
-        playerConnections.get(player).closeConnection();
-        playerConnections.remove(player);
-    }
-
     public void nextPlayer(Player player){
         Iterator<Player> i = players.iterator();
         Player nextPlayer = null;
@@ -211,6 +198,19 @@ public class GameManager {
         } else{
             currPlayer = players.get(0);
         }
+    }
+
+    public void deletePlayer(Player player){
+
+
+        playerConnections.get(currPlayer).asyncSend("Hai perso!");
+
+
+        Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(1));
+        Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(2));
+        players.remove(player);
+        playerConnections.get(player).closeConnection();
+        playerConnections.remove(player);
     }
 
     public void endGame(Player winnerPlayer){

@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class Deck implements Serializable {
 
     private static Deck deck = null;
-    private final God[] godSelected;
+    private final God[] cardsSelected;
     private final boolean[] availability;
 
     public Deck(int numberOfCards){
@@ -18,10 +18,10 @@ public class Deck implements Serializable {
             i++;
         }
         int[] casual = extractCasualNumbers(numberOfCards);
-        godSelected = new God[numberOfCards];
+        cardsSelected = new God[numberOfCards];
         availability = new boolean[numberOfCards];
         for (i = 0; i < numberOfCards; i++){
-            godSelected[i] = godList[casual[i]];
+            cardsSelected[i] = godList[casual[i]];
             availability[i] = true;
         }
         deck = this;
@@ -32,7 +32,7 @@ public class Deck implements Serializable {
     }
 
     public God[] getCardsSelected(){
-        return godSelected;
+        return cardsSelected;
     }
 
     public boolean[] getAvailability() {
@@ -41,11 +41,11 @@ public class Deck implements Serializable {
 
     public God getCardToPlayer(int cardNumber){
         availability[cardNumber-1] = false;
-        return godSelected[cardNumber-1];
+        return cardsSelected[cardNumber-1];
     }
 
     public boolean isAvailable(int cardNumber) {
-        return (cardNumber >= 1 && cardNumber <= GameManager.getInstance().getNumberOfPlayers()) && (Deck.getInstance().getAvailability()[cardNumber - 1]);
+        return (cardNumber >= 1 && cardNumber <= cardsSelected.length) && (Deck.getInstance().getAvailability()[cardNumber - 1]);
     }
 
     private int[] extractCasualNumbers(int numberOfNumbers){
@@ -73,8 +73,8 @@ public class Deck implements Serializable {
 
     public void printCards(){
         System.out.println("La partita avrà le seguenti carte divinità:");
-        for (int i = 0; i < godSelected.length; i++){
-            System.out.println("Carta " + (i+1) + " --> " + godSelected[i].toString() + ": " + God.getGodDescription(godSelected[i]));
+        for (int i = 0; i < cardsSelected.length; i++){
+            System.out.println("Carta " + (i+1) + " --> " + cardsSelected[i].toString() + ": " + God.getGodDescription(cardsSelected[i]));
             if (availability[i]){
                 System.out.println("            La carta è ancora disponibile.");
             } else {
