@@ -28,6 +28,14 @@ public class RemoteView {
         }
     }
 
+    /*NOTA per ricordarmi: all'interno della readMessage si dovrà:
+       -controllare che il GameState ricevuto tramite messaggio dal Client ( message.getGameState() )
+        sia uguale al GameState di quel Client salvato lato Server, pensavo ad una HashMap contenente (Client, GameState)
+       -se i due GameState coincidono allora il controller esegue l'azione specifica e lo notifica a tutti i Client
+       -se i due GameState NON coincidono -> Bug o manomissione del Client -> messaggio di errore
+
+       stessa cosa in turn(message) */
+
     private void readMessage(ClientMessage message) {
         switch (message.getGameState()) {
             case WELCOME_FIRST -> {
