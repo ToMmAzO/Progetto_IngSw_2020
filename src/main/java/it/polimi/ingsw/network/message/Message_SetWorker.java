@@ -1,7 +1,5 @@
 package it.polimi.ingsw.network.message;
 
-import it.polimi.ingsw.enumerations.GameState;
-
 public class Message_SetWorker extends Message{
 
     private final GameState gameState = GameState.SET_WORKER;

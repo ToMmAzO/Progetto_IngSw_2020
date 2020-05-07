@@ -11,46 +11,12 @@ public class WorkerMinotaur extends Worker {
         super(idWorker, coordX, coordY);
     }
 
-    /*
-    public boolean canPush(int i,int j){
-
-            if (i==this.getCoordX() && j!=this.getCoordY()){         //caso in cui il worker avversario è sulla stessa colonna di Minotauro
-                int temp = this.getCoordY() - j;
-                if(temp > 0){        //il worker avversario si trova a coord minori di Minotauro --> controllo se può spingerlo alla cella j-1
-                    int m = j-1;
-                    if(ActionManager.validCoords(i,m) && Map.noWorkerHere(i,m) && Map.getCellBlockType(i,m) != BlockType.CUPOLA)
-                        return true;
-                }
-                if(temp < 0) {        //il worker avversario si trova a coord maggiori di Minotauro --> controllo se può spingerlo alla cella j+1
-                    int m = j+1;
-                    if (ActionManager.validCoords(i,m) && Map.noWorkerHere(i,m) && (Map.getCellBlockType(i,m) != BlockType.CUPOLA))
-                        return true;
-                }
-            }
-
-            if (i!=this.getCoordX() && j==this.getCoordY()){         //caso in cui il worker avversario è sulla stessa riga di Minotauro
-                int temp = this.getCoordX() - i;
-                if(temp > 0){        //il worker avversario si trova a coord minori di Minotauro --> controllo se può spingerlo alla cella i-1
-                    int m = i-1;
-                    if(ActionManager.validCoords(m,j) && Map.noWorkerHere(m,j) && Map.getCellBlockType(m,j) != BlockType.CUPOLA)
-                        return true;
-                }
-                if(temp < 0) {        //il worker avversario si trova a coord maggiori di Minotauro --> controllo se può spingerlo alla cella i+1
-                    int m = i+1;
-                    if (ActionManager.validCoords(m,j) && Map.noWorkerHere(m,j) && Map.getCellBlockType(m,j) != BlockType.CUPOLA)
-                        return true;
-                }
-            }
-            return false;
-    }
-     */
-
     @Override
     public boolean canPush(int i, int j) {      //si potrebbe fare anche un for
         //ALTO SINISTRA
         if(i == getCoordX() - 1 && j == getCoordY() - 1){
-            if (ActionManager.validCoords(i - 1, j - 1) && Map.getInstance().noWorkerHere(i - 1, j - 1) && Map.getInstance().getCellBlockType(i - 1, j - 1) != BlockType.CUPOLA){
-                if(TurnManager.cannotGoUp()){
+            if (ActionManager.getInstance().validCoords(i - 1, j - 1) && Map.getInstance().noWorkerHere(i - 1, j - 1) && Map.getInstance().getCellBlockType(i - 1, j - 1) != BlockType.CUPOLA){
+                if(TurnManager.getInstance().cannotGoUp()){
                     if(Map.getInstance().getCellBlockType(i - 1, j - 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i,j).getCoordZ()) {
                         return true;
                     }
@@ -64,8 +30,8 @@ public class WorkerMinotaur extends Worker {
 
         //BASSO
         if(i == getCoordX() - 1 && j == getCoordY()){
-            if (ActionManager.validCoords(i - 1, j) && Map.getInstance().noWorkerHere(i - 1, j) && Map.getInstance().getCellBlockType(i - 1, j) != BlockType.CUPOLA){
-                if(TurnManager.cannotGoUp()){
+            if (ActionManager.getInstance().validCoords(i - 1, j) && Map.getInstance().noWorkerHere(i - 1, j) && Map.getInstance().getCellBlockType(i - 1, j) != BlockType.CUPOLA){
+                if(TurnManager.getInstance().cannotGoUp()){
                     if(Map.getInstance().getCellBlockType(i - 1, j).getAbbreviation() <= Map.getInstance().getWorkerInCell(i,j).getCoordZ()) {
                         return true;
                     }
@@ -79,8 +45,8 @@ public class WorkerMinotaur extends Worker {
 
         //BASSO DESTRA
         if(i == getCoordX() - 1 && j == getCoordY() + 1){
-            if (ActionManager.validCoords(i - 1, j + 1) && Map.getInstance().noWorkerHere(i - 1, j + 1) && Map.getInstance().getCellBlockType(i - 1, j + 1) != BlockType.CUPOLA){
-                if(TurnManager.cannotGoUp()){
+            if (ActionManager.getInstance().validCoords(i - 1, j + 1) && Map.getInstance().noWorkerHere(i - 1, j + 1) && Map.getInstance().getCellBlockType(i - 1, j + 1) != BlockType.CUPOLA){
+                if(TurnManager.getInstance().cannotGoUp()){
                     if(Map.getInstance().getCellBlockType(i - 1, j + 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i,j).getCoordZ()) {
                         return true;
                     }
@@ -94,8 +60,8 @@ public class WorkerMinotaur extends Worker {
 
         //CENTRO SINISTRA
         if(i == getCoordX() && j == getCoordY() - 1){
-            if (ActionManager.validCoords(i, j - 1) && Map.getInstance().noWorkerHere(i, j - 1) && Map.getInstance().getCellBlockType(i, j - 1) != BlockType.CUPOLA){
-                if(TurnManager.cannotGoUp()){
+            if (ActionManager.getInstance().validCoords(i, j - 1) && Map.getInstance().noWorkerHere(i, j - 1) && Map.getInstance().getCellBlockType(i, j - 1) != BlockType.CUPOLA){
+                if(TurnManager.getInstance().cannotGoUp()){
                     if(Map.getInstance().getCellBlockType(i, j - 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i,j).getCoordZ()) {
                         return true;
                     }
@@ -109,8 +75,8 @@ public class WorkerMinotaur extends Worker {
 
         //CENTRO DESTRA
         if(i == getCoordX() && j == getCoordY() + 1){
-            if (ActionManager.validCoords(i, j + 1) && Map.getInstance().noWorkerHere(i, j + 1) && Map.getInstance().getCellBlockType(i, j + 1) != BlockType.CUPOLA){
-                if(TurnManager.cannotGoUp()){
+            if (ActionManager.getInstance().validCoords(i, j + 1) && Map.getInstance().noWorkerHere(i, j + 1) && Map.getInstance().getCellBlockType(i, j + 1) != BlockType.CUPOLA){
+                if(TurnManager.getInstance().cannotGoUp()){
                     if(Map.getInstance().getCellBlockType(i, j + 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i,j).getCoordZ()) {
                         return true;
                     }
@@ -124,8 +90,8 @@ public class WorkerMinotaur extends Worker {
 
         //ALTO SINISTRA
         if(i == getCoordX() + 1 && j == getCoordY() - 1){
-            if (ActionManager.validCoords(i + 1, j - 1) && Map.getInstance().noWorkerHere(i + 1, j - 1) && Map.getInstance().getCellBlockType(i + 1, j - 1) != BlockType.CUPOLA){
-                if(TurnManager.cannotGoUp()){
+            if (ActionManager.getInstance().validCoords(i + 1, j - 1) && Map.getInstance().noWorkerHere(i + 1, j - 1) && Map.getInstance().getCellBlockType(i + 1, j - 1) != BlockType.CUPOLA){
+                if(TurnManager.getInstance().cannotGoUp()){
                     if(Map.getInstance().getCellBlockType(i + 1, j - 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i,j).getCoordZ()) {
                         return true;
                     }
@@ -139,8 +105,8 @@ public class WorkerMinotaur extends Worker {
 
         //ALTO
         if(i == getCoordX() + 1 && j == getCoordY()){
-            if (ActionManager.validCoords(i + 1, j) && Map.getInstance().noWorkerHere(i + 1, j) && Map.getInstance().getCellBlockType(i + 1, j) != BlockType.CUPOLA){
-                if(TurnManager.cannotGoUp()){
+            if (ActionManager.getInstance().validCoords(i + 1, j) && Map.getInstance().noWorkerHere(i + 1, j) && Map.getInstance().getCellBlockType(i + 1, j) != BlockType.CUPOLA){
+                if(TurnManager.getInstance().cannotGoUp()){
                     if(Map.getInstance().getCellBlockType(i + 1, j).getAbbreviation() <= Map.getInstance().getWorkerInCell(i,j).getCoordZ()) {
                         return true;
                     }
@@ -154,15 +120,11 @@ public class WorkerMinotaur extends Worker {
 
         //ALTO DESTRA
         if(i == getCoordX() + 1 && j == getCoordY() + 1){
-            if (ActionManager.validCoords(i + 1, j + 1) && Map.getInstance().noWorkerHere(i + 1, j + 1) && Map.getInstance().getCellBlockType(i + 1, j + 1) != BlockType.CUPOLA){
-                if(TurnManager.cannotGoUp()){
-                    if(Map.getInstance().getCellBlockType(i + 1, j + 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i,j).getCoordZ()) {
-                        return true;
-                    }
+            if (ActionManager.getInstance().validCoords(i + 1, j + 1) && Map.getInstance().noWorkerHere(i + 1, j + 1) && Map.getInstance().getCellBlockType(i + 1, j + 1) != BlockType.CUPOLA){
+                if(TurnManager.getInstance().cannotGoUp()){
+                    return Map.getInstance().getCellBlockType(i + 1, j + 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i, j).getCoordZ();
                 }else{
-                    if(Map.getInstance().getCellBlockType(i + 1, j + 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i,j).getCoordZ() + 1) {
-                        return true;
-                    }
+                    return Map.getInstance().getCellBlockType(i + 1, j + 1).getAbbreviation() <= Map.getInstance().getWorkerInCell(i, j).getCoordZ() + 1;
                 }
             }
         }
@@ -174,8 +136,8 @@ public class WorkerMinotaur extends Worker {
     public boolean canMove() {
         for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
             for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
-                if (!(i == getCoordX() && j == getCoordY()) && ActionManager.validCoords(i, j) && Map.getInstance().getCellBlockType(i, j) != BlockType.CUPOLA){
-                    if (TurnManager.cannotGoUp()){
+                if (!(i == getCoordX() && j == getCoordY()) && ActionManager.getInstance().validCoords(i, j) && Map.getInstance().getCellBlockType(i, j) != BlockType.CUPOLA){
+                    if (TurnManager.getInstance().cannotGoUp()){
                         if (Map.getInstance().getCellBlockType(i, j).getAbbreviation() <= getCoordZ())
                             if (Map.getInstance().noWorkerHere(i, j))
                                 return true;
@@ -183,7 +145,7 @@ public class WorkerMinotaur extends Worker {
                                 if (this.canPush(i, j))
                                     return true;
                     }
-                    if (!TurnManager.cannotGoUp()) {
+                    if (!TurnManager.getInstance().cannotGoUp()) {
                         if (Map.getInstance().getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1)
                             if (Map.getInstance().noWorkerHere(i, j))
                                 return true;

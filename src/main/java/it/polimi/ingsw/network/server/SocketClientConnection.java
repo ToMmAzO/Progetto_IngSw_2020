@@ -1,9 +1,8 @@
 package it.polimi.ingsw.network.server;
 
-import it.polimi.ingsw.enumerations.GameState;
+import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.ClientMessage;
-import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.view.RemoteView;
 
 import java.io.IOException;
@@ -18,7 +17,6 @@ public class SocketClientConnection implements Runnable {
     private ObjectOutputStream out;
     private final Server server;
     private boolean active = true;
-    private GameState currGameState;
 
     public SocketClientConnection(Socket socket, Server server){
         this.socket = socket;
@@ -30,9 +28,11 @@ public class SocketClientConnection implements Runnable {
     }
 
     public void asyncSend(final Object message){
+        /*
         if(message instanceof Message){
             currGameState = ((Message) message).getGameState();
         }
+        */
         new Thread(() -> send(message)).start();
     }
 
@@ -76,7 +76,7 @@ public class SocketClientConnection implements Runnable {
             ClientMessage message = new ClientMessage();
             while(isActive()){
                 read = in.nextLine();
-                message.setGameState(currGameState);
+                message.setGameState(GameManager.getInstance().getGameState(player));
                 message.setContent(read);
                 viewSocket.messageReceiver(message);
             }

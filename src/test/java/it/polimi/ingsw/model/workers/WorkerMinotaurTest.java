@@ -13,6 +13,7 @@ class WorkerMinotaurTest {
     @BeforeEach
     void setUp(){
         new Map();
+        new TurnManager();
     }
 
     @Test
@@ -44,7 +45,7 @@ class WorkerMinotaurTest {
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
-        TurnManager.setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeight(false);
 
         assertFalse(worker1.canMove());
 

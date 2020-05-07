@@ -25,12 +25,17 @@ public class Server {
         serverReady = choice;
     }
 
+    public static void refresh(){
+        new GameManager();
+        setServerAvailability(true);
+    }
+
     public synchronized void lobby(Player player, SocketClientConnection c) throws InterruptedException {
         if(serverReady){
-            if(GameManager.mapEmpty()) {
-                GameManager.setCurrPlayer(player);
+            if(GameManager.getInstance().mapEmpty()) {
+                GameManager.getInstance().setCurrPlayer(player);
             }
-            GameManager.addPlayerConnection(player, c);
+            GameManager.getInstance().addPlayerConnection(player, c);
         } else{
             c.asyncSend("Il server non è ancora pronto per accettare nuovi giocatori, riprova più tardi.");
             wait(10);
@@ -40,6 +45,7 @@ public class Server {
 
     public void run(){
         System.out.println("Server listening on port: " + PORT);
+        new GameManager();
         while(true){
             try{
                 Socket socket = serverSocket.accept();
@@ -47,6 +53,7 @@ public class Server {
                 executor.submit(connection);
             } catch(IOException e){
                 System.err.println("Connection error!");
+                break;
             }
         }
     }

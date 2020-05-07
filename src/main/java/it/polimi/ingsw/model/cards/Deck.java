@@ -45,7 +45,7 @@ public class Deck implements Serializable {
     }
 
     public boolean isAvailable(int cardNumber) {
-        return (cardNumber >= 1 && cardNumber <= GameManager.getNumberOfPlayers()) && (Deck.getInstance().getAvailability()[cardNumber - 1]);
+        return (cardNumber >= 1 && cardNumber <= GameManager.getInstance().getNumberOfPlayers()) && (Deck.getInstance().getAvailability()[cardNumber - 1]);
     }
 
     private int[] extractCasualNumbers(int numberOfNumbers){

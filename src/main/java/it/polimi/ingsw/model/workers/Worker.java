@@ -51,8 +51,8 @@ public abstract class Worker implements Serializable {
     public boolean canMove() {
         for (int i = coordX - 1; i <= coordX + 1; i++) {
             for (int j = coordY - 1; j <= coordY + 1; j++) {
-                if (!(i == coordX && j == coordY) && ActionManager.validCoords(i, j) && Map.getInstance().noWorkerHere(i, j) && Map.getInstance().getCellBlockType(i, j) != BlockType.CUPOLA){
-                    if(TurnManager.cannotGoUp()){
+                if (!(i == coordX && j == coordY) && ActionManager.getInstance().validCoords(i, j) && Map.getInstance().noWorkerHere(i, j) && Map.getInstance().getCellBlockType(i, j) != BlockType.CUPOLA){
+                    if(TurnManager.getInstance().cannotGoUp()){
                         if(Map.getInstance().getCellBlockType(i, j).getAbbreviation() <= coordZ) {
                             return true;
                         }
@@ -86,7 +86,7 @@ public abstract class Worker implements Serializable {
     public boolean canBuild(){
         for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
             for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
-                if (!(i == getCoordX() && j == getCoordY()) && ActionManager.validCoords(i, j) && Map.getInstance().noWorkerHere(i, j) && Map.getInstance().getCellBlockType(i, j) != BlockType.CUPOLA) {
+                if (!(i == getCoordX() && j == getCoordY()) && ActionManager.getInstance().validCoords(i, j) && Map.getInstance().noWorkerHere(i, j) && Map.getInstance().getCellBlockType(i, j) != BlockType.CUPOLA) {
                     return true;
                 }
             }

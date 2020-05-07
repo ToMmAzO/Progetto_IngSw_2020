@@ -13,6 +13,7 @@ class WorkerAthenaTest {
     @BeforeEach
     void setUp(){
         new Map();
+        new TurnManager();
     }
 
     @Test
@@ -44,7 +45,7 @@ class WorkerAthenaTest {
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
-        TurnManager.setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeight(false);
 
         assertTrue(worker1.canMove());
 
@@ -65,7 +66,7 @@ class WorkerAthenaTest {
         assertEquals(worker1.getCoordX(),0);
         assertEquals(worker1.getCoordY(),1);
         assertEquals(worker1.getCoordZ(),1);
-        assertTrue(TurnManager.cannotGoUp());
+        assertTrue(TurnManager.getInstance().cannotGoUp());
         assertFalse(worker2.canMove());
 
     }

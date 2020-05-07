@@ -17,19 +17,19 @@ public class RemoteView {
     }
 
     public void messageReceiver(ClientMessage message){
-        if(GameManager.verifyActivePlayer(player)){
+        if(GameManager.getInstance().verifyActivePlayer(player)){
             readMessage(message);
         } else{
             clientConnection.asyncSend("Non è il tuo turno! Attendi.");
         }
     }
 
-    protected void readMessage(ClientMessage message){
+    private void readMessage(ClientMessage message){
         switch (message.getGameState()){
             case WELCOME_FIRST -> {
                 try {
                     int numberChosen = Integer.parseInt(message.getContent());
-                    GameManager.setNumberOfPlayers(numberChosen);
+                    GameManager.getInstance().setNumberOfPlayers(numberChosen);
                 } catch (IllegalArgumentException e) {
                     clientConnection.asyncSend("Formato Input scorretto! Scrivi 2 oppure 3:");
                 }
@@ -38,7 +38,7 @@ public class RemoteView {
             case CARD_CHOICE -> {
                 try {
                     int cardNumber = Integer.parseInt(message.getContent());
-                    GameManager.choiceOfCard(cardNumber);
+                    GameManager.getInstance().choiceOfCard(cardNumber);
                 } catch (IllegalArgumentException e) {
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
@@ -46,7 +46,7 @@ public class RemoteView {
             case SET_WORKER -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
-                    GameManager.setWorker(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                    GameManager.getInstance().setWorker(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
@@ -60,7 +60,7 @@ public class RemoteView {
             case WORKER_CHOICE -> {
                 try {
                     int selectionWorker = Integer.parseInt(message.getContent());
-                    TurnManager.workerChoice(selectionWorker);
+                    TurnManager.getInstance().workerChoice(selectionWorker);
                 } catch(IllegalArgumentException e){
                     clientConnection.asyncSend("Formato Input scorretto! Scrivi 1 oppure 2: ");
                 }
@@ -68,7 +68,7 @@ public class RemoteView {
             case PREBUILD_PROMETHEUS -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
-                    TurnManager.prebuildPrometheus(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                    TurnManager.getInstance().prebuildPrometheus(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
@@ -76,7 +76,7 @@ public class RemoteView {
             case MOVEMENT -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
-                    TurnManager.movement(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                    TurnManager.getInstance().movement(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
@@ -84,7 +84,7 @@ public class RemoteView {
             case SECOND_MOVE -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
-                    TurnManager.secondMove(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                    TurnManager.getInstance().secondMove(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
@@ -92,7 +92,7 @@ public class RemoteView {
             case CONSTRUCTION_CUPOLA -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
-                    TurnManager.constructionCupola(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                    TurnManager.getInstance().constructionCupola(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
@@ -100,7 +100,7 @@ public class RemoteView {
             case DOUBLE_CONSTRUCTION -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
-                    TurnManager.doubleConstruction(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                    TurnManager.getInstance().doubleConstruction(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
@@ -108,7 +108,7 @@ public class RemoteView {
             case CONSTRUCTION -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
-                    TurnManager.construction(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                    TurnManager.getInstance().construction(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
@@ -116,7 +116,7 @@ public class RemoteView {
             case SECOND_CONSTRUCTION -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
-                    TurnManager.secondConstruction(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                    TurnManager.getInstance().secondConstruction(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
@@ -143,4 +143,5 @@ public class RemoteView {
             }
         }
     }
+
 }

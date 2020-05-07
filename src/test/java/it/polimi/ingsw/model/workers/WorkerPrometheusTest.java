@@ -13,6 +13,7 @@ class WorkerPrometheusTest {
     @BeforeEach
     void setUp(){
         new Map();
+        new TurnManager();
     }
 
     @Test
@@ -22,10 +23,10 @@ class WorkerPrometheusTest {
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
 
-        TurnManager.setAllowHeightPrometheus(false);
+        TurnManager.getInstance().setAllowHeightPrometheus(false);
         assertFalse(worker1.canMove());
 
-        TurnManager.setAllowHeightPrometheus(true);
+        TurnManager.getInstance().setAllowHeightPrometheus(true);
         assertTrue(worker1.canMove());
     }
 

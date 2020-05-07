@@ -1,7 +1,5 @@
 package it.polimi.ingsw.network.message;
 
-import it.polimi.ingsw.enumerations.GameState;
-
 import java.io.Serializable;
 
 public abstract class Message implements Serializable {

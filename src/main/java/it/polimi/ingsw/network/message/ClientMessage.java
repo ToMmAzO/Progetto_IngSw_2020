@@ -1,7 +1,5 @@
 package it.polimi.ingsw.network.message;
 
-import it.polimi.ingsw.enumerations.GameState;
-
 public class ClientMessage {
 
     private GameState gameState;
