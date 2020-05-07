@@ -1,9 +1,9 @@
 package it.polimi.ingsw.network.client;
 
-import it.polimi.ingsw.model.Board.Map;
-import it.polimi.ingsw.model.Cards.Deck;
-import it.polimi.ingsw.model.Cards.God;
-import it.polimi.ingsw.model.Player.Player;
+import it.polimi.ingsw.model.board.Map;
+import it.polimi.ingsw.model.cards.Deck;
+import it.polimi.ingsw.model.cards.God;
+import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.Message;
 
 import java.io.IOException;

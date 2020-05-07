@@ -1,34 +1,44 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Board.BlockType;
-import it.polimi.ingsw.model.Board.Map;
-import it.polimi.ingsw.model.Cards.God;
-import it.polimi.ingsw.model.Workers.Worker;
+import it.polimi.ingsw.model.board.BlockType;
+import it.polimi.ingsw.model.board.Map;
+import it.polimi.ingsw.model.cards.God;
+import it.polimi.ingsw.model.workers.Worker;
 
 public class ActionManager {
 
-    public static boolean isAround(int x, int y, int newX, int newY) {
+    private static ActionManager actionManager = null;
+
+    public ActionManager(){
+        actionManager = this;
+    }
+
+    public static ActionManager getInstance(){
+        return actionManager;
+    }
+
+    public boolean isAround(int x, int y, int newX, int newY) {
         return newX >= x - 1 && newX <= x + 1 && newY >= y - 1 && newY <= y + 1;
     }
 
-    public static boolean validCoords(int i, int j) {
+    public boolean validCoords(int i, int j) {
         return (i >= 0 && i <= 4) && (j >= 0 && j <= 4);
     }
 
-    public static boolean verifyCoordinateMovement(Worker w, God g, int coordX, int coordY) {
+    public boolean verifyCoordinateMovement(Worker w, God g, int coordX, int coordY) {
         if (validCoords(coordX, coordY)) {
             if (isAround(w.getCoordX(), w.getCoordY(), coordX, coordY)) {
                 if (w.getCoordX() != coordX || w.getCoordY() != coordY) {
                     if (Map.getInstance().noWorkerHere(coordX, coordY)) {
                         if (Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
-                            if (TurnManager.cannotGoUp()) {
+                            if (TurnManager.getInstance().cannotGoUp()) {
                                 if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
                                     return true;
                                 } else {
                                     System.out.print("ATTENTO, c'è attivo il potere di ATHENA! ");
                                 }
                             } else {
-                                if (g == God.PROMETHEUS && TurnManager.cannotGoUpPrometheus()) {
+                                if (g == God.PROMETHEUS && TurnManager.getInstance().cannotGoUpPrometheus()) {
                                     if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
                                         return true;
                                     } else {
@@ -47,7 +57,7 @@ public class ActionManager {
                         if (g == God.APOLLO) {
                             if (!Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))) {
                                 if (Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
-                                    if (TurnManager.cannotGoUp()) {
+                                    if (TurnManager.getInstance().cannotGoUp()) {
                                         if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
                                             return true;
                                         } else {
@@ -70,7 +80,7 @@ public class ActionManager {
                         if (g == God.MINOTAUR) {
                             if (!Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))) {
                                 if (Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
-                                    if (TurnManager.cannotGoUp()) {
+                                    if (TurnManager.getInstance().cannotGoUp()) {
                                         if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
                                             if (w.canPush(coordX, coordY)) {
                                                 return true;
@@ -114,7 +124,7 @@ public class ActionManager {
         return false;
     }
 
-    public static boolean verifyCoordinateConstruction(Worker w, boolean doubleConstruction, int coordX, int coordY) {
+    public boolean verifyCoordinateConstruction(Worker w, boolean doubleConstruction, int coordX, int coordY) {
         if (validCoords(coordX, coordY)) {
             if (isAround(w.getCoordX(), w.getCoordY(), coordX, coordY)) {
                 if (w.getCoordX() != coordX || w.getCoordY() != coordY) {

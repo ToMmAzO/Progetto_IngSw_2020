@@ -1,7 +1,5 @@
 package it.polimi.ingsw.network.message;
 
-import it.polimi.ingsw.enumerations.GameState;
-
 public class Message_SetWorker extends Message{
 
     private final GameState gameState = GameState.SET_WORKER;
@@ -12,7 +10,7 @@ public class Message_SetWorker extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("Posizionamento lavoratori. Inserisci delle cordinate (x, y):");
+        System.out.println("Posizionamento il lavoratore. Inserisci delle cordinate (x, y):");
     }
 
 }

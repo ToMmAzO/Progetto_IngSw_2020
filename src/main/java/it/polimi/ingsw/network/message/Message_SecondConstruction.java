@@ -1,8 +1,5 @@
 package it.polimi.ingsw.network.message;
 
-import it.polimi.ingsw.enumerations.GameState;
-import it.polimi.ingsw.model.Board.Map;
-
 public class Message_SecondConstruction extends Message{
 
     private final GameState gameState = GameState.SECOND_CONSTRUCTION;
