@@ -21,6 +21,7 @@ public abstract class Worker extends Observable<Player> implements Serializable 
         this.coordY = coordY;
         this.coordZ = 0;
         Map.getInstance().setWorkerInCell(coordX, coordY, this);
+        notify(GameManager.getInstance().getCurrPlayer());
     }
 
     public String getIdWorker() {

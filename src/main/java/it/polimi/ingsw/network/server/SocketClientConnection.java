@@ -70,9 +70,8 @@ public class SocketClientConnection implements Runnable {
             send("Welcome!\nWhat is your name?");
             String read = in.nextLine();
             String name = read;
-            Player player = new Player(name);
+            Player player = server.lobby(name, this);
             RemoteView viewSocket = new RemoteView(player, this);
-            server.lobby(player, this);
             ClientMessage message = new ClientMessage();
             while(isActive()){
                 read = in.nextLine();

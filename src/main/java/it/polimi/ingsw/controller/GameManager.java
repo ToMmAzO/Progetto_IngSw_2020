@@ -40,18 +40,19 @@ public class GameManager {
             Server.setServerAvailability(false);
             players.add(0, player);
             playerConnections.put(player, c);
-
-
             setGameState(player, GameState.WELCOME_FIRST);
+
+
             c.asyncSend(new Message_WelcomeFirst());
 
 
         } else{
             players.add(player);
             playerConnections.put(player, c);
-
-
             setGameState(player, GameState.WAIT);
+
+
+            playerConnections.get(player).asyncSend("Avrai il colore " + player.getColor().toString() + ".");
             c.asyncSend(new Message_Wait());
 
 
@@ -73,7 +74,7 @@ public class GameManager {
             new Deck(numberOfPlayers);
             new Map();
             Server.setServerAvailability(true);
-
+            setGameState(currPlayer, GameState.WELCOME_FIRST);
 
             playerConnections.get(currPlayer).asyncSend("Avrai il colore " + currPlayer.getColor().toString() + ".");
             playerConnections.get(currPlayer).asyncSend(new Message_Wait());
@@ -96,9 +97,13 @@ public class GameManager {
         return currPlayer;
     }
 
+
+
     public SocketClientConnection getCurrConnection() {
         return playerConnections.get(currPlayer);
     }
+
+
 
     public void setGameState(Player player, GameState gameState){
         playerStates.put(player, gameState);
@@ -106,10 +111,6 @@ public class GameManager {
 
     public GameState getGameState(Player player){
         return playerStates.get(player);
-    }
-
-    public boolean verifyActivePlayer(Player player){
-        return player == currPlayer;
     }
 
     public Player[] getPlayersInGame(){
@@ -123,12 +124,13 @@ public class GameManager {
             currPlayer.setGodChoice(Deck.getInstance().getCardToPlayer(cardNumber));
 
 
-            playerConnections.get(currPlayer).asyncSend(currPlayer.getGodChoice());
 
             playerConnections.get(currPlayer).asyncSend(Map.getInstance());
-
             playerConnections.get(currPlayer).asyncSend(new Message_Wait());//message waitlobby
+
+
             nextPlayer(currPlayer);
+
 
             //problema per passaggio del turno (messaggi wait diversi per gestirli)
             playerConnections.get(currPlayer).asyncSend(Deck.getInstance());
@@ -147,7 +149,6 @@ public class GameManager {
                 if (currPlayer.setWorker1(coordRow, coordColumn)) {
 
 
-                    playerConnections.get(currPlayer).asyncSend(Map.getInstance());
                     playerConnections.get(currPlayer).asyncSend(new Message_SetWorker());
 
 
@@ -163,13 +164,12 @@ public class GameManager {
                 if (currPlayer.setWorker2(coordRow, coordColumn)) {
 
 
-                    playerConnections.get(currPlayer).asyncSend(Map.getInstance());
                     playerConnections.get(currPlayer).asyncSend(new Message_Wait());//message waitsetworker
 
 
                     nextPlayer(currPlayer);
-
                     //passaggio turno???
+
 
                 } else{
                     System.out.print("È già presente un lavoratore quì! ");
@@ -181,7 +181,11 @@ public class GameManager {
     }
 
     public void deletePlayer(Player player){
+
+
         playerConnections.get(currPlayer).asyncSend("Hai perso!");
+
+
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(1));
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(2));
         players.remove(player);
@@ -211,13 +215,21 @@ public class GameManager {
 
     public void endGame(Player winnerPlayer){
         String winner = winnerPlayer.getNickname();
+
+
         System.out.println("Congratulazioni, hai vinto la partita!");
+
+
         players.remove(winnerPlayer);
         playerConnections.get(winnerPlayer).closeConnection();
         playerConnections.remove(winnerPlayer);
         if(players.size() > 1) {
             for (Player player : players) {
+
+
                 System.out.println("GAME OVER! " + winner + " ha vinto la partita.");
+
+
                 players.remove(player);
                 playerConnections.get(player).closeConnection();
                 playerConnections.remove(player);

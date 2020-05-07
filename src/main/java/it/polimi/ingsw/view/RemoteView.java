@@ -21,9 +21,9 @@ public class RemoteView {
     }
 
     public void messageReceiver(ClientMessage message) {
-        if (GameManager.getInstance().verifyActivePlayer(player)) {
+        if (player.equals(GameManager.getInstance().getCurrPlayer())){
             readMessage(message);
-        } else {
+        } else{
             clientConnection.asyncSend("Non è il tuo turno! Attendi.");
         }
     }
@@ -152,7 +152,7 @@ public class RemoteView {
     private class ChangeInDeck implements Observer<God> {
 
         @Override
-        public void update(God message) {
+        public void update(God message){
             if(player.equals(GameManager.getInstance().getCurrPlayer())){
                 clientConnection.asyncSend(message);
             } else{
@@ -167,14 +167,16 @@ public class RemoteView {
     private class ChangeMap implements Observer<Player> {
 
         @Override
-        public void update(Player message) {
-            if (!player.equals(message)) {
+        public void update(Player message){
+            if (!player.equals(message)){
                 clientConnection.asyncSend("Azione di " + message.getNickname() + ".");
             }
             clientConnection.asyncSend(Map.getInstance());
             Player[] players = GameManager.getInstance().getPlayersInGame();
-            for (Player value : players) {
-                clientConnection.asyncSend(value);
+            for (Player value : players){
+                if(value.getWorkerSelected(1) != null && value.getWorkerSelected(2) != null){
+                    clientConnection.asyncSend(value);
+                }
             }
         }
 
