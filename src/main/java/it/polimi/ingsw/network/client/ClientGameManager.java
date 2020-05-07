@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.client;
 
-import it.polimi.ingsw.enumerations.GameState;
+import it.polimi.ingsw.network.message.GameState;
 import it.polimi.ingsw.model.Cards.God;
 
 public abstract class ClientGameManager implements Runnable{     //in questa classe metto tutte le cose che "regole di gioco" di cui è a conoscenza il client, poi Cli e Gui le ereditano e implementano i metodi per applicarle
