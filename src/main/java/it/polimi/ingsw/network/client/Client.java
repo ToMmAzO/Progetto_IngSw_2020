@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.Message_LoadState;
-import it.polimi.ingsw.view.Cli.Cli;
+import it.polimi.ingsw.view.cli.Cli;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,6 +20,7 @@ public class Client {
     private final String ip;
     private final int port;
     private boolean active = true;
+    private Cli cli = new Cli();
 
     public Client(String ip, int port){
         this.ip = ip;
@@ -55,6 +56,7 @@ public class Client {
                         *    il server potrebbe notificare al client quale stato ha lui in memoria, così da risintonizzarsi nello stesso stato
                         *  */
                     } else if(inputObject instanceof Message){
+                        cli.setPlayerState(((Message)inputObject).getGameState());
                         ((Message)inputObject).printMessage();
                     } else if(inputObject instanceof String){
                         System.out.println((String)inputObject);
@@ -64,6 +66,8 @@ public class Client {
                         God.printCardChosen(((God)inputObject));
                     } else if(inputObject instanceof Map){
                         ((Map)inputObject).print();
+                        cli.runState();
+                        cli.nextState();
                     } else if(inputObject instanceof Player){
                         ((Player)inputObject).printWorkersPositions();
                     } else{

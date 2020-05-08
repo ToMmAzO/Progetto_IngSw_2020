@@ -1,6 +1,5 @@
-package it.polimi.ingsw.view.Cli;
+package it.polimi.ingsw.view.cli;
 
-import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.network.message.*;
 
@@ -12,8 +11,11 @@ public class Cli extends ClientGameManager {
     String choice;
 
 
-    public void preGameConfiguration(){
-        switch (this.getPlayerState()){
+
+
+
+    public void runState(){
+        switch (getPlayerState()){
             case WELCOME_FIRST -> {
                 Message_WelcomeFirst message = new Message_WelcomeFirst();
                 message.printMessage();
@@ -30,33 +32,6 @@ public class Cli extends ClientGameManager {
                 Message_SetWorker2 message = new Message_SetWorker2();
                 message.printMessage();
             }
-            default -> {
-                Message_Wait message = new Message_Wait();
-                message.printMessage();
-            }
-
-        }
-    }
-
-
-    public void runState(){
-        switch (getPlayerState()){
-            /*case WELCOME_FIRST -> {
-                Message_WelcomeFirst message = new Message_WelcomeFirst();
-                message.printMessage();
-            }
-            case CARD_CHOICE -> {
-                Message_CardChoice message = new Message_CardChoice();
-                message.printMessage();
-            }
-            case SET_WORKER1 -> {
-                Message_SetWorker1 message = new Message_SetWorker1();
-                message.printMessage();
-            }
-            case SET_WORKER2 -> {
-                Message_SetWorker2 message = new Message_SetWorker2();
-                message.printMessage();
-            } */
             case WORKER_CHOICE -> {
                 Message_WorkerChoice message = new Message_WorkerChoice();
                 message.printMessage();
