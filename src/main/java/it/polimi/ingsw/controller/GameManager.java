@@ -182,6 +182,9 @@ public class GameManager {
         } else{
             currPlayer = players.get(0);
         }
+
+        //qui metti il case per svegliare nextplayer (che ora è anche currPlayer) dal suo specifico stato di wait mettendogli quello successivo
+
     }
 
     public void deletePlayer(Player player){
