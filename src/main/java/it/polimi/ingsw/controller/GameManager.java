@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.network.message.GameState;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.Deck;
@@ -16,13 +17,14 @@ public class GameManager {
 
     private static GameManager gameManager = null;
     private final ArrayList<Player> players = new ArrayList<>();
-    private final HashMap<Player, GameState> playerStates = new HashMap<>();
     private final HashMap<Player, SocketClientConnection> playerConnections = new HashMap<>();
     private Player currPlayer;
     private int numberOfPlayers;
+    private final Game game;
 
     public GameManager(){
         gameManager = this;
+        game = new Game();
         new TurnManager();
         new ActionManager();
     }
@@ -40,22 +42,15 @@ public class GameManager {
             Server.setServerAvailability(false);
             players.add(0, player);
             playerConnections.put(player, c);
-            setGameState(player, GameState.WELCOME_FIRST);
+            game.setGameState(player, GameState.WELCOME_FIRST);
 
-
-            c.asyncSend(new Message_WelcomeFirst());
-
+            //game.notify(GameState.WELCOME_FIRST);
+            //c.asyncSend(new Message_WelcomeFirst());
 
         } else{
             players.add(player);
             playerConnections.put(player, c);
-            setGameState(player, GameState.WAIT);
-
-
-            playerConnections.get(player).asyncSend("Avrai il colore " + player.getColor().toString() + ".");
-            c.asyncSend(new Message_Wait());
-
-
+            game.setGameState(player, GameState.WAIT_PLAYERS);
         }
         if (players.size() == numberOfPlayers){
             Server.setServerAvailability(false);
@@ -69,7 +64,7 @@ public class GameManager {
     }
 
 
-    
+
     //serve ancora quando abbiamo fatto???
 
     public SocketClientConnection getCurrConnection() {
@@ -88,14 +83,6 @@ public class GameManager {
         return currPlayer;
     }
 
-    public void setGameState(Player player, GameState gameState){
-        playerStates.put(player, gameState);
-    }
-
-    public GameState getGameState(Player player){
-        return playerStates.get(player);
-    }
-
     public Player[] getPlayersInGame(){
         Player[] listOfPlayer = new Player[players.size()];
         listOfPlayer = players.toArray(listOfPlayer);
@@ -108,10 +95,10 @@ public class GameManager {
             new Deck(numberOfPlayers);
             new Map();
             Server.setServerAvailability(true);
-            setGameState(currPlayer, GameState.WELCOME_FIRST);
+            game.setGameState(currPlayer, GameState.WELCOME_FIRST);
 
             playerConnections.get(currPlayer).asyncSend("Avrai il colore " + currPlayer.getColor().toString() + ".");
-            playerConnections.get(currPlayer).asyncSend(new Message_Wait());
+            playerConnections.get(currPlayer).asyncSend(new Message_WaitPlayers());
 
 
         } else{
@@ -126,7 +113,7 @@ public class GameManager {
 
 
             playerConnections.get(currPlayer).asyncSend(Map.getInstance());
-            playerConnections.get(currPlayer).asyncSend(new Message_Wait());//message waitlobby
+            playerConnections.get(currPlayer).asyncSend(new Message_WaitPlayers());//message waitlobby
 
 
             nextPlayer(currPlayer);
@@ -164,7 +151,7 @@ public class GameManager {
                 if (currPlayer.setWorker2(coordRow, coordColumn)) {
 
 
-                    playerConnections.get(currPlayer).asyncSend(new Message_Wait());//message waitsetworker
+                    playerConnections.get(currPlayer).asyncSend(new Message_WaitPlayers());//message waitsetworker
 
 
                     nextPlayer(currPlayer);

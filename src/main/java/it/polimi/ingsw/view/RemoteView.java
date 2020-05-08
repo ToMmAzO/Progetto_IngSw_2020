@@ -47,6 +47,10 @@ public class RemoteView {
                 }
             }
             case WAIT -> clientConnection.asyncSend("Attendi!");
+            case WAIT_PLAYERS -> {
+                clientConnection.asyncSend("Il tuo colore è: " + player.getColor().toString() + ".");
+                clientConnection.asyncSend(new Message_WaitPlayers());
+            }
             case CARD_CHOICE -> {
                 try {
                     int cardNumber = Integer.parseInt(message.getContent());
