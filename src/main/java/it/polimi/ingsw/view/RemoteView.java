@@ -51,11 +51,6 @@ public class RemoteView {
                     clientConnection.asyncSend("Formato Input scorretto! Scrivi 2 oppure 3:");
                 }
             }
-            case WAIT -> clientConnection.asyncSend("Attendi!");
-            case WAIT_PLAYERS -> {
-                clientConnection.asyncSend("Il tuo colore è: " + player.getColor().toString() + ".");
-                clientConnection.asyncSend(new Message_WaitPlayers());
-            }
             case CARD_CHOICE -> {
                 try {
                     int cardNumber = Integer.parseInt(message.getContent());
@@ -177,6 +172,7 @@ public class RemoteView {
         }
 
     }
+
     //se metto in uno solo Object prende entrambe le notify???
     private class Error implements Observer<String> {
 

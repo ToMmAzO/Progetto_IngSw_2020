@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.SystemError;
+import it.polimi.ingsw.model.SystemMessage;
 import it.polimi.ingsw.network.message.GameState;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.Deck;
@@ -25,7 +25,7 @@ public class GameManager {
     public GameManager(){
         gameManager = this;
         new Game();
-        new SystemError();
+        new SystemMessage();
         new TurnManager();
         new ActionManager();
     }
@@ -94,12 +94,12 @@ public class GameManager {
             Server.setServerAvailability(true);
             Game.getInstance().setGameState(currPlayer, GameState.WELCOME_FIRST);
 
-            playerConnections.get(currPlayer).asyncSend("Avrai il colore " + currPlayer.getColor().toString() + ".");
+            //playerConnections.get(currPlayer).asyncSend("Avrai il colore " + currPlayer.getColor().toString() + ".");
             playerConnections.get(currPlayer).asyncSend(new Message_WaitPlayers());
 
 
         } else{
-            SystemError.getInstance().serverMessage(SystemError.getInstance().contentError);
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().contentError);
         }
     }
 
@@ -122,7 +122,7 @@ public class GameManager {
 
 
         } else {
-            playerConnections.get(currPlayer).asyncSend("Carta non disponibile, scegline una disponibile.");
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cardNotAvailable);
         }
 
     }
@@ -137,10 +137,10 @@ public class GameManager {
 
 
                 } else{
-                    System.out.print("È già presente un lavoratore quì! ");
+                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().workerPresence);
                 }
             } else{
-                System.out.print("Puoi inserire solo interi da 0 a 4! ");
+                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().exceedMap);
             }
 
         } else{
@@ -156,10 +156,10 @@ public class GameManager {
 
 
                 } else{
-                    System.out.print("È già presente un lavoratore quì! ");
+                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().workerPresence);
                 }
             } else{
-                System.out.print("Puoi inserire solo interi da 0 a 4! ");
+                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().exceedMap);
             }
         }
     }
@@ -185,11 +185,7 @@ public class GameManager {
     }
 
     public void deletePlayer(Player player){
-
-
-        playerConnections.get(currPlayer).asyncSend("Hai perso!");
-
-
+        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().youLose);
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(1));
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(2));
         players.remove(player);
@@ -198,22 +194,14 @@ public class GameManager {
     }
 
     public void endGame(Player winnerPlayer){
-        String winner = winnerPlayer.getNickname();
-
-
-        System.out.println("Congratulazioni, hai vinto la partita!");
-
-
+        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().youWin);
         players.remove(winnerPlayer);
         playerConnections.get(winnerPlayer).closeConnection();
         playerConnections.remove(winnerPlayer);
         if(players.size() > 1) {
             for (Player player : players) {
-
-
-                System.out.println("GAME OVER! " + winner + " ha vinto la partita.");
-
-
+                currPlayer = player;
+                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().gameOver);
                 players.remove(player);
                 playerConnections.get(player).closeConnection();
                 playerConnections.remove(player);

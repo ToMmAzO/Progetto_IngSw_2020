@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.SystemMessage;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.God;
-import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.workers.Worker;
 import it.polimi.ingsw.network.message.*;
 
@@ -22,32 +22,10 @@ public class TurnManager {
         return turnManager;
     }
 
-    public boolean verifyRegularity(Player player, int workerChosen){
-        workerSelected = player.getWorkerSelected(workerChosen);
-        if(workerSelected.canMove()){
-            return true;
-        } else{
-            GameManager.getInstance().getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può muoversi! Seleziono l'altro Worker.");
-            if(workerChosen == 1){
-                workerChosen ++;
-            } else{
-                workerChosen --;
-            }
-            workerSelected = player.getWorkerSelected(workerChosen);
-            GameManager.getInstance().getCurrConnection().asyncSend("Il worker selezionato è: "+ workerSelected.getIdWorker() + ".");
-            if(workerSelected.canMove()){
-                return true;
-            } else{
-                GameManager.getInstance().getCurrConnection().asyncSend("Nemmeno " + workerSelected.getIdWorker() + " può muoversi!");
-                workerSelected = null;
-                return false;
-            }
-        }
-    }
-
     public void workerChoice(int selectionWorker){
         if(selectionWorker == 1 || selectionWorker == 2){
-            if(verifyRegularity(GameManager.getInstance().getCurrPlayer(), selectionWorker)){
+            workerSelected = GameManager.getInstance().getCurrPlayer().getWorkerSelected(selectionWorker);
+            if(workerSelected.canMove()){
                 if(GameManager.getInstance().getCurrPlayer().getGodChoice() == God.PROMETHEUS && workerSelected.canBuild()){
                     GameManager.getInstance().getCurrConnection().asyncSend(Map.getInstance());
                     GameManager.getInstance().getCurrConnection().asyncSend(new Message_QuestionPrometheus());
@@ -56,10 +34,21 @@ public class TurnManager {
                     GameManager.getInstance().getCurrConnection().asyncSend(new Message_Movement());
                 }
             } else{
-                GameManager.getInstance().deletePlayer(GameManager.getInstance().getCurrPlayer());
+                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantMove);
+                if(selectionWorker == 1){
+                    selectionWorker ++;
+                } else{
+                    selectionWorker --;
+                }
+                workerSelected = GameManager.getInstance().getCurrPlayer().getWorkerSelected(selectionWorker);
+                if(!workerSelected.canMove()){
+                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantDoNothing);
+                    GameManager.getInstance().deletePlayer(GameManager.getInstance().getCurrPlayer());
+                }
+                workerSelected = null;
             }
         } else{
-            GameManager.getInstance().getCurrConnection().asyncSend("Numero scorretto! Scrivi 1 oppure 2: ");
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().contentError);
         }
     }
 
@@ -72,7 +61,7 @@ public class TurnManager {
         if(workerSelected.canMove()) {
             GameManager.getInstance().getCurrConnection().asyncSend(new Message_Movement());
         }else{
-            GameManager.getInstance().getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può più muoversi!");
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantMove);
             setAllowHeightPrometheus(true);
             //STOP TURN
         }
@@ -103,7 +92,7 @@ public class TurnManager {
                             if(workerSelected.canMove(startX, startY)) {
                                 GameManager.getInstance().getCurrConnection().asyncSend(new Message_QuestionArtemis());
                             } else {
-                                GameManager.getInstance().getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può più muoversi!");
+                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantMove);
                                 GameManager.getInstance().getCurrConnection().asyncSend(new Message_Construction());
                             }
                         }
@@ -111,7 +100,7 @@ public class TurnManager {
                             if(workerSelected.canBuild()) {
                                 GameManager.getInstance().getCurrConnection().asyncSend(new Message_QuestionAtlas());
                             }else{
-                                GameManager.getInstance().getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può costruire!");
+                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
                                 //STOP TURN
                             }
                         }
@@ -124,7 +113,7 @@ public class TurnManager {
                                     GameManager.getInstance().getCurrConnection().asyncSend(new Message_Construction());
                                 }
                             }else{
-                                GameManager.getInstance().getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può costruire!");
+                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
                                 //STOP TURN
                             }
                         }
@@ -132,7 +121,7 @@ public class TurnManager {
                             if(workerSelected.canBuild()) {
                                 GameManager.getInstance().getCurrConnection().asyncSend(new Message_Construction());
                             }else{
-                                GameManager.getInstance().getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può costruire!");
+                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
                                 //STOP TURN
                             }
                         }
@@ -144,7 +133,7 @@ public class TurnManager {
 
     public void secondMove(int coordX, int coordY){
         if (startX == coordX && startY == coordY) {
-            GameManager.getInstance().getCurrConnection().asyncSend("ATTENTO, non puoi tornare indietro! ");
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantComeBack);
         } else {
             if (ActionManager.getInstance().verifyCoordinateMovement(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), coordX, coordY)) {
                 if (winDefault(coordX, coordY)) {
@@ -157,7 +146,7 @@ public class TurnManager {
                     if(workerSelected.canBuild()) {
                         GameManager.getInstance().getCurrConnection().asyncSend(new Message_Construction());
                     }else{
-                        GameManager.getInstance().getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può costruire!");
+                        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
                         //STOP TURN
                     }
                 }
@@ -183,24 +172,21 @@ public class TurnManager {
             if (GameManager.getInstance().getCurrPlayer().getGodChoice() == God.DEMETER) {
                 buildX = coordX;
                 buildY = coordY;
-                if(workerSelected.canBuild(buildX, buildY)) {
+                if (workerSelected.canBuild(buildX, buildY)) {
                     GameManager.getInstance().getCurrConnection().asyncSend(new Message_QuestionDemeter());
-                }else{
-                    GameManager.getInstance().getCurrConnection().asyncSend(workerSelected.getIdWorker() + " non può più costruire!");
+                } else {
+                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
                     //STOP TURN
                 }
-            }
-            /*
-            else {
+            } else {
                 //STOP TURN
             }
-            */
         }
     }
 
     public void secondConstruction(int coordX, int coordY){
         if (buildX == coordX && buildY == coordY) {
-            System.out.print("ATTENTO, non puoi costruire nello stesso punto di prima!");
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantRebuild);
         } else {
             if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
                 workerSelected.buildBlock(coordX, coordY);
