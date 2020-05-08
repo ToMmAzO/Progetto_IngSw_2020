@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.SystemError;
 import it.polimi.ingsw.network.message.GameState;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.Deck;
@@ -20,11 +21,11 @@ public class GameManager {
     private final HashMap<Player, SocketClientConnection> playerConnections = new HashMap<>();
     private Player currPlayer;
     private int numberOfPlayers;
-    private final Game game;
 
     public GameManager(){
         gameManager = this;
-        game = new Game();
+        new Game();
+        new SystemError();
         new TurnManager();
         new ActionManager();
     }
@@ -42,15 +43,11 @@ public class GameManager {
             Server.setServerAvailability(false);
             players.add(0, player);
             playerConnections.put(player, c);
-            game.setGameState(player, GameState.WELCOME_FIRST);
-
-            //game.notify(GameState.WELCOME_FIRST);
-            //c.asyncSend(new Message_WelcomeFirst());
-
+            Game.getInstance().setGameState(player, GameState.WELCOME_FIRST);
         } else{
             players.add(player);
             playerConnections.put(player, c);
-            game.setGameState(player, GameState.WAIT_PLAYERS);
+            Game.getInstance().setGameState(player, GameState.WAIT_PLAYERS);
         }
         if (players.size() == numberOfPlayers){
             Server.setServerAvailability(false);
@@ -95,14 +92,14 @@ public class GameManager {
             new Deck(numberOfPlayers);
             new Map();
             Server.setServerAvailability(true);
-            game.setGameState(currPlayer, GameState.WELCOME_FIRST);
+            Game.getInstance().setGameState(currPlayer, GameState.WELCOME_FIRST);
 
             playerConnections.get(currPlayer).asyncSend("Avrai il colore " + currPlayer.getColor().toString() + ".");
             playerConnections.get(currPlayer).asyncSend(new Message_WaitPlayers());
 
 
         } else{
-            playerConnections.get(currPlayer).asyncSend("Numero scorretto, scrivi 2 oppure 3:");
+            SystemError.getInstance().serverMessage(SystemError.getInstance().contentError);
         }
     }
 
