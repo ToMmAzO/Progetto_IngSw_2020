@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.Cli;
 
+import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.network.message.*;
 
@@ -10,8 +11,52 @@ public class Cli extends ClientGameManager {
     Scanner stdin = new Scanner(System.in);
     String choice;
 
+
+    public void preGameConfiguration(){
+        switch (this.getPlayerState()){
+            case WELCOME_FIRST -> {
+                Message_WelcomeFirst message = new Message_WelcomeFirst();
+                message.printMessage();
+            }
+            case CARD_CHOICE -> {
+                Message_CardChoice message = new Message_CardChoice();
+                message.printMessage();
+            }
+            case SET_WORKER1 -> {
+                Message_SetWorker1 message = new Message_SetWorker1();
+                message.printMessage();
+            }
+            case SET_WORKER2 -> {
+                Message_SetWorker2 message = new Message_SetWorker2();
+                message.printMessage();
+            }
+            default -> {
+                Message_Wait message = new Message_Wait();
+                message.printMessage();
+            }
+
+        }
+    }
+
+
     public void runState(){
         switch (getPlayerState()){
+            /*case WELCOME_FIRST -> {
+                Message_WelcomeFirst message = new Message_WelcomeFirst();
+                message.printMessage();
+            }
+            case CARD_CHOICE -> {
+                Message_CardChoice message = new Message_CardChoice();
+                message.printMessage();
+            }
+            case SET_WORKER1 -> {
+                Message_SetWorker1 message = new Message_SetWorker1();
+                message.printMessage();
+            }
+            case SET_WORKER2 -> {
+                Message_SetWorker2 message = new Message_SetWorker2();
+                message.printMessage();
+            } */
             case WORKER_CHOICE -> {
                 Message_WorkerChoice message = new Message_WorkerChoice();
                 message.printMessage();
@@ -22,10 +67,6 @@ public class Cli extends ClientGameManager {
             }
             case CONSTRUCTION -> {
                 Message_Construction message = new Message_Construction();
-                message.printMessage();
-            }
-            case WAIT -> {
-                Message_Wait message = new Message_Wait();
                 message.printMessage();
             }
             case QUESTION_ARTEMIS -> {
@@ -75,6 +116,11 @@ public class Cli extends ClientGameManager {
 
 
         }
+    }
+
+    @Override
+    public void run(){
+
     }
 
 

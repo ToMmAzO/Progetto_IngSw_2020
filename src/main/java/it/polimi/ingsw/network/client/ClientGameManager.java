@@ -2,43 +2,49 @@ package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.network.message.GameState;
 import it.polimi.ingsw.model.cards.God;
+import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.Message_LoadState;
 
 public abstract class ClientGameManager implements Runnable{     //in questa classe metto tutte le cose che "regole di gioco" di cui è a conoscenza il client, poi Cli e Gui le ereditano e implementano i metodi per applicarle
     private String username;
     private God godChoice;
-    private GameState playerState;
+    private GameState playerState = GameState.LOAD_STATE;
 
     protected ClientGameManager() {
     }
 
-    public GameState nextState(){
-        GameState nextState;
-        switch (godChoice){
-            case ARTEMIS -> nextState = ArtemisNextState(playerState);
-            case ATLAS -> nextState = AtlasNextState(playerState);
-            case DEMETER -> nextState = DemeterNextState(playerState);
-            case HEPHAESTUS -> nextState = HephaestusNextState(playerState);
-            case PROMETHEUS -> nextState = PrometheusNextState(playerState);
-            default -> nextState = DefaultNextState(playerState);
-        }
-        return nextState;
+
+    public void loadState(Message_LoadState message){
+        this.playerState = message.getToLoad();
     }
 
-    public GameState DefaultNextState(GameState currPlayerState){
+    public void nextState(){
+        GameState nextState;
+        switch (godChoice){
+            case ARTEMIS -> ArtemisNextState();
+            case ATLAS -> AtlasNextState();
+            case DEMETER -> DemeterNextState();
+            case HEPHAESTUS -> HephaestusNextState();
+            case PROMETHEUS -> PrometheusNextState();
+            default -> DefaultNextState();
+        }
+    }
+
+    public void DefaultNextState(){
         GameState nextPlayerState;
-        switch (currPlayerState){
+        switch (playerState){
             case WAIT -> nextPlayerState = GameState.WORKER_CHOICE;
             case WORKER_CHOICE -> nextPlayerState = GameState.MOVEMENT;
             case MOVEMENT -> nextPlayerState = GameState.CONSTRUCTION;
             //case CONSTRUCTION -> nextPlayerState = GameState.WAIT;
             default -> nextPlayerState = GameState.WAIT;
         }
-        return nextPlayerState;
+        playerState = nextPlayerState;
     }
 
-    public GameState ArtemisNextState(GameState currPlayerState){
+    public void ArtemisNextState(){
         GameState nextPlayerState;
-        switch (currPlayerState){
+        switch (playerState){
             case WAIT -> nextPlayerState = GameState.WORKER_CHOICE;
             case WORKER_CHOICE -> nextPlayerState = GameState.MOVEMENT;
             case MOVEMENT -> nextPlayerState = GameState.QUESTION_ARTEMIS;
@@ -46,12 +52,12 @@ public abstract class ClientGameManager implements Runnable{     //in questa cla
             case SECOND_MOVE -> nextPlayerState = GameState.CONSTRUCTION;
             default -> nextPlayerState = GameState.WAIT;
         }
-        return nextPlayerState;
+        playerState = nextPlayerState;
     }
 
-    public GameState AtlasNextState(GameState currPlayerState){
+    public void AtlasNextState(){
         GameState nextPlayerState;
-        switch (currPlayerState){
+        switch (playerState){
             case WAIT -> nextPlayerState = GameState.WORKER_CHOICE;
             case WORKER_CHOICE -> nextPlayerState = GameState.MOVEMENT;
             case MOVEMENT -> nextPlayerState = GameState.QUESTION_ATLAS;
@@ -62,16 +68,16 @@ public abstract class ClientGameManager implements Runnable{     //in questa cla
             }
             default -> nextPlayerState = GameState.WAIT;
         }
-        return nextPlayerState;
+        playerState = nextPlayerState;
     }
 
     public boolean askCupola(){
         return false;
     }
 
-    public GameState DemeterNextState(GameState currPlayerState){
+    public void DemeterNextState(){
         GameState nextPlayerState;
-        switch (currPlayerState){
+        switch (playerState){
             case WAIT -> nextPlayerState = GameState.WORKER_CHOICE;
             case WORKER_CHOICE -> nextPlayerState = GameState.MOVEMENT;
             case MOVEMENT -> nextPlayerState = GameState.CONSTRUCTION;
@@ -83,16 +89,16 @@ public abstract class ClientGameManager implements Runnable{     //in questa cla
             }
             default -> nextPlayerState = GameState.WAIT;
         }
-        return nextPlayerState;
+        playerState = nextPlayerState;
     }
 
     public boolean askSecondConstruction(){
         return false;
     }
 
-    public GameState HephaestusNextState(GameState currPlayerState){
+    public void HephaestusNextState(){
         GameState nextPlayerState;
-        switch (currPlayerState){
+        switch (playerState){
             case WAIT -> nextPlayerState = GameState.WORKER_CHOICE;
             case WORKER_CHOICE -> nextPlayerState = GameState.MOVEMENT;
             case MOVEMENT -> nextPlayerState = GameState.QUESTION_HEPHAESTUS;
@@ -103,16 +109,16 @@ public abstract class ClientGameManager implements Runnable{     //in questa cla
             }
             default -> nextPlayerState = GameState.WAIT;
         }
-        return nextPlayerState;
+        playerState = nextPlayerState;
     }
 
     public boolean askDoubleConstruction(){
         return false;
     }
 
-    public GameState PrometheusNextState(GameState currPlayerState){
+    public void PrometheusNextState(){
         GameState nextPlayerState;
-        switch (currPlayerState){
+        switch (playerState){
             case WAIT -> nextPlayerState = GameState.WORKER_CHOICE;
             case WORKER_CHOICE -> nextPlayerState = GameState.QUESTION_PROMETHEUS;
             case QUESTION_PROMETHEUS -> {
@@ -124,7 +130,7 @@ public abstract class ClientGameManager implements Runnable{     //in questa cla
             case MOVEMENT -> nextPlayerState = GameState.CONSTRUCTION;
             default -> nextPlayerState = GameState.WAIT;
         }
-        return nextPlayerState;
+        playerState = nextPlayerState;
     }
 
     public boolean askPreBuild(){

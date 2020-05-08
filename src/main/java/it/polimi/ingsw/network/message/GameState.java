@@ -2,8 +2,8 @@ package it.polimi.ingsw.network.message;
 
 public enum GameState {
 
-    WELCOME_FIRST, WAIT,
-    CARD_CHOICE, SET_WORKER,
+    LOAD_STATE, WELCOME_FIRST, WAIT,
+    CARD_CHOICE, SET_WORKER1, SET_WORKER2,
     WORKER_CHOICE,
     QUESTION_PROMETHEUS, PREBUILD_PROMETHEUS,
     MOVEMENT,

@@ -36,6 +36,8 @@ public class RemoteView {
 
        stessa cosa in turn(message) */
 
+    /*NOTA per il passaggio del turno: HashMap (Client, GameState) lato server. tutti i client su WAIT tranne quello current, */
+
     private void readMessage(ClientMessage message) {
         switch (message.getGameState()) {
             case WELCOME_FIRST -> {
@@ -55,7 +57,7 @@ public class RemoteView {
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
             }
-            case SET_WORKER -> {
+            case SET_WORKER1 -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
                     GameManager.getInstance().setWorker(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));

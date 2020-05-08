@@ -18,7 +18,7 @@ public class GameManager {
     private final ArrayList<Player> players = new ArrayList<>();
     private final HashMap<Player, GameState> playerStates = new HashMap<>();
     private final HashMap<Player, SocketClientConnection> playerConnections = new HashMap<>();
-    private Player currPlayer;
+    private Player currPlayer ;
     private int numberOfPlayers;
 
     public GameManager(){
@@ -149,7 +149,7 @@ public class GameManager {
                 if (currPlayer.setWorker1(coordRow, coordColumn)) {
 
 
-                    playerConnections.get(currPlayer).asyncSend(new Message_SetWorker());
+                    playerConnections.get(currPlayer).asyncSend(new Message_SetWorker1());
 
 
                 } else{
@@ -237,5 +237,17 @@ public class GameManager {
         }
         Server.refresh();
     }
+
+    /*
+    public class currPlayerConnection extends Observable<SocketClientConnection>{
+        public SocketClientConnection currPlayerConnection;
+
+        @Override
+        protected void notify(SocketClientConnection message) {
+            super.notify(message);
+        }
+    }
+    quando cambia il turno viene modificato e quindi notificato a tutti i client. a quel punto i client inviano richiesta inizio turno.
+    al client giusto si risponde con OK e lui parte con la sua macchina a stati. Gli altri che non ricevono OK rimangono nel loro stato WAIT*/
 
 }
