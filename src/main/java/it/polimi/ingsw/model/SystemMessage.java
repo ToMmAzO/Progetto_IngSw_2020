@@ -5,7 +5,6 @@ import it.polimi.ingsw.observer.Observable;
 public class SystemMessage extends Observable<String> {
 
     private static SystemMessage systemError = null;
-
     public String contentError = "Input scorreto.";
     public String cardNotAvailable = "Carta non disponibile, scegline un'altra.";
     public String workerPresence = "È già presente un lavoratore quì!";
@@ -26,6 +25,7 @@ public class SystemMessage extends Observable<String> {
     public String cantBuild = "Non può costruire.";
     public String cantDoNothing = "Nemmeno l'altro worker può muoversi.";
     public String cantComeBack = "ATTENTO, non puoi tornare indietro!";
+    public String cantDoubleBuild = "Non può costruire due blocchi.";
     public String cantRebuild = "ATTENTO, non puoi costruire nello stesso punto di prima!";
 
     public SystemMessage(){
