@@ -2,6 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.controller.TurnManager;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.God;
@@ -22,7 +23,11 @@ public class RemoteView {
 
     public void messageReceiver(ClientMessage message) {
         if (player.equals(GameManager.getInstance().getCurrPlayer())){
-            readMessage(message);
+            if(Game.getInstance().getGameState(player).equals(message.getGameState())){
+                readMessage(message);
+            } else{
+                //caccia fuori tutti perchè imbroglia
+            }
         } else{
             clientConnection.asyncSend("Non è il tuo turno! Attendi.");
         }
@@ -48,7 +53,6 @@ public class RemoteView {
                     clientConnection.asyncSend("Formato Input scorretto! Scrivi 2 oppure 3:");
                 }
             }
-            case WAIT -> clientConnection.asyncSend("Attendi!");
             case CARD_CHOICE -> {
                 try {
                     int cardNumber = Integer.parseInt(message.getContent());
@@ -159,6 +163,30 @@ public class RemoteView {
         }
     }
 
+    private class ChangeState implements Observer<GameState> {
+
+        @Override
+        public void update(GameState message){
+
+            if (player.equals(GameManager.getInstance().getCurrPlayer())){
+                clientConnection.asyncSend(message);
+            }
+        }
+
+    }
+
+    //se metto in uno solo Object prende entrambe le notify???
+    private class Error implements Observer<String> {
+
+        @Override
+        public void update(String message){
+            if (player.equals(GameManager.getInstance().getCurrPlayer())){
+                clientConnection.asyncSend(message);
+            }
+        }
+
+    }
+
     private class ChangeInDeck implements Observer<God> {
 
         @Override
@@ -174,7 +202,7 @@ public class RemoteView {
 
     }
 
-    private class ChangeMap implements Observer<Player> {
+    private class ChangeInMap implements Observer<Player> {
 
         @Override
         public void update(Player message){

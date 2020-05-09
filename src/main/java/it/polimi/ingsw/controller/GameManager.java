@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.SystemMessage;
 import it.polimi.ingsw.network.message.GameState;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.Deck;
@@ -16,13 +18,14 @@ public class GameManager {
 
     private static GameManager gameManager = null;
     private final ArrayList<Player> players = new ArrayList<>();
-    private final HashMap<Player, GameState> playerStates = new HashMap<>();
     private final HashMap<Player, SocketClientConnection> playerConnections = new HashMap<>();
     private Player currPlayer ;
     private int numberOfPlayers;
 
     public GameManager(){
         gameManager = this;
+        new Game();
+        new SystemMessage();
         new TurnManager();
         new ActionManager();
     }
@@ -40,22 +43,11 @@ public class GameManager {
             Server.setServerAvailability(false);
             players.add(0, player);
             playerConnections.put(player, c);
-            setGameState(player, GameState.WELCOME_FIRST);
-
-
-            c.asyncSend(new Message_WelcomeFirst());
-
-
+            Game.getInstance().setGameState(player, GameState.WELCOME_FIRST);
         } else{
             players.add(player);
             playerConnections.put(player, c);
-            setGameState(player, GameState.WAIT);
-
-
-            playerConnections.get(player).asyncSend("Avrai il colore " + player.getColor().toString() + ".");
-            c.asyncSend(new Message_Wait());
-
-
+            Game.getInstance().setGameState(player, GameState.WAIT_PLAYERS);
         }
         if (players.size() == numberOfPlayers){
             Server.setServerAvailability(false);
@@ -69,7 +61,7 @@ public class GameManager {
     }
 
 
-    
+
     //serve ancora quando abbiamo fatto???
 
     public SocketClientConnection getCurrConnection() {
@@ -88,14 +80,6 @@ public class GameManager {
         return currPlayer;
     }
 
-    public void setGameState(Player player, GameState gameState){
-        playerStates.put(player, gameState);
-    }
-
-    public GameState getGameState(Player player){
-        return playerStates.get(player);
-    }
-
     public Player[] getPlayersInGame(){
         Player[] listOfPlayer = new Player[players.size()];
         listOfPlayer = players.toArray(listOfPlayer);
@@ -108,14 +92,14 @@ public class GameManager {
             new Deck(numberOfPlayers);
             new Map();
             Server.setServerAvailability(true);
-            setGameState(currPlayer, GameState.WELCOME_FIRST);
+            Game.getInstance().setGameState(currPlayer, GameState.WELCOME_FIRST);
 
-            playerConnections.get(currPlayer).asyncSend("Avrai il colore " + currPlayer.getColor().toString() + ".");
-            playerConnections.get(currPlayer).asyncSend(new Message_Wait());
+            //playerConnections.get(currPlayer).asyncSend("Avrai il colore " + currPlayer.getColor().toString() + ".");
+            playerConnections.get(currPlayer).asyncSend(new Message_WaitPlayers());
 
 
         } else{
-            playerConnections.get(currPlayer).asyncSend("Numero scorretto, scrivi 2 oppure 3:");
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().contentError);
         }
     }
 
@@ -126,7 +110,7 @@ public class GameManager {
 
 
             playerConnections.get(currPlayer).asyncSend(Map.getInstance());
-            playerConnections.get(currPlayer).asyncSend(new Message_Wait());//message waitlobby
+            playerConnections.get(currPlayer).asyncSend(new Message_WaitPlayers());//message waitlobby
 
 
             nextPlayer(currPlayer);
@@ -138,7 +122,7 @@ public class GameManager {
 
 
         } else {
-            playerConnections.get(currPlayer).asyncSend("Carta non disponibile, scegline una disponibile.");
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cardNotAvailable);
         }
 
     }
@@ -153,10 +137,10 @@ public class GameManager {
 
 
                 } else{
-                    System.out.print("È già presente un lavoratore quì! ");
+                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().workerPresence);
                 }
             } else{
-                System.out.print("Puoi inserire solo interi da 0 a 4! ");
+                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().exceedMap);
             }
 
         } else{
@@ -164,7 +148,7 @@ public class GameManager {
                 if (currPlayer.setWorker2(coordRow, coordColumn)) {
 
 
-                    playerConnections.get(currPlayer).asyncSend(new Message_Wait());//message waitsetworker
+                    playerConnections.get(currPlayer).asyncSend(new Message_WaitPlayers());//message waitsetworker
 
 
                     nextPlayer(currPlayer);
@@ -172,10 +156,10 @@ public class GameManager {
 
 
                 } else{
-                    System.out.print("È già presente un lavoratore quì! ");
+                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().workerPresence);
                 }
             } else{
-                System.out.print("Puoi inserire solo interi da 0 a 4! ");
+                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().exceedMap);
             }
         }
     }
@@ -198,14 +182,13 @@ public class GameManager {
         } else{
             currPlayer = players.get(0);
         }
+
+        //qui metti il case per svegliare nextplayer (che ora è anche currPlayer) dal suo specifico stato di wait mettendogli quello successivo
+
     }
 
     public void deletePlayer(Player player){
-
-
-        playerConnections.get(currPlayer).asyncSend("Hai perso!");
-
-
+        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().youLose);
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(1));
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(2));
         players.remove(player);
@@ -214,22 +197,14 @@ public class GameManager {
     }
 
     public void endGame(Player winnerPlayer){
-        String winner = winnerPlayer.getNickname();
-
-
-        System.out.println("Congratulazioni, hai vinto la partita!");
-
-
+        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().youWin);
         players.remove(winnerPlayer);
         playerConnections.get(winnerPlayer).closeConnection();
         playerConnections.remove(winnerPlayer);
         if(players.size() > 1) {
             for (Player player : players) {
-
-
-                System.out.println("GAME OVER! " + winner + " ha vinto la partita.");
-
-
+                currPlayer = player;
+                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().gameOver);
                 players.remove(player);
                 playerConnections.get(player).closeConnection();
                 playerConnections.remove(player);

@@ -1,0 +1,31 @@
+package it.polimi.ingsw.model;
+
+import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.network.message.GameState;
+import it.polimi.ingsw.observer.Observable;
+
+import java.util.HashMap;
+
+public class Game extends Observable<GameState> {
+
+    private static Game game = null;
+    private final HashMap<Player, GameState> playerStates = new HashMap<>();
+
+    public Game(){
+        game = this;
+    }
+
+    public static Game getInstance(){
+        return game;
+    }
+
+    public void setGameState(Player player, GameState gameState){
+        playerStates.put(player, gameState);
+        notify(gameState);
+    }
+
+    public GameState getGameState(Player player){
+        return playerStates.get(player);
+    }
+
+}

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.SystemMessage;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.God;
@@ -35,23 +36,23 @@ public class ActionManager {
                                 if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
                                     return true;
                                 } else {
-                                    System.out.print("ATTENTO, c'è attivo il potere di ATHENA! ");
+                                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().powerAthena);
                                 }
                             } else {
                                 if (g == God.PROMETHEUS && TurnManager.getInstance().cannotGoUpPrometheus()) {
                                     if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
                                         return true;
                                     } else {
-                                        System.out.print("ATTENTO, hai appena costruito e sei PROMETHEUS! ");
+                                        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().powerPrometheus);
                                     }
                                 } else if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1) {
                                     return true;
                                 } else {
-                                    System.out.print("ATTENTO, non puoi salire di due livelli! ");
+                                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().doubleGoUp);
                                 }
                             }
                         } else {
-                            System.out.print("ATTENTO, c'è una cupola! ");
+                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cupolaPresence);
                         }
                     } else {
                         if (g == God.APOLLO) {
@@ -61,20 +62,20 @@ public class ActionManager {
                                         if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
                                             return true;
                                         } else {
-                                            System.out.print("ATTENTO, c'è attivo il potere di ATHENA! ");
+                                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().powerAthena);
                                         }
                                     } else {
                                         if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1) {
                                             return true;
                                         } else {
-                                            System.out.print("ATTENTO, non puoi salire di due livelli! ");
+                                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().doubleGoUp);
                                         }
                                     }
                                 } else {
-                                    System.out.print("ATTENTO, c'è una cupola! ");
+                                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cupolaPresence);
                                 }
                             } else {
-                                System.out.print("ATTENTO, non è un worker avversario! ");
+                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().yourWorker);
                             }
                         }
                         if (g == God.MINOTAUR) {
@@ -85,41 +86,41 @@ public class ActionManager {
                                             if (w.canPush(coordX, coordY)) {
                                                 return true;
                                             } else {
-                                                System.out.print("ATTENTO, non puoi spingere quel worker! ");
+                                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantPush);
                                             }
                                         } else {
-                                            System.out.print("ATTENTO, c'è attivo il potere di ATHENA! ");
+                                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().powerAthena);
                                         }
                                     } else {
                                         if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1) {
                                             if (w.canPush(coordX, coordY)) {
                                                 return true;
                                             } else {
-                                                System.out.print("ATTENTO, non puoi spingere quel worker! ");
+                                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantPush);
                                             }
                                         } else {
-                                            System.out.print("ATTENTO, non puoi salire di due livelli! ");
+                                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().doubleGoUp);
                                         }
                                     }
                                 } else {
-                                    System.out.print("ATTENTO, c'è una cupola! ");
+                                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cupolaPresence);
                                 }
                             } else {
-                                System.out.print("ATTENTO, non è un worker avversario! ");
+                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().yourWorker);
                             }
                         }
                         if (g != God.APOLLO && g != God.MINOTAUR) {
-                            System.out.print("ATTENTO, c'è un altro worker! ");
+                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().workerPresence);
                         }
                     }
                 } else {
-                    System.out.print("ATTENTO, ci sei già tu! ");
+                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().yourPosition);
                 }
             } else {
-                System.out.print("Devi selezionare una delle 8 caselle intorno a worker! ");
+                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().distantCell);
             }
         } else {
-            System.out.print("Puoi inserire solo interi da 0 a 4! ");
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().exceedMap);
         }
         return false;
     }
@@ -134,25 +135,25 @@ public class ActionManager {
                                 if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() < 2) {
                                     return true;
                                 } else {
-                                    System.out.print("ATTENTO, sei Hephaestus! ");
+                                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().youHephaestus);
                                 }
                             } else {
                                 return true;
                             }
                         } else {
-                            System.out.print("ATTENTO, c'è una cupola! ");
+                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cupolaPresence);
                         }
                     } else {
-                        System.out.print("ATTENTO, c'è un altro worker! ");
+                        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().workerPresence);
                     }
                 } else {
-                    System.out.print("ATTENTO, ci sei già tu! ");
+                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().yourPosition);
                 }
             } else {
-                System.out.print("Devi selezionare una delle 8 caselle intorno a worker! ");
+                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().distantCell);
             }
         } else {
-            System.out.print("Puoi inserire solo interi da 0 a 4! ");
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().exceedMap);
         }
         return false;
     }
