@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.network.message.GameState;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.Message_LoadState;
 import it.polimi.ingsw.view.cli.Cli;
@@ -58,6 +59,8 @@ public class Client {
                     } else if(inputObject instanceof Message){
                         cli.setPlayerState(((Message)inputObject).getGameState());
                         ((Message)inputObject).printMessage();
+                    } else if(inputObject instanceof GameState) {
+                        cli.setPlayerState((GameState) inputObject);
                     } else if(inputObject instanceof String){
                         System.out.println((String)inputObject);
                     } else if(inputObject instanceof Deck){

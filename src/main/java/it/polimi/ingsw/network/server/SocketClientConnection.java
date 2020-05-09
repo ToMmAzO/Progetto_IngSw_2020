@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameManager;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.ClientMessage;
 import it.polimi.ingsw.view.RemoteView;
@@ -75,7 +76,7 @@ public class SocketClientConnection implements Runnable {
             ClientMessage message = new ClientMessage();
             while(isActive()){
                 read = in.nextLine();
-                message.setGameState(GameManager.getInstance().getGameState(player));
+                message.setGameState(Game.getInstance().getGameState(player));
                 message.setContent(read);
                 viewSocket.messageReceiver(message);
             }

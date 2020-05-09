@@ -18,7 +18,7 @@ public class GameManager {
 
     private static GameManager gameManager = null;
     private final ArrayList<Player> players = new ArrayList<>();
-    private final HashMap<Player, SocketClientConnection> playerConnections = new HashMap<>();
+    private final HashMap<Player, SocketClientConnection> playerConnections = new HashMap<>();  //perchè tenere la socketClientConnection? non è meglio fare hashmap con player e la sua remoteView?
     private Player currPlayer ;
     private int numberOfPlayers;
 

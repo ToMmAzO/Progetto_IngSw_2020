@@ -48,7 +48,7 @@ public abstract class ClientGameManager implements Runnable{     //in questa cla
             case WAIT -> nextPlayerState = GameState.WORKER_CHOICE;
             case WORKER_CHOICE -> nextPlayerState = GameState.MOVEMENT;
             case MOVEMENT -> nextPlayerState = GameState.QUESTION_ARTEMIS;
-            case QUESTION_ARTEMIS -> nextPlayerState = GameState.SECOND_MOVE;
+            //case QUESTION_ARTEMIS -> nextPlayerState = GameState.SECOND_MOVE;
             case SECOND_MOVE -> nextPlayerState = GameState.CONSTRUCTION;
             default -> nextPlayerState = GameState.WAIT;
         }
@@ -61,11 +61,11 @@ public abstract class ClientGameManager implements Runnable{     //in questa cla
             case WAIT -> nextPlayerState = GameState.WORKER_CHOICE;
             case WORKER_CHOICE -> nextPlayerState = GameState.MOVEMENT;
             case MOVEMENT -> nextPlayerState = GameState.QUESTION_ATLAS;
-            case QUESTION_ATLAS -> {
+            /*case QUESTION_ATLAS -> {
                 boolean cupola = askCupola();
                 if(cupola) nextPlayerState = GameState.CONSTRUCTION_CUPOLA;
                 else nextPlayerState = GameState.CONSTRUCTION;
-            }
+            }*/
             default -> nextPlayerState = GameState.WAIT;
         }
         playerState = nextPlayerState;
@@ -82,11 +82,11 @@ public abstract class ClientGameManager implements Runnable{     //in questa cla
             case WORKER_CHOICE -> nextPlayerState = GameState.MOVEMENT;
             case MOVEMENT -> nextPlayerState = GameState.CONSTRUCTION;
             case CONSTRUCTION -> nextPlayerState = GameState.QUESTION_DEMETER;
-            case QUESTION_DEMETER -> {
+            /*case QUESTION_DEMETER -> {
                 boolean secondConstruction = askSecondConstruction();
                 if(secondConstruction) nextPlayerState = GameState.SECOND_CONSTRUCTION;
                 else nextPlayerState = GameState.WAIT;
-            }
+            }*/
             default -> nextPlayerState = GameState.WAIT;
         }
         playerState = nextPlayerState;
@@ -102,11 +102,11 @@ public abstract class ClientGameManager implements Runnable{     //in questa cla
             case WAIT -> nextPlayerState = GameState.WORKER_CHOICE;
             case WORKER_CHOICE -> nextPlayerState = GameState.MOVEMENT;
             case MOVEMENT -> nextPlayerState = GameState.QUESTION_HEPHAESTUS;
-            case QUESTION_HEPHAESTUS -> {
+            /*case QUESTION_HEPHAESTUS -> {
                 boolean doubleConstruction = askDoubleConstruction();
                 if(doubleConstruction) nextPlayerState = GameState.DOUBLE_CONSTRUCTION;
                 else nextPlayerState = GameState.CONSTRUCTION;
-            }
+            }*/
             default -> nextPlayerState = GameState.WAIT;
         }
         playerState = nextPlayerState;
@@ -121,11 +121,11 @@ public abstract class ClientGameManager implements Runnable{     //in questa cla
         switch (playerState){
             case WAIT -> nextPlayerState = GameState.WORKER_CHOICE;
             case WORKER_CHOICE -> nextPlayerState = GameState.QUESTION_PROMETHEUS;
-            case QUESTION_PROMETHEUS -> {
+            /*case QUESTION_PROMETHEUS -> {
                 boolean preBuild = askPreBuild();
                 if(preBuild) nextPlayerState = GameState.PREBUILD_PROMETHEUS;
                 else nextPlayerState = GameState.MOVEMENT;
-            }
+            }*/
             case PREBUILD_PROMETHEUS -> nextPlayerState = GameState.MOVEMENT;
             case MOVEMENT -> nextPlayerState = GameState.CONSTRUCTION;
             default -> nextPlayerState = GameState.WAIT;
