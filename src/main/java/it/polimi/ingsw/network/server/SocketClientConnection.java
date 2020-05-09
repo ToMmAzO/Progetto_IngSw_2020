@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network.server;
 
-import it.polimi.ingsw.controller.GameManager;
-import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.ClientMessage;
 import it.polimi.ingsw.view.RemoteView;

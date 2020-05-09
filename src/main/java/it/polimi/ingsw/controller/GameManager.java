@@ -1,12 +1,11 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.SystemMessage;
+import it.polimi.ingsw.model.game.Game;
+import it.polimi.ingsw.model.game.SystemMessage;
 import it.polimi.ingsw.network.message.GameState;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.network.server.SocketClientConnection;
 
@@ -18,8 +17,8 @@ public class GameManager {
 
     private static GameManager gameManager = null;
     private final ArrayList<Player> players = new ArrayList<>();
-    private final HashMap<Player, SocketClientConnection> playerConnections = new HashMap<>();  //perchè tenere la socketClientConnection? non è meglio fare hashmap con player e la sua remoteView?
-    private Player currPlayer ;
+    private final HashMap<Player, SocketClientConnection> playerConnections = new HashMap<>();
+    private Player currPlayer;
     private int numberOfPlayers;
 
     public GameManager(){
@@ -47,30 +46,14 @@ public class GameManager {
         } else{
             players.add(player);
             playerConnections.put(player, c);
+            currPlayer = player;
             Game.getInstance().setGameState(player, GameState.WAIT_PLAYERS);
         }
-        if (players.size() == numberOfPlayers){
+        if(players.size() == numberOfPlayers){
             Server.setServerAvailability(false);
-
-
-            playerConnections.get(currPlayer).asyncSend(Deck.getInstance());
-            playerConnections.get(currPlayer).asyncSend(new Message_CardChoice());
-
-
+            nextPlayer(currPlayer);
         }
     }
-
-
-
-    //serve ancora quando abbiamo fatto???
-
-    public SocketClientConnection getCurrConnection() {
-        return playerConnections.get(currPlayer);
-    }
-
-    //???
-
-
 
     public void setCurrPlayer(Player currPlayer) {
         this.currPlayer = currPlayer;
@@ -92,12 +75,7 @@ public class GameManager {
             new Deck(numberOfPlayers);
             new Map();
             Server.setServerAvailability(true);
-            Game.getInstance().setGameState(currPlayer, GameState.WELCOME_FIRST);
-
-            //playerConnections.get(currPlayer).asyncSend("Avrai il colore " + currPlayer.getColor().toString() + ".");
-            playerConnections.get(currPlayer).asyncSend(new Message_WaitPlayers());
-
-
+            Game.getInstance().setGameState(currPlayer, GameState.WAIT_PLAYERS);
         } else{
             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().contentError);
         }
@@ -106,21 +84,8 @@ public class GameManager {
     public void choiceOfCard(int cardNumber){
         if (Deck.getInstance().isAvailable(cardNumber)) {
             currPlayer.setGodChoice(Deck.getInstance().getCardToPlayer(cardNumber));
-
-
-
-            playerConnections.get(currPlayer).asyncSend(Map.getInstance());
-            playerConnections.get(currPlayer).asyncSend(new Message_WaitPlayers());//message waitlobby
-
-
+            Game.getInstance().setGameState(currPlayer, GameState.WAIT_CARD_CHOICE);
             nextPlayer(currPlayer);
-
-
-            //problema per passaggio del turno (messaggi wait diversi per gestirli)
-            playerConnections.get(currPlayer).asyncSend(Deck.getInstance());
-            playerConnections.get(currPlayer).asyncSend(new Message_CardChoice());
-
-
         } else {
             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cardNotAvailable);
         }
@@ -131,30 +96,18 @@ public class GameManager {
         if (currPlayer.getWorkerSelected(1) == null) {
             if (ActionManager.getInstance().validCoords(coordRow, coordColumn)) {
                 if (currPlayer.setWorker1(coordRow, coordColumn)) {
-
-
-                    playerConnections.get(currPlayer).asyncSend(new Message_SetWorker1());
-
-
+                    Game.getInstance().setGameState(currPlayer, GameState.SET_WORKER);
                 } else{
                     SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().workerPresence);
                 }
             } else{
                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().exceedMap);
             }
-
         } else{
             if (ActionManager.getInstance().validCoords(coordRow, coordColumn)) {
                 if (currPlayer.setWorker2(coordRow, coordColumn)) {
-
-
-                    playerConnections.get(currPlayer).asyncSend(new Message_WaitPlayers());//message waitsetworker
-
-
+                    Game.getInstance().setGameState(currPlayer, GameState.WAIT_TURN);
                     nextPlayer(currPlayer);
-                    //passaggio turno???
-
-
                 } else{
                     SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().workerPresence);
                 }
@@ -182,9 +135,11 @@ public class GameManager {
         } else{
             currPlayer = players.get(0);
         }
-
-        //qui metti il case per svegliare nextplayer (che ora è anche currPlayer) dal suo specifico stato di wait mettendogli quello successivo
-
+        switch(Game.getInstance().getGameState(currPlayer)){
+            case WAIT_PLAYERS -> Game.getInstance().setGameState(currPlayer, GameState.CARD_CHOICE);
+            case WAIT_CARD_CHOICE -> Game.getInstance().setGameState(currPlayer, GameState.SET_WORKER);
+            case WAIT_TURN -> Game.getInstance().setGameState(currPlayer, GameState.WORKER_CHOICE);
+        }
     }
 
     public void deletePlayer(Player player){
@@ -213,16 +168,14 @@ public class GameManager {
         Server.refresh();
     }
 
-    /*
-    public class currPlayerConnection extends Observable<SocketClientConnection>{
-        public SocketClientConnection currPlayerConnection;
-
-        @Override
-        protected void notify(SocketClientConnection message) {
-            super.notify(message);
+    public void cheating(){
+        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cheating);
+        for (Player player : players) {
+            players.remove(player);
+            playerConnections.get(player).closeConnection();
+            playerConnections.remove(player);
         }
+        Server.refresh();
     }
-    quando cambia il turno viene modificato e quindi notificato a tutti i client. a quel punto i client inviano richiesta inizio turno.
-    al client giusto si risponde con OK e lui parte con la sua macchina a stati. Gli altri che non ricevono OK rimangono nel loro stato WAIT*/
 
 }

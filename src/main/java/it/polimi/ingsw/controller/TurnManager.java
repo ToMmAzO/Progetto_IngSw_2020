@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.SystemMessage;
+import it.polimi.ingsw.model.game.Game;
+import it.polimi.ingsw.model.game.SystemMessage;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.workers.Worker;
@@ -24,29 +25,22 @@ public class TurnManager {
 
     public void workerChoice(int selectionWorker){
         if(selectionWorker == 1 || selectionWorker == 2){
-            workerSelected = GameManager.getInstance().getCurrPlayer().getWorkerSelected(selectionWorker);
-            if(workerSelected.canMove()){
-                if(GameManager.getInstance().getCurrPlayer().getGodChoice() == God.PROMETHEUS && workerSelected.canBuild()){
-                    GameManager.getInstance().getCurrConnection().asyncSend(Map.getInstance());
-                    GameManager.getInstance().getCurrConnection().asyncSend(new Message_QuestionPrometheus());
+            if(GameManager.getInstance().getCurrPlayer().getWorkerSelected(1).canMove() || GameManager.getInstance().getCurrPlayer().getWorkerSelected(2).canMove()){
+                workerSelected = GameManager.getInstance().getCurrPlayer().getWorkerSelected(selectionWorker);
+                if(workerSelected.canMove()){
+                    if(GameManager.getInstance().getCurrPlayer().getGodChoice() == God.PROMETHEUS && workerSelected.canBuild()){
+                        Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_PROMETHEUS);
+                    } else{
+                        Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.MOVEMENT);
+                    }
                 } else{
-                    GameManager.getInstance().getCurrConnection().asyncSend(Map.getInstance());
-                    GameManager.getInstance().getCurrConnection().asyncSend(new Message_Movement());
+                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantMove);
                 }
             } else{
-                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantMove);
-                if(selectionWorker == 1){
-                    selectionWorker ++;
-                } else{
-                    selectionWorker --;
-                }
-                workerSelected = GameManager.getInstance().getCurrPlayer().getWorkerSelected(selectionWorker);
-                if(!workerSelected.canMove()){
-                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantDoNothing);
-                    GameManager.getInstance().deletePlayer(GameManager.getInstance().getCurrPlayer());
-                }
-                workerSelected = null;
+                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantDoNothing);
+                GameManager.getInstance().deletePlayer(GameManager.getInstance().getCurrPlayer());
             }
+            workerSelected = null;
         } else{
             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().contentError);
         }
@@ -55,74 +49,74 @@ public class TurnManager {
     public void prebuildPrometheus(int coordX, int coordY){
         if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
             workerSelected.buildBlock(coordX, coordY);
-            GameManager.getInstance().getCurrConnection().asyncSend(Map.getInstance());
             setAllowHeightPrometheus(false);
         }
-        if(workerSelected.canMove()) {
-            GameManager.getInstance().getCurrConnection().asyncSend(new Message_Movement());
-        }else{
+        if(workerSelected.canMove()){
+            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.MOVEMENT);
+        } else{
             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantMove);
             setAllowHeightPrometheus(true);
-            //STOP TURN
+            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+            GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
         }
     }
 
     public void movement(int coordX, int coordY){
-        if (ActionManager.getInstance().verifyCoordinateMovement(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), coordX, coordY)) {
+        if(ActionManager.getInstance().verifyCoordinateMovement(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), coordX, coordY)){
             if(GameManager.getInstance().getCurrPlayer().getGodChoice() == God.ARTEMIS){
                 startX = workerSelected.getCoordX();
                 startY = workerSelected.getCoordY();
             }
-
             if(GameManager.getInstance().getCurrPlayer().getGodChoice() == God.PAN){          //brutto
-                if(winPan(coordX, coordY)) {
+                if(winPan(coordX, coordY)){
                     workerSelected.changePosition(coordX, coordY);
-                    GameManager.getInstance().getCurrConnection().asyncSend(Map.getInstance());
                     GameManager.getInstance().endGame(GameManager.getInstance().getCurrPlayer());
                 }
-            }else{
-                if (winDefault(coordX, coordY)) {
+            } else{
+                if(winDefault(coordX, coordY)){
                     workerSelected.changePosition(coordX, coordY);
-                    GameManager.getInstance().getCurrConnection().asyncSend(Map.getInstance());
                     GameManager.getInstance().endGame(GameManager.getInstance().getCurrPlayer());
-                } else {
+                } else{
                     workerSelected.changePosition(coordX, coordY);
-                    switch (GameManager.getInstance().getCurrPlayer().getGodChoice()) {
+                    switch (GameManager.getInstance().getCurrPlayer().getGodChoice()){
                         case ARTEMIS -> {
                             if(workerSelected.canMove(startX, startY)) {
-                                GameManager.getInstance().getCurrConnection().asyncSend(new Message_QuestionArtemis());
+                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_ARTEMIS);
                             } else {
                                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantMove);
-                                GameManager.getInstance().getCurrConnection().asyncSend(new Message_Construction());
+                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
                             }
                         }
                         case ATLAS -> {
                             if(workerSelected.canBuild()) {
-                                GameManager.getInstance().getCurrConnection().asyncSend(new Message_QuestionAtlas());
+                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_ATLAS);
                             }else{
                                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
-                                //STOP TURN
+                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                                GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
                             }
                         }
                         case HEPHAESTUS -> {
                             if(workerSelected.canBuild()) {
                                 if(workerSelected.canBuild(true)) {
-                                    GameManager.getInstance().getCurrConnection().asyncSend(new Message_QuestionHephaestus());
+                                    Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_HEPHAESTUS);
                                 } else {
                                     SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantDoubleBuild);
-                                    GameManager.getInstance().getCurrConnection().asyncSend(new Message_Construction());
+                                    Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
                                 }
                             }else{
                                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
-                                //STOP TURN
+                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                                GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
                             }
                         }
                         default -> {
                             if(workerSelected.canBuild()) {
-                                GameManager.getInstance().getCurrConnection().asyncSend(new Message_Construction());
-                            }else{
+                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
+                            } else{
                                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
-                                //STOP TURN
+                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                                GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
                             }
                         }
                     }
@@ -138,16 +132,15 @@ public class TurnManager {
             if (ActionManager.getInstance().verifyCoordinateMovement(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), coordX, coordY)) {
                 if (winDefault(coordX, coordY)) {
                     workerSelected.changePosition(coordX, coordY);
-                    GameManager.getInstance().getCurrConnection().asyncSend(Map.getInstance());
                     GameManager.getInstance().endGame(GameManager.getInstance().getCurrPlayer());
                 } else {
                     workerSelected.changePosition(coordX, coordY);
-                    GameManager.getInstance().getCurrConnection().asyncSend(Map.getInstance());
                     if(workerSelected.canBuild()) {
-                        GameManager.getInstance().getCurrConnection().asyncSend(new Message_Construction());
+                        Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
                     }else{
                         SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
-                        //STOP TURN
+                        Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                        GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
                     }
                 }
             }
@@ -168,18 +161,18 @@ public class TurnManager {
     public void construction(int coordX, int coordY){
         if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
             workerSelected.buildBlock(coordX, coordY);
-            GameManager.getInstance().getCurrConnection().asyncSend(Map.getInstance());
             if (GameManager.getInstance().getCurrPlayer().getGodChoice() == God.DEMETER) {
                 buildX = coordX;
                 buildY = coordY;
                 if (workerSelected.canBuild(buildX, buildY)) {
-                    GameManager.getInstance().getCurrConnection().asyncSend(new Message_QuestionDemeter());
+                    Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_DEMETER);
                 } else {
                     SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
-                    //STOP TURN
+                    Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                    GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
                 }
             } else {
-                //STOP TURN
+                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
             }
         }
     }
@@ -190,8 +183,8 @@ public class TurnManager {
         } else {
             if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
                 workerSelected.buildBlock(coordX, coordY);
-                GameManager.getInstance().getCurrConnection().asyncSend(Map.getInstance());
-                //STOP TURN
+                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
             }
         }
     }
@@ -199,16 +192,16 @@ public class TurnManager {
     public void constructionCupola(int coordX, int coordY){
         if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
             workerSelected.buildBlock(true, coordX, coordY);
-            GameManager.getInstance().getCurrConnection().asyncSend(Map.getInstance());
-            //STOP TURN
+            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+            GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
         }
     }
 
     public void doubleConstruction(int coordX, int coordY){
         if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, true, coordX, coordY)){
             workerSelected.buildBlock(true, coordX, coordY);
-            GameManager.getInstance().getCurrConnection().asyncSend(Map.getInstance());
-            //STOP TURN
+            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+            GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
         }
     }
 

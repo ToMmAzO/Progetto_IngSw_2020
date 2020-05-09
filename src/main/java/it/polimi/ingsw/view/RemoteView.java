@@ -2,7 +2,8 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.controller.TurnManager;
-import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.game.Game;
+import it.polimi.ingsw.model.game.SystemMessage;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.God;
@@ -26,22 +27,12 @@ public class RemoteView {
             if(Game.getInstance().getGameState(player).equals(message.getGameState())){
                 readMessage(message);
             } else{
-                //caccia fuori tutti perchè imbroglia
+                GameManager.getInstance().cheating();
             }
         } else{
             clientConnection.asyncSend("Non è il tuo turno! Attendi.");
         }
     }
-
-    /*NOTA per ricordarmi: all'interno della readMessage si dovrà:
-       -controllare che il GameState ricevuto tramite messaggio dal Client ( message.getGameState() )
-        sia uguale al GameState di quel Client salvato lato Server, pensavo ad una HashMap contenente (Client, GameState)
-       -se i due GameState coincidono allora il controller esegue l'azione specifica e lo notifica a tutti i Client
-       -se i due GameState NON coincidono -> Bug o manomissione del Client -> messaggio di errore
-
-       stessa cosa in turn(message) */
-
-    /*NOTA per il passaggio del turno: HashMap (Client, GameState) lato server. tutti i client su WAIT tranne quello current, */
 
     private void readMessage(ClientMessage message) {
         switch (message.getGameState()) {
@@ -152,9 +143,11 @@ public class RemoteView {
                 } else if (answer.equals("no")) {
                     switch (message.getGameState()) {
                         case QUESTION_DEMETER -> {
-                        } //STOP TURN
+                            Game.getInstance().setGameState(player, GameState.WAIT_TURN);
+                            GameManager.getInstance().nextPlayer(player);
+                        }
                         case QUESTION_PROMETHEUS -> clientConnection.asyncSend(new Message_Movement());
-                        default -> clientConnection.asyncSend(new Message_Construction());   //QUESTION_ARTEMIS, QUESTION_ATLAS, QUESTION_HEPHAESTUS
+                        default -> clientConnection.asyncSend(new Message_Construction());//QUESTION_ARTEMIS, QUESTION_ATLAS, QUESTION_HEPHAESTUS
                     }
                 } else {
                     clientConnection.asyncSend("Puoi rispondere solo con yes o no!");
@@ -169,19 +162,33 @@ public class RemoteView {
         public void update(GameState message){
 
             if (player.equals(GameManager.getInstance().getCurrPlayer())){
+                if(player.equals(GameManager.getInstance().getPlayersInGame()[0])){
+                    switch(message){
+                        case WAIT_PLAYERS -> clientConnection.asyncSend("Avrai il colore " + player.getColor().toString() + ".");
+                        case CARD_CHOICE -> clientConnection.asyncSend(Deck.getInstance());
+                        case SET_WORKER -> clientConnection.asyncSend(Map.getInstance());
+                    }
+                }
                 clientConnection.asyncSend(message);
             }
         }
 
     }
 
-    //se metto in uno solo Object prende entrambe le notify???
     private class Error implements Observer<String> {
 
         @Override
         public void update(String message){
             if (player.equals(GameManager.getInstance().getCurrPlayer())){
                 clientConnection.asyncSend(message);
+                if(message.equals(SystemMessage.getInstance().cheating)){
+                    clientConnection.asyncSend("Hai decretato la fine della partita!");
+                }
+            } else{
+                if(message.equals(SystemMessage.getInstance().cheating)){
+                    clientConnection.asyncSend(message);
+                    clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha tentato di barare.\nGAME OVER!");
+                }
             }
         }
 

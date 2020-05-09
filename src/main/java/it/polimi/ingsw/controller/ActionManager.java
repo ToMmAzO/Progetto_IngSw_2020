@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.SystemMessage;
+import it.polimi.ingsw.model.game.SystemMessage;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.God;

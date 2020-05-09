@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.controller.GameManager;
-
 import java.io.Serializable;
 
 public class Deck implements Serializable {

@@ -120,8 +120,6 @@ public abstract class Worker extends Observable<Player> implements Serializable 
         notify(GameManager.getInstance().getCurrPlayer());
     }
 
-    public void buildBlock(boolean build, int buildX, int buildY) {         //HEPHAESTUS e ATLAS
-
-    }
+    public void buildBlock(boolean build, int buildX, int buildY){}
 
 }
