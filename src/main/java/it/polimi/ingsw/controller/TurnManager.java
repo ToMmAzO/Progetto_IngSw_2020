@@ -106,6 +106,18 @@ public class TurnManager {
                             GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
                         }
                     }
+                    case TRITON -> {
+                        if(workerSelected.getCoordX() == 0 || workerSelected.getCoordX() == 4 || workerSelected.getCoordY() == 0 || workerSelected.getCoordY() == 4) {
+                            if (workerSelected.canMove()) {
+                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_TRITON);
+                            } else {
+                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantMove);
+                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
+                            }
+                        }else{
+                            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
+                        }
+                    }
                     default -> {
                         if(workerSelected.canBuild()) {
                             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);

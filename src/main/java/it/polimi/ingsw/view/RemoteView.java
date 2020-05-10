@@ -159,6 +159,7 @@ public class RemoteView {
                         case QUESTION_HEPHAESTUS -> Game.getInstance().setGameState(player, GameState.DOUBLE_CONSTRUCTION);
                         case QUESTION_HESTIA -> Game.getInstance().setGameState(player, GameState.SECOND_CONSTRUCTION_HESTIA);
                         case QUESTION_PROMETHEUS -> Game.getInstance().setGameState(player, GameState.PREBUILD_PROMETHEUS);
+                        case QUESTION_TRITON -> Game.getInstance().setGameState(player, GameState.MOVEMENT);
                     }
                 } else if (answer.equals("no")) {
                     switch (message.getGameState()) {
@@ -171,7 +172,7 @@ public class RemoteView {
                             GameManager.getInstance().nextPlayer(player);
                         }
                         case QUESTION_PROMETHEUS -> clientConnection.asyncSend(new Message_Movement());
-                        default -> clientConnection.asyncSend(new Message_Construction());//QUESTION_ARTEMIS, QUESTION_ATLAS, QUESTION_HEPHAESTUS
+                        default -> Game.getInstance().setGameState(player, GameState.CONSTRUCTION);             //QUESTION_ARTEMIS, QUESTION_ATLAS, QUESTION_HEPHAESTUS, QUESTION_TRITON
                     }
                 } else {
                     clientConnection.asyncSend("Puoi rispondere solo con yes o no!");
