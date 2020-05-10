@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.network.server.SocketClientConnection;
+import it.polimi.ingsw.view.RemoteView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,17 +43,28 @@ public class GameManager {
             Server.setServerAvailability(false);
             players.add(0, player);
             playerConnections.put(player, c);
+            c.setViewSocket(new RemoteView(player, c));
             Game.getInstance().setGameState(player, GameState.WELCOME_FIRST);
         } else{
             players.add(player);
             playerConnections.put(player, c);
             currPlayer = player;
+            c.setViewSocket(new RemoteView(player, c));
             Game.getInstance().setGameState(player, GameState.WAIT_PLAYERS);
         }
         if(players.size() == numberOfPlayers){
             Server.setServerAvailability(false);
+            for(Player p1: players){
+                for(Player p2: players){
+                    p1.addObserver(playerConnections.get(p2).getViewSocket().createChangeInDeck());
+                }
+            }
             nextPlayer(currPlayer);
         }
+    }
+
+    public SocketClientConnection getPlayerConnection(Player player){
+        return playerConnections.get(player);
     }
 
     public void setCurrPlayer(Player currPlayer) {
@@ -168,6 +180,7 @@ public class GameManager {
         Server.refresh();
     }
 
+    //inutile
     public void cheating(){
         SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cheating);
         for (Player player : players) {

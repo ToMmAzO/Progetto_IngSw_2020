@@ -16,6 +16,7 @@ public class SocketClientConnection implements Runnable {
     private final Socket socket;
     private ObjectOutputStream out;
     private final Server server;
+    private RemoteView viewSocket;
     private boolean active = true;
 
     public SocketClientConnection(Socket socket, Server server){
@@ -23,16 +24,19 @@ public class SocketClientConnection implements Runnable {
         this.server = server;
     }
 
+    public void setViewSocket(RemoteView view){
+        viewSocket = view;
+    }
+
+    public RemoteView getViewSocket(){
+        return viewSocket;
+    }
+
     private synchronized boolean isActive(){
         return active;
     }
 
     public void asyncSend(final Object message){
-        /*
-        if(message instanceof Message){
-            currGameState = ((Message) message).getGameState();
-        }
-        */
         new Thread(() -> send(message)).start();
     }
 
@@ -71,7 +75,6 @@ public class SocketClientConnection implements Runnable {
             String read = in.nextLine();
             String name = read;
             Player player = server.lobby(name, this);
-            RemoteView viewSocket = new RemoteView(player, this);
             ClientMessage message = new ClientMessage();
             while(isActive()){
                 read = in.nextLine();

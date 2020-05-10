@@ -25,7 +25,7 @@ public class Cli extends ClientGameManager {
                 message.printMessage();
             }
             case SET_WORKER1 -> {
-                Message_SetWorker1 message = new Message_SetWorker1();
+                Message_SetWorker message = new Message_SetWorker();
                 message.printMessage();
             }
             case SET_WORKER2 -> {

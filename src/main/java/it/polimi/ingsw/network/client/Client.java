@@ -4,10 +4,8 @@ import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.network.client.cli.CLI;
 import it.polimi.ingsw.network.message.GameState;
-import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.Message_LoadState;
-import it.polimi.ingsw.view.cli.Cli;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,7 +19,7 @@ public class Client {
     private final String ip;
     private final int port;
     private boolean active = true;
-    private Cli cli = new Cli();
+    private final CLI cli = new CLI();
 
     public Client(String ip, int port){
         this.ip = ip;
@@ -41,36 +39,16 @@ public class Client {
             try{
                 while(isActive()){
                     Object inputObject = socketIn.readObject();
-                    if(inputObject instanceof Message_LoadState){
-                        //Cli.loadState(((Message_LoadState) inputObject).getToLoad());
-                        //Cli.runState();
-
-                        /*quando il client stabilisce la connessione il server manda come primo messaggio di ritorno un Message_LoadState con il
-                        * quale dice al Client come impostare il proprio GameState.
-                        * se la richiesta di connessione è la prima, il server risponderà con un Message_LoadState.toLoad = WELCOME_FIRST,
-                        * altrimenti WAIT.
-                        * inoltre, in questo modo possiamo:
-                        * 1) una volta che il primo ha scelto il numero di giocatori far cambiare lo stato ai Client facendogli ricevere un
-                        *    Message_LoadState.toLoad = CARD_CHOICE, in questo modo i Client che riceveranno il messaggio aggiorneranno il proprio
-                        *    playerState a CARD_CHOICE
-                        * 2) nel caso in cui ci fosse un errore durante il gioco perchè il playerState lato Client fosse diverso dal GameState lato server,
-                        *    il server potrebbe notificare al client quale stato ha lui in memoria, così da risintonizzarsi nello stesso stato
-                        *  */
-                    } else if(inputObject instanceof Message){
-                        cli.setPlayerState(((Message)inputObject).getGameState());
-                        ((Message)inputObject).printMessage();
-                    } else if(inputObject instanceof GameState) {
-                        cli.setPlayerState((GameState) inputObject);
+                    if(inputObject instanceof GameState) {
+                        cli.setPlayerState((GameState)inputObject);
                     } else if(inputObject instanceof String){
                         System.out.println((String)inputObject);
                     } else if(inputObject instanceof Deck){
                         ((Deck)inputObject).printCards();
                     } else if(inputObject instanceof God){
-                        God.printCardChosen(((God)inputObject));
+                        God.printCardChosen((God)inputObject);
                     } else if(inputObject instanceof Map){
                         ((Map)inputObject).print();
-                        cli.runState();
-                        cli.nextState();
                     } else if(inputObject instanceof Player){
                         ((Player)inputObject).printWorkersPositions();
                     } else{
@@ -123,3 +101,40 @@ public class Client {
     }
 
 }
+
+
+/*
+
+(inputObject instanceof Message_LoadState){
+                        //Cli.loadState(((Message_LoadState) inputObject).getToLoad());
+                        //Cli.runState();
+
+                        /*quando il client stabilisce la connessione il server manda come primo messaggio di ritorno un Message_LoadState con il
+                        * quale dice al Client come impostare il proprio GameState.
+                        * se la richiesta di connessione è la prima, il server risponderà con un Message_LoadState.toLoad = WELCOME_FIRST,
+                        * altrimenti WAIT.
+                        * inoltre, in questo modo possiamo:
+                        * 1) una volta che il primo ha scelto il numero di giocatori far cambiare lo stato ai Client facendogli ricevere un
+                        *    Message_LoadState.toLoad = CARD_CHOICE, in questo modo i Client che riceveranno il messaggio aggiorneranno il proprio
+                        *    playerState a CARD_CHOICE
+                        * 2) nel caso in cui ci fosse un errore durante il gioco perchè il playerState lato Client fosse diverso dal GameState lato server,
+                        *    il server potrebbe notificare al client quale stato ha lui in memoria, così da risintonizzarsi nello stesso stato
+                        *
+                    } else if(inputObject instanceof Message){
+                            cli.setPlayerState(((Message)inputObject).getGameState());
+                            ((Message)inputObject).printMessage();
+                            } else
+
+
+                            } else if(inputObject instanceof Map){
+                        ((Map)inputObject).print();
+                        cli.runState();
+                        cli.nextState();
+                    }
+
+
+                    } else if(inputObject instanceof God){
+                        God.printCardChosen((God)inputObject);
+                        cli.setGodChoice((God)inputObject);
+
+*/

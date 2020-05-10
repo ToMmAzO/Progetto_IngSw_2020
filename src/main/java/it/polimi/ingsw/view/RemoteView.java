@@ -20,10 +20,21 @@ public class RemoteView {
     public RemoteView(Player player, SocketClientConnection c) {
         this.player = player;
         this.clientConnection = c;
+        Game.getInstance().addObserver(new ChangeState());
+        SystemMessage.getInstance().addObserver(new Error());
+    }
+
+    public ChangeInDeck createChangeInDeck(){
+        return new ChangeInDeck();
+    }
+
+    public ChangeInMap createChangeInMap(){
+        return new ChangeInMap();
     }
 
     public void messageReceiver(ClientMessage message) {
         if (player.equals(GameManager.getInstance().getCurrPlayer())){
+            //inutile
             if(Game.getInstance().getGameState(player).equals(message.getGameState())){
                 readMessage(message);
             } else{
