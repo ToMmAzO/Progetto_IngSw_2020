@@ -48,7 +48,7 @@ public class TurnManager {
     }
 
     public void prebuildPrometheus(int coordX, int coordY){
-        if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
+        if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), false, coordX, coordY)){
             workerSelected.buildBlock(coordX, coordY);
             setAllowHeightPrometheus(false);
         }
@@ -181,7 +181,7 @@ public class TurnManager {
     }
 
     public void construction(int coordX, int coordY){
-        if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
+        if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), false, coordX, coordY)){
             workerSelected.buildBlock(coordX, coordY);
             switch (GameManager.getInstance().getCurrPlayer().getGodChoice()){
                 case DEMETER -> {
@@ -213,7 +213,7 @@ public class TurnManager {
         if (buildX == coordX && buildY == coordY) {
             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantRebuild);
         } else {
-            if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
+            if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), false, coordX, coordY)){
                 workerSelected.buildBlock(coordX, coordY);
                 Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
                 GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
@@ -225,7 +225,7 @@ public class TurnManager {
         if (coordX == 0 || coordX == 4 || coordY == 0 || coordY == 4) {
             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantRebuild);
         } else {
-            if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
+            if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), false, coordX, coordY)){
                 workerSelected.buildBlock(coordX, coordY);
                 Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
                 GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
@@ -234,7 +234,7 @@ public class TurnManager {
     }
 
     public void constructionCupola(int coordX, int coordY){
-        if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
+        if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), false, coordX, coordY)){
             workerSelected.buildBlock(true, coordX, coordY);
             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
             GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
@@ -242,7 +242,7 @@ public class TurnManager {
     }
 
     public void doubleConstruction(int coordX, int coordY){
-        if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, true, coordX, coordY)){
+        if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), true, coordX, coordY)){
             workerSelected.buildBlock(true, coordX, coordY);
             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
             GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());

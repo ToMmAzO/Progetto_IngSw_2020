@@ -125,7 +125,7 @@ public class ActionManager {
         return false;
     }
 
-    public boolean verifyCoordinateConstruction(Worker w, boolean doubleConstruction, int coordX, int coordY) {
+    public boolean verifyCoordinateConstruction(Worker w, God g, boolean doubleConstruction, int coordX, int coordY) {
         if (validCoords(coordX, coordY)) {
             if (isAround(w.getCoordX(), w.getCoordY(), coordX, coordY)) {
                 if (w.getCoordX() != coordX || w.getCoordY() != coordY) {
@@ -147,7 +147,11 @@ public class ActionManager {
                         SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().workerPresence);
                     }
                 } else {
-                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().yourPosition);
+                    if(g == God.ZEUS){
+                        return true;
+                    }else {
+                        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().yourPosition);
+                    }
                 }
             } else {
                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().distantCell);
