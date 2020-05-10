@@ -47,6 +47,18 @@ public class Map implements Serializable {
         return map[row][column].getWorkerPresence() == null;
     }
 
+    public int numberOfTurrets(){
+        int n = 0;
+        for (int i = 0; i < 5; i++){
+            for (int j = 0; j < 5; j++){
+                if(map[i][j].getBlockType() == BlockType.CUPOLA){
+                    n++;
+                }
+            }
+        }
+        return n;
+    }
+
     public void print(){
         System.out.printf("   |   %d  |   %d  |   %d  |   %d  |   %d  |\n", 0, 1, 2, 3, 4);
         System.out.println("---|------|------|------|------|------|");
