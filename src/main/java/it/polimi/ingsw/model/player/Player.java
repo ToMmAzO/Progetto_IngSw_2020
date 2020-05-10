@@ -37,15 +37,20 @@ public class Player extends Observable<God> {
         String id = color.toString().substring(0, 3).concat("1");
         if(Map.getInstance().noWorkerHere(row, column)) {
             switch (this.getGodChoice()) {
-                case PAN -> workers[0] = new WorkerPan(id, row, column);
-                case ATLAS -> workers[0] = new WorkerAtlas(id, row, column);
                 case APOLLO -> workers[0] = new WorkerApollo(id, row, column);
-                case ATHENA -> workers[0] = new WorkerAthena(id, row, column);
                 case ARTEMIS -> workers[0] = new WorkerArtemis(id, row, column);
+                case ATHENA -> workers[0] = new WorkerAthena(id, row, column);
+                case ATLAS -> workers[0] = new WorkerAtlas(id, row, column);
+                case CHRONUS -> workers[0] = new WorkerChronus(id, row, column);
                 case DEMETER -> workers[0] = new WorkerDemeter(id, row, column);
-                case MINOTAUR -> workers[0] = new WorkerMinotaur(id, row, column);
                 case HEPHAESTUS -> workers[0] = new WorkerHephaestus(id, row, column);
+                case HERA -> workers[0] = new WorkerHera(id, row, column);
+                case HESTIA -> workers[0] = new WorkerHestia(id, row, column);
+                case MINOTAUR -> workers[0] = new WorkerMinotaur(id, row, column);
+                case PAN -> workers[0] = new WorkerPan(id, row, column);
                 case PROMETHEUS -> workers[0] = new WorkerPrometheus(id, row, column);
+                case TRITON -> workers[0] = new WorkerTriton(id, row, column);
+                case ZEUS -> workers[0] = new WorkerZeus(id, row, column);
             }
             return true;
         } else
@@ -56,15 +61,20 @@ public class Player extends Observable<God> {
         String id = color.toString().substring(0, 3).concat("2");
         if(Map.getInstance().noWorkerHere(row, column)) {
             switch (this.getGodChoice()) {
-                case PAN -> workers[1] = new WorkerPan(id, row, column);
-                case ATLAS -> workers[1] = new WorkerAtlas(id, row, column);
                 case APOLLO -> workers[1] = new WorkerApollo(id, row, column);
-                case ATHENA -> workers[1] = new WorkerAthena(id, row, column);
                 case ARTEMIS -> workers[1] = new WorkerArtemis(id, row, column);
+                case ATHENA -> workers[1] = new WorkerAthena(id, row, column);
+                case ATLAS -> workers[1] = new WorkerAtlas(id, row, column);
+                case CHRONUS -> workers[1] = new WorkerChronus(id, row, column);
                 case DEMETER -> workers[1] = new WorkerDemeter(id, row, column);
-                case MINOTAUR -> workers[1] = new WorkerMinotaur(id, row, column);
                 case HEPHAESTUS -> workers[1] = new WorkerHephaestus(id, row, column);
+                case HERA -> workers[1] = new WorkerHera(id, row, column);
+                case HESTIA -> workers[1] = new WorkerHestia(id, row, column);
+                case MINOTAUR -> workers[1] = new WorkerMinotaur(id, row, column);
+                case PAN -> workers[1] = new WorkerPan(id, row, column);
                 case PROMETHEUS -> workers[1] = new WorkerPrometheus(id, row, column);
+                case TRITON -> workers[1] = new WorkerTriton(id, row, column);
+                case ZEUS -> workers[1] = new WorkerZeus(id, row, column);
             }
             return true;
         } else
