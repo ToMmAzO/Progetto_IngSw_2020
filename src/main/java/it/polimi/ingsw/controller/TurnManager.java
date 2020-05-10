@@ -171,24 +171,46 @@ public class TurnManager {
     public void construction(int coordX, int coordY){
         if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
             workerSelected.buildBlock(coordX, coordY);
-            if (GameManager.getInstance().getCurrPlayer().getGodChoice() == God.DEMETER) {
-                buildX = coordX;
-                buildY = coordY;
-                if (workerSelected.canBuild(buildX, buildY)) {
-                    Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_DEMETER);
-                } else {
-                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
-                    Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
-                    GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
+            switch (GameManager.getInstance().getCurrPlayer().getGodChoice()){
+                case DEMETER -> {
+                    buildX = coordX;
+                    buildY = coordY;
+                    if (workerSelected.canBuild(buildX, buildY)) {
+                        Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_DEMETER);
+                    } else {
+                        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
+                        Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                        GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
+                    }
                 }
-            } else {
-                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                case HESTIA -> {
+                    if (workerSelected.canBuild(true)) {
+                        Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_HESTIA);
+                    } else {
+                        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
+                        Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                        GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
+                    }
+                }
+                default -> Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
             }
         }
     }
 
-    public void secondConstruction(int coordX, int coordY){
+    public void secondConstructionDemeter(int coordX, int coordY){
         if (buildX == coordX && buildY == coordY) {
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantRebuild);
+        } else {
+            if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){
+                workerSelected.buildBlock(coordX, coordY);
+                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
+            }
+        }
+    }
+
+    public void secondConstructionHestia(int coordX, int coordY){
+        if (coordX == 0 || coordX == 4 || coordY == 0 || coordY == 4) {
             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantRebuild);
         } else {
             if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, false, coordX, coordY)){

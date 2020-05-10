@@ -133,10 +133,18 @@ public class RemoteView {
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
             }
-            case SECOND_CONSTRUCTION -> {
+            case SECOND_CONSTRUCTION_DEMETER -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
-                    TurnManager.getInstance().secondConstruction(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                    TurnManager.getInstance().secondConstructionDemeter(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
+                } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+                    clientConnection.asyncSend("Formato Input scorretto!");
+                }
+            }
+            case SECOND_CONSTRUCTION_HESTIA -> {
+                try {
+                    String[] coordString = message.getContent().replace(" ", "").split(",");
+                    TurnManager.getInstance().secondConstructionHestia(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
                 } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
@@ -144,16 +152,21 @@ public class RemoteView {
             default -> {
                 String answer = message.getContent().toLowerCase().replace(" ", "");
                 if (answer.equals("yes")) {
-                    switch (message.getGameState()) {
-                        case QUESTION_ARTEMIS -> clientConnection.asyncSend(new Message_SecondMove());
-                        case QUESTION_ATLAS -> clientConnection.asyncSend(new Message_ConstructionCupola());
-                        case QUESTION_DEMETER -> clientConnection.asyncSend(new Message_SecondConstruction());
-                        case QUESTION_HEPHAESTUS -> clientConnection.asyncSend(new Message_DoubleConstruction());
-                        case QUESTION_PROMETHEUS -> clientConnection.asyncSend(new Message_PrebuildPrometheus());
+                    switch (message.getGameState()) {   //BOH, prima message
+                        case QUESTION_ARTEMIS -> Game.getInstance().setGameState(player, GameState.SECOND_MOVE);
+                        case QUESTION_ATLAS -> Game.getInstance().setGameState(player, GameState.CONSTRUCTION_CUPOLA);
+                        case QUESTION_DEMETER -> Game.getInstance().setGameState(player, GameState.SECOND_CONSTRUCTION_DEMETER);
+                        case QUESTION_HEPHAESTUS -> Game.getInstance().setGameState(player, GameState.DOUBLE_CONSTRUCTION);
+                        case QUESTION_HESTIA -> Game.getInstance().setGameState(player, GameState.SECOND_CONSTRUCTION_HESTIA);
+                        case QUESTION_PROMETHEUS -> Game.getInstance().setGameState(player, GameState.PREBUILD_PROMETHEUS);
                     }
                 } else if (answer.equals("no")) {
                     switch (message.getGameState()) {
                         case QUESTION_DEMETER -> {
+                            Game.getInstance().setGameState(player, GameState.WAIT_TURN);
+                            GameManager.getInstance().nextPlayer(player);
+                        }
+                        case QUESTION_HESTIA -> {
                             Game.getInstance().setGameState(player, GameState.WAIT_TURN);
                             GameManager.getInstance().nextPlayer(player);
                         }
