@@ -63,7 +63,7 @@ public class RemoteView {
                     clientConnection.asyncSend("Formato Input scorretto!");
                 }
             }
-            case SET_WORKER1 -> {
+            case SET_WORKER -> {
                 try {
                     String[] coordString = message.getContent().replace(" ", "").split(",");
                     GameManager.getInstance().setWorker(Integer.parseInt(coordString[0]), Integer.parseInt(coordString[1]));
@@ -175,12 +175,14 @@ public class RemoteView {
             if (player.equals(GameManager.getInstance().getCurrPlayer())){
                 if(player.equals(GameManager.getInstance().getPlayersInGame()[0])){
                     switch(message){
-                        case WAIT_PLAYERS -> clientConnection.asyncSend("Avrai il colore " + player.getColor().toString() + ".");
                         case CARD_CHOICE -> clientConnection.asyncSend(Deck.getInstance());
                         case SET_WORKER -> clientConnection.asyncSend(Map.getInstance());
                     }
                 }
                 clientConnection.asyncSend(message);
+                if(message.equals(GameState.WAIT_PLAYERS)){
+                    clientConnection.asyncSend("Avrai il colore " + player.getColor().toString() + ".");
+                }
             }
         }
 
