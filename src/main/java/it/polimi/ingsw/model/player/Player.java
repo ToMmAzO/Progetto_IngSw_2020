@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.player;
 
+import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.workers.*;
@@ -44,7 +45,10 @@ public class Player extends Observable<God> {
                 case CHRONUS -> workers[0] = new WorkerChronus(id, row, column);
                 case DEMETER -> workers[0] = new WorkerDemeter(id, row, column);
                 case HEPHAESTUS -> workers[0] = new WorkerHephaestus(id, row, column);
-                case HERA -> workers[0] = new WorkerHera(id, row, column);
+                case HERA -> {
+                    workers[0] = new WorkerHera(id, row, column);
+                    TurnManager.getInstance().setAllowWin(false);
+                }
                 case HESTIA -> workers[0] = new WorkerHestia(id, row, column);
                 case MINOTAUR -> workers[0] = new WorkerMinotaur(id, row, column);
                 case PAN -> workers[0] = new WorkerPan(id, row, column);

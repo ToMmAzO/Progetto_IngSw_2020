@@ -13,6 +13,7 @@ public class TurnManager {
     private Worker workerSelected;
     private boolean allowHeight = true;
     private boolean allowHeightPrometheus = true;
+    private boolean allowWin;
     private int startX, startY, buildX, buildY;
 
     public TurnManager(){
@@ -142,19 +143,27 @@ public class TurnManager {
     }
 
     public boolean win(int x, int y){
-        switch (GameManager.getInstance().getCurrPlayer().getGodChoice()){
-            case CHRONUS -> {
-                return (Map.getInstance().numberOfTurrets() >= 5)
-                        || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3);
-            }
-            case PAN -> {
-                return (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 1)
-                        || (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)
-                        || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)
-                        || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3);
-            }
-            default -> {
+        if((x == 0 || x == 4 || y == 0 || y == 4) && cannotWin()){
+            if(GameManager.getInstance().getCurrPlayer().getGodChoice() == God.HERA){
                 return workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3;
+            }else {
+                return false;
+            }
+        }else {
+            switch (GameManager.getInstance().getCurrPlayer().getGodChoice()) {
+                case CHRONUS -> {
+                    return (Map.getInstance().numberOfTurrets() >= 5)
+                            || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3);
+                }
+                case PAN -> {
+                    return (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 1)
+                            || (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)
+                            || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)
+                            || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3);
+                }
+                default -> {
+                    return workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3;
+                }
             }
         }
     }
@@ -220,6 +229,14 @@ public class TurnManager {
 
     public boolean cannotGoUpPrometheus() {
         return !allowHeightPrometheus;
+    }
+
+    public void setAllowWin(boolean allowWin) {
+        this.allowWin = allowWin;
+    }
+
+    public boolean cannotWin() {
+        return !allowWin;
     }
 
 }
