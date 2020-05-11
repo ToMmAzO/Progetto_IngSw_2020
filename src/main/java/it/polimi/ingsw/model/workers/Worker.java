@@ -22,8 +22,8 @@ public abstract class Worker extends Observable<Player> implements Serializable 
         this.coordZ = 0;
         Map.getInstance().setWorkerInCell(coordX, coordY, this);
         Player[] players = GameManager.getInstance().getPlayersInGame();
-        for(Player p1: players){
-            this.addObserver(GameManager.getInstance().getPlayerConnection(p1).getViewSocket().createChangeInMap());
+        for(Player p: players){
+            this.addObserver(GameManager.getInstance().getPlayerConnection(p).getViewSocket().createChangeInMap());
         }
         notify(GameManager.getInstance().getCurrPlayer());
     }

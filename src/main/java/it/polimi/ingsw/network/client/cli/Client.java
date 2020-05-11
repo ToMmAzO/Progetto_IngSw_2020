@@ -1,11 +1,10 @@
-package it.polimi.ingsw.network.client;
+package it.polimi.ingsw.network.client.cli;
 
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.network.client.cli.CLI;
-import it.polimi.ingsw.network.message.GameState;
+import it.polimi.ingsw.network.message.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,7 +18,6 @@ public class Client {
     private final String ip;
     private final int port;
     private boolean active = true;
-    private final CLI cli = new CLI();
 
     public Client(String ip, int port){
         this.ip = ip;
@@ -40,7 +38,7 @@ public class Client {
                 while(isActive()){
                     Object inputObject = socketIn.readObject();
                     if(inputObject instanceof GameState) {
-                        cli.setPlayerState((GameState)inputObject);
+                        runState((GameState)inputObject);
                     } else if(inputObject instanceof String){
                         System.out.println((String)inputObject);
                     } else if(inputObject instanceof Deck){
@@ -79,6 +77,33 @@ public class Client {
         return t;
     }
 
+    public void runState(GameState state){
+        Message message;
+        switch (state){
+            case WELCOME_FIRST -> message = new Message_WelcomeFirst();
+            case WAIT_PLAYERS -> message = new Message_WaitPlayers();
+            case WAIT_CARD_CHOICE -> message = new Message_WaitCardChoice();
+            case WAIT_TURN -> message = new Message_WaitTurn();
+            case CARD_CHOICE -> message = new Message_CardChoice();
+            case SET_WORKER -> message = new Message_SetWorker();
+            case WORKER_CHOICE -> message = new Message_WorkerChoice();
+            case QUESTION_PROMETHEUS -> message = new Message_QuestionPrometheus();
+            case PREBUILD_PROMETHEUS -> message = new Message_PrebuildPrometheus();
+            case MOVEMENT -> message = new Message_Movement();
+            case QUESTION_ARTEMIS -> message = new Message_QuestionArtemis();
+            case QUESTION_ATLAS -> message = new Message_QuestionAtlas();
+            case CONSTRUCTION_CUPOLA -> message = new Message_ConstructionCupola();
+            case SECOND_MOVE -> message = new Message_SecondMove();
+            case QUESTION_HEPHAESTUS -> message = new Message_QuestionHephaestus();
+            case DOUBLE_CONSTRUCTION -> message = new Message_DoubleConstruction();
+            case QUESTION_DEMETER -> message = new Message_QuestionDemeter();
+            case SECOND_CONSTRUCTION -> message = new Message_SecondConstruction();
+            case CONSTRUCTION -> message = new Message_Construction();
+            default -> message = new Message_Error();
+        }
+        message.printMessage();
+    }
+
     public void run() throws IOException {
         Socket socket = new Socket(ip, port);
         System.out.println("Connection established");
@@ -101,40 +126,3 @@ public class Client {
     }
 
 }
-
-
-/*
-
-(inputObject instanceof Message_LoadState){
-                        //Cli.loadState(((Message_LoadState) inputObject).getToLoad());
-                        //Cli.runState();
-
-                        /*quando il client stabilisce la connessione il server manda come primo messaggio di ritorno un Message_LoadState con il
-                        * quale dice al Client come impostare il proprio GameState.
-                        * se la richiesta di connessione è la prima, il server risponderà con un Message_LoadState.toLoad = WELCOME_FIRST,
-                        * altrimenti WAIT.
-                        * inoltre, in questo modo possiamo:
-                        * 1) una volta che il primo ha scelto il numero di giocatori far cambiare lo stato ai Client facendogli ricevere un
-                        *    Message_LoadState.toLoad = CARD_CHOICE, in questo modo i Client che riceveranno il messaggio aggiorneranno il proprio
-                        *    playerState a CARD_CHOICE
-                        * 2) nel caso in cui ci fosse un errore durante il gioco perchè il playerState lato Client fosse diverso dal GameState lato server,
-                        *    il server potrebbe notificare al client quale stato ha lui in memoria, così da risintonizzarsi nello stesso stato
-                        *
-                    } else if(inputObject instanceof Message){
-                            cli.setPlayerState(((Message)inputObject).getGameState());
-                            ((Message)inputObject).printMessage();
-                            } else
-
-
-                            } else if(inputObject instanceof Map){
-                        ((Map)inputObject).print();
-                        cli.runState();
-                        cli.nextState();
-                    }
-
-
-                    } else if(inputObject instanceof God){
-                        God.printCardChosen((God)inputObject);
-                        cli.setGodChoice((God)inputObject);
-
-*/
