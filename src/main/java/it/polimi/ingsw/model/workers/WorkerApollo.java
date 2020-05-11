@@ -65,7 +65,6 @@ public class WorkerApollo extends Worker {
             setCoordX(newX);           //aggiorna anche le coordinate di WorkerApollo
             setCoordY(newY);
             setCoordZ(Map.getInstance().getCellBlockType(newX, newY).getAbbreviation());
-            notify(GameManager.getInstance().getCurrPlayer());
         }else {
             super.changePosition(newX, newY);
         }

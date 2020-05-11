@@ -22,14 +22,11 @@ public class RemoteView {
         this.clientConnection = c;
         Game.getInstance().addObserver(new ChangeState());
         SystemMessage.getInstance().addObserver(new Error());
+        Map.getInstance().addObserver(new ChangeInMap());
     }
 
     public ChangeInDeck createChangeInDeck(){
         return new ChangeInDeck();
-    }
-
-    public ChangeInMap createChangeInMap(){
-        return new ChangeInMap();
     }
 
     public void messageReceiver(ClientMessage message) {

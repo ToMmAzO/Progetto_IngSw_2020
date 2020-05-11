@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model.player;
 
-import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.workers.*;
 import it.polimi.ingsw.observer.Observable;
 
-public class Player extends Observable<God> {
+import java.io.Serializable;
+
+public class Player extends Observable<God> implements Serializable {
 
     private final String nickname;
     private final Color color;

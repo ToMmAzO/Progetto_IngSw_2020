@@ -1,10 +1,13 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.controller.GameManager;
+import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.workers.Worker;
+import it.polimi.ingsw.observer.Observable;
 
 import java.io.Serializable;
 
-public class Map implements Serializable {
+public class Map extends Observable<Player> implements Serializable {
 
     private static Map board = null;
     private final Cell[][] map;
@@ -25,6 +28,7 @@ public class Map implements Serializable {
 
     public void setCellBlockType(int row, int column, BlockType block){
         map[row][column].setBlockType(block);
+        notify(GameManager.getInstance().getCurrPlayer());
     }
 
     public BlockType getCellBlockType(int row, int column){
@@ -33,6 +37,7 @@ public class Map implements Serializable {
 
     public void setWorkerInCell(int row, int column, Worker worker){
         map[row][column].setWorkerPresence(worker);
+        notify(GameManager.getInstance().getCurrPlayer());
     }
 
     public Worker getWorkerInCell(int row, int column){

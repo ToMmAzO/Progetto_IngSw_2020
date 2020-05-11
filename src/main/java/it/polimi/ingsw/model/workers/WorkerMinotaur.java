@@ -296,7 +296,6 @@ public class WorkerMinotaur extends Worker {
                 setCoordY(newY);
                 setCoordZ(Map.getInstance().getCellBlockType(newX, newY).getAbbreviation());
             }
-            notify(GameManager.getInstance().getCurrPlayer());
         }
     }
 }

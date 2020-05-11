@@ -1,16 +1,13 @@
 package it.polimi.ingsw.model.workers;
 
 import it.polimi.ingsw.controller.ActionManager;
-import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
-import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.observer.Observable;
 
 import java.io.Serializable;
 
-public abstract class Worker extends Observable<Player> implements Serializable {
+public abstract class Worker implements Serializable {
 
     private final String idWorker;
     private int coordX, coordY, coordZ;
@@ -21,11 +18,6 @@ public abstract class Worker extends Observable<Player> implements Serializable 
         this.coordY = coordY;
         this.coordZ = 0;
         Map.getInstance().setWorkerInCell(coordX, coordY, this);
-        Player[] players = GameManager.getInstance().getPlayersInGame();
-        for(Player p: players){
-            this.addObserver(GameManager.getInstance().getPlayerConnection(p).getViewSocket().createChangeInMap());
-        }
-        notify(GameManager.getInstance().getCurrPlayer());
     }
 
     public String getIdWorker() {
@@ -89,7 +81,6 @@ public abstract class Worker extends Observable<Player> implements Serializable 
         coordY = newY;
         coordZ = Map.getInstance().getCellBlockType(newX, newY).getAbbreviation();
         Map.getInstance().setWorkerInCell(newX, newY, this);
-        notify(GameManager.getInstance().getCurrPlayer());
     }
 
     public boolean canBuild(){
@@ -121,7 +112,6 @@ public abstract class Worker extends Observable<Player> implements Serializable 
         }else if(Map.getInstance().getCellBlockType(buildX, buildY) == BlockType.BLOCK3){
             Map.getInstance().setCellBlockType(buildX, buildY, BlockType.CUPOLA);
         }
-        notify(GameManager.getInstance().getCurrPlayer());
     }
 
     public void buildBlock(boolean build, int buildX, int buildY){}

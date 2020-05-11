@@ -28,6 +28,7 @@ public class GameManager {
         new SystemMessage();
         new TurnManager();
         new ActionManager();
+        new Map();
     }
 
     public static GameManager getInstance(){
@@ -85,7 +86,6 @@ public class GameManager {
         if (numberOfPlayers == 2 || numberOfPlayers == 3) {
             this.numberOfPlayers = numberOfPlayers;
             new Deck(numberOfPlayers);
-            new Map();
             Server.setServerAvailability(true);
             Game.getInstance().setGameState(currPlayer, GameState.WAIT_PLAYERS);
         } else{
@@ -158,9 +158,11 @@ public class GameManager {
         SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().youLose);
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(1));
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(2));
+        //da rivedere per nextplayer
         players.remove(player);
         playerConnections.get(player).closeConnection();
         playerConnections.remove(player);
+        //da rivedere per il messaggio di perdita
     }
 
     public void endGame(Player winnerPlayer){
