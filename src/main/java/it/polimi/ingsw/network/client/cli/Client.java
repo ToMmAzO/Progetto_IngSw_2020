@@ -90,6 +90,7 @@ public class Client {
             case QUESTION_PROMETHEUS -> message = new Message_QuestionPrometheus();
             case PREBUILD_PROMETHEUS -> message = new Message_PrebuildPrometheus();
             case MOVEMENT -> message = new Message_Movement();
+            case QUESTION_TRITON -> message = new Message_QuestionTriton();
             case QUESTION_ARTEMIS -> message = new Message_QuestionArtemis();
             case QUESTION_ATLAS -> message = new Message_QuestionAtlas();
             case CONSTRUCTION_CUPOLA -> message = new Message_ConstructionCupola();
@@ -97,7 +98,9 @@ public class Client {
             case QUESTION_HEPHAESTUS -> message = new Message_QuestionHephaestus();
             case DOUBLE_CONSTRUCTION -> message = new Message_DoubleConstruction();
             case QUESTION_DEMETER -> message = new Message_QuestionDemeter();
-            case SECOND_CONSTRUCTION -> message = new Message_SecondConstruction();
+            case SECOND_CONSTRUCTION_DEMETER -> message = new Message_SecondConstructionDemeter();
+            case QUESTION_HESTIA -> message = new Message_QuestionHestia();
+            case SECOND_CONSTRUCTION_HESTIA -> message = new Message_SecondConstructionHestia();
             case CONSTRUCTION -> message = new Message_Construction();
             default -> message = new Message_Error();
         }

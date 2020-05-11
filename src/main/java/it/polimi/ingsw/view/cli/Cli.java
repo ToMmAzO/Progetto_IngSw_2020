@@ -64,8 +64,8 @@ public class Cli extends ClientGameManager {
                 Message_QuestionDemeter message = new Message_QuestionDemeter();
                 message.printMessage();
             }
-            case SECOND_CONSTRUCTION -> {
-                Message_SecondConstruction message = new Message_SecondConstruction();
+            case SECOND_CONSTRUCTION_DEMETER -> {
+                Message_SecondConstructionDemeter message = new Message_SecondConstructionDemeter();
                 message.printMessage();
             }
             case QUESTION_HEPHAESTUS -> {
