@@ -13,7 +13,7 @@ public class TurnManager {
     private Worker workerSelected;
     private boolean allowHeight = true;
     private boolean allowHeightPrometheus = true;
-    private boolean allowWin;
+    private boolean allowWin = true;
     private int startX, startY, buildX, buildY;
 
     public TurnManager(){
@@ -184,6 +184,11 @@ public class TurnManager {
         if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), false, coordX, coordY)){
             workerSelected.buildBlock(coordX, coordY);
             switch (GameManager.getInstance().getCurrPlayer().getGodChoice()){
+                case CHRONUS -> {
+                    if(win(workerSelected.getCoordX(), workerSelected.getCoordY())){
+                        GameManager.getInstance().endGame(GameManager.getInstance().getCurrPlayer());
+                    }
+                }
                 case DEMETER -> {
                     buildX = coordX;
                     buildY = coordY;

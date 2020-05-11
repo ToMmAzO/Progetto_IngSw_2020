@@ -163,11 +163,7 @@ public class RemoteView {
                     }
                 } else if (answer.equals("no")) {
                     switch (message.getGameState()) {
-                        case QUESTION_DEMETER -> {
-                            Game.getInstance().setGameState(player, GameState.WAIT_TURN);
-                            GameManager.getInstance().nextPlayer(player);
-                        }
-                        case QUESTION_HESTIA -> {
+                        case QUESTION_DEMETER, QUESTION_HESTIA -> {
                             Game.getInstance().setGameState(player, GameState.WAIT_TURN);
                             GameManager.getInstance().nextPlayer(player);
                         }

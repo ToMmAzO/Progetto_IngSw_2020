@@ -6,9 +6,4 @@ public class WorkerChronus extends Worker {
         super(idWorker, coordX, coordY);
     }
 
-    @Override
-    public void changePosition(int newX, int newY){
-        super.changePosition(newX, newY);
-    }
-
 }

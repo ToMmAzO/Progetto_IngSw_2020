@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.workers;
 
 import it.polimi.ingsw.controller.ActionManager;
+import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 
@@ -19,7 +20,9 @@ public class WorkerZeus extends Worker {
                         return true;
                     }else{
                         if(i == getCoordX() && j == getCoordY()){
-                            return true;
+                            if(Map.getInstance().getCellBlockType(i, j).getAbbreviation() < 3) {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -28,6 +31,12 @@ public class WorkerZeus extends Worker {
         return false;
     }
 
-    //dorebbe funzionare la build block normale, perchè cambia il block type
+    @Override
+    public void buildBlock(int buildX, int buildY){
+        if(buildX == getCoordX() && buildY == getCoordY()){
+            setCoordZ(getCoordZ() + 1);
+        }
+        super.buildBlock(buildX, buildY);
+    }
 
 }

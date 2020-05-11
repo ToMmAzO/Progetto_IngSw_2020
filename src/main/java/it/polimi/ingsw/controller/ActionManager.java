@@ -148,7 +148,11 @@ public class ActionManager {
                     }
                 } else {
                     if(g == God.ZEUS){
-                        return true;
+                        if(Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() < 3) {
+                            return true;
+                        }else{
+                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
+                        }
                     }else {
                         SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().yourPosition);
                     }

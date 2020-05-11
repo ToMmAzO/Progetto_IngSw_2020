@@ -45,10 +45,7 @@ public class Player extends Observable<God> {
                 case CHRONUS -> workers[0] = new WorkerChronus(id, row, column);
                 case DEMETER -> workers[0] = new WorkerDemeter(id, row, column);
                 case HEPHAESTUS -> workers[0] = new WorkerHephaestus(id, row, column);
-                case HERA -> {
-                    workers[0] = new WorkerHera(id, row, column);
-                    TurnManager.getInstance().setAllowWin(false);
-                }
+                case HERA -> workers[0] = new WorkerHera(id, row, column);
                 case HESTIA -> workers[0] = new WorkerHestia(id, row, column);
                 case MINOTAUR -> workers[0] = new WorkerMinotaur(id, row, column);
                 case PAN -> workers[0] = new WorkerPan(id, row, column);
