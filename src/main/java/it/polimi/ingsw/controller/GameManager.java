@@ -24,10 +24,10 @@ public class GameManager {
 
     public GameManager(){
         gameManager = this;
-        new Game();
-        new SystemMessage();
         new TurnManager();
         new ActionManager();
+        new Game();
+        new SystemMessage();
         new Map();
     }
 
@@ -155,14 +155,23 @@ public class GameManager {
     }
 
     public void deletePlayer(Player player){
-        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().youLose);
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(1));
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(2));
-        //da rivedere per nextplayer
+        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().youLose);
+        int index = players.indexOf(player);
         players.remove(player);
         playerConnections.get(player).closeConnection();
         playerConnections.remove(player);
-        //da rivedere per il messaggio di perdita
+        if(index > players.size()){
+            currPlayer = players.get(0);
+        } else{
+            currPlayer = players.get(index);
+        }
+        if(players.size() == 1){
+            endGame(currPlayer);
+        } else{
+            Game.getInstance().setGameState(currPlayer, GameState.WORKER_CHOICE);
+        }
     }
 
     public void endGame(Player winnerPlayer){
@@ -178,17 +187,6 @@ public class GameManager {
                 playerConnections.get(player).closeConnection();
                 playerConnections.remove(player);
             }
-        }
-        Server.refresh();
-    }
-
-    //inutile
-    public void cheating(){
-        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cheating);
-        for (Player player : players) {
-            players.remove(player);
-            playerConnections.get(player).closeConnection();
-            playerConnections.remove(player);
         }
         Server.refresh();
     }

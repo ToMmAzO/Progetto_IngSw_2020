@@ -27,7 +27,6 @@ public class SystemMessage extends Observable<String> {
     public String cantComeBack = "ATTENTO, non puoi tornare indietro!";
     public String cantDoubleBuild = "Non può costruire due blocchi.";
     public String cantRebuild = "ATTENTO, non puoi costruire nello stesso punto di prima!";
-    public String cheating = "TENTATIVO DI CHEATING!";
 
     public SystemMessage(){
         systemError = this;

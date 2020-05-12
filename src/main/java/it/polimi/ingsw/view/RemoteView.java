@@ -31,12 +31,7 @@ public class RemoteView {
 
     public void messageReceiver(ClientMessage message) {
         if (player.equals(GameManager.getInstance().getCurrPlayer())){
-            //inutile
-            if(Game.getInstance().getGameState(player).equals(message.getGameState())){
-                readMessage(message);
-            } else{
-                GameManager.getInstance().cheating();
-            }
+            readMessage(message);
         } else{
             clientConnection.asyncSend("Non è il tuo turno! Attendi.");
         }
@@ -149,7 +144,7 @@ public class RemoteView {
             default -> {
                 String answer = message.getContent().toLowerCase().replace(" ", "");
                 if (answer.equals("yes")) {
-                    switch (message.getGameState()) {   //BOH, prima message
+                    switch (message.getGameState()) {
                         case QUESTION_ARTEMIS -> Game.getInstance().setGameState(player, GameState.SECOND_MOVE);
                         case QUESTION_ATLAS -> Game.getInstance().setGameState(player, GameState.CONSTRUCTION_CUPOLA);
                         case QUESTION_DEMETER -> Game.getInstance().setGameState(player, GameState.SECOND_CONSTRUCTION_DEMETER);
@@ -201,13 +196,10 @@ public class RemoteView {
         public void update(String message){
             if (player.equals(GameManager.getInstance().getCurrPlayer())){
                 clientConnection.asyncSend(message);
-                if(message.equals(SystemMessage.getInstance().cheating)){
-                    clientConnection.asyncSend("Hai decretato la fine della partita!");
-                }
             } else{
-                if(message.equals(SystemMessage.getInstance().cheating)){
-                    clientConnection.asyncSend(message);
-                    clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha tentato di barare.\nGAME OVER!");
+                if(message.equals(SystemMessage.getInstance().youLose)){
+                    clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha perso!");
+                    clientConnection.asyncSend(Map.getInstance());
                 }
             }
         }
@@ -238,9 +230,9 @@ public class RemoteView {
             }
             clientConnection.asyncSend(Map.getInstance());
             Player[] players = GameManager.getInstance().getPlayersInGame();
-            for (Player value : players){
-                if(value.getWorkerSelected(1) != null && value.getWorkerSelected(2) != null){
-                    clientConnection.asyncSend(value);
+            for (Player p : players){
+                if(p.getWorkerSelected(1) != null && p.getWorkerSelected(2) != null){
+                    clientConnection.asyncSend(p);
                 }
             }
         }

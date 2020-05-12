@@ -35,9 +35,4 @@ public class Cli extends ClientGameManager {
         message.printMessage();
     }
 
-    @Override
-    public void run(){
-
-    }
-
 }
