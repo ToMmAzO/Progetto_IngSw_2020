@@ -173,12 +173,15 @@ public class RemoteView {
 
         @Override
         public void update(GameState message){
-
             if (player.equals(GameManager.getInstance().getCurrPlayer())){
                 if(player.equals(GameManager.getInstance().getPlayersInGame()[0])){
                     switch(message){
                         case CARD_CHOICE -> clientConnection.asyncSend(Deck.getInstance());
-                        case SET_WORKER -> clientConnection.asyncSend(Map.getInstance());
+                        case SET_WORKER -> {
+                            if(player.getWorkerSelected(1) == null){
+                                clientConnection.asyncSend(Map.getInstance());
+                            }
+                        }
                     }
                 }
                 clientConnection.asyncSend(message);

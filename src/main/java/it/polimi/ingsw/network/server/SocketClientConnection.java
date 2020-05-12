@@ -36,11 +36,7 @@ public class SocketClientConnection implements Runnable {
         return active;
     }
 
-    public void asyncSend(final Object message){
-        new Thread(() -> send(message)).start();
-    }
-
-    private synchronized void send(Object message){
+    public synchronized void asyncSend(Object message){
         try{
             out.reset();
             out.writeObject(message);
@@ -51,17 +47,13 @@ public class SocketClientConnection implements Runnable {
     }
 
     public synchronized void closeConnection(){
-        send("Connection closed!");
+        asyncSend("Connection closed!");
         try{
             socket.close();
         } catch (IOException e) {
             System.err.println("Error when closing socket!");
         }
         active = false;
-    }
-
-    private void close(){
-        closeConnection();
         System.out.println("Deregistering client...");
         System.out.println("Done!");
     }
@@ -71,7 +63,7 @@ public class SocketClientConnection implements Runnable {
         try{
             Scanner in = new Scanner(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
-            send("Welcome!\nWhat is your name?");
+            asyncSend("Welcome!\nWhat is your name?");
             String read = in.nextLine();
             String name = read;
             Player player = server.lobby(name, this);
@@ -82,10 +74,10 @@ public class SocketClientConnection implements Runnable {
                 message.setContent(read);
                 viewSocket.messageReceiver(message);
             }
-        } catch (IOException | NoSuchElementException | InterruptedException e) {
+        } catch (IOException | NoSuchElementException e) {
             System.err.println("Error!" + e.getMessage());
         } finally{
-            close();
+            closeConnection();
         }
     }
 

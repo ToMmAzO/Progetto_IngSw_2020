@@ -30,7 +30,7 @@ public class Server {
         setServerAvailability(true);
     }
 
-    public synchronized Player lobby(String nickname, SocketClientConnection c) throws InterruptedException {
+    public synchronized Player lobby(String nickname, SocketClientConnection c) {
         if(serverReady){
             Player player = new Player(nickname);
             if(GameManager.getInstance().mapEmpty()) {
@@ -40,7 +40,6 @@ public class Server {
             return player;
         } else{
             c.asyncSend("Il server non è ancora pronto per accettare nuovi giocatori, riprova più tardi.");
-            wait(10);
             c.closeConnection();
             return null;
         }
