@@ -165,7 +165,7 @@ public class TurnManager {
         }else {
             switch (GameManager.getInstance().getCurrPlayer().getGodChoice()) {
                 case CHRONUS -> {
-                    return (Map.getInstance().numberOfTurrets() >= 5)
+                    return (Map.getInstance().getNumberOfCompleteTurrets() >= 5)
                             || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3);
                 }
                 case PAN -> {
@@ -188,6 +188,9 @@ public class TurnManager {
                 case CHRONUS -> {
                     if(win(workerSelected.getCoordX(), workerSelected.getCoordY())){
                         GameManager.getInstance().endGame(GameManager.getInstance().getCurrPlayer());
+                    } else{
+                        Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                        GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
                     }
                 }
                 case DEMETER -> {
@@ -210,14 +213,17 @@ public class TurnManager {
                         GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
                     }
                 }
-                default -> Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                default -> {
+                    Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                    GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
+                }
             }
         }
     }
 
     public void secondConstructionDemeter(int coordX, int coordY){
         if (buildX == coordX && buildY == coordY) {
-            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantRebuild);
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantRebuildDemeter);
         } else {
             if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), false, coordX, coordY)){
                 workerSelected.buildBlock(coordX, coordY);
@@ -229,7 +235,7 @@ public class TurnManager {
 
     public void secondConstructionHestia(int coordX, int coordY){
         if (coordX == 0 || coordX == 4 || coordY == 0 || coordY == 4) {
-            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantRebuild);
+            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantRebuildHestia);
         } else {
             if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), false, coordX, coordY)){
                 workerSelected.buildBlock(coordX, coordY);

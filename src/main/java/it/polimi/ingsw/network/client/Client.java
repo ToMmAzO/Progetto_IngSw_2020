@@ -1,10 +1,5 @@
 package it.polimi.ingsw.network.client;
 
-import it.polimi.ingsw.model.board.Map;
-import it.polimi.ingsw.model.cards.Deck;
-import it.polimi.ingsw.model.cards.God;
-import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.view.cli.Cli;
 
 import java.io.IOException;
@@ -39,21 +34,7 @@ public class Client {
             try{
                 while(isActive()){
                     Object inputObject = socketIn.readObject();
-                    if(inputObject instanceof GameState) {
-                        cli.runState((GameState)inputObject);
-                    } else if(inputObject instanceof String){
-                        System.out.println((String)inputObject);
-                    } else if(inputObject instanceof Deck){
-                        ((Deck)inputObject).printCards();
-                    } else if(inputObject instanceof God){
-                        God.printCardChosen((God)inputObject);
-                    } else if(inputObject instanceof Map){
-                        ((Map)inputObject).print();
-                    } else if(inputObject instanceof Player){
-                        ((Player)inputObject).printWorkersPositions();
-                    } else{
-                        throw new IllegalArgumentException();
-                    }
+                    cli.readObject(inputObject);
                 }
             } catch(Exception e){
                 setActive(false);

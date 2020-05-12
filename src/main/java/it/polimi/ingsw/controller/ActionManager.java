@@ -36,7 +36,11 @@ public class ActionManager {
                                 if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
                                     return true;
                                 } else {
-                                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().powerAthena);
+                                    if(g == God.ATHENA){
+                                        return true;
+                                    } else {
+                                        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().powerAthena);
+                                    }
                                 }
                             } else {
                                 if (g == God.PROMETHEUS && TurnManager.getInstance().cannotGoUpPrometheus()) {

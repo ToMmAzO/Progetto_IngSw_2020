@@ -111,6 +111,7 @@ public abstract class Worker implements Serializable {
             Map.getInstance().setCellBlockType(buildX, buildY, BlockType.BLOCK3);
         }else if(Map.getInstance().getCellBlockType(buildX, buildY) == BlockType.BLOCK3){
             Map.getInstance().setCellBlockType(buildX, buildY, BlockType.CUPOLA);
+            Map.getInstance().addNumberOfCompleteTurrets();
         }
     }
 

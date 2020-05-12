@@ -64,10 +64,6 @@ public class GameManager {
         }
     }
 
-    public SocketClientConnection getPlayerConnection(Player player){
-        return playerConnections.get(player);
-    }
-
     public void setCurrPlayer(Player currPlayer) {
         this.currPlayer = currPlayer;
     }
@@ -179,7 +175,7 @@ public class GameManager {
         players.remove(winnerPlayer);
         playerConnections.get(winnerPlayer).closeConnection();
         playerConnections.remove(winnerPlayer);
-        if(players.size() > 1) {
+        if(players.size() > 0) {
             for (Player player : players) {
                 currPlayer = player;
                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().gameOver);

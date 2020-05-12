@@ -201,6 +201,9 @@ public class RemoteView {
                     clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha perso!");
                     clientConnection.asyncSend(Map.getInstance());
                 }
+                if(message.equals(SystemMessage.getInstance().youWin)){
+                    clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha vinto!");
+                }
             }
         }
 

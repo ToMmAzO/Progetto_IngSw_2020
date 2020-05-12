@@ -26,7 +26,8 @@ public class SystemMessage extends Observable<String> {
     public String cantDoNothing = "Nemmeno l'altro worker può muoversi.";
     public String cantComeBack = "ATTENTO, non puoi tornare indietro!";
     public String cantDoubleBuild = "Non può costruire due blocchi.";
-    public String cantRebuild = "ATTENTO, non puoi costruire nello stesso punto di prima!";
+    public String cantRebuildDemeter = "ATTENTO, non puoi ricostruire nello stesso punto di prima!";
+    public String cantRebuildHestia = "ATTENTO, non puoi costruire sul perimetro!";
 
     public SystemMessage(){
         systemError = this;

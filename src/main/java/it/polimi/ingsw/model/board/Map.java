@@ -11,6 +11,7 @@ public class Map extends Observable<Player> implements Serializable {
 
     private static Map board = null;
     private final Cell[][] map;
+    private int numberOfCompleteTurrets = 0;
 
     public Map(){
         map = new Cell[5][5];
@@ -44,24 +45,20 @@ public class Map extends Observable<Player> implements Serializable {
         return map[row][column].getWorkerPresence();
     }
 
+    public void addNumberOfCompleteTurrets(){
+        numberOfCompleteTurrets++;
+    }
+
+    public int getNumberOfCompleteTurrets(){
+        return numberOfCompleteTurrets;
+    }
+
     public void deleteWorkerInCell(Worker worker){
         map[worker.getCoordX()][worker.getCoordY()].setWorkerPresence(null);
     }
 
     public boolean noWorkerHere(int row, int column){
         return map[row][column].getWorkerPresence() == null;
-    }
-
-    public int numberOfTurrets(){
-        int n = 0;
-        for (int i = 0; i < 5; i++){
-            for (int j = 0; j < 5; j++){
-                if(map[i][j].getBlockType() == BlockType.CUPOLA){
-                    n++;
-                }
-            }
-        }
-        return n;
     }
 
     public void print(){
