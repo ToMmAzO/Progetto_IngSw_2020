@@ -36,12 +36,13 @@ public class TurnManager {
                     }
                 } else{
                     SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantMove);
+                    workerSelected = null;
                 }
             } else{
                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantDoNothing);
+                workerSelected = null;
                 GameManager.getInstance().deletePlayer(GameManager.getInstance().getCurrPlayer());
             }
-            workerSelected = null;
         } else{
             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().contentError);
         }
