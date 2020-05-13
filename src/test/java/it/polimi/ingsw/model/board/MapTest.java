@@ -18,13 +18,17 @@ class MapTest {
                 assertTrue(Map.getInstance().noWorkerHere(0, 0));
             }
         }
+
         Map.getInstance().setCellBlockType(0, 0, BlockType.BLOCK1);
         assertEquals(Map.getInstance().getCellBlockType(0, 0), BlockType.BLOCK1);
+
         Worker workerApollo = new WorkerApollo("testApollo", 0, 0);
         assertFalse(Map.getInstance().noWorkerHere(0, 0));
         assertEquals(Map.getInstance().getWorkerInCell(0, 0), workerApollo);
+
         Worker workerArtemis = new WorkerArtemis("testArtemis", 1, 1);
         assertNotEquals(Map.getInstance().getWorkerInCell(0, 0), workerArtemis);
+
         Map.getInstance().deleteWorkerInCell(workerApollo);
         assertTrue(Map.getInstance().noWorkerHere(0, 0));
     }
