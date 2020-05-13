@@ -61,78 +61,46 @@ public class ActionManager {
                     } else {
                         if (g == God.APOLLO) {
                             if (!Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))) {
-
-                                //controllo cupola inutile???
-
-                                if (Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
-
-
-
-                                    if (TurnManager.getInstance().cannotGoUp()) {
-                                        if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
-                                            return true;
-                                        } else {
-                                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().powerAthena);
-                                        }
+                                if (TurnManager.getInstance().cannotGoUp()) {
+                                    if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
+                                        return true;
                                     } else {
-                                        if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1) {
-                                            return true;
-                                        } else {
-                                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().doubleGoUp);
-                                        }
+                                        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().powerAthena);
                                     }
-
-
-
                                 } else {
-                                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cupolaPresence);
+                                    if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1) {
+                                        return true;
+                                    } else {
+                                        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().doubleGoUp);
+                                    }
                                 }
-
-
-
                             } else {
                                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().yourWorker);
                             }
                         }
                         if (g == God.MINOTAUR) {
                             if (!Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))) {
-
-                                //controllo cupola inutile???
-
-                                if (Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
-
-
-
-                                    if (TurnManager.getInstance().cannotGoUp()) {
-                                        if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
-                                            if (w.canPush(coordX, coordY)) {
-                                                return true;
-                                            } else {
-                                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantPush);
-                                            }
+                                if (TurnManager.getInstance().cannotGoUp()) {
+                                    if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
+                                        if (w.canPush(coordX, coordY)) {
+                                            return true;
                                         } else {
-                                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().powerAthena);
+                                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantPush);
                                         }
                                     } else {
-                                        if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1) {
-                                            if (w.canPush(coordX, coordY)) {
-                                                return true;
-                                            } else {
-                                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantPush);
-                                            }
-                                        } else {
-                                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().doubleGoUp);
-                                        }
+                                        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().powerAthena);
                                     }
-
-
-
                                 } else {
-                                    SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cupolaPresence);
+                                    if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ() + 1) {
+                                        if (w.canPush(coordX, coordY)) {
+                                            return true;
+                                        } else {
+                                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantPush);
+                                        }
+                                    } else {
+                                        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().doubleGoUp);
+                                    }
                                 }
-
-
-
                             } else {
                                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().yourWorker);
                             }
