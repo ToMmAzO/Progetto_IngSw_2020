@@ -11,12 +11,13 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private static final int PORT= 12345;
+    private static int PORT;
     private final ServerSocket serverSocket;
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
     private static boolean serverReady;
 
-    public Server() throws IOException {
+    public Server(int port) throws IOException {
+        PORT = port;
         this.serverSocket = new ServerSocket(PORT);
         serverReady = true;
     }

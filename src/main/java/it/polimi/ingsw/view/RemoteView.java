@@ -47,6 +47,7 @@ public class RemoteView {
                     clientConnection.asyncSend("Formato Input scorretto! Scrivi 2 oppure 3:");
                 }
             }
+            case WAIT_PLAYERS -> clientConnection.asyncSend("Attendi!");
             case CARD_CHOICE -> {
                 try {
                     int cardNumber = Integer.parseInt(message.getContent());
