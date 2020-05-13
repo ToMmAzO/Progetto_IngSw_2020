@@ -61,6 +61,8 @@ public class ActionManager {
                     } else {
                         if (g == God.APOLLO) {
                             if (!Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))) {
+
+
                                 if (Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
                                     if (TurnManager.getInstance().cannotGoUp()) {
                                         if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
@@ -78,12 +80,16 @@ public class ActionManager {
                                 } else {
                                     SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cupolaPresence);
                                 }
+
+
                             } else {
                                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().yourWorker);
                             }
                         }
                         if (g == God.MINOTAUR) {
                             if (!Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))) {
+
+
                                 if (Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
                                     if (TurnManager.getInstance().cannotGoUp()) {
                                         if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
@@ -109,6 +115,8 @@ public class ActionManager {
                                 } else {
                                     SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cupolaPresence);
                                 }
+
+
                             } else {
                                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().yourWorker);
                             }
