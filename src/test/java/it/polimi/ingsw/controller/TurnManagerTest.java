@@ -1,8 +1,12 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.God;
+import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.workers.WorkerAtlas;
+import it.polimi.ingsw.network.message.GameState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TurnManagerTest {
 
-    /*
+
     @BeforeEach
     void setUp(){
         new Map();
@@ -19,40 +23,29 @@ class TurnManagerTest {
     }
 
     @Test
-    void verifyRegularityTest1() {
-        Player p = new Player("Player 1");
-        p.setGodChoice(God.APOLLO);
-        p.setWorker1(0, 0);
-        p.setWorker2(0,1);
-        assertTrue(TurnManager.getInstance().verifyRegularity(p, 1));
-        assertTrue(TurnManager.getInstance().verifyRegularity(p, 2));
+    void workerChoiceTest(){
+        new WorkerAtlas("Worker", 0, 0);    //? setWorker
+
+        Player p = new Player("Player");
+        p.setGodChoice(God.APOLLO); //?
+        assertNull(p.getWorkerSelected(1));
+        assertNull(p.getWorkerSelected(2));
+        GameManager.getInstance().setCurrPlayer(p);
+
+        GameManager.getInstance().setWorker(0, 0);
+        GameManager.getInstance().setWorker(0, 1);
+        TurnManager.getInstance().workerChoice(1);
+        assertEquals(Game.getInstance().getGameState(p), GameState.MOVEMENT);
+
+        Map.getInstance().setCellBlockType(0, 2, BlockType.CUPOLA);
+        Map.getInstance().setCellBlockType(1, 0, BlockType.CUPOLA);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.CUPOLA);
+        Map.getInstance().setCellBlockType(1, 2, BlockType.CUPOLA);
+        TurnManager.getInstance().workerChoice(1);
+        assertEquals(Game.getInstance().getGameState(p), GameState.MOVEMENT);
+
     }
 
-    @Test
-    void verifyRegularityTest2() {
-        Player p1 = new Player("Player 1");
-        p1.setGodChoice(God.DEMETER);
-        p1.setWorker1(0, 0);
-        p1.setWorker2(0,1);
 
-        Player p2 = new Player("Player 2");
-        p2.setGodChoice(God.HEPHAESTUS);
-        p2.setWorker1(0, 2);
-        p2.setWorker2(1,2);
-
-        Player p3 = new Player("Player 3");
-        p3.setGodChoice(God.MINOTAUR);
-        p3.setWorker1(1, 0);
-        p3.setWorker2(1,1);
-
-        assertFalse(TurnManager.getInstance().verifyRegularity(p1, 1));
-        assertFalse(TurnManager.getInstance().verifyRegularity(p1, 2));
-        assertTrue(TurnManager.getInstance().verifyRegularity(p2, 1));
-        assertTrue(TurnManager.getInstance().verifyRegularity(p2, 2));
-        assertTrue(TurnManager.getInstance().verifyRegularity(p3, 1));
-        assertTrue(TurnManager.getInstance().verifyRegularity(p3, 2));
-    }
-
-     */
 
 }
