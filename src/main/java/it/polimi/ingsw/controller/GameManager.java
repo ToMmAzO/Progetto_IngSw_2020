@@ -30,7 +30,7 @@ public class GameManager {
         new Game();
         new SystemMessage();
         new Map();
-        Color.mapInitializer();
+        Color.initialization();
     }
 
     public static GameManager getInstance(){

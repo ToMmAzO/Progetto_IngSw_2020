@@ -8,7 +8,7 @@ public enum Color {
 
     static HashMap<Color, Boolean> availability = new HashMap<>();
 
-    public static void mapInitializer(){
+    public static void initialization(){
         availability.put(RED, true);
         availability.put(YELLOW, true);
         availability.put(BLUE, true);
