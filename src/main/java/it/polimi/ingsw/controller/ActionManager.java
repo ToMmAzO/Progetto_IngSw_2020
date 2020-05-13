@@ -62,8 +62,12 @@ public class ActionManager {
                         if (g == God.APOLLO) {
                             if (!Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))) {
 
+                                //controllo cupola inutile???
 
                                 if (Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
+
+
+
                                     if (TurnManager.getInstance().cannotGoUp()) {
                                         if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
                                             return true;
@@ -77,9 +81,13 @@ public class ActionManager {
                                             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().doubleGoUp);
                                         }
                                     }
+
+
+
                                 } else {
                                     SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cupolaPresence);
                                 }
+
 
 
                             } else {
@@ -89,8 +97,12 @@ public class ActionManager {
                         if (g == God.MINOTAUR) {
                             if (!Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(w.getIdWorker().substring(0, 3))) {
 
+                                //controllo cupola inutile???
 
                                 if (Map.getInstance().getCellBlockType(coordX, coordY) != BlockType.CUPOLA) {
+
+
+
                                     if (TurnManager.getInstance().cannotGoUp()) {
                                         if (Map.getInstance().getCellBlockType(coordX, coordY).getAbbreviation() <= w.getCoordZ()) {
                                             if (w.canPush(coordX, coordY)) {
@@ -112,9 +124,13 @@ public class ActionManager {
                                             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().doubleGoUp);
                                         }
                                     }
+
+
+
                                 } else {
                                     SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cupolaPresence);
                                 }
+
 
 
                             } else {

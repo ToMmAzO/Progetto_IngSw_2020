@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.SystemMessage;
+import it.polimi.ingsw.model.player.Color;
 import it.polimi.ingsw.network.message.GameState;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.Deck;
@@ -29,6 +30,7 @@ public class GameManager {
         new Game();
         new SystemMessage();
         new Map();
+        Color.mapInitializer();
     }
 
     public static GameManager getInstance(){
