@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.workers;
 
+import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
@@ -11,17 +12,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class WorkerArtemisTest {
 
     @BeforeEach
-    void setUp(){
-        new Map();
-        new TurnManager();
+    void setUp() {
+        new GameManager();
     }
 
     @Test
     void canMoveTest1(){     //worker1 is blocked by other workers
         WorkerArtemis worker1 = new WorkerArtemis("RED1",0,0);
-        WorkerAtlas worker2 = new WorkerAtlas("YEL1",0,1);
-        WorkerAtlas worker3 = new WorkerAtlas("YEL2",1,0);
-        WorkerPan worker4 = new WorkerPan("BLU1",1,1);
+        new WorkerAtlas("YEL1",0,1);
+        new WorkerAtlas("YEL2",1,0);
+        new WorkerPan("BLU1",1,1);
 
         assertFalse(worker1.canMove(0,0));
     }
@@ -49,7 +49,6 @@ class WorkerArtemisTest {
         TurnManager.getInstance().setAllowHeight(false);
 
         assertFalse(worker1.canMove(0,0));
-
     }
 
     @Test
@@ -60,7 +59,6 @@ class WorkerArtemisTest {
 
         assertEquals(worker1.getCoordX(),1);
         assertEquals(worker1.getCoordY(),0);
-
     }
 
     @Test
@@ -79,8 +77,6 @@ class WorkerArtemisTest {
         assertEquals(worker1.getCoordX(),1);
         assertEquals(worker1.getCoordY(),1);
         assertEquals(worker1.getCoordZ(),1);
-
-
     }
 
 }

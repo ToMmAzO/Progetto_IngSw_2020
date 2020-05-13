@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.workers;
 
+import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class WorkerHephaestusTest {
 
     @BeforeEach
-    void setUp(){
-        new Map();
+    void setUp() {
+        new GameManager();
     }
 
     @Test
@@ -28,7 +29,6 @@ class WorkerHephaestusTest {
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK2);
         assertTrue(worker1.canBuild(false));
         assertFalse(worker1.canBuild(true));
-
     }
 
     @Test
@@ -45,7 +45,6 @@ class WorkerHephaestusTest {
 
         worker1.buildBlock(true,0,1);
         assertEquals(Map.getInstance().getCellBlockType(0, 1), BlockType.BLOCK2);
-
     }
 
 }

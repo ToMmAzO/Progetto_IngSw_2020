@@ -1,17 +1,23 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.model.workers.Worker;
 import it.polimi.ingsw.model.workers.WorkerApollo;
 import it.polimi.ingsw.model.workers.WorkerArtemis;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MapTest {
 
+    @BeforeEach
+    void setUp() {
+        new GameManager();
+    }
+
     @Test
     void mapTest() {
-        new Map();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 assertEquals(Map.getInstance().getCellBlockType(i, j), BlockType.GROUND);

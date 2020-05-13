@@ -1,16 +1,22 @@
 package it.polimi.ingsw.model.player;
 
+import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.God;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
+    @BeforeEach
+    void setUp() {
+        new GameManager();
+    }
+
     @Test
     void playerTest() {
-        new Map();
         Player p1 = new Player("player1");
         Player p2 = new Player("player2");
         Player p3 = new Player("player3");

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.workers;
 
+import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
@@ -11,9 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class WorkerPrometheusTest {
 
     @BeforeEach
-    void setUp(){
-        new Map();
-        new TurnManager();
+    void setUp() {
+        new GameManager();
     }
 
     @Test
