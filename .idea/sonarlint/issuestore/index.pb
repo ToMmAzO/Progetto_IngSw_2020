@@ -8,8 +8,6 @@
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 h
 8src/main/java/it/polimi/ingsw/network/client/Client.java,b\0\b0bd361779d5031355f3d3dcf725a6dba078f2cb
-r
-Bsrc/main/java/it/polimi/ingsw/network/server/ClientConnection.java,6\4\644c5aef644db2716b51e4650fb1b9b8517edb23
 h
 8src/main/java/it/polimi/ingsw/network/server/Server.java,d\7\d7e6f1c15cfb11436a94ae068d03f246747b2533
 x
@@ -34,8 +32,6 @@ i
 9src/main/java/it/polimi/ingsw/controller/TurnManager.java,8\5\858995f7d4a45e71dbe8d7fbb78dadeaf3e3d0b9
 b
 2src/main/java/it/polimi/ingsw/model/Cards/God.java,1\e\1e1794898de8a0c72b3a259b61be17d65a0da404
-X
-(src/main/java/it/polimi/ingsw/Prova.java,2\9\2945e24e5f93d97b69f07d45d38e20eae9b2c56a
 g
 7src/test/java/it/polimi/ingsw/model/Cards/DeckTest.java,a\d\ad2132eb895999044243703cdca870ac9a601fd8
 n
@@ -54,8 +50,6 @@ o
 ?src/main/java/it/polimi/ingsw/model/Workers/WorkerMinotaur.java,4\3\43c4a520304886530624755593ff44c60d62b57d
 q
 Asrc/main/java/it/polimi/ingsw/model/Workers/WorkerPrometheus.java,3\5\350599c96da64b04faa9d87abe7d18631b18fa18
-k
-;src/test/java/it/polimi/ingsw/model/Workers/WorkerTest.java,9\2\92f0d1824b43b2e724db606e2f1c51bf7aa08765
 q
 Asrc/main/java/it/polimi/ingsw/model/Workers/WorkerHephaestus.java,9\2\92d8c99091f98421e69d598b4dd72e1accf931a1
 f
@@ -66,3 +60,17 @@ E
 src/uml/Santorini.mdj,e\a\eabfc3e3d0d21f915ac72c60c0260b0ba10877a1
 f
 6src/test/java/it/polimi/ingsw/model/Board/MapTest.java,9\d\9d2ad77b2f5798f42ef6527ff73b76e5f86046db
+g
+7src/test/java/it/polimi/ingsw/model/cards/DeckTest.java,d\2\d28ba9cdbf45f7ee4ac13e84465b3865a4dd3199
+f
+6src/test/java/it/polimi/ingsw/model/board/MapTest.java,7\f\7f95113ca8b7de3151c7e4cce03406b867470de6
+h
+8src/main/java/it/polimi/ingsw/model/board/BlockType.java,2\c\2c3d76ac2e7e5c818001902db8a0646a593f0217
+b
+2src/main/java/it/polimi/ingsw/model/cards/God.java,a\2\a2c3a2254e7f4d9d930c55cd964288f79b54c6a7
+b
+2src/main/java/it/polimi/ingsw/model/board/Map.java,e\3\e37fb71b5321c4b4ffda8946ca2a50e6ac50565b
+n
+>src/main/java/it/polimi/ingsw/model/workers/WorkerArtemis.java,9\c\9c565dde430438c2ef4b680b1bb309b0dcadcd73
+o
+?src/test/java/it/polimi/ingsw/controller/ActionManagerTest.java,c\c\cc77f6f2a40028eb62604c9952b28c4156e4720a
