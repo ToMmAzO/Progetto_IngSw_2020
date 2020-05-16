@@ -17,17 +17,36 @@ class MapTest {
     }
 
     @Test
-    void mapTest() {
+    void map_InitializationTest() {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 assertEquals(Map.getInstance().getCellBlockType(i, j), BlockType.GROUND);
-                assertTrue(Map.getInstance().noWorkerHere(0, 0));
+                assertEquals(0, Map.getInstance().getCellBlockType(i, j).getAbbreviation());
+                assertTrue(Map.getInstance().noWorkerHere(i, j));
             }
         }
+    }
 
+    @Test
+    void map_SetBlockTest() {
         Map.getInstance().setCellBlockType(0, 0, BlockType.BLOCK1);
         assertEquals(Map.getInstance().getCellBlockType(0, 0), BlockType.BLOCK1);
+        assertEquals(1, Map.getInstance().getCellBlockType(0, 0).getAbbreviation());
 
+        assertEquals(0, Map.getInstance().getNumberOfCompleteTurrets());
+        Map.getInstance().setCellBlockType(2, 2, BlockType.BLOCK3);
+        assertEquals(Map.getInstance().getCellBlockType(2, 2), BlockType.BLOCK3);
+        assertEquals(3, Map.getInstance().getCellBlockType(2, 2).getAbbreviation());
+
+        Worker workerArtemis = new WorkerArtemis("testArtemis", 1, 1);
+        workerArtemis.buildBlock(2, 2);
+        assertEquals(Map.getInstance().getCellBlockType(2, 2), BlockType.CUPOLA);
+        assertEquals(4, Map.getInstance().getCellBlockType(2, 2).getAbbreviation());
+        assertEquals(1, Map.getInstance().getNumberOfCompleteTurrets());
+    }
+
+    @Test
+    void map_SetAndDeleteWorkerTest() {
         Worker workerApollo = new WorkerApollo("testApollo", 0, 0);
         assertFalse(Map.getInstance().noWorkerHere(0, 0));
         assertEquals(Map.getInstance().getWorkerInCell(0, 0), workerApollo);
@@ -38,5 +57,13 @@ class MapTest {
         Map.getInstance().deleteWorkerInCell(workerApollo);
         assertTrue(Map.getInstance().noWorkerHere(0, 0));
     }
+
+    @Test
+    void map_PrintTest() {
+        Map.getInstance().setCellBlockType(0, 0, BlockType.BLOCK1);
+        Worker workerArtemis = new WorkerArtemis("RED1", 1, 1);
+        Map.getInstance().print();
+    }
+
 
 }
