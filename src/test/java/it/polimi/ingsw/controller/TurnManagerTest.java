@@ -248,28 +248,19 @@ class TurnManagerTest {
     }
 
     @Test
-    void movement_TritonCantMoveAgainTest() {
+    void secondMove_Test() {
         Player p = new Player("Player");
-        p.setGodChoice(God.TRITON);
-        p.setWorker1(2, 1);
+        p.setGodChoice(God.ARTEMIS);
+        p.setWorker1(0, 0);
         p.setWorker2(0, 1);
         GameManager.getInstance().setCurrPlayer(p);
         TurnManager.getInstance().workerChoice(1);
-        Map.getInstance().setCellBlockType(0, 0, BlockType.BLOCK2);
-        Map.getInstance().setCellBlockType(2, 0, BlockType.BLOCK2);
-
         TurnManager.getInstance().movement(1, 0);
-        assertEquals(p.getWorkerSelected(1), Map.getInstance().getWorkerInCell(1, 0));
+
+        TurnManager.getInstance().secondMove(1, 1);
+        assertEquals(p.getWorkerSelected(1), Map.getInstance().getWorkerInCell(1, 1));
         assertEquals(GameState.CONSTRUCTION, Game.getInstance().getGameState(p));
     }
-
-
-
-
-
-
-
-
 
     @Test
     void secondMove_ComeBackTest() {
@@ -286,6 +277,97 @@ class TurnManagerTest {
         assertEquals(p.getWorkerSelected(1), Map.getInstance().getWorkerInCell(1, 0));
     }
 
+    @Test
+    void construction_Test() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.ZEUS);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
 
-
+        try {
+            TurnManager.getInstance().construction(1, 0);
+        } catch(IndexOutOfBoundsException ignore){}
+        assertEquals(BlockType.BLOCK1, Map.getInstance().getCellBlockType(1, 0));
+        assertEquals(GameState.WAIT_TURN, Game.getInstance().getGameState(p));
     }
+
+
+    //CHRONUS
+
+
+    @Test
+    void construction_DemeterCanRebuildTest() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.DEMETER);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+
+        TurnManager.getInstance().construction(1, 0);
+        assertEquals(BlockType.BLOCK1, Map.getInstance().getCellBlockType(1, 0));
+        assertEquals(GameState.QUESTION_DEMETER, Game.getInstance().getGameState(p));
+    }
+
+    @Test
+    void construction_DemeterCantRebuildTest() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.DEMETER);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.CUPOLA);
+
+        try {
+            TurnManager.getInstance().construction(1, 0);
+        } catch(IndexOutOfBoundsException ignore){}
+        assertEquals(BlockType.BLOCK1, Map.getInstance().getCellBlockType(1, 0));
+        assertEquals(GameState.WAIT_TURN, Game.getInstance().getGameState(p));
+    }
+
+    @Test
+    void construction_HestiaCanRebuildTest() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.HESTIA);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+
+        TurnManager.getInstance().construction(1, 0);
+        assertEquals(BlockType.BLOCK1, Map.getInstance().getCellBlockType(1, 0));
+        assertEquals(GameState.QUESTION_HESTIA, Game.getInstance().getGameState(p));
+    }
+
+    @Test
+    void construction_HestiaCantRebuildTest() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.HESTIA);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK3);
+
+        try {
+            TurnManager.getInstance().construction(1, 1);
+        } catch(IndexOutOfBoundsException ignore){}
+        assertEquals(BlockType.CUPOLA, Map.getInstance().getCellBlockType(1, 1));
+        assertEquals(GameState.WAIT_TURN, Game.getInstance().getGameState(p));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+}
