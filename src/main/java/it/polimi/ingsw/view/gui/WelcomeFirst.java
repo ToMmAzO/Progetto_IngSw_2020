@@ -10,6 +10,11 @@ public class WelcomeFirst extends JFrame{
     private JButton a2Button;
     private JButton a3Button;
 
+    /*For thread safety,
+     * this method should be invoked from the
+     * event-dispatching thread.
+
+     */
 
     public WelcomeFirst(){
         add(mainPanel);
@@ -19,6 +24,12 @@ public class WelcomeFirst extends JFrame{
     }
 
     public static void main(String[] args) {
-        new WelcomeFirst();
+
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new WelcomeFirst();
+            }
+        });
+
     }
 }

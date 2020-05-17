@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="it.polimi.ingsw.view.gui.GodChoice">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="4" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="505" height="406"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="7db47" class="javax.swing.JLabel" binding="godChoice">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Select a God:"/>
+        </properties>
+      </component>
+      <vspacer id="806a0">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <grid id="44155" binding="god1Panel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="ad42b" class="javax.swing.JLabel" binding="godPicture1">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <text value="(picture)"/>
+            </properties>
+          </component>
+          <component id="f8f0" class="javax.swing.JLabel" binding="godName1">
+            <constraints border-constraint="North"/>
+            <properties>
+              <text value="godName"/>
+            </properties>
+          </component>
+          <component id="303bc" class="javax.swing.JLabel" binding="godPower1">
+            <constraints border-constraint="South"/>
+            <properties>
+              <text value="godPower"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="c68a0" binding="god2Panel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="6424c" class="javax.swing.JLabel" binding="godName2">
+            <constraints border-constraint="North"/>
+            <properties>
+              <text value="godName2"/>
+            </properties>
+          </component>
+          <component id="dfb6c" class="javax.swing.JLabel" binding="godPicture">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <text value="(picture)"/>
+            </properties>
+          </component>
+          <component id="9f70c" class="javax.swing.JLabel" binding="godPower2">
+            <constraints border-constraint="South"/>
+            <properties>
+              <text value="godPower"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="3e376" binding="god3Panel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="1" column="4" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="2d28e" class="javax.swing.JLabel" binding="godName3">
+            <constraints border-constraint="North"/>
+            <properties>
+              <text value="godName3"/>
+            </properties>
+          </component>
+          <component id="f60c7" class="javax.swing.JLabel" binding="godPicture3">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <text value="(picture)"/>
+            </properties>
+          </component>
+          <component id="3a312" class="javax.swing.JLabel" binding="godPower3">
+            <constraints border-constraint="South"/>
+            <properties>
+              <text value="godPower"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <vspacer id="66175">
+        <constraints>
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="72456" class="javax.swing.JCheckBox" binding="checkBox1" default-binding="true">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="c8e30" class="javax.swing.JCheckBox" binding="checkBox2" default-binding="true">
+        <constraints>
+          <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="6da8" class="javax.swing.JCheckBox" binding="checkBox3" default-binding="true">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="ec3bf" class="javax.swing.JButton" binding="okButton">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="OK"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+  <buttonGroups>
+    <group name="buttonGroup1">
+      <member id="6da8"/>
+      <member id="72456"/>
+      <member id="c8e30"/>
+    </group>
+  </buttonGroups>
+</form>
