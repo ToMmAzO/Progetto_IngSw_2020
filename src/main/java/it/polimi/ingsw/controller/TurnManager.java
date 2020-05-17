@@ -69,7 +69,6 @@ public class TurnManager {
                 startX = workerSelected.getCoordX();
                 startY = workerSelected.getCoordY();
             }
-
             if(win(coordX, coordY)){
                 workerSelected.changePosition(coordX, coordY);
                 GameManager.getInstance().endGame(GameManager.getInstance().getCurrPlayer());
@@ -115,7 +114,7 @@ public class TurnManager {
                                 SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantMove);
                                 Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
                             }
-                        }else{
+                        } else{
                             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
                         }
                     }
@@ -259,6 +258,10 @@ public class TurnManager {
             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
             GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
         }
+    }
+
+    public Worker getWorkerSelected(){
+        return workerSelected;
     }
 
     public void setAllowHeight(boolean allowHeight) {
