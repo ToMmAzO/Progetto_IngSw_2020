@@ -18,17 +18,17 @@ class WorkerApolloTest {
 
     @Test
     void canMove_SurroundedByWorkersTest(){
-        Worker w = new WorkerApollo("RED1",0,0);
+        WorkerApollo w = new WorkerApollo("RED1",0,0);
         new WorkerAtlas("YEL1",0,1);
         new WorkerChronus("YEL2",1,0);
-        new WorkerPan("BLU1",1,1);
+        new WorkerHera("BLU1",1,1);
 
         assertTrue(w.canMove());
     }
 
     @Test
     void canMove_SurroundedByBlockTest(){
-        Worker w = new WorkerApollo("RED1",0,0);
+        WorkerApollo w = new WorkerApollo("RED1",0,0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK2);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK2);
@@ -41,7 +41,7 @@ class WorkerApolloTest {
 
     @Test
     void canMove_GoUpAllowHeightWithWorkersTest(){
-        Worker w = new WorkerApollo("RED1",0,0);
+        WorkerApollo w = new WorkerApollo("RED1",0,0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
@@ -55,7 +55,7 @@ class WorkerApolloTest {
 
     @Test
     void canMove_NotGoUpAllowHeightWithWorkersTest(){
-        Worker w = new WorkerApollo("RED1",0,0);
+        WorkerApollo w = new WorkerApollo("RED1",0,0);
         new WorkerAtlas("YEL1",0,1);
         new WorkerAtlas("YEL2",1,0);
         new WorkerPan("BLU1",1,1);
@@ -66,7 +66,7 @@ class WorkerApolloTest {
 
     @Test
     void canMove_GoUpAllowHeightWithoutWorkersTest(){
-        Worker w = new WorkerApollo("RED1",0,0);
+        WorkerApollo w = new WorkerApollo("RED1",0,0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
@@ -77,7 +77,7 @@ class WorkerApolloTest {
 
     @Test
     void canMove_NotGoUpAllowHeightWithoutWorkersTest(){
-        Worker w = new WorkerApollo("RED1",0,0);
+        WorkerApollo w = new WorkerApollo("RED1",0,0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.GROUND);
         Map.getInstance().setCellBlockType(1, 0, BlockType.GROUND);
         Map.getInstance().setCellBlockType(1, 1, BlockType.GROUND);
@@ -89,7 +89,7 @@ class WorkerApolloTest {
 
     @Test
     void changePosition_CanReplaceTest1(){
-        Worker w1 = new WorkerApollo("RED1",0,0);
+        WorkerApollo w1 = new WorkerApollo("RED1",0,0);
         new WorkerAtlas("YEL1",0,1);
         WorkerAtlas w2 = new WorkerAtlas("YEL2",1,0);
         new WorkerPan("BLU1",1,1);
@@ -103,7 +103,7 @@ class WorkerApolloTest {
 
     @Test
     void changePositionTest2(){
-        Worker w = new WorkerApollo("RED1",0,0);
+        WorkerApollo w = new WorkerApollo("RED1",0,0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
 

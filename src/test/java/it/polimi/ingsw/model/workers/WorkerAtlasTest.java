@@ -16,23 +16,20 @@ class WorkerAtlasTest {
     }
 
     @Test
-    void buildBlockTest1(){
-        WorkerAtlas worker1 = new WorkerAtlas("RED1",0,0);
-        Map.getInstance().setCellBlockType(0, 1, BlockType.GROUND);
-        Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
-        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
+    void buildBlock_BuildCupolaTest() {
+        WorkerAtlas w = new WorkerAtlas("RED1", 0, 0);
 
-        worker1.buildBlock(true,0,1);
+        w.buildBlock(true, 0, 1);
         assertEquals(Map.getInstance().getCellBlockType(0, 1), BlockType.CUPOLA);
+    }
 
-        worker1.buildBlock(false,1,0);
-        assertEquals(Map.getInstance().getCellBlockType(1, 0), BlockType.BLOCK3);
+    @Test
+    void buildBlock_DefaultTest() {
+        WorkerAtlas w = new WorkerAtlas("RED1", 0, 0);
 
-        worker1.buildBlock(false,1,1);
-        assertEquals(Map.getInstance().getCellBlockType(1, 1), BlockType.BLOCK2);
 
-        worker1.buildBlock(false,1,0);
-        assertEquals(Map.getInstance().getCellBlockType(1, 0), BlockType.CUPOLA);
+        w.buildBlock(false, 1, 0);
+        assertEquals(Map.getInstance().getCellBlockType(1, 0), BlockType.BLOCK1);
     }
 
 }

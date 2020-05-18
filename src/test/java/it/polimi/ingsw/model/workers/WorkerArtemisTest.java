@@ -17,13 +17,13 @@ class WorkerArtemisTest {
     }
 
     @Test
-    void canMove_SurroundedByWorkersTest(){
-        Worker w = new WorkerArtemis("RED1",0,0);
+    void canMoveTest1(){     //worker1 is blocked by other workers
+        WorkerArtemis worker1 = new WorkerArtemis("RED1",0,0);
         new WorkerAtlas("YEL1",0,1);
         new WorkerAtlas("YEL2",1,0);
         new WorkerPan("BLU1",1,1);
 
-        assertFalse(w.canMove(0,0));
+        assertFalse(worker1.canMove(0,0));
     }
 
     @Test

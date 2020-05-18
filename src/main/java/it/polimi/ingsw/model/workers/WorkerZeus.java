@@ -10,6 +10,7 @@ public class WorkerZeus extends Worker {
         super(idWorker, coordX, coordY);
     }
 
+   /*
     @Override
     public boolean canBuild(){
         for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
@@ -29,6 +30,8 @@ public class WorkerZeus extends Worker {
         }
         return false;
     }
+
+    */
 
     @Override
     public void buildBlock(int buildX, int buildY){
