@@ -17,7 +17,7 @@ class WorkerZeusTest {
 
     @Test
     void buildBlock_defaultTest(){
-        WorkerZeus w = new WorkerZeus("RED1",0,0);
+        WorkerZeus w = new WorkerZeus("RED1", 0, 0);
         w.buildBlock(0, 1);
 
         assertEquals(BlockType.BLOCK1, Map.getInstance().getCellBlockType(0, 1));
@@ -25,7 +25,7 @@ class WorkerZeusTest {
 
     @Test
     void buildBlock_InActualPositionTest(){
-        WorkerZeus w = new WorkerZeus("RED1",0,0);
+        WorkerZeus w = new WorkerZeus("RED1", 0, 0);
         w.buildBlock(0, 0);
 
         assertEquals(BlockType.BLOCK1, Map.getInstance().getCellBlockType(0, 0));
