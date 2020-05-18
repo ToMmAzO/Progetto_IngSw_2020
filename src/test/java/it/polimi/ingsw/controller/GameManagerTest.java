@@ -82,7 +82,7 @@ class GameManagerTest {
             GameManager.getInstance().choiceOfCard(1);
         } catch(IndexOutOfBoundsException ignored){}
         assertEquals(p1.getGodChoice(), Deck.getInstance().getCardsSelected()[0]);
-        assertFalse(Deck.getInstance().getAvailability()[0]);
+        assertFalse(Deck.getInstance().isAvailable(1));
 
         Player p2 = new Player("Player 2");
         GameManager.getInstance().setCurrPlayer(p2);
@@ -94,7 +94,7 @@ class GameManagerTest {
             GameManager.getInstance().choiceOfCard(2);
         } catch(IndexOutOfBoundsException ignored){}
         assertEquals(p2.getGodChoice(), Deck.getInstance().getCardsSelected()[1]);
-        assertFalse(Deck.getInstance().getAvailability()[1]);
+        assertFalse(Deck.getInstance().isAvailable(2));
 
         Player p3 = new Player("Player 3");
         GameManager.getInstance().setCurrPlayer(p3);
@@ -110,7 +110,7 @@ class GameManagerTest {
             GameManager.getInstance().choiceOfCard(3);
         } catch(IndexOutOfBoundsException ignored){}
         assertEquals(p3.getGodChoice(), Deck.getInstance().getCardsSelected()[2]);
-        assertFalse(Deck.getInstance().getAvailability()[2]);
+        assertFalse(Deck.getInstance().isAvailable(3));
     }
 
     @Test

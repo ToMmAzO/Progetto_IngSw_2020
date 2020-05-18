@@ -4,8 +4,7 @@ import java.util.HashMap;
 
 public enum God {
 
-    APOLLO, ARTEMIS, ATHENA, ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS,
-    CHRONUS, HERA, HESTIA, TRITON, ZEUS;    //NEW
+    APOLLO, ARTEMIS, ATHENA, ATLAS, CHRONUS, DEMETER, HEPHAESTUS, HERA, HESTIA, MINOTAUR, PAN, PROMETHEUS, TRITON, ZEUS;
 
     static HashMap<God, String> godDescription = new HashMap<>() {
         {

@@ -69,7 +69,6 @@ public class TurnManager {
                 startX = workerSelected.getCoordX();
                 startY = workerSelected.getCoordY();
             }
-
             if(win(coordX, coordY)){
                 workerSelected.changePosition(coordX, coordY);
                 GameManager.getInstance().endGame(GameManager.getInstance().getCurrPlayer());
@@ -84,38 +83,19 @@ public class TurnManager {
                             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
                         }
                     }
-                    case ATLAS -> {
-                        if(workerSelected.canBuild()) {
-                            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_ATLAS);
-                        }else{
-                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
-                            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
-                            GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
-                        }
-                    }
+                    case ATLAS -> Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_ATLAS);
                     case HEPHAESTUS -> {
-                        if(workerSelected.canBuild()) {
-                            if(workerSelected.canBuild(true)) {
-                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_HEPHAESTUS);
-                            } else {
-                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantDoubleBuild);
-                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
-                            }
-                        }else{
-                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
-                            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
-                            GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
+                        if(workerSelected.canBuild(true)) {
+                            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_HEPHAESTUS);
+                        } else {
+                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantDoubleBuild);
+                            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
                         }
                     }
                     case TRITON -> {
                         if(workerSelected.getCoordX() == 0 || workerSelected.getCoordX() == 4 || workerSelected.getCoordY() == 0 || workerSelected.getCoordY() == 4) {
-                            if (workerSelected.canMove()) {
-                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_TRITON);
-                            } else {
-                                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantMove);
-                                Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
-                            }
-                        }else{
+                            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_TRITON);
+                        } else{
                             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
                         }
                     }
@@ -143,13 +123,7 @@ public class TurnManager {
                     GameManager.getInstance().endGame(GameManager.getInstance().getCurrPlayer());
                 } else {
                     workerSelected.changePosition(coordX, coordY);
-                    if(workerSelected.canBuild()) {
-                        Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
-                    }else{
-                        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
-                        Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
-                        GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
-                    }
+                    Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
                 }
             }
         }
@@ -165,19 +139,15 @@ public class TurnManager {
         }else {
             switch (GameManager.getInstance().getCurrPlayer().getGodChoice()) {
                 case CHRONUS -> {
-                    return (Map.getInstance().getNumberOfCompleteTurrets() >= 5)
-                            || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3);
+                    return (Map.getInstance().getNumberOfCompleteTurrets() >= 5);
                 }
                 case PAN -> {
                     return (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 1)
                             || (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)
-                            || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)
-                            || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3);
-                }
-                default -> {
-                    return workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3;
+                            || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0);
                 }
             }
+            return workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3;
         }
     }
 
@@ -259,6 +229,10 @@ public class TurnManager {
             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
             GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
         }
+    }
+
+    public Worker getWorkerSelected(){
+        return workerSelected;
     }
 
     public void setAllowHeight(boolean allowHeight) {

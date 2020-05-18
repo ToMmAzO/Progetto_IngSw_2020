@@ -33,17 +33,13 @@ public class Deck implements Serializable {
         return cardsSelected;
     }
 
-    public boolean[] getAvailability() {
-        return availability;
-    }
-
     public God getCardToPlayer(int cardNumber){
         availability[cardNumber-1] = false;
         return cardsSelected[cardNumber-1];
     }
 
     public boolean isAvailable(int cardNumber) {
-        return (cardNumber >= 1 && cardNumber <= cardsSelected.length) && (Deck.getInstance().getAvailability()[cardNumber - 1]);
+        return (cardNumber >= 1 && cardNumber <= cardsSelected.length) && (availability[cardNumber - 1]);
     }
 
     private int[] extractCasualNumbers(int numberOfNumbers){
