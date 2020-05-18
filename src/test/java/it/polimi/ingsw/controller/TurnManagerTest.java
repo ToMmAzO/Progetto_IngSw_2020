@@ -5,7 +5,10 @@ import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.workers.Worker;
 import it.polimi.ingsw.model.workers.WorkerDemeter;
+import it.polimi.ingsw.model.workers.WorkerHera;
+import it.polimi.ingsw.model.workers.WorkerPan;
 import it.polimi.ingsw.network.message.GameState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -248,6 +251,31 @@ class TurnManagerTest {
     }
 
     @Test
+    void movement_ApolloBlockedTest() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.APOLLO);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+        Map.getInstance().setCellBlockType(0, 2, BlockType.CUPOLA);
+        Worker worker = new WorkerPan("YEL1", 1, 1);
+        Map.getInstance().setCellBlockType(1, 0, BlockType.CUPOLA);
+        Map.getInstance().setCellBlockType(1, 2, BlockType.CUPOLA);
+        Map.getInstance().setCellBlockType(2, 0, BlockType.CUPOLA);
+        Map.getInstance().setCellBlockType(2, 1, BlockType.CUPOLA);
+        Map.getInstance().setCellBlockType(2, 2, BlockType.CUPOLA);
+
+        try{
+            TurnManager.getInstance().movement(1, 1);
+        } catch(IndexOutOfBoundsException ignore){}
+        assertEquals(p.getWorkerSelected(1), Map.getInstance().getWorkerInCell(1, 1));
+        assertEquals(worker, Map.getInstance().getWorkerInCell(0, 0));
+        assertEquals(GameState.WAIT_TURN, Game.getInstance().getGameState(p));
+    }
+
+
+    @Test
     void secondMove_Test() {
         Player p = new Player("Player");
         p.setGodChoice(God.ARTEMIS);
@@ -278,6 +306,93 @@ class TurnManagerTest {
     }
 
     @Test
+    void win_HeraInPerimeterTest() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.HERA);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK2);
+        p.getWorkerSelected(1).setCoordZ(2);
+        Map.getInstance().setCellBlockType(0, 2, BlockType.BLOCK3);
+
+        assertTrue(TurnManager.getInstance().win(0, 2));
+    }
+
+    @Test
+    void win_WorkerInPerimeterWithHeraTest() {
+        new WorkerHera("YEL1", 3, 0);
+        Player p = new Player("Player");
+        p.setGodChoice(God.APOLLO);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+
+        assertFalse(TurnManager.getInstance().win(0, 2));
+    }
+
+    @Test
+    void win_ChronusTest() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.CHRONUS);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+        for(int i = 0; i < 5; i++) {
+            Map.getInstance().addNumberOfCompleteTurrets();
+        }
+
+        assertTrue(TurnManager.getInstance().win(0, 2));
+    }
+
+    @Test
+    void win_PanLevel2Test() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.PAN);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK2);
+        p.getWorkerSelected(1).setCoordZ(2);
+
+        assertTrue(TurnManager.getInstance().win(0, 2));
+    }
+
+    @Test
+    void win_PanLevel3Test() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.PAN);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK3);
+        p.getWorkerSelected(1).setCoordZ(3);
+
+        assertTrue(TurnManager.getInstance().win(0, 2));
+    }
+
+    @Test
+    void win_DefaultTest() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.APOLLO);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK2);
+        p.getWorkerSelected(1).setCoordZ(2);
+        Map.getInstance().setCellBlockType(0, 2, BlockType.BLOCK3);
+
+        assertTrue(TurnManager.getInstance().win(0, 2));
+    }
+
+
+    @Test
     void construction_Test() {
         Player p = new Player("Player");
         p.setGodChoice(God.ZEUS);
@@ -293,10 +408,6 @@ class TurnManagerTest {
         assertEquals(BlockType.BLOCK1, Map.getInstance().getCellBlockType(1, 0));
         assertEquals(GameState.WAIT_TURN, Game.getInstance().getGameState(p));
     }
-
-
-    //CHRONUS win
-
 
     @Test
     void construction_ChronusNotWinTest() {
