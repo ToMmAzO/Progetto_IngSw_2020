@@ -27,7 +27,7 @@ class WorkerPrometheusTest {
     }
 
     @Test
-    void canMove_GoUpWithBondPrometheusTest(){
+    void canMove_OnlyGoUpWithBondPrometheusTest(){
         WorkerPrometheus w = new WorkerPrometheus("RED1",0,0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
@@ -38,7 +38,7 @@ class WorkerPrometheusTest {
     }
 
     @Test
-    void canMove_NoGoUpWithBondPrometheusTest(){
+    void canMove_WithBondPrometheusTest(){
         WorkerPrometheus w = new WorkerPrometheus("RED1",0,0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.GROUND);

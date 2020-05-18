@@ -51,17 +51,13 @@ public class WorkerApollo extends Worker {
             x = this.getCoordX();
             y = this.getCoordY();
             z = this.getCoordZ();
-            Map.getInstance().deleteWorkerInCell(this);       //rimuove il WorkerApollo selezionato dalla mappa
-
-            Map.getInstance().getWorkerInCell(newX, newY).setCoordX(x);     //prende il worker in (newX, newY) e gli aggiorna le coord con quelle del WorkerApollo che ha chiamato la changePosition
+            Map.getInstance().deleteWorkerInCell(this);
+            Map.getInstance().getWorkerInCell(newX, newY).setCoordX(x);
             Map.getInstance().getWorkerInCell(newX, newY).setCoordY(y);
             Map.getInstance().getWorkerInCell(newX, newY).setCoordZ(z);
-
-            Map.getInstance().setWorkerInCell(x, y, Map.getInstance().getWorkerInCell(newX, newY));    //sposta nella mappa la workerPresence dell'altro worker sul posto del WorkerApollo
-            //Map.deleteWorkerInCell(Map.getWorkerInCell(newX, newY));     //non necessaria(?) viene sovrascritto con il comando successivo
-            Map.getInstance().setWorkerInCell(newX, newY, this);                 //sovrascrive la workerPresence della cella in cui workerApollo vuole spostarsi con WorkerApollo stesso
-
-            setCoordX(newX);           //aggiorna anche le coordinate di WorkerApollo
+            Map.getInstance().setWorkerInCell(x, y, Map.getInstance().getWorkerInCell(newX, newY));
+            Map.getInstance().setWorkerInCell(newX, newY, this);
+            setCoordX(newX);
             setCoordY(newY);
             setCoordZ(Map.getInstance().getCellBlockType(newX, newY).getAbbreviation());
         }else {

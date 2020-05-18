@@ -27,7 +27,6 @@ class WorkerAtlasTest {
     void buildBlock_DefaultTest() {
         WorkerAtlas w = new WorkerAtlas("RED1", 0, 0);
 
-
         w.buildBlock(false, 1, 0);
         assertEquals(Map.getInstance().getCellBlockType(1, 0), BlockType.BLOCK1);
     }
