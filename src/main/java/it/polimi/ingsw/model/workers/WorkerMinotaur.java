@@ -13,7 +13,7 @@ public class WorkerMinotaur extends Worker {
 
     @Override
     public boolean canPush(int i, int j) {
-        //ALTO SINISTRA
+        //BASSO SINISTRA
         if(i == getCoordX() - 1 && j == getCoordY() - 1){
             if (ActionManager.getInstance().validCoords(i - 1, j - 1) && Map.getInstance().noWorkerHere(i - 1, j - 1) && Map.getInstance().getCellBlockType(i - 1, j - 1) != BlockType.CUPOLA){
                 if(TurnManager.getInstance().cannotGoUp()){
@@ -28,7 +28,7 @@ public class WorkerMinotaur extends Worker {
             }
         }
 
-        //BASSO
+        //BASSO CENTRO
         if(i == getCoordX() - 1 && j == getCoordY()){
             if (ActionManager.getInstance().validCoords(i - 1, j) && Map.getInstance().noWorkerHere(i - 1, j) && Map.getInstance().getCellBlockType(i - 1, j) != BlockType.CUPOLA){
                 if(TurnManager.getInstance().cannotGoUp()){
@@ -103,7 +103,7 @@ public class WorkerMinotaur extends Worker {
             }
         }
 
-        //ALTO
+        //ALTO CENTRO
         if(i == getCoordX() + 1 && j == getCoordY()){
             if (ActionManager.getInstance().validCoords(i + 1, j) && Map.getInstance().noWorkerHere(i + 1, j) && Map.getInstance().getCellBlockType(i + 1, j) != BlockType.CUPOLA){
                 if(TurnManager.getInstance().cannotGoUp()){
@@ -184,7 +184,7 @@ public class WorkerMinotaur extends Worker {
                 setCoordZ(Map.getInstance().getCellBlockType(newX, newY).getAbbreviation());
             }
 
-            //BASSO
+            //BASSO CENTRO
             if(newX == getCoordX() - 1 && newY == getCoordY()){
                 Map.getInstance().deleteWorkerInCell(this);
 
@@ -264,7 +264,7 @@ public class WorkerMinotaur extends Worker {
                 setCoordZ(Map.getInstance().getCellBlockType(newX, newY).getAbbreviation());
             }
 
-            //ALTO
+            //ALTO CENTRO
             if(newX == getCoordX() + 1 && newY == getCoordY()){
                 Map.getInstance().deleteWorkerInCell(this);
 

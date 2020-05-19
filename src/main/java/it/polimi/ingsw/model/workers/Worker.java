@@ -67,22 +67,6 @@ public abstract class Worker implements Serializable {
         return false;
     }
 
-    public boolean canPush(int x, int y){       //MINOTAUR (ActionManager)
-        return true;
-    }
-
-    public boolean canMove(int x, int y) {      //ARTEMIS
-        return true;
-    }
-
-    public void changePosition(int newX, int newY){
-        Map.getInstance().deleteWorkerInCell(this);
-        coordX = newX;
-        coordY = newY;
-        coordZ = Map.getInstance().getCellBlockType(newX, newY).getAbbreviation();
-        Map.getInstance().setWorkerInCell(newX, newY, this);
-    }
-
     public boolean canBuild(){
         for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
             for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
@@ -92,15 +76,23 @@ public abstract class Worker implements Serializable {
             }
         }
         return false;
+    }//Prometheus, Apollo, Hephaestus, Hestia
+
+    public void changePosition(int newX, int newY){
+        Map.getInstance().deleteWorkerInCell(this);
+        coordX = newX;
+        coordY = newY;
+        coordZ = Map.getInstance().getCellBlockType(newX, newY).getAbbreviation();
+        Map.getInstance().setWorkerInCell(newX, newY, this);
     }
 
-    public boolean canBuild(int x, int y) {      //DEMETER
-        return true;
-    }
+    public boolean canDoAgain(int x, int y){
+        return false;
+    }//Artemis e Demeter
 
-    public boolean canBuild(boolean buildTwoTimes) {       //HEPHAESTUS
-        return true;
-    }
+    public boolean canPush(int x, int y){
+        return false;
+    }//Minotaur
 
     public void buildBlock(int buildX, int buildY){
         if(Map.getInstance().getCellBlockType(buildX, buildY) == BlockType.GROUND){
@@ -115,6 +107,6 @@ public abstract class Worker implements Serializable {
         }
     }
 
-    public void buildBlock(boolean build, int buildX, int buildY){}
+    public void specialBuild(int buildX, int buildY){}//Hephaestus e Atlas
 
 }

@@ -146,6 +146,44 @@ class TurnManagerTest {
     }
 
     @Test
+    void movement_ApolloTest() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.APOLLO);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+
+        TurnManager.getInstance().movement(1, 0);
+        assertEquals(p.getWorkerSelected(1), Map.getInstance().getWorkerInCell(1, 0));
+        assertEquals(GameState.CONSTRUCTION, Game.getInstance().getGameState(p));
+    }
+
+    @Test
+    void movement_ApolloBlockedTest() {
+        Player p = new Player("Player");
+        p.setGodChoice(God.APOLLO);
+        p.setWorker1(0, 0);
+        p.setWorker2(0, 1);
+        GameManager.getInstance().setCurrPlayer(p);
+        TurnManager.getInstance().workerChoice(1);
+        Map.getInstance().setCellBlockType(0, 2, BlockType.CUPOLA);
+        Worker worker = new WorkerPan("YEL1", 1, 1);
+        Map.getInstance().setCellBlockType(1, 0, BlockType.CUPOLA);
+        Map.getInstance().setCellBlockType(1, 2, BlockType.CUPOLA);
+        Map.getInstance().setCellBlockType(2, 0, BlockType.CUPOLA);
+        Map.getInstance().setCellBlockType(2, 1, BlockType.CUPOLA);
+        Map.getInstance().setCellBlockType(2, 2, BlockType.CUPOLA);
+
+        try{
+            TurnManager.getInstance().movement(1, 1);
+        } catch(IndexOutOfBoundsException ignore){}
+        assertEquals(p.getWorkerSelected(1), Map.getInstance().getWorkerInCell(1, 1));
+        assertEquals(worker, Map.getInstance().getWorkerInCell(0, 0));
+        assertEquals(GameState.WAIT_TURN, Game.getInstance().getGameState(p));
+    }
+
+    @Test
     void movement_ArtemisCantMoveAgainTest() {
         Player p = new Player("Player");
         p.setGodChoice(God.ARTEMIS);
@@ -249,31 +287,6 @@ class TurnManagerTest {
         assertEquals(p.getWorkerSelected(1), Map.getInstance().getWorkerInCell(1, 1));
         assertEquals(GameState.CONSTRUCTION, Game.getInstance().getGameState(p));
     }
-
-    @Test
-    void movement_ApolloBlockedTest() {
-        Player p = new Player("Player");
-        p.setGodChoice(God.APOLLO);
-        p.setWorker1(0, 0);
-        p.setWorker2(0, 1);
-        GameManager.getInstance().setCurrPlayer(p);
-        TurnManager.getInstance().workerChoice(1);
-        Map.getInstance().setCellBlockType(0, 2, BlockType.CUPOLA);
-        Worker worker = new WorkerPan("YEL1", 1, 1);
-        Map.getInstance().setCellBlockType(1, 0, BlockType.CUPOLA);
-        Map.getInstance().setCellBlockType(1, 2, BlockType.CUPOLA);
-        Map.getInstance().setCellBlockType(2, 0, BlockType.CUPOLA);
-        Map.getInstance().setCellBlockType(2, 1, BlockType.CUPOLA);
-        Map.getInstance().setCellBlockType(2, 2, BlockType.CUPOLA);
-
-        try{
-            TurnManager.getInstance().movement(1, 1);
-        } catch(IndexOutOfBoundsException ignore){}
-        assertEquals(p.getWorkerSelected(1), Map.getInstance().getWorkerInCell(1, 1));
-        assertEquals(worker, Map.getInstance().getWorkerInCell(0, 0));
-        assertEquals(GameState.WAIT_TURN, Game.getInstance().getGameState(p));
-    }
-
 
     @Test
     void secondMove_Test() {

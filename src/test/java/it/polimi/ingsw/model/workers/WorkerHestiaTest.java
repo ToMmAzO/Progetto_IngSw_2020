@@ -22,14 +22,14 @@ class WorkerHestiaTest {
         Map.getInstance().setCellBlockType(2, 1, BlockType.CUPOLA);
         Map.getInstance().setCellBlockType(2, 2, BlockType.CUPOLA);
 
-        assertFalse(w.canBuild(true));//da togliere true
+        assertFalse(w.canBuild());
     }
 
     @Test
     void canRebuild_EverywhereTest() {
         WorkerHestia w = new WorkerHestia("RED1", 1, 1);
 
-        assertTrue(w.canBuild(true));//da togliere true
+        assertTrue(w.canBuild());
     }
 
 }

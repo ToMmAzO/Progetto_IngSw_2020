@@ -10,12 +10,8 @@ public class WorkerAtlas extends Worker {
     }
 
     @Override
-    public void buildBlock(boolean buildCupola, int buildX, int buildY) {
-        if(buildCupola){
-            Map.getInstance().setCellBlockType(buildX, buildY, BlockType.CUPOLA);
-        } else{
-            super.buildBlock(buildX,buildY);
-        }
+    public void specialBuild(int buildX, int buildY) {
+        Map.getInstance().setCellBlockType(buildX, buildY, BlockType.CUPOLA);
     }
 
 }

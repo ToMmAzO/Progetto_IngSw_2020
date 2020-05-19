@@ -75,8 +75,17 @@ public class TurnManager {
             } else{
                 workerSelected.changePosition(coordX, coordY);
                 switch (GameManager.getInstance().getCurrPlayer().getGodChoice()){
+                    case APOLLO -> {
+                        if(workerSelected.canBuild()) {
+                            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
+                        } else{
+                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
+                            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
+                            GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
+                        }
+                    }
                     case ARTEMIS -> {
-                        if(workerSelected.canMove(startX, startY)) {
+                        if(workerSelected.canDoAgain(startX, startY)) {
                             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_ARTEMIS);
                         } else {
                             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantMove);
@@ -85,7 +94,7 @@ public class TurnManager {
                     }
                     case ATLAS -> Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_ATLAS);
                     case HEPHAESTUS -> {
-                        if(workerSelected.canBuild(true)) {
+                        if(workerSelected.canBuild()) {
                             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_HEPHAESTUS);
                         } else {
                             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantDoubleBuild);
@@ -99,15 +108,7 @@ public class TurnManager {
                             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
                         }
                     }
-                    default -> {
-                        if(workerSelected.canBuild()) {
-                            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
-                        } else{
-                            SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
-                            Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
-                            GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
-                        }
-                    }
+                    default -> Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
                 }
             }
         }
@@ -166,7 +167,7 @@ public class TurnManager {
                 case DEMETER -> {
                     buildX = coordX;
                     buildY = coordY;
-                    if (workerSelected.canBuild(buildX, buildY)) {
+                    if (workerSelected.canDoAgain(buildX, buildY)) {
                         Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_DEMETER);
                     } else {
                         SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
@@ -175,7 +176,7 @@ public class TurnManager {
                     }
                 }
                 case HESTIA -> {
-                    if (workerSelected.canBuild(true)) {
+                    if (workerSelected.canBuild()) {
                         Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_HESTIA);
                     } else {
                         SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantBuild);
@@ -217,7 +218,7 @@ public class TurnManager {
 
     public void constructionCupola(int coordX, int coordY){
         if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), false, coordX, coordY)){
-            workerSelected.buildBlock(true, coordX, coordY);
+            workerSelected.specialBuild(coordX, coordY);
             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
             GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
         }
@@ -225,7 +226,7 @@ public class TurnManager {
 
     public void doubleConstruction(int coordX, int coordY){
         if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), true, coordX, coordY)){
-            workerSelected.buildBlock(true, coordX, coordY);
+            workerSelected.specialBuild(coordX, coordY);
             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.WAIT_TURN);
             GameManager.getInstance().nextPlayer(GameManager.getInstance().getCurrPlayer());
         }

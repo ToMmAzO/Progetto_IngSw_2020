@@ -26,14 +26,14 @@ class WorkerDemeterTest {
         Map.getInstance().setCellBlockType(2, 0, BlockType.CUPOLA);
         Map.getInstance().setCellBlockType(2, 2, BlockType.CUPOLA);
 
-        assertFalse(w.canBuild(2, 1));
+        assertFalse(w.canDoAgain(2, 1));
     }
 
     @Test
     void canBuild_RegularitySecondConstructionTest() {
         WorkerDemeter w = new WorkerDemeter("RED1", 1, 1);
 
-        assertTrue(w.canBuild(2, 1));
+        assertTrue(w.canDoAgain(2, 1));
     }
 
 }

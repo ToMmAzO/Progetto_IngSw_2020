@@ -37,7 +37,7 @@ public class Player extends Observable<God> implements Serializable {
 
     public boolean setWorker1(int row, int column) {
         String id = color.toString().substring(0, 3).concat("1");
-        if(Map.getInstance().noWorkerHere(row, column)) {
+        if(Map.getInstance().noWorkerHere(row, column)){
             switch (this.getGodChoice()) {
                 case APOLLO -> workers[0] = new WorkerApollo(id, row, column);
                 case ARTEMIS -> workers[0] = new WorkerArtemis(id, row, column);
@@ -55,13 +55,14 @@ public class Player extends Observable<God> implements Serializable {
                 case ZEUS -> workers[0] = new WorkerZeus(id, row, column);
             }
             return true;
-        } else
+        } else{
             return false;
+        }
     }
 
     public boolean setWorker2(int row, int column) {
         String id = color.toString().substring(0, 3).concat("2");
-        if(Map.getInstance().noWorkerHere(row, column)) {
+        if(Map.getInstance().noWorkerHere(row, column)){
             switch (this.getGodChoice()) {
                 case APOLLO -> workers[1] = new WorkerApollo(id, row, column);
                 case ARTEMIS -> workers[1] = new WorkerArtemis(id, row, column);
@@ -79,8 +80,9 @@ public class Player extends Observable<God> implements Serializable {
                 case ZEUS -> workers[1] = new WorkerZeus(id, row, column);
             }
             return true;
-        } else
+        } else{
             return false;
+        }
     }
 
     public String getNickname() {

@@ -19,7 +19,7 @@ class WorkerAtlasTest {
     void buildBlock_BuildCupolaTest() {
         WorkerAtlas w = new WorkerAtlas("RED1", 0, 0);
 
-        w.buildBlock(true, 0, 1);
+        w.specialBuild(0, 1);
         assertEquals(Map.getInstance().getCellBlockType(0, 1), BlockType.CUPOLA);
     }
 
@@ -27,7 +27,7 @@ class WorkerAtlasTest {
     void buildBlock_DefaultTest() {
         WorkerAtlas w = new WorkerAtlas("RED1", 0, 0);
 
-        w.buildBlock(false, 1, 0);
+        w.buildBlock(1, 0);
         assertEquals(Map.getInstance().getCellBlockType(1, 0), BlockType.BLOCK1);
     }
 

@@ -22,7 +22,7 @@ class WorkerArtemisTest {
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK2);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
 
-        assertFalse(w.canMove(1, 1));
+        assertFalse(w.canDoAgain(1, 1));
     }
 
 
@@ -34,7 +34,7 @@ class WorkerArtemisTest {
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
         TurnManager.getInstance().setAllowHeight(false);
 
-        assertFalse(w.canMove(0, 1));
+        assertFalse(w.canDoAgain(0, 1));
     }
 
     @Test
@@ -42,14 +42,14 @@ class WorkerArtemisTest {
         WorkerArtemis w = new WorkerArtemis("RED1", 0, 0);
         TurnManager.getInstance().setAllowHeight(false);
 
-        assertTrue(w.canMove(0, 1));
+        assertTrue(w.canDoAgain(0, 1));
     }
 
     @Test
     void canMoveAgain_DefaultTest(){
         WorkerArtemis w = new WorkerArtemis("RED1", 0, 0);
 
-        assertTrue(w.canMove(0, 1));
+        assertTrue(w.canDoAgain(0, 1));
     }
 
 }
