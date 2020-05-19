@@ -17,31 +17,18 @@ class WorkerAthenaTest {
     }
 
     @Test
-    void canMoveTest1(){     //worker1 is blocked by other workers
-        WorkerAthena worker1 = new WorkerAthena("RED1",0,0);
-        new WorkerAtlas("YEL1",0,1);
-        new WorkerAtlas("YEL2",1,0);
-        new WorkerPan("BLU1",1,1);
+    void canMove_BlockedByWorkersTest() {
+        WorkerAthena w = new WorkerAthena("RED1", 0, 0);
+        new WorkerAtlas("YEL1", 0, 1);
+        new WorkerAtlas("YEL2", 1, 0);
+        new WorkerPan("BLU1", 1, 1);
 
-        assertFalse(worker1.canMove());
+        assertFalse(w.canMove());
     }
 
     @Test
-    void canMoveTest2(){    //worker1 is blocked by BlockTypes
-        WorkerAthena worker1 = new WorkerAthena("RED1",0,0);
-        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK2);
-        Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
-        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK2);
-
-        assertFalse(worker1.canMove());
-
-        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
-        assertTrue(worker1.canMove());
-    }
-
-    @Test
-    void canMoveTest3(){    //worker1 can move even with allowHeight == false
-        WorkerAthena worker1 = new WorkerAthena("RED1",0,0);
+    void canMove_BoundAthenaTest() {
+        WorkerAthena worker1 = new WorkerAthena("RED1", 0, 0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
@@ -51,40 +38,20 @@ class WorkerAthenaTest {
     }
 
     @Test
-    void changePositionTest1(){
-        WorkerAthena worker1 = new WorkerAthena("RED1",0,0);
-        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
-        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
-        WorkerAtlas worker2 = new WorkerAtlas("YEL1",0,4);
-        Map.getInstance().setCellBlockType(0, 3, BlockType.BLOCK1);
-        Map.getInstance().setCellBlockType(1, 3, BlockType.BLOCK1);
-        Map.getInstance().setCellBlockType(1, 4, BlockType.BLOCK1);
+    void changePosition_NoGoUpTest() {
+        WorkerAthena w = new WorkerAthena("RED1", 0, 0);
+        w.changePosition(0, 1);
 
-        worker1.changePosition(0,1);
-
-        assertEquals(worker1.getCoordX(),0);
-        assertEquals(worker1.getCoordY(),1);
-        assertEquals(worker1.getCoordZ(),1);
-        assertTrue(TurnManager.getInstance().cannotGoUp());
-        assertFalse(worker2.canMove());
+        assertFalse(TurnManager.getInstance().cannotGoUp());
     }
 
     @Test
-    void changePositionTest2(){
-        WorkerAthena worker1 = new WorkerAthena("RED1",0,0);
+    void changePosition_GoUpTest() {
+        WorkerAthena w = new WorkerAthena("RED1", 0, 0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
-        Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
-        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
+        w.changePosition(0, 1);
 
-        worker1.changePosition(1,0);
-        assertEquals(worker1.getCoordX(),1);
-        assertEquals(worker1.getCoordY(),0);
-        assertEquals(worker1.getCoordZ(),2);
-
-        worker1.changePosition(1,1);
-        assertEquals(worker1.getCoordX(),1);
-        assertEquals(worker1.getCoordY(),1);
-        assertEquals(worker1.getCoordZ(),1);
+        assertTrue(TurnManager.getInstance().cannotGoUp());
     }
 
 }

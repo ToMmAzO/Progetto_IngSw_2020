@@ -10,9 +10,10 @@ public class WorkerHestia extends Worker {
         super(idWorker, coordX, coordY);
     }
 
+    //canBuildSecondTime
     @Override
-    public boolean canBuild(boolean buildTwoTimes) {
-        if(buildTwoTimes) {
+    public boolean canBuild(boolean buildTwoTimes) {//togliere attributo
+        //if(buildTwoTimes) {
             for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
                 for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
                     if(!(i == 0 ||  i == 4 || j == 0 || j == 4)) {
@@ -23,9 +24,9 @@ public class WorkerHestia extends Worker {
                 }
             }
             return false;
-        }else{
+        /*}else{
             return super.canBuild();
-        }
+        }*/
     }
 
 }

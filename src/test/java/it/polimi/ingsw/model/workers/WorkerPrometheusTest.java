@@ -17,17 +17,36 @@ class WorkerPrometheusTest {
     }
 
     @Test
-    void canMoveTest1(){
-        WorkerPrometheus worker1 = new WorkerPrometheus("RED1",0,0);
+    void canMove_DefaultTes(){
+        WorkerPrometheus w = new WorkerPrometheus("RED1", 0, 0);
+        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
+        Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
+
+        assertTrue(w.canMove());
+    }
+
+    @Test
+    void canMove_OnlyGoUpWithBondPrometheusTest(){
+        WorkerPrometheus w = new WorkerPrometheus("RED1", 0, 0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
 
         TurnManager.getInstance().setAllowHeightPrometheus(false);
-        assertFalse(worker1.canMove());
-
-        TurnManager.getInstance().setAllowHeightPrometheus(true);
-        assertTrue(worker1.canMove());
+        assertFalse(w.canMove());
     }
+
+    @Test
+    void canMove_WithBondPrometheusTest(){
+        WorkerPrometheus w = new WorkerPrometheus("RED1", 0, 0);
+        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
+        Map.getInstance().setCellBlockType(1, 0, BlockType.GROUND);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
+
+        TurnManager.getInstance().setAllowHeightPrometheus(false);
+        assertTrue(w.canMove());
+    }
+
 
 }

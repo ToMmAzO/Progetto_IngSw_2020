@@ -17,70 +17,93 @@ class WorkerApolloTest {
     }
 
     @Test
-    void canMoveTest1(){     //worker1 is blocked by other workers
-        WorkerApollo worker1 = new WorkerApollo("RED1",0,0);
-        new WorkerAtlas("YEL1",0,1);
-        new WorkerAtlas("YEL2",1,0);
-        new WorkerPan("BLU1",1,1);
+    void canMove_BlockedByWorkersTest(){
+        WorkerApollo w = new WorkerApollo("RED1", 0, 0);
+        new WorkerAtlas("YEL1", 0, 1);
+        new WorkerChronus("YEL2", 1, 0);
+        new WorkerHera("BLU1", 1, 1);
 
-        assertTrue(worker1.canMove());
+        assertTrue(w.canMove());
     }
 
     @Test
-    void canMoveTest2(){    //worker1 is blocked by BlockTypes
-        WorkerApollo worker1 = new WorkerApollo("RED1",0,0);
+    void canMove_BlockedByBlockTest(){
+        WorkerApollo w = new WorkerApollo("RED1", 0, 0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK2);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK2);
 
-        assertFalse(worker1.canMove());
+        assertFalse(w.canMove());
 
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
-        assertTrue(worker1.canMove());
+        assertTrue(w.canMove());
     }
 
     @Test
-    void canMoveTest3(){    //worker1 is blocked by allowHeight
-        WorkerApollo worker1 = new WorkerApollo("RED1",0,0);
+    void canMove_OnlyGoUpWithBoundAthenaWithWorkersTest(){
+        WorkerApollo w = new WorkerApollo("RED1", 0, 0);
+        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
+        Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
+        new WorkerTriton("YEL1", 0, 1);
+        new WorkerAtlas("YEL2", 1, 0);
+        new WorkerPan("BLU1", 1, 1);
+        TurnManager.getInstance().setAllowHeight(false);
+
+        assertFalse(w.canMove());
+    }
+
+    @Test
+    void canMove_WithBoundAthenaWithWorkersTest(){
+        WorkerApollo w = new WorkerApollo("RED1", 0, 0);
+        new WorkerAtlas("YEL1", 0, 1);
+        new WorkerAtlas("YEL2", 1, 0);
+        new WorkerPan("BLU1", 1, 1);
+        TurnManager.getInstance().setAllowHeight(false);
+
+        assertTrue(w.canMove());
+    }
+
+    @Test
+    void canMove_OnlyGoUpWithBoundAthenaTest(){
+        WorkerApollo w = new WorkerApollo("RED1", 0, 0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
         TurnManager.getInstance().setAllowHeight(false);
 
-        assertFalse(worker1.canMove());
+        assertFalse(w.canMove());
     }
 
     @Test
-    void changePositionTest1(){     //worker1 is blocked by other workers
-        WorkerApollo worker1 = new WorkerApollo("RED1",0,0);
-        new WorkerAtlas("YEL1",0,1);
-        WorkerAtlas worker3 = new WorkerAtlas("YEL2",1,0);
-        new WorkerPan("BLU1",1,1);
+    void canMove_DefaultTest(){
+        WorkerApollo w = new WorkerApollo("RED1", 0, 0);
+        Map.getInstance().setCellBlockType(0, 1, BlockType.GROUND);
+        Map.getInstance().setCellBlockType(1, 0, BlockType.GROUND);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.GROUND);
+        TurnManager.getInstance().setAllowHeight(false);
 
-        worker1.changePosition(1,0);
-
-        assertEquals(worker1.getCoordX(),1);
-        assertEquals(worker1.getCoordY(),0);
-        assertEquals(worker3.getCoordX(),0);
-        assertEquals(worker3.getCoordY(),0);
+        assertTrue(w.canMove());
     }
 
     @Test
-    void changePositionTest2(){
-        WorkerApollo worker1 = new WorkerApollo("RED1",0,0);
-        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
-        Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
-        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
+    void changePosition_ReplaceTest(){
+        WorkerApollo w1 = new WorkerApollo("RED1", 0, 0);
+        WorkerAtlas w2 = new WorkerAtlas("YEL2", 1, 0);
 
-        worker1.changePosition(1,0);
-        assertEquals(worker1.getCoordX(),1);
-        assertEquals(worker1.getCoordY(),0);
-        assertEquals(worker1.getCoordZ(),2);
+        w1.changePosition(1, 0);
+        assertEquals(w1.getCoordX(), 1);
+        assertEquals(w1.getCoordY(), 0);
+        assertEquals(w2.getCoordX(), 0);
+        assertEquals(w2.getCoordY(), 0);
+    }
 
-        worker1.changePosition(1,1);
-        assertEquals(worker1.getCoordX(),1);
-        assertEquals(worker1.getCoordY(),1);
-        assertEquals(worker1.getCoordZ(),1);
+    @Test
+    void changePosition_DefaultTest(){
+        WorkerApollo w = new WorkerApollo("RED1",0,0);
+
+        w.changePosition(1, 0);
+        assertEquals(w, Map.getInstance().getWorkerInCell(1, 0));
     }
 
 

@@ -16,35 +16,45 @@ class WorkerHephaestusTest {
     }
 
     @Test
-    void canBuildTest1(){
-        WorkerHephaestus worker1 = new WorkerHephaestus("RED1",0,0);
+    void canBuildTwice_Test(){
+        WorkerHephaestus w = new WorkerHephaestus("RED1",0,0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
-        assertTrue(worker1.canBuild(false));
-        assertTrue(worker1.canBuild(true));
 
-        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK2);
-        Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
-        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK2);
-        assertTrue(worker1.canBuild(false));
-        assertFalse(worker1.canBuild(true));
+        assertTrue(w.canBuild(true));//togliere true
     }
 
     @Test
-    void buildBlockTest1(){
-        WorkerHephaestus worker1 = new WorkerHephaestus("RED1",0,0);
+    void canBuildTwice_OnlyInBlock2Test(){
+        WorkerHephaestus w = new WorkerHephaestus("RED1",0,0);
+        Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK2);
+        Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK2);
+
+        assertFalse(w.canBuild(true));//togliere true
+    }
+
+    @Test
+    void buildBlock_SingleConstructionTest() {
+        WorkerHephaestus w = new WorkerHephaestus("RED1", 0, 0);
+        w.buildBlock(false, 1, 1);
+
+        assertEquals(BlockType.BLOCK1, Map.getInstance().getCellBlockType(1, 1));
+    }
+
+
+    @Test
+    void buildBlock_DoubleConstructionTest(){
+        WorkerHephaestus w = new WorkerHephaestus("RED1",0,0);
         Map.getInstance().setCellBlockType(0, 1, BlockType.GROUND);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
-        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
-        worker1.buildBlock(true,1,0);
-        assertNotEquals(Map.getInstance().getCellBlockType(1, 0), BlockType.BLOCK2);
 
-        worker1.buildBlock(true,1,1);
-        assertEquals(Map.getInstance().getCellBlockType(1, 1), BlockType.BLOCK3);
+        w.buildBlock(true, 0, 1);
+        assertEquals(BlockType.BLOCK2, Map.getInstance().getCellBlockType(0, 1));
 
-        worker1.buildBlock(true,0,1);
-        assertEquals(Map.getInstance().getCellBlockType(0, 1), BlockType.BLOCK2);
+        w.buildBlock(true, 1, 0);
+        assertEquals(BlockType.BLOCK3, Map.getInstance().getCellBlockType(1, 0));
     }
 
 }
