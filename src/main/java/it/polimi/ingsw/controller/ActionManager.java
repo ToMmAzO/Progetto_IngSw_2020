@@ -22,8 +22,8 @@ public class ActionManager {
         return newX >= x - 1 && newX <= x + 1 && newY >= y - 1 && newY <= y + 1;
     }
 
-    public boolean validCoords(int i, int j) {
-        return (i >= 0 && i <= 4) && (j >= 0 && j <= 4);
+    public boolean validCoords(int x, int y) {
+        return (x >= 0 && x <= 4) && (y >= 0 && y <= 4);
     }
 
     public boolean verifyCoordinateMovement(Worker w, God g, int coordX, int coordY) {

@@ -54,15 +54,15 @@ class WorkerMinotaurTest {
     void changePositionTest1(){     //worker1 is blocked by other workers
         WorkerMinotaur worker1 = new WorkerMinotaur("RED1",0,0);
         new WorkerAtlas("YEL1",0,1);
-        WorkerAtlas worker3 = new WorkerAtlas("YEL2",1,0);
-        new WorkerPan("BLU1",1,1);
+        WorkerAtlas worker3 = new WorkerAtlas("YEL2",1,1);
+        new WorkerPan("BLU1",1,0);
 
-        worker1.changePosition(1,0);
+        worker1.changePosition(1,1);
 
         assertEquals(worker1.getCoordX(),1);
-        assertEquals(worker1.getCoordY(),0);
+        assertEquals(worker1.getCoordY(),1);
         assertEquals(worker3.getCoordX(),2);
-        assertEquals(worker3.getCoordY(),0);
+        assertEquals(worker3.getCoordY(),2);
     }
 
     @Test
