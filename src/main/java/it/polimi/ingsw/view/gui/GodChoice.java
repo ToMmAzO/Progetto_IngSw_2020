@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.model.cards.Deck;
+
 import javax.swing.*;
 
 public class GodChoice extends JFrame{
@@ -23,7 +25,11 @@ public class GodChoice extends JFrame{
     private JButton okButton;
 
     public GodChoice(){
+
         add(mainPanel);
+        godName1.setText("ATLAS");
+
+        //createUIComponents();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
@@ -38,4 +44,6 @@ public class GodChoice extends JFrame{
         });
 
     }
+
+
 }
