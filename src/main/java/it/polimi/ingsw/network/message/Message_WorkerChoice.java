@@ -10,7 +10,7 @@ public class Message_WorkerChoice extends Message{
 
     @Override
     public void printMessage(){
-        System.out.print("Scegli quale dei tuoi worker usare, scrivi 1 oppure 2.");
+        System.out.print("Scegli quale dei tuoi worker usare, scrivi 1 oppure 2: ");
     }
 
 }

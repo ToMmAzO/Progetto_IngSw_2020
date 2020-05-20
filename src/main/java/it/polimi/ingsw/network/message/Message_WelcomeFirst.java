@@ -10,7 +10,7 @@ public class Message_WelcomeFirst extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("Sei il primo giocatore ad unirsi alla lobby.\nScegli quanti giocatori avrà la partita. Scrivi 2 oppure 3: ");
+        System.out.print("Sei il primo giocatore ad unirsi alla lobby.\nScegli quanti giocatori avrà la partita. Scrivi 2 oppure 3: ");
     }
 
 }

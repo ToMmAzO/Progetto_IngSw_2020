@@ -176,22 +176,19 @@ public class RemoteView {
         public void update(GameState message){
             if (player.equals(GameManager.getInstance().getCurrPlayer())){
                 if(player.equals(GameManager.getInstance().getPlayersInGame()[0])){
-                    switch(message){
-                        case CARD_CHOICE -> clientConnection.asyncSend(Deck.getInstance());
-                        case SET_WORKER -> {
-                            if(player.getWorkerSelected(1) == null){
-                                clientConnection.asyncSend(Map.getInstance());
-                            }
+                    if (message == GameState.SET_WORKER) {
+                        if (player.getWorkerSelected(1) == null) {
+                            clientConnection.asyncSend(Map.getInstance());
                         }
                     }
                 }
-                clientConnection.asyncSend(message);
-                if(message.equals(GameState.WAIT_PLAYERS)){
-                    clientConnection.asyncSend("Avrai il colore " + player.getColor().toString() + ".");
+                switch(message){
+                    case CARD_CHOICE -> clientConnection.asyncSend(Deck.getInstance());
+                    case WAIT_PLAYERS -> clientConnection.asyncSend("Avrai il colore " + player.getColor().toString() + ".");
                 }
+                clientConnection.asyncSend(message);
             }
         }
-
     }
 
     private class Error implements Observer<String> {
@@ -222,7 +219,6 @@ public class RemoteView {
             } else{
                 clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha scelto la carta "
                 + message.toString() + ".");
-                clientConnection.asyncSend(Deck.getInstance());
             }
         }
 

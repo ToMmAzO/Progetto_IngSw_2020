@@ -10,7 +10,7 @@ public class Message_Movement extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("MOVIMENTO: \nInserisci delle cordinate (x, y):");
+        System.out.print("MOVIMENTO:\nInserisci delle cordinate (x, y): ");
     }
 
 }

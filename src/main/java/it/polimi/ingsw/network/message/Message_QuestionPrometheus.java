@@ -10,7 +10,7 @@ public class Message_QuestionPrometheus extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("Vuoi costruire prima di muoverti? (Yes o No)\n Ricorda: se construisci ora non potrai salire di livello.");
+        System.out.print("Vuoi costruire prima di muoverti?\nRicorda: se construisci ora non potrai salire di livello. Scrivi Yes o No: ");
     }
 
 }

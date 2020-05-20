@@ -6,7 +6,7 @@ public class WorkerHera extends Worker {
 
     public WorkerHera(String idWorker, int coordX, int coordY) {
         super(idWorker, coordX, coordY);
-        TurnManager.getInstance().setAllowWin(false);
+        TurnManager.getInstance().setAllowWinHera(false);
     }
 
 }

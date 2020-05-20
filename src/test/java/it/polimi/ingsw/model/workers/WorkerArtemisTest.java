@@ -32,7 +32,7 @@ class WorkerArtemisTest {
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
 
         assertFalse(w.canDoAgain(0, 1));
     }
@@ -40,7 +40,7 @@ class WorkerArtemisTest {
     @Test
     void canMoveAgain_WithBoundAthenaTest(){
         WorkerArtemis w = new WorkerArtemis("RED1", 0, 0);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
 
         assertTrue(w.canDoAgain(0, 1));
     }

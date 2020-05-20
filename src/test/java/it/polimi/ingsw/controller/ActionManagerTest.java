@@ -76,14 +76,14 @@ class ActionManagerTest {
     @Test
     void verifyCoordinateMovement_OccupiedCellApolloTest2(){//lavoratore avversario e potere di athena senza salire
         new WorkerDemeter("BLU1", 1, 1);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
         assertTrue(ActionManager.getInstance().verifyCoordinateMovement(new WorkerApollo("RED2", 0, 0), God.APOLLO, 1, 1));
     }
 
     @Test
     void verifyCoordinateMovement_OccupiedCellApolloTest3(){//lavoratore avversario e potere di athena e salire
         new WorkerDemeter("BLU1", 1, 1);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
         assertFalse(ActionManager.getInstance().verifyCoordinateMovement(new WorkerApollo("RED2", 0, 0), God.APOLLO, 1, 1));
     }
@@ -111,7 +111,7 @@ class ActionManagerTest {
     @Test
     void verifyCoordinateMovement_OccupiedCellMinotaurTest2(){//lavoratore avversario e potere di athena senza salire e puoi spingere
         new WorkerDemeter("BLU1", 1, 1);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
         assertTrue(ActionManager.getInstance().verifyCoordinateMovement(new WorkerMinotaur("RED2", 0, 0), God.MINOTAUR, 1, 1));
     }
 
@@ -119,14 +119,14 @@ class ActionManagerTest {
     void verifyCoordinateMovement_OccupiedCellMinotaurTest3(){//lavoratore avversario e potere di athena senza salire e non puoi spingere
         new WorkerDemeter("BLU1", 1, 1);
         new WorkerDemeter("BLU2", 2, 2);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
         assertFalse(ActionManager.getInstance().verifyCoordinateMovement(new WorkerMinotaur("RED2", 0, 0), God.MINOTAUR, 1, 1));
     }
 
     @Test
     void verifyCoordinateMovement_OccupiedCellMinotaurTest4(){//lavoratore avversario e potere di athena e salire
         new WorkerDemeter("BLU1", 1, 1);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
         assertFalse(ActionManager.getInstance().verifyCoordinateMovement(new WorkerMinotaur("RED2", 0, 0), God.MINOTAUR, 1, 1));
     }
@@ -161,20 +161,20 @@ class ActionManagerTest {
 
     @Test
     void verifyCoordinateMovement_PowerAthenaTest1(){//senza salire
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
         assertTrue(ActionManager.getInstance().verifyCoordinateMovement(new WorkerAtlas("W", 0, 0), God.ATLAS, 1, 1));
     }
 
     @Test
     void verifyCoordinateMovement_PowerAthenaTest2(){//salire ma sei Athena
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
         assertTrue(ActionManager.getInstance().verifyCoordinateMovement(new WorkerAthena("W", 0, 0), God.ATHENA, 1, 1));
     }
 
     @Test
     void verifyCoordinateMovement_PowerAthenaTest3(){//salire e non sei athena
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
         assertFalse(ActionManager.getInstance().verifyCoordinateMovement(new WorkerAtlas("W", 0, 0), God.ATLAS, 1, 1));
     }

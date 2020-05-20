@@ -10,7 +10,7 @@ public class Message_QuestionHestia extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("Vuoi costruire ancora? (Yes o No)\n Ricorda: non puoi costruire sul perimetro.");
+        System.out.print("Vuoi costruire ancora?\nRicorda: non puoi costruire sul perimetro. Scrivi Yes o No: ");
     }
 
 }

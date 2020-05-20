@@ -10,7 +10,7 @@ public class Message_SecondConstructionDemeter extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("Inserisci delle cordinate (x, y).");
+        System.out.print("Inserisci delle cordinate (x, y): ");
     }
 
 }

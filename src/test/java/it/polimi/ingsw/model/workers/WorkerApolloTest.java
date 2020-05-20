@@ -48,7 +48,7 @@ class WorkerApolloTest {
         new WorkerTriton("YEL1", 0, 1);
         new WorkerAtlas("YEL2", 1, 0);
         new WorkerPan("BLU1", 1, 1);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
 
         assertFalse(w.canMove());
     }
@@ -59,7 +59,7 @@ class WorkerApolloTest {
         new WorkerAtlas("YEL1", 0, 1);
         new WorkerAtlas("YEL2", 1, 0);
         new WorkerPan("BLU1", 1, 1);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
 
         assertTrue(w.canMove());
     }
@@ -70,7 +70,7 @@ class WorkerApolloTest {
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
 
         assertFalse(w.canMove());
     }
@@ -81,7 +81,7 @@ class WorkerApolloTest {
         Map.getInstance().setCellBlockType(0, 1, BlockType.GROUND);
         Map.getInstance().setCellBlockType(1, 0, BlockType.GROUND);
         Map.getInstance().setCellBlockType(1, 1, BlockType.GROUND);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
 
         assertTrue(w.canMove());
     }

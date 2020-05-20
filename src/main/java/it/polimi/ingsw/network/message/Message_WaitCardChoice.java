@@ -10,7 +10,7 @@ public class Message_WaitCardChoice extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("Attendi che gli altri giocatori scelagno una carta.");
+        System.out.println("Attendi per posizionare i lavoratori sulla mappa.");
     }
 
 }

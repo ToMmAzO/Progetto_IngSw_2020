@@ -10,7 +10,7 @@ public class Message_Construction extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("COSTRUZIONE: \nInserisci delle cordinate (x, y):");
+        System.out.print("COSTRUZIONE:\nInserisci delle cordinate (x, y): ");
     }
 
 }

@@ -10,7 +10,7 @@ public class Message_QuestionHephaestus extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("Vuoi costruire 2 blocchi? (Yes o No)");
+        System.out.print("Vuoi costruire 2 blocchi? Scrivi Yes o No: ");
     }
 
 }

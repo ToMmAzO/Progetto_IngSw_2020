@@ -11,9 +11,9 @@ public class TurnManager {
 
     private static TurnManager turnManager = null;
     private Worker workerSelected;
-    private boolean allowHeight = true;
+    private boolean allowHeightAthena = true;
     private boolean allowHeightPrometheus = true;
-    private boolean allowWin = true;
+    private boolean allowWinHera = true;
     private int startX, startY, buildX, buildY;
 
     public TurnManager(){
@@ -236,12 +236,12 @@ public class TurnManager {
         return workerSelected;
     }
 
-    public void setAllowHeight(boolean allowHeight) {
-        this.allowHeight = allowHeight;
+    public void setAllowHeightAthena(boolean allowHeightAthena) {
+        this.allowHeightAthena = allowHeightAthena;
     }
 
     public boolean cannotGoUp() {
-        return !allowHeight;
+        return !allowHeightAthena;
     }
 
     public void setAllowHeightPrometheus(boolean allowHeightPrometheus) {
@@ -252,12 +252,12 @@ public class TurnManager {
         return !allowHeightPrometheus;
     }
 
-    public void setAllowWin(boolean allowWin) {
-        this.allowWin = allowWin;
+    public void setAllowWinHera(boolean allowWinHera) {
+        this.allowWinHera = allowWinHera;
     }
 
     public boolean cannotWin() {
-        return !allowWin;
+        return !allowWinHera;
     }
 
 }

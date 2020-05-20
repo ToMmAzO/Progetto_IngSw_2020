@@ -10,7 +10,7 @@ public class Message_QuestionArtemis extends Message{
 
     @Override
     public void printMessage(){
-        System.out.println("Vuoi muovere ancora? (Yes o No)\n Ricorda: non puoi tornare alla casella precedente.");
+        System.out.print("Vuoi muovere ancora?/\nRicorda: non puoi tornare alla casella precedente. Scrivi Yes o No: ");
     }
 
 }

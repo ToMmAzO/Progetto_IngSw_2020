@@ -58,7 +58,7 @@ class WorkerMinotaurTest {
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
 
         assertFalse(w1.canMove());
     }
@@ -66,7 +66,7 @@ class WorkerMinotaurTest {
     @Test
     void canMove_WithBoundAthenaWithNoWorkerInCellTest(){
         WorkerMinotaur w1 = new WorkerMinotaur("RED1",0,0);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
 
         assertTrue(w1.canMove());
     }
@@ -77,7 +77,7 @@ class WorkerMinotaurTest {
         new WorkerMinotaur("RED2",1,1);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK2);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
 
         assertFalse(w1.canMove());
     }
@@ -88,7 +88,7 @@ class WorkerMinotaurTest {
         new WorkerAtlas("YEL2",1,1);
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK2);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK2);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
 
         assertTrue(w1.canMove());
     }

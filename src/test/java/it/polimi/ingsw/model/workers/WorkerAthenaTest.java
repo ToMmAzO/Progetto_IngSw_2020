@@ -32,7 +32,7 @@ class WorkerAthenaTest {
         Map.getInstance().setCellBlockType(0, 1, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 0, BlockType.BLOCK1);
         Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK1);
-        TurnManager.getInstance().setAllowHeight(false);
+        TurnManager.getInstance().setAllowHeightAthena(false);
 
         assertTrue(worker1.canMove());
     }

@@ -27,9 +27,9 @@ public class WorkerAthena extends Worker {
 
     @Override
     public void changePosition(int newX, int newY){
-        TurnManager.getInstance().setAllowHeight(true);
+        TurnManager.getInstance().setAllowHeightAthena(true);
         if(Map.getInstance().getCellBlockType(newX, newY).getAbbreviation() > getCoordZ()){
-            TurnManager.getInstance().setAllowHeight(false);
+            TurnManager.getInstance().setAllowHeightAthena(false);
         }
         super.changePosition(newX, newY);
     }
