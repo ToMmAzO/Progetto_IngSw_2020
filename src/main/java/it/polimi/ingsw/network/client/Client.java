@@ -62,7 +62,7 @@ public class Client {
 
     public void run() throws IOException {
         Socket socket = new Socket(ip, port);
-        System.out.println("Connection established");
+        System.out.println("Connected to the server!");
         ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
         PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
         Scanner stdin = new Scanner(System.in);
@@ -72,7 +72,7 @@ public class Client {
             t0.join();
             t1.join();
         } catch(InterruptedException | NoSuchElementException e){
-            System.out.println("Connection closed from the client side");
+            System.out.println("Connection closed!");
         } finally{
             stdin.close();
             socketIn.close();

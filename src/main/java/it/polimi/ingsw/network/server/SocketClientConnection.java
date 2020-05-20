@@ -47,15 +47,14 @@ public class SocketClientConnection implements Runnable {
     }
 
     public synchronized void closeConnection(){
-        asyncSend("Connection closed!");
+        asyncSend("Connection closed!\n");
         try{
             socket.close();
         } catch (IOException e) {
             System.err.println("Error when closing socket!");
         }
         active = false;
-        System.out.println("Deregistering client...");
-        System.out.println("Done!");
+        System.out.println("Client deregistered!");
     }
 
     @Override
@@ -63,7 +62,23 @@ public class SocketClientConnection implements Runnable {
         try{
             Scanner in = new Scanner(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
-            asyncSend("Welcome!\nWhat is your name?");
+            asyncSend(
+                    """
+                            ----------------------------------------------------------------------------------------------------------------------------------------------------
+                            ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+                            ----------------------------------------------------------------------------------------------------------------------------------------------------
+                                               ________          __                       __________      ________       ________                                              \s
+                                              //                //\\\\        ||\\\\   ||         ||         ||      ||     ||      \\\\     ||     ||\\\\   ||     ||                 \s
+                                              \\\\_______        //__\\\\       || \\\\  ||         ||         ||      ||     ||______//     ||     || \\\\  ||     ||                 \s
+                                                      \\\\      //    \\\\      ||  \\\\ ||         ||         ||      ||     ||    \\\\       ||     ||  \\\\ ||     ||                 \s
+                                               _______//     //      \\\\     ||   \\\\||         ||         ||______||     ||     \\\\      ||     ||   \\\\||     ||                 \s
+                                                                                                                                                                               \s
+                            ----------------------------------------------------------------------------------------------------------------------------------------------------
+                            ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+                            ----------------------------------------------------------------------------------------------------------------------------------------------------
+                            """
+            );
+            asyncSend("What is your name? ");
             String read = in.nextLine();
             String name = read;
             Player player = server.lobby(name, this);

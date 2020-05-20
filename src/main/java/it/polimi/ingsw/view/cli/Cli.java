@@ -13,7 +13,7 @@ public class Cli {
         if(object instanceof GameState) {
             runState((GameState)object);
         } else if(object instanceof String){
-            System.out.println((String)object);
+            System.out.print((String)object);
         } else if(object instanceof Deck){
             ((Deck)object).printCards();
         } else if(object instanceof God){

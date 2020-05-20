@@ -40,14 +40,14 @@ public class Server {
             GameManager.getInstance().addPlayerConnection(player, c);
             return player;
         } else{
-            c.asyncSend("Il server non è ancora pronto per accettare nuovi giocatori, riprova più tardi.");
+            c.asyncSend("Il server non è ancora pronto per accettare nuovi giocatori, riprova più tardi.\n");
             c.closeConnection();
             return null;
         }
     }
 
     public void run(){
-        System.out.println("Server listening on port: " + PORT);
+        System.out.println("Server listening on port " + PORT + ".");
         new GameManager();
         while(true){
             try{
