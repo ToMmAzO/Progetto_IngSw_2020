@@ -15,8 +15,7 @@ public class WorkerHestia extends Worker {
         for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
             for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
                 if(!(i == 0 ||  i == 4 || j == 0 || j == 4)) {
-                    if (!(i == getCoordX() && j == getCoordY()) && ActionManager.getInstance().validCoords(i, j) &&
-                            Map.getInstance().noWorkerHere(i, j) && Map.getInstance().getCellBlockType(i, j) != BlockType.CUPOLA) {
+                    if (!(i == getCoordX() && j == getCoordY()) && ActionManager.getInstance().validCoords(i, j) && Map.getInstance().noWorkerHere(i, j) && Map.getInstance().getCellBlockType(i, j) != BlockType.CUPOLA) {
                         return true;
                     }
                 }

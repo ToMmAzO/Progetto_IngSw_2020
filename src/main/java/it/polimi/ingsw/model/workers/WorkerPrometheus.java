@@ -15,8 +15,7 @@ public class WorkerPrometheus extends Worker {
     public boolean canMove() {
         for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
             for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
-                if (!(i == getCoordX() && j == getCoordY()) && ActionManager.getInstance().validCoords(i, j) &&
-                        Map.getInstance().noWorkerHere(i, j) && Map.getInstance().getCellBlockType(i, j) != BlockType.CUPOLA){
+                if (!(i == getCoordX() && j == getCoordY()) && ActionManager.getInstance().validCoords(i, j) && Map.getInstance().noWorkerHere(i, j) && Map.getInstance().getCellBlockType(i, j) != BlockType.CUPOLA){
                     if(TurnManager.getInstance().cannotGoUp() || TurnManager.getInstance().cannotGoUpPrometheus()){
                         if(Map.getInstance().getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
                             return true;
