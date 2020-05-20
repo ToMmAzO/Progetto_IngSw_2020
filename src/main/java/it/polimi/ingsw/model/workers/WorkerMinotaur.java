@@ -20,9 +20,7 @@ public class WorkerMinotaur extends Worker {
             for(int j = getCoordY() - 1; j < getCoordY() + 2; j++){
                 if((x == i) && (y == j)){
                     if(ActionManager.getInstance().validCoords(pushedX, pushedY) && Map.getInstance().noWorkerHere(pushedX, pushedY) && Map.getInstance().getCellBlockType(pushedX, pushedY) != BlockType.CUPOLA){
-                        if(Map.getInstance().getCellBlockType(pushedX, pushedY).getAbbreviation() <= Map.getInstance().getWorkerInCell(x,y).getCoordZ() + 1){
-                            return true;
-                        }
+                        return true;
                     }
                 }
                 pushedY = pushedY + 2;

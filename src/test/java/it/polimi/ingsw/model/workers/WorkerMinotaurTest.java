@@ -39,8 +39,18 @@ class WorkerMinotaurTest {
         new WorkerAtlas("YEL1",0,1);
         Map.getInstance().setCellBlockType(0, 2, BlockType.BLOCK3);
 
+        assertTrue(w1.canPush(0,1));
+    }
+
+    @Test
+    void canPush_WorkerPushedInCupolaTest(){
+        WorkerMinotaur w1 = new WorkerMinotaur("RED1",0,0);
+        new WorkerAtlas("YEL1",0,1);
+        Map.getInstance().setCellBlockType(0, 2, BlockType.CUPOLA);
+
         assertFalse(w1.canPush(0,1));
     }
+
 
     @Test
     void canMove_OnlyGoUpWithBoundAthenaTest(){
