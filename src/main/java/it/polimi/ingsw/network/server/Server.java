@@ -40,7 +40,7 @@ public class Server {
             GameManager.getInstance().addPlayerConnection(player, c);
             return player;
         } else{
-            c.asyncSend("Il server non è ancora pronto per accettare nuovi giocatori, riprova più tardi.\n");
+            c.asyncSend("Il server non è ancora pronto per accettare nuovi giocatori, riprova più tardi.");
             c.closeConnection();
             return null;
         }

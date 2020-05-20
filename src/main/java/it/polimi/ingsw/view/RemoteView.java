@@ -161,7 +161,7 @@ public class RemoteView {
                             GameManager.getInstance().nextPlayer(player);
                         }
                         case QUESTION_PROMETHEUS -> clientConnection.asyncSend(new Message_Movement());
-                        default -> Game.getInstance().setGameState(player, GameState.CONSTRUCTION);             //QUESTION_ARTEMIS, QUESTION_ATLAS, QUESTION_HEPHAESTUS, QUESTION_TRITON
+                        default -> Game.getInstance().setGameState(player, GameState.CONSTRUCTION);//QUESTION_ARTEMIS, QUESTION_ATLAS, QUESTION_HEPHAESTUS, QUESTION_TRITON
                     }
                 } else {
                     clientConnection.asyncSend("Puoi rispondere solo con yes o no!");

@@ -66,7 +66,7 @@ public class Deck implements Serializable {
     }
 
     public void printCards(){
-        System.out.println("La partita avrà le seguenti carte divinità:");
+        System.out.println("\nLa partita avrà le seguenti carte divinità:");
         for (int i = 0; i < cardsSelected.length; i++){
             System.out.println("Carta " + (i+1) + " --> " + cardsSelected[i].toString() + ": " + God.getGodDescription(cardsSelected[i]));
             if (availability[i]){
