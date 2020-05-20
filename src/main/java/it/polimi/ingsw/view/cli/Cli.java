@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.*;
+import it.polimi.ingsw.view.gui.WelcomeFirst;
 
 public class Cli {
 
