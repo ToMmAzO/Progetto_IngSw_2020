@@ -38,9 +38,10 @@ class WorkerHephaestusTest {
     @Test
     void buildBlock_SingleConstructionTest() {
         WorkerHephaestus w = new WorkerHephaestus("RED1", 0, 0);
+        Map.getInstance().setCellBlockType(1, 1, BlockType.BLOCK2);
         w.buildBlock(1, 1);
 
-        assertEquals(BlockType.BLOCK1, Map.getInstance().getCellBlockType(1, 1));
+        assertEquals(BlockType.BLOCK3, Map.getInstance().getCellBlockType(1, 1));
     }
 
 

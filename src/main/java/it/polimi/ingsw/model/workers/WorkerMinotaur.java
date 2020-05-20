@@ -20,14 +20,8 @@ public class WorkerMinotaur extends Worker {
             for(int j = getCoordY() - 1; j < getCoordY() + 2; j++){
                 if((x == i) && (y == j)){
                     if(ActionManager.getInstance().validCoords(pushedX, pushedY) && Map.getInstance().noWorkerHere(pushedX, pushedY) && Map.getInstance().getCellBlockType(pushedX, pushedY) != BlockType.CUPOLA){
-                        if(TurnManager.getInstance().cannotGoUp()){
-                            if(Map.getInstance().getCellBlockType(pushedX, pushedY).getAbbreviation() <= Map.getInstance().getWorkerInCell(x,y).getCoordZ()){
-                                return true;
-                            }
-                        } else{
-                            if(Map.getInstance().getCellBlockType(pushedX, pushedY).getAbbreviation() <= Map.getInstance().getWorkerInCell(x,y).getCoordZ() + 1){
-                                return true;
-                            }
+                        if(Map.getInstance().getCellBlockType(pushedX, pushedY).getAbbreviation() <= Map.getInstance().getWorkerInCell(x,y).getCoordZ() + 1){
+                            return true;
                         }
                     }
                 }
@@ -48,20 +42,18 @@ public class WorkerMinotaur extends Worker {
                         if (Map.getInstance().getCellBlockType(i, j).getAbbreviation() <= getCoordZ()) {
                             if (Map.getInstance().noWorkerHere(i, j)) {
                                 return true;
-                            }
-                        }
-                        if (!Map.getInstance().noWorkerHere(i, j) && (!Map.getInstance().getWorkerInCell(i, j).getIdWorker().substring(0, 3).equals(getIdWorker().substring(0, 3)))) {
-                            if (canPush(i, j)) {
-                                return true;
+                            } else{
+                                if ((!Map.getInstance().getWorkerInCell(i, j).getIdWorker().substring(0, 3).equals(getIdWorker().substring(0, 3))) && (canPush(i, j))) {
+                                    return true;
+                                }
                             }
                         }
                     } else{
                         if (Map.getInstance().getCellBlockType(i, j).getAbbreviation() <= getCoordZ() + 1) {
                             if (Map.getInstance().noWorkerHere(i, j)) {
                                 return true;
-                            }
-                            if (!Map.getInstance().noWorkerHere(i, j) && (!Map.getInstance().getWorkerInCell(i, j).getIdWorker().substring(0, 3).equals(getIdWorker().substring(0, 3)))) {
-                                if (canPush(i, j)) {
+                            } else{
+                                if ((!Map.getInstance().getWorkerInCell(i, j).getIdWorker().substring(0, 3).equals(getIdWorker().substring(0, 3))) && (canPush(i, j))) {
                                     return true;
                                 }
                             }
