@@ -5,9 +5,7 @@ import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.workers.*;
 import it.polimi.ingsw.observer.Observable;
 
-import java.io.Serializable;
-
-public class Player extends Observable<God> implements Serializable {
+public class Player extends Observable<God> {
 
     private final String nickname;
     private final Color color;
@@ -99,13 +97,6 @@ public class Player extends Observable<God> implements Serializable {
 
     public Worker getWorkerSelected(int number){
         return workers[number - 1];
-    }
-
-    public void printWorkersPositions(){
-        System.out.printf("%s: %s (livello %d), %s (livello %d).\n", getNickname(),
-                getWorkerSelected(1).getIdWorker(), getWorkerSelected(1).getCoordZ(),
-                getWorkerSelected(2).getIdWorker(), getWorkerSelected(2).getCoordZ()
-        );
     }
 
 }

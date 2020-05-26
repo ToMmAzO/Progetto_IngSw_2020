@@ -187,13 +187,4 @@ class PlayerTest {
         assertTrue(p.getWorkerSelected(2) instanceof WorkerZeus);
     }
 
-    @Test
-    void player_PrintTest() {
-        Player p1 = new Player("player1");
-        p1.setGodChoice(God.APOLLO);
-        p1.setWorker1(0, 0);
-        p1.setWorker2(2, 2);
-        p1.printWorkersPositions();
-    }
-
 }

@@ -237,7 +237,10 @@ public class RemoteView {
             Player[] players = GameManager.getInstance().getPlayersInGame();
             for (Player p : players){
                 if(p.getWorkerSelected(1) != null && p.getWorkerSelected(2) != null){
-                    clientConnection.asyncSend(p);
+                    clientConnection.asyncSend(p.getNickname() + ": " +
+                            p.getWorkerSelected(1).getIdWorker() + " (livello " + p.getWorkerSelected(1).getCoordZ() + "), " +
+                            p.getWorkerSelected(2).getIdWorker() + " (livello " + p.getWorkerSelected(2).getCoordZ() + ")."
+                    );
                 }
             }
         }

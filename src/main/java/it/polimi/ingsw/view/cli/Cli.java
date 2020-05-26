@@ -2,7 +2,6 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.model.board.MapCopy;
 import it.polimi.ingsw.model.cards.DeckCopy;
-import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.*;
 
@@ -17,8 +16,6 @@ public class Cli {
             ((DeckCopy) object).printCards();
         } else if(object instanceof MapCopy){
             ((MapCopy)object).print();
-        } else if(object instanceof Player){
-            ((Player)object).printWorkersPositions();
         } else{
             throw new IllegalArgumentException();
         }
