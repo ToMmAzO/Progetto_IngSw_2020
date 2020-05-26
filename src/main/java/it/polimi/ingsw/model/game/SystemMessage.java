@@ -4,7 +4,7 @@ import it.polimi.ingsw.observer.Observable;
 
 public class SystemMessage extends Observable<String> {
 
-    private static SystemMessage systemError = null;
+    private static SystemMessage systemError;
     public String contentError = "Input scorreto!";
     public String cardNotAvailable = "Carta non più disponibile!";
     public String workerPresence = "È già presente un lavoratore quì!";

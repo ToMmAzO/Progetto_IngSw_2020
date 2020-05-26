@@ -29,7 +29,4 @@ public enum God {
         return godDescription.get(god);
     }
 
-    public static void printCardChosen(God god){
-        System.out.println("\nHai il potere di " + god.toString() + ": " + getGodDescription(god));
-    }
 }

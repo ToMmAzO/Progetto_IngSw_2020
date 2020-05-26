@@ -8,7 +8,7 @@ import it.polimi.ingsw.model.workers.Worker;
 
 public class ActionManager {
 
-    private static ActionManager actionManager = null;
+    private static ActionManager actionManager;
 
     public ActionManager(){
         actionManager = this;

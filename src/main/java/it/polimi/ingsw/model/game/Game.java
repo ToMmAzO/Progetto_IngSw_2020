@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class Game extends Observable<GameState> {
 
-    private static Game game = null;
+    private static Game game;
     private final HashMap<Player, GameState> playerStates = new HashMap<>();
 
 

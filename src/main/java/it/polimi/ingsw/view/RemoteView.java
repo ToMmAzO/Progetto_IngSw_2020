@@ -2,6 +2,8 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.controller.TurnManager;
+import it.polimi.ingsw.model.board.MapCopy;
+import it.polimi.ingsw.model.cards.DeckCopy;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.SystemMessage;
 import it.polimi.ingsw.model.board.Map;
@@ -178,12 +180,12 @@ public class RemoteView {
                 if(player.equals(GameManager.getInstance().getPlayersInGame()[0])){
                     if (message == GameState.SET_WORKER) {
                         if (player.getWorkerSelected(1) == null) {
-                            clientConnection.asyncSend(Map.getInstance());
+                            clientConnection.asyncSend(new MapCopy());
                         }
                     }
                 }
                 switch(message){
-                    case CARD_CHOICE -> clientConnection.asyncSend(Deck.getInstance());
+                    case CARD_CHOICE -> clientConnection.asyncSend(new DeckCopy());
                     case WAIT_PLAYERS -> clientConnection.asyncSend("Avrai il colore " + player.getColor().toString() + ".");
                 }
                 clientConnection.asyncSend(message);
@@ -200,7 +202,7 @@ public class RemoteView {
             } else{
                 if(message.equals(SystemMessage.getInstance().youLose)){
                     clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha perso!");
-                    clientConnection.asyncSend(Map.getInstance());
+                    clientConnection.asyncSend(new MapCopy());
                 }
                 if(message.equals(SystemMessage.getInstance().youWin)){
                     clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha vinto!");
@@ -215,7 +217,7 @@ public class RemoteView {
         @Override
         public void update(God message){
             if(player.equals(GameManager.getInstance().getCurrPlayer())){
-                clientConnection.asyncSend(message);
+                clientConnection.asyncSend(("\nHai il potere di " + message.toString() + ": " + God.getGodDescription(message)));
             } else{
                 clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha scelto la carta "
                 + message.toString() + ".");
@@ -231,7 +233,7 @@ public class RemoteView {
             if (!player.equals(message)){
                 clientConnection.asyncSend("Azione di " + message.getNickname() + ".");
             }
-            clientConnection.asyncSend(Map.getInstance());
+            clientConnection.asyncSend(new MapCopy());
             Player[] players = GameManager.getInstance().getPlayersInGame();
             for (Player p : players){
                 if(p.getWorkerSelected(1) != null && p.getWorkerSelected(2) != null){

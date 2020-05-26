@@ -17,7 +17,7 @@ import java.util.Iterator;
 
 public class GameManager {
 
-    private static GameManager gameManager = null;
+    private static GameManager gameManager;
     private final ArrayList<Player> players = new ArrayList<>();
     private final HashMap<Player, SocketClientConnection> playerConnections = new HashMap<>();
     private Player currPlayer;

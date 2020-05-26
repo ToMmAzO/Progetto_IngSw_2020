@@ -9,7 +9,7 @@ import it.polimi.ingsw.network.message.*;
 
 public class TurnManager {
 
-    private static TurnManager turnManager = null;
+    private static TurnManager turnManager;
     private Worker workerSelected;
     private boolean allowHeightAthena = true;
     private boolean allowHeightPrometheus = true;

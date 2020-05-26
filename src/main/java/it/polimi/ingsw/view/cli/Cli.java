@@ -1,11 +1,10 @@
 package it.polimi.ingsw.view.cli;
 
-import it.polimi.ingsw.model.board.Map;
-import it.polimi.ingsw.model.cards.Deck;
+import it.polimi.ingsw.model.board.MapCopy;
+import it.polimi.ingsw.model.cards.DeckCopy;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.*;
-import it.polimi.ingsw.view.gui.WelcomeFirst;
 
 public class Cli {
 
@@ -14,12 +13,10 @@ public class Cli {
             runState((GameState)object);
         } else if(object instanceof String){
             System.out.println((String)object);
-        } else if(object instanceof Deck){
-            ((Deck)object).printCards();
-        } else if(object instanceof God){
-            God.printCardChosen((God)object);
-        } else if(object instanceof Map){
-            ((Map)object).print();
+        } else if(object instanceof DeckCopy) {
+            ((DeckCopy) object).printCards();
+        } else if(object instanceof MapCopy){
+            ((MapCopy)object).print();
         } else if(object instanceof Player){
             ((Player)object).printWorkersPositions();
         } else{

@@ -5,11 +5,9 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.workers.Worker;
 import it.polimi.ingsw.observer.Observable;
 
-import java.io.Serializable;
+public class Map extends Observable<Player> {
 
-public class Map extends Observable<Player> implements Serializable {
-
-    private static Map board = null;
+    private static Map board;
     private final Cell[][] map;
     private int numberOfCompleteTurrets = 0;
 
@@ -25,6 +23,10 @@ public class Map extends Observable<Player> implements Serializable {
 
     public static Map getInstance(){
         return board;
+    }
+
+    protected Cell[][] getMap(){
+        return map;
     }
 
     public void setCellBlockType(int row, int column, BlockType block){
@@ -61,23 +63,4 @@ public class Map extends Observable<Player> implements Serializable {
         return map[row][column].getWorkerPresence() == null;
     }
 
-    public void print(){
-        System.out.printf("   |   %d  |   %d  |   %d  |   %d  |   %d  |\n", 0, 1, 2, 3, 4);
-        System.out.println("---|------|------|------|------|------|");
-        for (int i = 0; i < 5; i++){
-            System.out.printf("%d  |", i);
-            for (int j = 0; j < 5; j++){
-                if(noWorkerHere(i, j)){
-                    if(getCellBlockType(i, j) == BlockType.GROUND){
-                        System.out.printf("%7c", '|');
-                    } else{
-                        System.out.printf("%s|", getCellBlockType(i, j).toString());
-                    }
-                } else{
-                    System.out.printf("|%s||", getWorkerInCell(i, j).getIdWorker());
-                }
-            }
-            System.out.println("\n---|------|------|------|------|------|");
-        }
-    }
 }

@@ -58,12 +58,4 @@ class MapTest {
         assertTrue(Map.getInstance().noWorkerHere(0, 0));
     }
 
-    @Test
-    void map_PrintTest() {
-        Map.getInstance().setCellBlockType(0, 0, BlockType.BLOCK1);
-        Worker workerArtemis = new WorkerArtemis("RED1", 1, 1);
-        Map.getInstance().print();
-    }
-
-
 }

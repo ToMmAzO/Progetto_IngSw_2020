@@ -44,16 +44,4 @@ class DeckTest {
         }
     }
 
-    @Test
-    void deck_PrintTest() {
-        new Deck(3);
-        Deck.getInstance().getCardToPlayer(1);
-        Deck.getInstance().printCards();
-    }
-
-    @Test
-    void card_PrintTest() {
-        God.printCardChosen(God.APOLLO);
-    }
-
 }
