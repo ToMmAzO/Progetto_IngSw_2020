@@ -3,7 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.SystemMessage;
 import it.polimi.ingsw.model.player.Color;
-import it.polimi.ingsw.network.message.GameState;
+import it.polimi.ingsw.model.game.GameState;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.player.Player;

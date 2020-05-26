@@ -36,8 +36,13 @@ public class SocketClientConnection implements Runnable {
         return active;
     }
 
+    //metodo del timer, se arriva a zero annulla la partita
+
     public synchronized void asyncSend(Object message){
         try{
+
+            //se message è uno stato e non è di wait, fai partire il timer di 30 secondi
+
             out.reset();
             out.writeObject(message);
             out.flush();
@@ -69,6 +74,9 @@ public class SocketClientConnection implements Runnable {
             ClientMessage message = new ClientMessage();
             while(isActive()){
                 read = in.nextLine();
+
+                //resetta il timer
+
                 message.setGameState(Game.getInstance().getGameState(player));
                 message.setContent(read);
                 viewSocket.messageReceiver(message);

@@ -2,7 +2,7 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.model.board.MapCopy;
 import it.polimi.ingsw.model.cards.DeckCopy;
-import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.game.GameState;
 import it.polimi.ingsw.network.message.*;
 
 public class Cli {

@@ -22,6 +22,10 @@ class PlayerTest {
         Player p2 = new Player("player2");
         Player p3 = new Player("player3");
 
+        assertEquals("player1", p1.getNickname());
+        assertEquals("player2", p2.getNickname());
+        assertEquals("player3", p3.getNickname());
+
         assertNotEquals(p1.getColor(), p2.getColor());
         assertNotEquals(p1.getColor(), p3.getColor());
         assertNotEquals(p2.getColor(), p3.getColor());

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.network.message;
 
+import it.polimi.ingsw.model.game.GameState;
+
 public class Message_QuestionArtemis extends Message{
 
     private final GameState gameState = GameState.QUESTION_ARTEMIS;

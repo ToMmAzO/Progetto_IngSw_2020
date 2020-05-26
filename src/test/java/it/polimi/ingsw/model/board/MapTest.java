@@ -25,6 +25,8 @@ class MapTest {
                 assertTrue(Map.getInstance().noWorkerHere(i, j));
             }
         }
+        MapCopy c = new MapCopy();
+        c.print();
     }
 
     @Test
@@ -37,6 +39,9 @@ class MapTest {
         Map.getInstance().setCellBlockType(2, 2, BlockType.BLOCK3);
         assertEquals(Map.getInstance().getCellBlockType(2, 2), BlockType.BLOCK3);
         assertEquals(3, Map.getInstance().getCellBlockType(2, 2).getAbbreviation());
+
+        MapCopy c = new MapCopy();
+        c.print();
 
         Worker workerArtemis = new WorkerArtemis("testArtemis", 1, 1);
         workerArtemis.buildBlock(2, 2);
@@ -53,6 +58,9 @@ class MapTest {
 
         Worker workerArtemis = new WorkerArtemis("testArtemis", 1, 1);
         assertNotEquals(Map.getInstance().getWorkerInCell(0, 0), workerArtemis);
+
+        MapCopy c = new MapCopy();
+        c.print();
 
         Map.getInstance().deleteWorkerInCell(workerApollo);
         assertTrue(Map.getInstance().noWorkerHere(0, 0));

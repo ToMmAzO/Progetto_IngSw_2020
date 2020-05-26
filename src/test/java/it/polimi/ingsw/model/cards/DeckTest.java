@@ -29,6 +29,9 @@ class DeckTest {
         for (int i = 0; i < 3; i++) {
             assertTrue(Deck.getInstance().isAvailable(i + 1));
         }
+
+        DeckCopy c = new DeckCopy();
+        c.printCards();
     }
 
     @Test
@@ -42,6 +45,9 @@ class DeckTest {
             assertEquals(god,godChosen);
             assertFalse(Deck.getInstance().isAvailable(i + 1));
         }
+
+        DeckCopy c = new DeckCopy();
+        c.printCards();
     }
 
 }

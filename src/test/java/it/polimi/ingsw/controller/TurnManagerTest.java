@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.workers.Worker;
 import it.polimi.ingsw.model.workers.WorkerDemeter;
 import it.polimi.ingsw.model.workers.WorkerHera;
 import it.polimi.ingsw.model.workers.WorkerPan;
-import it.polimi.ingsw.network.message.GameState;
+import it.polimi.ingsw.model.game.GameState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

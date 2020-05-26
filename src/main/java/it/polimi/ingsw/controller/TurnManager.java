@@ -1,11 +1,11 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.game.Game;
+import it.polimi.ingsw.model.game.GameState;
 import it.polimi.ingsw.model.game.SystemMessage;
 import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.workers.Worker;
-import it.polimi.ingsw.network.message.*;
 
 public class TurnManager {
 
