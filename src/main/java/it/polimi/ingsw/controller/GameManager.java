@@ -173,19 +173,14 @@ public class GameManager {
     }
 
     public void endGame(Player winnerPlayer){
+        currPlayer = winnerPlayer;
         SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().youWin);
-        players.remove(winnerPlayer);
-        playerConnections.get(winnerPlayer).closeConnection();
-        playerConnections.remove(winnerPlayer);
-        if(players.size() > 0) {
-            for (Player player : players) {
-                currPlayer = player;
-                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().gameOver);
-                players.remove(player);
-                playerConnections.get(player).closeConnection();
-                playerConnections.remove(player);
-            }
-        }
+        Server.refresh();
+    }
+
+    public void disconnectedPlayer(Player player){
+        currPlayer = player;
+        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().gameInvalidation);
         Server.refresh();
     }
 

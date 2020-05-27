@@ -197,15 +197,23 @@ public class RemoteView {
 
         @Override
         public void update(String message){
-            if (player.equals(GameManager.getInstance().getCurrPlayer())){
+            if ((player.equals(GameManager.getInstance().getCurrPlayer())) && (!message.equals(SystemMessage.getInstance().gameInvalidation))){
                 clientConnection.asyncSend(message);
+                if(message.equals(SystemMessage.getInstance().youWin)){
+                    clientConnection.closeConnection();
+                }
             } else{
+                if(message.equals(SystemMessage.getInstance().gameInvalidation)){
+                    clientConnection.asyncSend(message);
+                    clientConnection.closeConnection();
+                }
                 if(message.equals(SystemMessage.getInstance().youLose)){
                     clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha perso!");
                     clientConnection.asyncSend(new MapCopy());
                 }
                 if(message.equals(SystemMessage.getInstance().youWin)){
                     clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha vinto!");
+                    clientConnection.closeConnection();
                 }
             }
         }

@@ -11,7 +11,7 @@ public class SystemMessage extends Observable<String> {
     public String exceedMap = "Puoi inserire solo interi da 0 a 4!";
     public String youLose = "Hai perso!";
     public String youWin = "Congratulazioni, hai vinto la partita!";
-    public String gameOver = "GAME OVER!";
+    public String gameInvalidation = "\nPARTITA ANNULLATA! Un giocatore ha abbandonato il gioco.";
     public String powerAthena = "ATTENTO, c'è attivo il potere di ATHENA!";
     public String powerPrometheus = "ATTENTO, hai appena costruito e sei PROMETHEUS!";
     public String doubleGoUp = "ATTENTO, non puoi salire di due livelli!";
