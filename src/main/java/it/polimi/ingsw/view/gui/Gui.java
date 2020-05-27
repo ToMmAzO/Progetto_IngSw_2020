@@ -6,6 +6,8 @@ import java.io.IOException;
 
 public class Gui{
 
+    private final static Dimension TABLE_DIMENSION = new Dimension(1440,810);
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
@@ -24,9 +26,11 @@ public class Gui{
         gameFrame.add(table);
 
         //gameFrame.setLocationRelativeTo(null);
-        gameFrame.pack();     //la finestra assuma le dimensioni minime necessarie e sufficienti affinchè ciò che contiene sia visualizzato secondo le sue dimensioni ottimali
+        //gameFrame.pack();     //la finestra assuma le dimensioni minime necessarie e sufficienti affinchè ciò che contiene sia visualizzato secondo le sue dimensioni ottimali
+
         gameFrame.setVisible(true);
         gameFrame.validate();
+        //gameFrame.setResizable(true);   se vogliamo impedire che la finestra venga ridimensionata
     }
 
 }
