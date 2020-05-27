@@ -18,7 +18,7 @@ import java.util.List;
 
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 
-public class Table extends JPanel {
+public class Table extends JLayeredPane{
 
     private final static String backGroundPath = "src/main/java/it/polimi/ingsw/view/gui/img/SantoriniBoard.png";
     private final static String iconsPath = "src/main/java/it/polimi/ingsw/view/gui/img/icons/";
@@ -29,18 +29,11 @@ public class Table extends JPanel {
 
     private final static int NUM_TILES = 25;
 
-    /*
-    public static void main(String[] args) throws IOException {
-       new Table();
-    }
-    */
-
     public Table() throws IOException {
-        setSize(TABLE_DIMENSION);
+        super();
+        this.setSize(TABLE_DIMENSION);
 
-        JLayeredPane layeredPane = new JLayeredPane();
-
-        layeredPane.add(getBackGround(), Integer.valueOf(0));
+        add(getBackGround(), Integer.valueOf(0));
 
         new Map();
 
@@ -63,15 +56,12 @@ public class Table extends JPanel {
         */
 
         PlayerPanel playerPanel = new PlayerPanel();
-        layeredPane.add(playerPanel, Integer.valueOf(1));
+        add(playerPanel, Integer.valueOf(1));
 
         BoardPanel boardPanel = new BoardPanel();
-        layeredPane.add(boardPanel, Integer.valueOf(1));
+        add(boardPanel, Integer.valueOf(1));
 
-        add(layeredPane);
-        setVisible(true);
-        setEnabled(true);
-        setOpaque(true);
+        validate();
     }
 
     public JLabel getBackGround() throws IOException {
