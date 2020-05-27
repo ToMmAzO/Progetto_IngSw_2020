@@ -21,12 +21,12 @@ public class Client {
         this.port = port;
     }
 
-    public synchronized boolean isActive(){
-        return active;
-    }
-
     public synchronized void setActive(boolean active){
         this.active = active;
+    }
+
+    public synchronized boolean isActive(){
+        return active;
     }
 
     public Thread asyncReadFromSocket(final ObjectInputStream socketIn){
@@ -83,6 +83,7 @@ public class Client {
         try{
             Thread t0 = asyncReadFromSocket(socketIn);
             Thread t1 = asyncWriteToSocket(stdin, socketOut);
+            System.out.print("What's your name? ");
             t0.join();
             t1.join();
         } catch(InterruptedException | NoSuchElementException e){

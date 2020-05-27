@@ -35,14 +35,9 @@ public class SocketClientConnection implements Runnable {
     private synchronized boolean isActive(){
         return active;
     }
-
-    //metodo del timer, se arriva a zero annulla la partita
-
+    
     public synchronized void asyncSend(Object message){
         try{
-
-            //se message è uno stato e non è di wait, fai partire il timer di 30 secondi
-
             out.reset();
             out.writeObject(message);
             out.flush();
@@ -67,16 +62,12 @@ public class SocketClientConnection implements Runnable {
         try{
             Scanner in = new Scanner(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
-            asyncSend("What's your name?");
             String read = in.nextLine();
-            String name = read;
-            Player player = server.lobby(name, this);
+            String clientName = read;
+            Player player = server.lobby(clientName, this);
             ClientMessage message = new ClientMessage();
             while(isActive()){
                 read = in.nextLine();
-
-                //resetta il timer
-
                 message.setGameState(Game.getInstance().getGameState(player));
                 message.setContent(read);
                 viewSocket.messageReceiver(message);
