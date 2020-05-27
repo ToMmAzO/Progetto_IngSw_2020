@@ -4,7 +4,6 @@ import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.ClientMessage;
-import it.polimi.ingsw.view.RemoteView;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -17,7 +16,7 @@ public class SocketClientConnection implements Runnable {
     private final Socket socket;
     private ObjectOutputStream out;
     private final Server server;
-    private RemoteView viewSocket;
+    private SocketRemoteView viewSocket;
     private boolean active = true;
     Player player;
 
@@ -26,11 +25,11 @@ public class SocketClientConnection implements Runnable {
         this.server = server;
     }
 
-    public void setViewSocket(RemoteView view){
+    public void setViewSocket(SocketRemoteView view){
         viewSocket = view;
     }
 
-    public RemoteView getViewSocket(){
+    public SocketRemoteView getViewSocket(){
         return viewSocket;
     }
 

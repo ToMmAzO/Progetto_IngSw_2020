@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.controller.TurnManager;
@@ -11,15 +11,14 @@ import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.*;
-import it.polimi.ingsw.network.server.SocketClientConnection;
 import it.polimi.ingsw.observer.Observer;
 
-public class RemoteView {
+public class SocketRemoteView {
 
     private final SocketClientConnection clientConnection;
     private final Player player;
 
-    public RemoteView(Player player, SocketClientConnection c) {
+    public SocketRemoteView(Player player, SocketClientConnection c) {
         this.player = player;
         this.clientConnection = c;
         Game.getInstance().addObserver(new ChangeState());
