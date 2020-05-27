@@ -8,11 +8,11 @@ import it.polimi.ingsw.network.message.*;
 public class Cli {
 
     public void readObject(Object object) throws IllegalArgumentException {
-        if(object instanceof GameState) {
-            runState((GameState)object);
-        } else if(object instanceof String){
+        if(object instanceof String){
             System.out.println((String)object);
-        } else if(object instanceof DeckCopy) {
+        } else if(object instanceof GameState){
+            runState((GameState)object);
+        } else if(object instanceof DeckCopy){
             ((DeckCopy) object).printCards();
         } else if(object instanceof MapCopy){
             ((MapCopy)object).print();
