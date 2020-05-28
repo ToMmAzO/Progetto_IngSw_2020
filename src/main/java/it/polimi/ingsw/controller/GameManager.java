@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.cards.Deck;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.network.server.SocketClientConnection;
-import it.polimi.ingsw.view.RemoteView;
+import it.polimi.ingsw.network.server.SocketRemoteView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,13 +46,13 @@ public class GameManager {
             Server.setServerAvailability(false);
             players.add(0, player);
             playerConnections.put(player, c);
-            c.setViewSocket(new RemoteView(player, c));
+            c.setViewSocket(new SocketRemoteView(player, c));
             Game.getInstance().setGameState(player, GameState.WELCOME_FIRST);
         } else{
             players.add(player);
             playerConnections.put(player, c);
             currPlayer = player;
-            c.setViewSocket(new RemoteView(player, c));
+            c.setViewSocket(new SocketRemoteView(player, c));
             Game.getInstance().setGameState(player, GameState.WAIT_PLAYERS);
         }
         if(players.size() == numberOfPlayers){
@@ -173,19 +173,14 @@ public class GameManager {
     }
 
     public void endGame(Player winnerPlayer){
+        currPlayer = winnerPlayer;
         SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().youWin);
-        players.remove(winnerPlayer);
-        playerConnections.get(winnerPlayer).closeConnection();
-        playerConnections.remove(winnerPlayer);
-        if(players.size() > 0) {
-            for (Player player : players) {
-                currPlayer = player;
-                SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().gameOver);
-                players.remove(player);
-                playerConnections.get(player).closeConnection();
-                playerConnections.remove(player);
-            }
-        }
+        Server.refresh();
+    }
+
+    public void disconnectedPlayer(Player player){
+        currPlayer = player;
+        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().gameInvalidation);
         Server.refresh();
     }
 
