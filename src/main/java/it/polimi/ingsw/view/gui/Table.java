@@ -2,8 +2,6 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
-import it.polimi.ingsw.model.workers.WorkerDemeter;
-import it.polimi.ingsw.model.workers.WorkerPan;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -307,6 +305,39 @@ public class Table extends JLayeredPane{
             }
             add(new JLabel(new ImageIcon(image)));
         }
+    }
+
+
+    private void enableLayer(Component container, boolean enable, boolean alwaysTrue){
+        container.setEnabled(enable);            //fase1: abilita/disabilita il container e tutti i suoi component
+        container.setVisible(enable);
+        boolean mainContainer = alwaysTrue;
+
+        //fase 2: se il componente è stato disabilitato (enable=false) viene spostato il un layer più basso,
+        //        se è stato abilitato (enable=true) viene spostato nel livello più alto
+
+        if(mainContainer) {      //entra solo se è il container principale (non i sotto-conteiner contenuti in esso)
+            if (!enable) {
+                moveToBack(container);
+            }
+            if (enable) {
+                moveToFront(container);
+            }
+
+        }
+        mainContainer = false;
+
+        try {
+            Component[] components= ((Container) container).getComponents();
+            for (Component component : components) {
+                enableLayer(component, enable,false);
+            }
+        } catch (ClassCastException e) {
+
+        }
+
+
+
     }
 
 }
