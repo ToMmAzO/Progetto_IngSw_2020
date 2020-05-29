@@ -239,7 +239,8 @@ public class CardChoice extends JPanel {
                     JPanel cardChoice =new CardChoice(God.ATLAS,God.MINOTAUR,God.ZEUS,availability);
                     mainFrame.add(cardChoice);
                     mainFrame.setVisible(true);
-                    mainFrame.pack();
+                    mainFrame.setSize(600,600);
+                    mainFrame.setLocation(400,20);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
