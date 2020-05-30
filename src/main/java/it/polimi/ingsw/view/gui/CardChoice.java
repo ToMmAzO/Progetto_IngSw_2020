@@ -20,6 +20,8 @@ public class CardChoice extends JPanel {
     private final Image loadingBack = ImageIO.read(new File(loadingImagePath));
     Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
+    private static JFrame mainFrame;
+
 
 
     public CardChoice(God god1, God god2, God god3, boolean[] availability) throws IOException {   //DA FARE: costruttore per 2 god
@@ -102,6 +104,7 @@ public class CardChoice extends JPanel {
                 card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
                 card2.setEnabled(false);
                 card3.setEnabled(false);
+
             }
         });
 
@@ -234,13 +237,14 @@ public class CardChoice extends JPanel {
 
                 try {
                     System.out.println(ImagePath.concat("/Apollo.png"));
-                    JFrame mainFrame = new JFrame();
-                    boolean[] availability = {true,true,true};
-                    JPanel cardChoice =new CardChoice(God.ATLAS,God.MINOTAUR,God.ZEUS,availability);
+                    mainFrame = new JFrame();
+                    boolean[] availability = {false,true,true};
+                    JPanel cardChoice =new CardChoice(God.ATLAS,God.ARTEMIS,God.ZEUS,availability);
                     mainFrame.add(cardChoice);
                     mainFrame.setVisible(true);
                     mainFrame.setSize(600,600);
                     mainFrame.setLocation(400,20);
+                    mainFrame.setResizable(false);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

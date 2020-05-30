@@ -44,8 +44,8 @@ public class Welcome extends JPanel {
         nicknameTextField.setBounds(200,90 + logoHeight,200,30);
         nicknameTextField.setOpaque(false);
 
-        JLabel nicknameLine = new JLabel("__________________________________________ ");
-        nicknameLine.setBounds(200,90 + logoHeight,200,30);
+        //JLabel nicknameLine = new JLabel("__________________________________________ ");
+        //nicknameLine.setBounds(200,90 + logoHeight,200,30);
 
         int okHeight = 150;
         int okWidth = 100;
@@ -56,7 +56,8 @@ public class Welcome extends JPanel {
         okButton.setBounds(250,150 + logoHeight,okWidth,okHeight);
         okButton.setOpaque(false);
         okButton.setBorderPainted(false);
-        okButton.setBackground(null);
+        okButton.setBackground(Color.DARK_GRAY);
+
         okButton.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -115,7 +116,7 @@ public class Welcome extends JPanel {
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //pack();
         setVisible(true);
-        setBackground(Color.DARK_GRAY);
+
 
     }
 
@@ -133,11 +134,13 @@ public class Welcome extends JPanel {
                 JFrame mainFrame = new JFrame();
                 try {
                     mainFrame.add(new Welcome());
+                    mainFrame.setVisible(true);
+                    mainFrame.setSize(600,600);
+                    mainFrame.setLocation(400,20);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                mainFrame.setVisible(true);
-                mainFrame.setSize(600,600);
+
             }
         });
     }
