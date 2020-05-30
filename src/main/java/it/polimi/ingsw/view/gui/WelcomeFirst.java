@@ -167,8 +167,8 @@ public class WelcomeFirst extends JPanel {
                 JFrame mainFrame = new JFrame();
                 try {
                     mainFrame.add(new WelcomeFirst());
-                    mainFrame.setSize(600,600);
-                    mainFrame.setLocation(400,20);
+                    mainFrame.setSize(600, 600);
+                    mainFrame.setLocation(400, 20);
                     mainFrame.setVisible(true);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -176,8 +176,8 @@ public class WelcomeFirst extends JPanel {
 
             }
         });
-    }
 
+    }
 
 
 

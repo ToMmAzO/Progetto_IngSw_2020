@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.controller.GameManager;
+import it.polimi.ingsw.model.game.GameState;
+
 import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,17 +12,26 @@ import java.util.NoSuchElementException;
 
 public class Gui {
 
+    private static Gui gui;
     private final String ip;
     private final int port;
     private boolean active = true;
     private ObjectInputStream socketIn;
     private PrintWriter socketOut;
     private JFrame gameFrame;
+    private Welcome welcome;
+    private WelcomeFirst welcomeFirst;
+
 
 
     public Gui(String ip, int port){
+        gui = this;
         this.ip = ip;
         this.port = port;
+    }
+
+    public static Gui getInstance(){
+        return gui;
     }
 
     public synchronized void setActive(boolean active){
@@ -45,9 +57,20 @@ public class Gui {
         return t;
     }
 
-    private void readObject(Object inputObject){
+    private void readObject(Object inputObject) throws IOException {
 
         //fai cose con quello che manda il server
+        System.out.println(inputObject.toString());
+        if(inputObject instanceof GameState){
+            if(((GameState)inputObject).equals(GameState.WELCOME_FIRST)){
+                gameFrame.add(welcomeFirst = new WelcomeFirst());
+                welcome.setVisible(false);
+                gameFrame.setSize(600,600);
+                gameFrame.setLocation(400,20);
+                welcomeFirst.setVisible(true);
+
+            }
+        }
 
     }
 
@@ -68,12 +91,18 @@ public class Gui {
         gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 
-        Table table = new Table();
-        gameFrame.add(table);
+        //Table table = new Table();
+        //gameFrame.add(table);
+
+        welcome = new Welcome();
+        gameFrame.add(welcome);
+        gameFrame.setVisible(true);
+        gameFrame.setSize(600,600);
+        gameFrame.setLocation(400,20);
 
         //gameFrame.setLocationRelativeTo(null);
-        gameFrame.pack();     //la finestra assuma le dimensioni minime necessarie e sufficienti affinchè ciò che contiene sia visualizzato secondo le sue dimensioni ottimali
-        gameFrame.setVisible(true);
+        //gameFrame.pack();     //la finestra assuma le dimensioni minime necessarie e sufficienti affinchè ciò che contiene sia visualizzato secondo le sue dimensioni ottimali
+        //gameFrame.setVisible(true);
         gameFrame.validate();
     }
 

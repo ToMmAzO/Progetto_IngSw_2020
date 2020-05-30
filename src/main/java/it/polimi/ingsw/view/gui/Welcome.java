@@ -47,8 +47,9 @@ public class Welcome extends JPanel {
         //JLabel nicknameLine = new JLabel("__________________________________________ ");
         //nicknameLine.setBounds(200,90 + logoHeight,200,30);
 
-        int okHeight = 150;
         int okWidth = 100;
+        int okHeight = 150;
+
         okButton = new JButton();
         Image buttonPng = ImageIO.read(new File(imagePath.concat("button-play-normal.png")));
         ImageIcon buttonImg = new ImageIcon(buttonPng.getScaledInstance(okWidth, okHeight, Image.SCALE_SMOOTH));
@@ -67,6 +68,7 @@ public class Welcome extends JPanel {
 
                 }else{
                     //manda al server la richiesta con il nickmane inserito
+                    Gui.getInstance().asyncWriteToSocket(nicknameTextField.getText());
                     okButton.setEnabled(false);
                 }
 
@@ -127,7 +129,7 @@ public class Welcome extends JPanel {
         g.drawImage(img, 0, 0, null);
     }
 
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -142,6 +144,6 @@ public class Welcome extends JPanel {
                 }
 
             }
-        });
-    }
+        });*/
+
 }
