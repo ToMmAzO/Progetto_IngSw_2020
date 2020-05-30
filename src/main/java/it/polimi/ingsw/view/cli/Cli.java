@@ -56,7 +56,7 @@ public class Cli {
         return t;
     }
 
-    public void runState(GameState state){
+    private void runState(GameState state){
         Message message;
         switch (state){
             case WELCOME_FIRST -> message = new Message_WelcomeFirst();
