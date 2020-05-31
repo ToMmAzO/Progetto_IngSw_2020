@@ -2,12 +2,15 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
+import it.polimi.ingsw.model.board.MapCopy;
+import it.polimi.ingsw.model.game.GameState;
+import it.polimi.ingsw.model.workers.WorkerDemeter;
+import it.polimi.ingsw.model.workers.WorkerPan;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,9 +24,12 @@ public class Table extends JLayeredPane{
     private final static String backGroundPath = "src/main/java/it/polimi/ingsw/view/gui/img/SantoriniBoard.png";
     private final static String iconsPath = "src/main/java/it/polimi/ingsw/view/gui/img/icons/";
 
-    private final static Dimension TABLE_DIMENSION = new Dimension(1440,810);
-    private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(600,600);
-    private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(200,600);
+    private final static Dimension TABLE_DIMENSION = new Dimension(1280,720);
+    private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(530,530);
+    private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(200,530);
+
+    private GameState gameState = GameState.WAIT_TURN;
+    private MapCopy map;
 
     private final static int NUM_TILES = 25;
 
@@ -33,9 +39,9 @@ public class Table extends JLayeredPane{
 
         add(getBackGround(), Integer.valueOf(0));
 
+
         new Map();
 
-        /*
         try {
             new WorkerDemeter("RED1", 2, 3);
         }catch(NullPointerException ignore){}
@@ -51,7 +57,7 @@ public class Table extends JLayeredPane{
         try {
             Map.getInstance().setCellBlockType(4, 3, BlockType.CUPOLA);
         }catch(NullPointerException ignore){}
-        */
+
 
         PlayerPanel playerPanel = new PlayerPanel();
         add(playerPanel, Integer.valueOf(1));
@@ -71,13 +77,63 @@ public class Table extends JLayeredPane{
         return label;
     }
 
+    /*
+    private void enableLayer(Component container, boolean enable, boolean alwaysTrue){
+        container.setEnabled(enable);            //fase1: abilita/disabilita il container e tutti i suoi component
+        container.setVisible(enable);
+        boolean mainContainer = alwaysTrue;
+
+        //fase 2: se il componente è stato disabilitato (enable=false) viene spostato il un layer più basso,
+        //        se è stato abilitato (enable=true) viene spostato nel livello più alto
+
+        if(mainContainer) {      //entra solo se è il container principale (non i sotto-conteiner contenuti in esso)
+            if (!enable) {
+                moveToBack(container);
+            }
+            if (enable) {
+                moveToFront(container);
+            }
+
+        }
+        mainContainer = false;
+
+        try {
+            Component[] components= ((Container) container).getComponents();
+            for (Component component : components) {
+                enableLayer(component, enable,false);
+            }
+        } catch (ClassCastException e) {
+
+        }
+
+
+
+    }
+    */
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public MapCopy getMap() {
+        return map;
+    }
+
+    public void setMap(MapCopy map) {
+        this.map = map;
+    }
+
     private class PlayerPanel extends JPanel{
 
         PlayerPanel() {
             super();
             //setBorder(new EmptyBorder(100, 100, 100, 100));
             //setBackground(new Color(0, 0, 0, 0));       //Sfondo invisibile
-            setBounds(1120, 105, getWidth(), getHeight());
+            setBounds(1005, 95, getWidth(), getHeight());
             setSize(PLAYER_PANEL_DIMENSION);
 
             //setVisible(false);    FUNZIONA
@@ -90,32 +146,17 @@ public class Table extends JLayeredPane{
     }
 
     private class BoardPanel extends JPanel{
-        final List<TilePanel> boardTiles;
-
         BoardPanel() throws IOException {
             super(new GridLayout(5,5));
-            boardTiles = new ArrayList<>();
             for(int i = 0; i < NUM_TILES; i++) {
                 final TilePanel tilePanel = new TilePanel(this, i);
-                boardTiles.add(tilePanel);          //lista
-                add(tilePanel);                     //JPanel
+                add(tilePanel);
             }
             setBackground(new Color(0, 0, 0, 0));
-            setBounds(420, 105, getWidth(), getHeight());
+            setBounds(375, 95, getWidth(), getHeight());
             setSize(BOARD_PANEL_DIMENSION);
             validate();
         }
-
-        public void drawBoard(final Map map) throws IOException {
-            removeAll();
-            for(final TilePanel tilePanel : boardTiles){
-                tilePanel.drawTile(map);
-                add(tilePanel);
-            }
-            validate();
-            repaint();
-        }
-
     }
 
     private class TilePanel extends JPanel{     //piastrella
@@ -127,32 +168,47 @@ public class Table extends JLayeredPane{
             this.tileId = tileId;
             tileIdInCoordinate();
             setBackground(new Color(0, 0, 0, 0));
-            assignTilePieceIcon(Map.getInstance());
+            assignTilePieceIcon(Map.getInstance());     //getMap()
 
             addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(final MouseEvent e) {
                     if(isLeftMouseButton(e)){
-                        /*
-                        if(GameState == WORKER_CHOICE){
-                            seleszione pedina
-                            per tornare il numero del worker:
-                            Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(4);
-                        }else{
-                            mossa
-                            coordX, coordY
-                        }
-                        */
-
-                        /*  repaint (?)
-                        SwingUtilities.invokeLater(() -> {
-                            try {
-                                boardPanel.drawBoard(Map.getInstance());
-                            } catch (IOException ioException) {
-                                ioException.printStackTrace();
+                        switch (getGameState()){
+                            case WORKER_CHOICE ->{
+                                //CONTROLLO WORKER PLAYER
+                                //CONTROLLO PRESENZA WORKER
+                                //ERRORE MAPPA
+                                //MAPCOPY BRUTTO
+                                System.out.println(Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(4));
+                                //Gui.getInstance().asyncWriteToSocket(Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(4));
                             }
-                        });
-                        */
+                            case WAIT_TURN -> {
+                                JDialog wait = new JDialog();
+                                wait.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+
+                                JButton button = new JButton ("OK");
+                                button.addActionListener (e1 -> wait.setVisible(false));
+
+                                JPanel panel = new JPanel();
+
+                                panel.add(new JLabel ("ATTENDI!"));
+                                panel.add(button);
+                                panel.setSize(200, 200);
+
+                                wait.add(panel);
+                                wait.dispose();
+
+                                wait.setLocation(700,375);
+                                wait.pack();
+                                wait.setVisible(true);
+                            }
+                            default -> {
+                                String coordinate = coordX + ", " + coordY;
+                                System.out.println(coordinate);
+                                //Gui.getInstance().asyncWriteToSocket(coordinate);
+                            }
+                        }
                     }
                 }
 
@@ -285,13 +341,7 @@ public class Table extends JLayeredPane{
             }
         }
 
-        public void drawTile(final Map map) throws IOException {
-            assignTilePieceIcon(map);
-            validate();
-            repaint();
-        }
-
-        private void assignTilePieceIcon(final Map map) throws IOException {
+        private void assignTilePieceIcon(final Map map) throws IOException {    //MapCopy
             BufferedImage image;
             this.removeAll();
             if(map.noWorkerHere(coordX, coordY)) {
@@ -307,37 +357,86 @@ public class Table extends JLayeredPane{
         }
     }
 
+    public static void main(String[] args) {
 
-    private void enableLayer(Component container, boolean enable, boolean alwaysTrue){
-        container.setEnabled(enable);            //fase1: abilita/disabilita il container e tutti i suoi component
-        container.setVisible(enable);
-        boolean mainContainer = alwaysTrue;
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            JWindow splashScreen = new JWindow();
+            splashScreen.addWindowListener(new WindowAdapter() {
+                private boolean closed = false;
+                public void windowOpened(WindowEvent e) {
+                    startBackgroundInitialization(e.getWindow());
+                }
+                public void windowClosed(WindowEvent e) {
+                    if(!closed) {
+                        closed = true;
+                        try {
+                            showMainFrame();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    }
+                }
+            });
 
-        //fase 2: se il componente è stato disabilitato (enable=false) viene spostato il un layer più basso,
-        //        se è stato abilitato (enable=true) viene spostato nel livello più alto
-
-        if(mainContainer) {      //entra solo se è il container principale (non i sotto-conteiner contenuti in esso)
-            if (!enable) {
-                moveToBack(container);
+            JLabel label = new JLabel();
+            final Image image;
+            try {
+                image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/santorini-logo.png"));
+                label.setSize(400, 130);
+                ImageIcon img = new ImageIcon(image);
+                label.setIcon(img);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            if (enable) {
-                moveToFront(container);
+
+            splashScreen.setLayout(new GridBagLayout());
+            splashScreen.add(label, new GridBagConstraints());
+            splashScreen.setSize(400, 130);
+            splashScreen.setLocationRelativeTo(null);
+            splashScreen.setVisible(true);
+
+        });
+    }
+
+    private static void startBackgroundInitialization(final Window splashScreen) {
+        new Thread(() -> {
+            try {
+                Thread.sleep(2000);              //simula qualcosa da fare...
+            } catch(InterruptedException ignore) {
+                ignore.printStackTrace();
+            } finally {
+                disposeWindow(splashScreen);
             }
+        }).start();
+    }
 
-        }
-        mainContainer = false;
+    private static void disposeWindow(final Window window) {
+        EventQueue.invokeLater(window::dispose);
+    }
 
-        try {
-            Component[] components= ((Container) container).getComponents();
-            for (Component component : components) {
-                enableLayer(component, enable,false);
+    private static void showMainFrame() throws IOException {
+        JFrame mainFrame = new JFrame("Main Frame");
+        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        mainFrame.add(new Table());
+
+        //CHIUSURA
+        mainFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int answer = JOptionPane.showConfirmDialog(
+                        e.getWindow(),
+                        "Vuoi veramente chiudere la finestra?",
+                        "Conferma chiusura",
+                        JOptionPane.YES_NO_OPTION);
+                if(answer == JOptionPane.YES_OPTION) {
+                    e.getWindow().dispose();
+                }
             }
-        } catch (ClassCastException e) {
+        });
 
-        }
-
-
-
+        mainFrame.setVisible(true);
+        mainFrame.setSize(1280,755);
+        mainFrame.setLocationRelativeTo(null);
     }
 
 }

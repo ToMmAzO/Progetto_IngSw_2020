@@ -1,6 +1,6 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.controller.GameManager;
+import it.polimi.ingsw.model.board.MapCopy;
 import it.polimi.ingsw.model.game.GameState;
 
 import javax.swing.*;
@@ -18,11 +18,11 @@ public class Gui {
     private boolean active = true;
     private ObjectInputStream socketIn;
     private PrintWriter socketOut;
+
     private JFrame gameFrame;
     private Welcome welcome;
     private WelcomeFirst welcomeFirst;
-
-
+    private Table table;
 
     public Gui(String ip, int port){
         gui = this;
@@ -62,14 +62,29 @@ public class Gui {
         //fai cose con quello che manda il server
         System.out.println(inputObject.toString());
         if(inputObject instanceof GameState){
-            if(((GameState)inputObject).equals(GameState.WELCOME_FIRST)){
-                gameFrame.add(welcomeFirst = new WelcomeFirst());
-                welcome.setVisible(false);
-                gameFrame.setSize(600,600);
-                gameFrame.setLocation(400,20);
-                welcomeFirst.setVisible(true);
-
+            switch ((GameState)inputObject){
+                case WELCOME_FIRST ->{
+                    gameFrame.add(welcomeFirst = new WelcomeFirst());
+                    welcome.setVisible(false);
+                    gameFrame.setSize(600,600);
+                    gameFrame.setLocation(400,20);
+                    welcomeFirst.setVisible(true);
+                }
+                case CARD_CHOICE -> {}
+                case SET_WORKER -> {
+                    gameFrame.add(table = new Table());
+                    table.setGameState((GameState)inputObject);
+                    welcomeFirst.setVisible(false);
+                    gameFrame.setSize(1280,755);
+                    gameFrame.setLocationRelativeTo(null);
+                    table.setVisible(true);
+                }
+                default -> table.setGameState((GameState)inputObject);  //mappa
             }
+        } else if(inputObject instanceof MapCopy){
+            table.setMap((MapCopy)inputObject);
+        } else{
+            throw new IllegalArgumentException();
         }
 
     }
@@ -90,19 +105,13 @@ public class Gui {
         gameFrame = new JFrame("SANTORINI");
         gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-
-        //Table table = new Table();
-        //gameFrame.add(table);
-
         welcome = new Welcome();
         gameFrame.add(welcome);
         gameFrame.setVisible(true);
         gameFrame.setSize(600,600);
         gameFrame.setLocation(400,20);
 
-        //gameFrame.setLocationRelativeTo(null);
         //gameFrame.pack();     //la finestra assuma le dimensioni minime necessarie e sufficienti affinchè ciò che contiene sia visualizzato secondo le sue dimensioni ottimali
-        //gameFrame.setVisible(true);
         gameFrame.validate();
     }
 
