@@ -95,7 +95,6 @@ public class CardChoice extends JPanel {
             }
         });
 
-
         card2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

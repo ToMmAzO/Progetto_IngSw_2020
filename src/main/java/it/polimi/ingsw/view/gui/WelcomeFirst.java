@@ -56,7 +56,7 @@ public class WelcomeFirst extends JPanel {
         add(chosePlayers);
 
         JButton button2 = new JButton();
-        Image button2Png = ImageIO.read(new File(imagePath.concat("2playersBtn.png")));
+        Image button2Png = ImageIO.read(new File(imagePath.concat("2playersButton.png")));
         ImageIcon button2Img = new ImageIcon(button2Png.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_SMOOTH));
         button2.setIcon(button2Img);
         button2.setBounds(70,250,buttonWidth,buttonHeight);
@@ -66,7 +66,7 @@ public class WelcomeFirst extends JPanel {
 
         JButton button3 = new JButton();
         button3.setBounds(70 + buttonWidth + 50,250,buttonWidth,buttonHeight);
-        Image button3Png = ImageIO.read(new File(imagePath.concat("2playersBtn.png")));
+        Image button3Png = ImageIO.read(new File(imagePath.concat("3playersButton.png")));
         ImageIcon button3Img = new ImageIcon(button3Png.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_SMOOTH));
         button3.setIcon(button3Img);
         button3.setOpaque(false);
@@ -77,7 +77,7 @@ public class WelcomeFirst extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //manda notifica al server
-
+                Gui.getInstance().asyncWriteToSocket("2");
                 button2.setEnabled(false);
                 button3.setEnabled(false);
 
@@ -113,6 +113,7 @@ public class WelcomeFirst extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //manda notifica al server
+                Gui.getInstance().asyncWriteToSocket("3");
                 button2.setEnabled(false);
                 button3.setEnabled(false);
 
@@ -139,7 +140,7 @@ public class WelcomeFirst extends JPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                ImageIcon button3Img = new ImageIcon(button2Png.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_SMOOTH));
+                ImageIcon button3Img = new ImageIcon(button3Png.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_SMOOTH));
                 button3.setIcon(button3Img);
 
             }
@@ -160,7 +161,7 @@ public class WelcomeFirst extends JPanel {
     }
 
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -177,7 +178,7 @@ public class WelcomeFirst extends JPanel {
             }
         });
 
-    }
+    }*/
 
 
 

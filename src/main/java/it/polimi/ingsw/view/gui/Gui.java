@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.board.MapCopy;
+import it.polimi.ingsw.model.cards.DeckCopy;
+import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.game.GameState;
 
 import javax.swing.*;
@@ -22,6 +24,7 @@ public class Gui {
     private JFrame gameFrame;
     private Welcome welcome;
     private WelcomeFirst welcomeFirst;
+    private CardChoice cardChoice;
     private Table table;
 
     public Gui(String ip, int port){
@@ -60,7 +63,7 @@ public class Gui {
     private void readObject(Object inputObject) throws IOException {
 
         //fai cose con quello che manda il server
-        System.out.println(inputObject.toString());
+        //System.out.println(inputObject.toString());
         if(inputObject instanceof GameState){
             switch ((GameState)inputObject){
                 case WELCOME_FIRST ->{
@@ -70,7 +73,23 @@ public class Gui {
                     gameFrame.setLocation(400,20);
                     welcomeFirst.setVisible(true);
                 }
-                case CARD_CHOICE -> {}
+                case CARD_CHOICE -> {
+                    System.out.println("bella");
+                    /*God[] cards = ((DeckCopy) inputObject).getCardsSelected();
+                    if(cards.length == 3) {
+                        gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], cards[2], ((DeckCopy) inputObject).getAvailability()));
+                    }
+                    if(cards.length == 2) {
+                        gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1],((DeckCopy) inputObject).getAvailability()));
+                    }
+                    welcome.setVisible(false);
+                    welcomeFirst.setVisible(false);
+                    gameFrame.setSize(600,600);
+                    gameFrame.setLocation(400,20);
+                    cardChoice.setVisible(true);*/
+
+                }
+                case WAIT_PLAYERS -> {System.out.println("aspetta");}
                 case SET_WORKER -> {
                     gameFrame.add(table = new Table());
                     table.setGameState((GameState)inputObject);
@@ -83,7 +102,22 @@ public class Gui {
             }
         } else if(inputObject instanceof MapCopy){
             table.setMap((MapCopy)inputObject);
-        } else{
+        } else if(inputObject instanceof DeckCopy) {
+            God[] cards = ((DeckCopy) inputObject).getCardsSelected();
+            if (cards.length == 3) {
+                gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], cards[2], ((DeckCopy) inputObject).getAvailability()));
+            }
+            if (cards.length == 2) {
+                gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], ((DeckCopy) inputObject).getAvailability()));
+            }
+            welcome.setVisible(false);
+            welcomeFirst.setVisible(false);
+            gameFrame.setSize(600, 600);
+            gameFrame.setLocation(400, 20);
+            cardChoice.setVisible(true);
+        } else if(inputObject instanceof String){
+
+        }else{
             throw new IllegalArgumentException();
         }
 
@@ -117,9 +151,10 @@ public class Gui {
 
     public void run() throws IOException {
         Socket socket = new Socket(ip, port);
-        try(socket){
-            socketIn = new ObjectInputStream(socket.getInputStream());
-            socketOut = new PrintWriter(socket.getOutputStream());
+        socketIn = new ObjectInputStream(socket.getInputStream());
+        socketOut = new PrintWriter(socket.getOutputStream());
+        try{
+
             Thread t0 = asyncReadFromSocket();
             SwingUtilities.invokeLater(() -> {
                 try {
