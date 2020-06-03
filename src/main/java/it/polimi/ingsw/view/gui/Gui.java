@@ -26,6 +26,7 @@ public class Gui {
     private WelcomeFirst welcomeFirst;
     private CardChoice cardChoice;
     private Table table;
+    private DeckCopy deck;
 
     public Gui(String ip, int port){
         gui = this;
@@ -74,19 +75,18 @@ public class Gui {
                     welcomeFirst.setVisible(true);
                 }
                 case CARD_CHOICE -> {
-                    System.out.println("bella");
-                    /*God[] cards = ((DeckCopy) inputObject).getCardsSelected();
-                    if(cards.length == 3) {
-                        gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], cards[2], ((DeckCopy) inputObject).getAvailability()));
+                    God[] cards = deck.getCardsSelected();
+                    if (cards.length == 3) {
+                        gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], cards[2], deck.getAvailability()));
                     }
-                    if(cards.length == 2) {
-                        gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1],((DeckCopy) inputObject).getAvailability()));
+                    if (cards.length == 2) {
+                        gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], deck.getAvailability()));
                     }
                     welcome.setVisible(false);
                     welcomeFirst.setVisible(false);
-                    gameFrame.setSize(600,600);
-                    gameFrame.setLocation(400,20);
-                    cardChoice.setVisible(true);*/
+                    gameFrame.setSize(600, 600);
+                    gameFrame.setLocation(400, 20);
+                    cardChoice.setVisible(true);
 
                 }
                 case WAIT_PLAYERS -> {System.out.println("aspetta");}
@@ -103,18 +103,8 @@ public class Gui {
         } else if(inputObject instanceof MapCopy){
             table.setMap((MapCopy)inputObject);
         } else if(inputObject instanceof DeckCopy) {
-            God[] cards = ((DeckCopy) inputObject).getCardsSelected();
-            if (cards.length == 3) {
-                gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], cards[2], ((DeckCopy) inputObject).getAvailability()));
-            }
-            if (cards.length == 2) {
-                gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], ((DeckCopy) inputObject).getAvailability()));
-            }
-            welcome.setVisible(false);
-            welcomeFirst.setVisible(false);
-            gameFrame.setSize(600, 600);
-            gameFrame.setLocation(400, 20);
-            cardChoice.setVisible(true);
+            deck = ((DeckCopy) inputObject);
+
         } else if(inputObject instanceof String){
 
         }else{
