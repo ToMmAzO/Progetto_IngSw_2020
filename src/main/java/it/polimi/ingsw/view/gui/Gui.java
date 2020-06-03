@@ -33,6 +33,8 @@ public class Gui {
     private CardChoice cardChoice;
     private Table table;
     private DeckCopy deck;
+    private MapCopy map;
+
 
     public Gui(String ip, int port){
         gui = this;
@@ -107,7 +109,8 @@ public class Gui {
                 default -> table.setGameState((GameState)inputObject);  //mappa
             }
         } else if(inputObject instanceof MapCopy){
-            table.setMap((MapCopy)inputObject);
+            map = ((MapCopy)inputObject);
+            //table.setMap((MapCopy)inputObject);
         } else if(inputObject instanceof DeckCopy) {
             deck = ((DeckCopy) inputObject);
 

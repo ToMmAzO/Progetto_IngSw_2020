@@ -88,7 +88,7 @@ public class CardChoice extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //segnala al server che è stato scelto god1
-                System.out.println("god1");
+                Gui.getInstance().asyncWriteToSocket("1");
                 card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
                 card2.setEnabled(false);
                 card3.setEnabled(false);
@@ -99,7 +99,7 @@ public class CardChoice extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //segnala al server che è stato scelto god2
-                System.out.println("god2");
+                Gui.getInstance().asyncWriteToSocket("2");
                 card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
                 card2.setEnabled(false);
                 card3.setEnabled(false);
@@ -111,7 +111,7 @@ public class CardChoice extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //segnala al server che è stato scelto god3
-                System.out.println("god3");
+                Gui.getInstance().asyncWriteToSocket("3");
                 card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
                 card2.setEnabled(false);
                 card3.setEnabled(false);
@@ -172,7 +172,7 @@ public class CardChoice extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //segnala al server che è stato scelto god1
-                System.out.println("god1");
+                Gui.getInstance().asyncWriteToSocket("1");
                 card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
                 card2.setEnabled(false);
             }
@@ -183,7 +183,7 @@ public class CardChoice extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //segnala al server che è stato scelto god2
-                System.out.println("god2");
+                Gui.getInstance().asyncWriteToSocket("2");
                 card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
                 card2.setEnabled(false);
             }

@@ -401,7 +401,7 @@ public class Table extends JLayeredPane{
     private static void startBackgroundInitialization(final Window splashScreen) {
         new Thread(() -> {
             try {
-                Thread.sleep(5000);              //simula qualcosa da fare...
+                Thread.sleep(1000);              //simula qualcosa da fare...
             } catch(InterruptedException e) {
                 e.printStackTrace();
             } finally {
