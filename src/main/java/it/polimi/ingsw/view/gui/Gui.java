@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.board.MapCopy;
 import it.polimi.ingsw.model.cards.DeckCopy;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.game.GameState;
+import it.polimi.ingsw.model.player.Color;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -122,7 +123,9 @@ public class Gui {
             cardChoice.setVisible(true);
         } else if(inputObject instanceof String){
 
-        }else{
+        } else if(inputObject instanceof Color){
+
+        } else{
             throw new IllegalArgumentException();
         }
 
