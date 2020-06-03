@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.model.workers.Worker;
+
 import java.io.Serializable;
 
 public class MapCopy implements Serializable {
@@ -28,6 +30,18 @@ public class MapCopy implements Serializable {
             }
             System.out.println("\n---|------|------|------|------|------|");
         }
+    }
+
+    public BlockType getCellBlockType(int row, int column){
+        return map[row][column].getBlockType();
+    }
+
+    public Worker getWorkerInCell(int row, int column){
+        return map[row][column].getWorkerPresence();
+    }
+
+    public boolean noWorkerHere(int row, int column){
+        return map[row][column].getWorkerPresence() == null;
     }
 
 }

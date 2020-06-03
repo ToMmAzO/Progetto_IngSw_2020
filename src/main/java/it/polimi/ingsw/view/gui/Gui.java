@@ -5,7 +5,12 @@ import it.polimi.ingsw.model.cards.DeckCopy;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.game.GameState;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -135,12 +140,86 @@ public class Gui {
         t.start();
     }
 
-    private void start() throws IOException {
+    private void start() {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            JWindow splashScreen = new JWindow();
+            splashScreen.addWindowListener(new WindowAdapter() {
+                private boolean closed = false;
+                public void windowOpened(WindowEvent e) {
+                    startBackgroundInitialization(e.getWindow());
+                }
+                public void windowClosed(WindowEvent e) {
+                    if(!closed) {
+                        closed = true;
+                        try {
+                            showMainFrame();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    }
+                }
+            });
+
+            JLabel label = new JLabel();
+            final Image image;
+            try {
+                image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/santorini-logo.png"));
+                label.setSize(400, 130);
+                ImageIcon img = new ImageIcon(image);
+                label.setIcon(img);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            splashScreen.setLayout(new GridBagLayout());
+            splashScreen.add(label, new GridBagConstraints());
+            splashScreen.setSize(400, 130);
+            splashScreen.setLocationRelativeTo(null);
+            splashScreen.setVisible(true);
+
+        });
+    }
+
+    private void startBackgroundInitialization(final Window splashScreen) {
+        new Thread(() -> {
+            try {
+                Thread.sleep(5000);              //simula qualcosa da fare...
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                disposeWindow(splashScreen);
+            }
+        }).start();
+    }
+
+    private void disposeWindow(final Window window) {
+        EventQueue.invokeLater(window::dispose);
+    }
+
+    private void showMainFrame() throws IOException {
         gameFrame = new JFrame("SANTORINI");
         gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         welcome = new Welcome();
         gameFrame.add(welcome);
+
+        //CHIUSURA
+        /*
+        gameFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int answer = JOptionPane.showConfirmDialog(
+                        e.getWindow(),
+                        "Vuoi veramente chiudere la finestra?",
+                        "Conferma chiusura",
+                        JOptionPane.YES_NO_OPTION);
+                if(answer == JOptionPane.YES_OPTION) {
+                    e.getWindow().dispose();
+                }
+            }
+        });
+        */
+
         gameFrame.setVisible(true);
         gameFrame.setSize(600,600);
         gameFrame.setLocation(400,20);
@@ -151,10 +230,9 @@ public class Gui {
 
     public void run() throws IOException {
         Socket socket = new Socket(ip, port);
-        socketIn = new ObjectInputStream(socket.getInputStream());
-        socketOut = new PrintWriter(socket.getOutputStream());
-        try{
-
+        try(socket){
+            socketIn = new ObjectInputStream(socket.getInputStream());
+            socketOut = new PrintWriter(socket.getOutputStream());
             Thread t0 = asyncReadFromSocket();
             SwingUtilities.invokeLater(() -> {
                 try {

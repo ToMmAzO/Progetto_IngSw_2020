@@ -176,7 +176,7 @@ public class Table extends JLayeredPane{
                     if(isLeftMouseButton(e)){
                         switch (getGameState()){
                             case WORKER_CHOICE ->{
-                                //CONTROLLO WORKER PLAYER
+                                //CONTROLLO WORKER PLAYER  ok color
                                 //CONTROLLO PRESENZA WORKER
                                 //ERRORE MAPPA
                                 //MAPCOPY BRUTTO
@@ -401,9 +401,9 @@ public class Table extends JLayeredPane{
     private static void startBackgroundInitialization(final Window splashScreen) {
         new Thread(() -> {
             try {
-                Thread.sleep(2000);              //simula qualcosa da fare...
-            } catch(InterruptedException ignore) {
-                ignore.printStackTrace();
+                Thread.sleep(5000);              //simula qualcosa da fare...
+            } catch(InterruptedException e) {
+                e.printStackTrace();
             } finally {
                 disposeWindow(splashScreen);
             }
