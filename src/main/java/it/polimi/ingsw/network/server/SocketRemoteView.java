@@ -185,7 +185,7 @@ public class SocketRemoteView {
                 }
                 switch(message){
                     case CARD_CHOICE -> clientConnection.asyncSend(new DeckCopy());
-                    case WAIT_PLAYERS -> clientConnection.asyncSend("Avrai il colore " + player.getColor().toString() + ".");
+                    case WAIT_PLAYERS -> clientConnection.asyncSend(player.getColor());
                 }
                 clientConnection.asyncSend(message);
             }

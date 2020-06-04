@@ -52,7 +52,7 @@ public class Welcome extends JPanel {
 
         okButton = new JButton();
         Image buttonPng = ImageIO.read(new File(imagePath.concat("button-play-normal.png")));
-        ImageIcon buttonImg = new ImageIcon(buttonPng.getScaledInstance(okWidth, okHeight, Image.SCALE_SMOOTH));
+        ImageIcon buttonImg = new ImageIcon(imagePath.concat("button-play-normal.png"));
         okButton.setIcon(buttonImg);
         okButton.setBounds(250,150 + logoHeight,okWidth,okHeight);
         okButton.setOpaque(false);
@@ -87,14 +87,15 @@ public class Welcome extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                ImageIcon buttonImg = new ImageIcon(buttonPng.getScaledInstance(okWidth + 10, okHeight + 10, Image.SCALE_SMOOTH));
-                okButton.setIcon(buttonImg);
+
+                ImageIcon buttonImg2 = new ImageIcon(buttonPng.getScaledInstance(okWidth + 10, okHeight + 10, Image.SCALE_SMOOTH));
+                okButton.setIcon(buttonImg2);
 
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                ImageIcon buttonImg = new ImageIcon(buttonPng.getScaledInstance(okWidth, okHeight, Image.SCALE_SMOOTH));
+                //ImageIcon buttonImg = new ImageIcon(buttonPng.getScaledInstance(okWidth, okHeight, Image.SCALE_SMOOTH));
                 okButton.setIcon(buttonImg);
 
             }
@@ -103,8 +104,8 @@ public class Welcome extends JPanel {
 
 
 
-        Image santoriniLogo = ImageIO.read(new File(imagePath.concat("santorini-logo.png")));
-        ImageIcon img = new ImageIcon(santoriniLogo.getScaledInstance(logoWidth, logoHeight, Image.SCALE_REPLICATE));
+        //Image santoriniLogo = ImageIO.read(new File(imagePath.concat("santorini-logo.png")));
+        ImageIcon img = new ImageIcon(imagePath.concat("santorini-logo.png"));
         logo = new JLabel(img);
         logo.setBounds(100,20,logoWidth,logoHeight);
         logo.setOpaque(false);
@@ -124,26 +125,29 @@ public class Welcome extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        super.paintComponent(g);
-        g.drawImage(img, 0, 0, null);
+        super.paintComponent(g2d);
+        g2d.drawImage(img, 0, 0, null);
     }
 
-  /*  public static void main(String[] args) {
+  /* public static void main(String[] args) {
 
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                JFrame mainFrame = new JFrame();
-                try {
-                    mainFrame.add(new Welcome());
-                    mainFrame.setVisible(true);
-                    mainFrame.setSize(600,600);
-                    mainFrame.setLocation(400,20);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+       javax.swing.SwingUtilities.invokeLater(new Runnable() {
+           public void run() {
+               JFrame mainFrame = new JFrame();
+               try {
+                   mainFrame.add(new Welcome());
+                   mainFrame.setVisible(true);
+                   mainFrame.setSize(600, 600);
+                   mainFrame.setLocation(400, 20);
+               } catch (IOException e) {
+                   e.printStackTrace();
+               }
 
-            }
-        });*/
+           }
+       });
+   }*/
 
 }

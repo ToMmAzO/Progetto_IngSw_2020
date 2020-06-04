@@ -27,4 +27,11 @@ public class DeckCopy implements Serializable {
         }
     }
 
+    public God[] getCardsSelected() {
+        return cardsSelected;
+    }
+
+    public boolean[] getAvailability() {
+        return availability;
+    }
 }

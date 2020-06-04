@@ -1,9 +1,17 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.board.MapCopy;
+import it.polimi.ingsw.model.cards.DeckCopy;
+import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.game.GameState;
+import it.polimi.ingsw.model.player.Color;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -22,7 +30,11 @@ public class Gui {
     private JFrame gameFrame;
     private Welcome welcome;
     private WelcomeFirst welcomeFirst;
+    private CardChoice cardChoice;
     private Table table;
+    private DeckCopy deck;
+    private MapCopy map;
+
 
     public Gui(String ip, int port){
         gui = this;
@@ -60,7 +72,7 @@ public class Gui {
     private void readObject(Object inputObject) throws IOException {
 
         //fai cose con quello che manda il server
-        System.out.println(inputObject.toString());
+        //System.out.println(inputObject.toString());
         if(inputObject instanceof GameState){
             switch ((GameState)inputObject){
                 case WELCOME_FIRST ->{
@@ -70,7 +82,22 @@ public class Gui {
                     gameFrame.setLocation(400,20);
                     welcomeFirst.setVisible(true);
                 }
-                case CARD_CHOICE -> {}
+                case CARD_CHOICE -> {
+                    God[] cards = deck.getCardsSelected();
+                    if (cards.length == 3) {
+                        gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], cards[2], deck.getAvailability()));
+                    }
+                    if (cards.length == 2) {
+                        gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], deck.getAvailability()));
+                    }
+                    welcome.setVisible(false);
+                    welcomeFirst.setVisible(false);
+                    gameFrame.setSize(600, 600);
+                    gameFrame.setLocation(400, 20);
+                    cardChoice.setVisible(true);
+
+                }
+                case WAIT_PLAYERS -> {System.out.println("aspetta");}
                 case SET_WORKER -> {
                     gameFrame.add(table = new Table());
                     table.setGameState((GameState)inputObject);
@@ -82,7 +109,15 @@ public class Gui {
                 default -> table.setGameState((GameState)inputObject);  //mappa
             }
         } else if(inputObject instanceof MapCopy){
-            table.setMap((MapCopy)inputObject);
+            map = ((MapCopy)inputObject);
+            //table.setMap((MapCopy)inputObject);
+        } else if(inputObject instanceof DeckCopy) {
+            deck = ((DeckCopy) inputObject);
+
+        } else if(inputObject instanceof String){
+
+        } else if(inputObject instanceof Color){
+
         } else{
             throw new IllegalArgumentException();
         }
@@ -101,12 +136,86 @@ public class Gui {
         t.start();
     }
 
-    private void start() throws IOException {
+    private void start() {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            JWindow splashScreen = new JWindow();
+            splashScreen.addWindowListener(new WindowAdapter() {
+                private boolean closed = false;
+                public void windowOpened(WindowEvent e) {
+                    startBackgroundInitialization(e.getWindow());
+                }
+                public void windowClosed(WindowEvent e) {
+                    if(!closed) {
+                        closed = true;
+                        try {
+                            showMainFrame();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    }
+                }
+            });
+
+            JLabel label = new JLabel();
+            final Image image;
+            try {
+                image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/santorini-logo.png"));
+                label.setSize(400, 130);
+                ImageIcon img = new ImageIcon(image);
+                label.setIcon(img);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            splashScreen.setLayout(new GridBagLayout());
+            splashScreen.add(label, new GridBagConstraints());
+            splashScreen.setSize(400, 130);
+            splashScreen.setLocationRelativeTo(null);
+            splashScreen.setVisible(true);
+
+        });
+    }
+
+    private void startBackgroundInitialization(final Window splashScreen) {
+        new Thread(() -> {
+            try {
+                Thread.sleep(5000);              //simula qualcosa da fare...
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                disposeWindow(splashScreen);
+            }
+        }).start();
+    }
+
+    private void disposeWindow(final Window window) {
+        EventQueue.invokeLater(window::dispose);
+    }
+
+    private void showMainFrame() throws IOException {
         gameFrame = new JFrame("SANTORINI");
         gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         welcome = new Welcome();
         gameFrame.add(welcome);
+
+        //CHIUSURA
+        /*
+        gameFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int answer = JOptionPane.showConfirmDialog(
+                        e.getWindow(),
+                        "Vuoi veramente chiudere la finestra?",
+                        "Conferma chiusura",
+                        JOptionPane.YES_NO_OPTION);
+                if(answer == JOptionPane.YES_OPTION) {
+                    e.getWindow().dispose();
+                }
+            }
+        });
+        */
+
         gameFrame.setVisible(true);
         gameFrame.setSize(600,600);
         gameFrame.setLocation(400,20);

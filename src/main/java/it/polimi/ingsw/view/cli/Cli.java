@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.cli;
 import it.polimi.ingsw.model.board.MapCopy;
 import it.polimi.ingsw.model.cards.DeckCopy;
 import it.polimi.ingsw.model.game.GameState;
+import it.polimi.ingsw.model.player.Color;
 import it.polimi.ingsw.network.message.*;
 
 import java.io.IOException;
@@ -38,8 +39,10 @@ public class Cli {
                     Object inputObject = socketIn.readObject();
                     if(inputObject instanceof String){
                         System.out.println((String)inputObject);
-                    } else if(inputObject instanceof GameState){
+                    } else if(inputObject instanceof GameState) {
                         runState((GameState)inputObject);
+                    } else if(inputObject instanceof Color){
+                        System.out.println("Avrai il colore " + inputObject.toString() + ".");
                     } else if(inputObject instanceof DeckCopy){
                         ((DeckCopy) inputObject).printCards();
                     } else if(inputObject instanceof MapCopy){
@@ -108,7 +111,7 @@ public class Cli {
                             ----------------------------------------------------------------------------------------------------------------------------------------------------
                             ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
                             ----------------------------------------------------------------------------------------------------------------------------------------------------
-                            |||||              ________          __                       __________      ________       ________                                          |||||\s
+                            |||||              ________          __         ___    __     __________      ________       ________      __     ___    __     __             |||||\s
                             |||||             //                //\\\\        ||\\\\   ||         ||         ||      ||     ||      \\\\     ||     ||\\\\   ||     ||             |||||\s
                             |||||             \\\\_______        //__\\\\       || \\\\  ||         ||         ||      ||     ||______//     ||     || \\\\  ||     ||             |||||\s
                             |||||                     \\\\      //    \\\\      ||  \\\\ ||         ||         ||      ||     ||    \\\\       ||     ||  \\\\ ||     ||             |||||\s
