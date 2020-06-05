@@ -1,11 +1,8 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.board.BlockType;
-import it.polimi.ingsw.model.board.Map;
 import it.polimi.ingsw.model.board.MapCopy;
 import it.polimi.ingsw.model.game.GameState;
-import it.polimi.ingsw.model.workers.WorkerDemeter;
-import it.polimi.ingsw.model.workers.WorkerPan;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,12 +23,15 @@ public class Table extends JLayeredPane{
 
     private final static Dimension TABLE_DIMENSION = new Dimension(1280,720);
     private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(530,530);
-    private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(200,530);
+    //private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(200,530);
+
+    private final static int NUM_TILES = 25;
 
     private GameState gameState = GameState.WAIT_TURN;
     private MapCopy map;
 
-    private final static int NUM_TILES = 25;
+    //PlayerPanel playerPanel = new PlayerPanel();
+    BoardPanel boardPanel = new BoardPanel();
 
     public Table() throws IOException {
         super();
@@ -39,30 +39,8 @@ public class Table extends JLayeredPane{
 
         add(getBackGround(), Integer.valueOf(0));
 
+        //add(playerPanel, Integer.valueOf(1));
 
-        new Map();
-
-        try {
-            new WorkerDemeter("RED1", 2, 3);
-        }catch(NullPointerException ignore){}
-
-        try {
-            new WorkerPan("YEL1", 3, 3);
-        }catch(NullPointerException ignore){}
-
-        try {
-            Map.getInstance().setCellBlockType(3, 3, BlockType.BLOCK3);
-        }catch(NullPointerException ignore){}
-
-        try {
-            Map.getInstance().setCellBlockType(4, 3, BlockType.CUPOLA);
-        }catch(NullPointerException ignore){}
-
-
-        PlayerPanel playerPanel = new PlayerPanel();
-        add(playerPanel, Integer.valueOf(1));
-
-        BoardPanel boardPanel = new BoardPanel();
         add(boardPanel, Integer.valueOf(1));
 
         validate();
@@ -123,10 +101,12 @@ public class Table extends JLayeredPane{
         return map;
     }
 
-    public void setMap(MapCopy map) {
+    public void setMap(MapCopy map) throws IOException {
         this.map = map;
+        boardPanel.drawBoard(map);
     }
 
+    /*
     private class PlayerPanel extends JPanel{
 
         PlayerPanel() {
@@ -144,12 +124,17 @@ public class Table extends JLayeredPane{
         }
 
     }
+    */
 
     private class BoardPanel extends JPanel{
+        final List<TilePanel> boardTiles;
+
         BoardPanel() throws IOException {
             super(new GridLayout(5,5));
+            this.boardTiles = new ArrayList<>();
             for(int i = 0; i < NUM_TILES; i++) {
-                final TilePanel tilePanel = new TilePanel(this, i);
+                final TilePanel tilePanel = new TilePanel(i);
+                this.boardTiles.add(tilePanel);
                 add(tilePanel);
             }
             setBackground(new Color(0, 0, 0, 0));
@@ -157,18 +142,28 @@ public class Table extends JLayeredPane{
             setSize(BOARD_PANEL_DIMENSION);
             validate();
         }
+
+        public void drawBoard(MapCopy map) throws IOException {
+            removeAll();
+            for(final TilePanel tilePanel : boardTiles){
+                tilePanel.drawTile(map);
+                add(tilePanel);
+            }
+            validate();
+            repaint();
+        }
     }
 
     private class TilePanel extends JPanel{     //piastrella
         private final int tileId;
         private int coordX, coordY;
 
-        TilePanel(final BoardPanel boardPanel, final int tileId) throws IOException {
+        TilePanel(final int tileId) throws IOException {
             super(new GridBagLayout());
             this.tileId = tileId;
             tileIdInCoordinate();
             setBackground(new Color(0, 0, 0, 0));
-            assignTilePieceIcon(Map.getInstance());     //getMap()
+            assignTilePieceIcon(getMap());
 
             addMouseListener(new MouseListener() {
                 @Override
@@ -176,12 +171,11 @@ public class Table extends JLayeredPane{
                     if(isLeftMouseButton(e)){
                         switch (getGameState()){
                             case WORKER_CHOICE ->{
-                                //CONTROLLO WORKER PLAYER  ok color
-                                //CONTROLLO PRESENZA WORKER
-                                //ERRORE MAPPA
-                                //MAPCOPY BRUTTO
-                                System.out.println(Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(4));
-                                //Gui.getInstance().asyncWriteToSocket(Map.getInstance().getWorkerInCell(coordX, coordY).getIdWorker().substring(4));
+                                if(!Table.this.getMap().noWorkerHere(coordX, coordY)){
+                                    if(Table.this.getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(Gui.getInstance().getColor().toString())){
+                                        Gui.getInstance().asyncWriteToSocket(Table.this.getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(4));
+                                    }
+                                }
                             }
                             case WAIT_TURN -> {
                                 JDialog wait = new JDialog();
@@ -205,8 +199,7 @@ public class Table extends JLayeredPane{
                             }
                             default -> {
                                 String coordinate = coordX + ", " + coordY;
-                                System.out.println(coordinate);
-                                //Gui.getInstance().asyncWriteToSocket(coordinate);
+                                Gui.getInstance().asyncWriteToSocket(coordinate);
                             }
                         }
                     }
@@ -341,7 +334,13 @@ public class Table extends JLayeredPane{
             }
         }
 
-        private void assignTilePieceIcon(final Map map) throws IOException {    //MapCopy
+        public void drawTile(final MapCopy map) throws IOException {
+            assignTilePieceIcon(map);
+            validate();
+            repaint();
+        }
+
+        private void assignTilePieceIcon(final MapCopy map) throws IOException {
             BufferedImage image;
             this.removeAll();
             if(map.noWorkerHere(coordX, coordY)) {
@@ -357,64 +356,7 @@ public class Table extends JLayeredPane{
         }
     }
 
-    public static void main(String[] args) {
-
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            JWindow splashScreen = new JWindow();
-            splashScreen.addWindowListener(new WindowAdapter() {
-                private boolean closed = false;
-                public void windowOpened(WindowEvent e) {
-                    startBackgroundInitialization(e.getWindow());
-                }
-                public void windowClosed(WindowEvent e) {
-                    if(!closed) {
-                        closed = true;
-                        try {
-                            showMainFrame();
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
-                        }
-                    }
-                }
-            });
-
-            JLabel label = new JLabel();
-            final Image image;
-            try {
-                image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/santorini-logo.png"));
-                label.setSize(400, 130);
-                ImageIcon img = new ImageIcon(image);
-                label.setIcon(img);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            splashScreen.setLayout(new GridBagLayout());
-            splashScreen.add(label, new GridBagConstraints());
-            splashScreen.setSize(400, 130);
-            splashScreen.setLocationRelativeTo(null);
-            splashScreen.setVisible(true);
-
-        });
-    }
-
-    private static void startBackgroundInitialization(final Window splashScreen) {
-        new Thread(() -> {
-            try {
-                Thread.sleep(1000);              //simula qualcosa da fare...
-            } catch(InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                disposeWindow(splashScreen);
-            }
-        }).start();
-    }
-
-    private static void disposeWindow(final Window window) {
-        EventQueue.invokeLater(window::dispose);
-    }
-
-    private static void showMainFrame() throws IOException {
+    public static void main(String[] args) throws IOException {
         JFrame mainFrame = new JFrame("Main Frame");
         mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainFrame.add(new Table());
