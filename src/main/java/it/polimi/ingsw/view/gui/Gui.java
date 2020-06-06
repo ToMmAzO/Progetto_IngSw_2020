@@ -32,9 +32,11 @@ public class Gui {
     private WelcomeFirst welcomeFirst;
     private CardChoice cardChoice;
     private Table table;
+
     private DeckCopy deck;
     private MapCopy map;
     private Color color;
+
 
 
     public Gui(String ip, int port){
@@ -98,7 +100,7 @@ public class Gui {
                     cardChoice.setVisible(true);
 
                 }
-                case WAIT_PLAYERS -> {System.out.println("aspetta");}
+                case WAIT_PLAYERS -> System.out.println("aspetta");
                 case SET_WORKER -> {
                     gameFrame.add(table = new Table());
                     table.setGameState((GameState)inputObject);
@@ -110,16 +112,30 @@ public class Gui {
                 default -> table.setGameState((GameState)inputObject);  //mappa
             }
         } else if(inputObject instanceof MapCopy){
-            map = ((MapCopy)inputObject);
-            //table.setMap((MapCopy)inputObject);
+            table.setMap((MapCopy)inputObject);
         } else if(inputObject instanceof DeckCopy) {
             deck = ((DeckCopy) inputObject);
-
         } else if(inputObject instanceof String){
+            JDialog wait = new JDialog();
+            wait.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 
+            JButton button = new JButton ("OK");
+            button.addActionListener (e1 -> wait.setVisible(false));
+
+            JPanel panel = new JPanel();
+
+            panel.add(new JLabel ((String) inputObject));
+            panel.add(button);
+            panel.setSize(200, 200);
+
+            wait.add(panel);
+            wait.dispose();
+
+            wait.setLocation(700,375);
+            wait.pack();
+            wait.setVisible(true);
         } else if(inputObject instanceof Color){
-            color = ((Color)inputObject);
-
+            setColor((Color) inputObject);
         } else{
             throw new IllegalArgumentException();
         }
@@ -248,4 +264,11 @@ public class Gui {
         }
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 }
