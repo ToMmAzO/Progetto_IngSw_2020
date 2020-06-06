@@ -2,7 +2,6 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.MapCopy;
-import it.polimi.ingsw.model.game.GameState;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

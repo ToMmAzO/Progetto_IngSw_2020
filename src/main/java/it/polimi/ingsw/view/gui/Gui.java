@@ -80,7 +80,7 @@ public class Gui {
         if(inputObject instanceof GameState){
             switch ((GameState)inputObject){
                 case WELCOME_FIRST ->{
-                    gameFrame.add(welcomeFirst = new WelcomeFirst());
+                    gameFrame.add(welcomeFirst);
                     welcome.setVisible(false);
                     gameFrame.setSize(600,600);
                     gameFrame.setLocation(400,20);
@@ -222,6 +222,7 @@ public class Gui {
         gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         welcome = new Welcome();
+        welcomeFirst = new WelcomeFirst();
         gameFrame.add(welcome);
 
         //CHIUSURA

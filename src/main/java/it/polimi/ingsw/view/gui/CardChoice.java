@@ -209,22 +209,6 @@ public class CardChoice extends JPanel {
 
         image = ImageIO.read(new File(ImagePath + god.toString() + ".png"));
 
-        /*switch (god){
-            case APOLLO -> image = ImageIO.read(new File(ImagePath.concat("/Apollo.png")));
-            case ARTEMIS -> image = ImageIO.read(new File(ImagePath.concat("/Artemis.png")));
-            case ATHENA -> image = ImageIO.read(new File(ImagePath.concat("/Athena.png")));
-            case ATLAS -> image = ImageIO.read(new File(ImagePath.concat("/Atlas.png")));
-            case CHRONUS -> image = ImageIO.read(new File(ImagePath.concat("/Chronus.png")));
-            case DEMETER -> image = ImageIO.read(new File(ImagePath.concat("/Demeter.png")));
-            case HEPHAESTUS -> image = ImageIO.read(new File(ImagePath.concat("/Hephaestus.png")));
-            case HERA -> image = ImageIO.read(new File(ImagePath.concat("/Hera.png")));
-            case HESTIA -> image = ImageIO.read(new File(ImagePath.concat("/Hestia.png")));
-            case MINOTAUR -> image = ImageIO.read(new File(ImagePath.concat("/Minotaur.png")));
-            case PAN -> image = ImageIO.read(new File(ImagePath.concat("/Pan.png")));
-            case PROMETHEUS -> image = ImageIO.read(new File(ImagePath.concat( "/Prometheus.png")));
-            case TRITON -> image = ImageIO.read(new File(ImagePath.concat("/Triton.png")));
-            default -> image = ImageIO.read(new File(ImagePath.concat("/Zeus.png")));
-        }*/
 
         return new ImageIcon(image.getScaledInstance(imageWidth, imageHeight, Image.SCALE_AREA_AVERAGING));
     }
