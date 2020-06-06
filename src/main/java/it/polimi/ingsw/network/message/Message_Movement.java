@@ -11,8 +11,8 @@ public class Message_Movement extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.print("MOVIMENTO:\nInserisci delle cordinate (x, y): ");
+    public String getMessage(){
+        return "MOVEMENT. Type coordinates (x, y): ";
     }
 
 }

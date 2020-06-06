@@ -11,8 +11,8 @@ public class Message_QuestionHestia extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.print("Vuoi costruire ancora?\nRicorda: non puoi costruire sul perimetro. Scrivi Yes o No: ");
+    public String getMessage(){
+        return "Do you want to build again?\nRemember: you cannot build into a perimeter space. Type Yes or No: ";
     }
 
 }

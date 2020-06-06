@@ -11,8 +11,8 @@ public class Message_WaitPlayers extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.println("Attendi gli altri giocatori!");
+    public String getMessage(){
+        return "Waiting for other players!\n";
     }
 
 }

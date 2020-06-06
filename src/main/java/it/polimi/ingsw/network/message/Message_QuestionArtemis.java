@@ -11,8 +11,8 @@ public class Message_QuestionArtemis extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.print("Vuoi muovere ancora?/\nRicorda: non puoi tornare alla casella precedente. Scrivi Yes o No: ");
+    public String getMessage(){
+        return "Do you want to move again?\nRemember: you cannot go back to the previous space. Type Yes or No: ";
     }
 
 }

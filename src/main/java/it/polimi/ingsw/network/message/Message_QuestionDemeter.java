@@ -11,8 +11,8 @@ public class Message_QuestionDemeter extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.print("Vuoi costruire ancora?\nRicorda: non puoi costruire dove hai già costruito. Scrivi Yes o No: ");
+    public String getMessage(){
+        return "Do you want to build again?\nRemember: you cannot build where you have already built. Type Yes or No: ";
     }
 
 }

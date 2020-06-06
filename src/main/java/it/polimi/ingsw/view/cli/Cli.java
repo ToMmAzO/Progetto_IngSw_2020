@@ -42,7 +42,7 @@ public class Cli {
                     } else if(inputObject instanceof GameState) {
                         runState((GameState)inputObject);
                     } else if(inputObject instanceof Color){
-                        System.out.println("Avrai il colore " + inputObject.toString() + ".");
+                        System.out.println("Your color is " + inputObject.toString() + ".");
                     } else if(inputObject instanceof DeckCopy){
                         ((DeckCopy) inputObject).printCards();
                     } else if(inputObject instanceof MapCopy){
@@ -86,7 +86,7 @@ public class Cli {
             case CONSTRUCTION -> message = new Message_Construction();
             default -> message = new Message_Error();
         }
-        message.printMessage();
+        System.out.print(message.getMessage());
     }
 
     public Thread asyncWriteToSocket(final Scanner stdin, final PrintWriter socketOut){
@@ -128,7 +128,7 @@ public class Cli {
         try{
             Thread t0 = asyncReadFromSocket(socketIn);
             Thread t1 = asyncWriteToSocket(stdin, socketOut);
-            System.out.print("What's your name? ");
+            System.out.print("What is your name? ");
             t0.join();
             t1.join();
         } catch(InterruptedException | NoSuchElementException e){

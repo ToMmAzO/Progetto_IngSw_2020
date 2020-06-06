@@ -11,8 +11,8 @@ public class Message_Error extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.println("Errore! Stato di gioco non riconosciuto!");
+    public String getMessage(){
+        return "Error!\n";
     }
 
 }

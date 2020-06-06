@@ -8,20 +8,20 @@ public enum God {
 
     static HashMap<God, String> godDescription = new HashMap<>() {
         {
-            put(APOLLO, "Il tuo lavoratore può spostarsi nella casella di un lavoratore avversario, mandandolo nella tua attuale casella.");
-            put(ARTEMIS, "Il tuo lavoratore può spostarsi una volta in più, ma non può tornare nella casella in cui è partito.");
-            put(ATHENA, "Se nel tuo turno uno dei tuoi lavoratori è salito di livello, in questo turno i lavoratori degli avversari non possono salire di livello.");
-            put(ATLAS, "Il tuo lavoratore può costruire una cupola su qualsiasi livello, compreso il terreno.");
-            put(CHRONUS, "Vinci anche quando ci sono almeno 5 torri complete sulla mappa.");
-            put(DEMETER, "Il tuo lavoratore può costruire una volta in più, ma non nella stessa casella.");
-            put(HEPHAESTUS, "Il tuo lavoratore può costruire un blocco aggiuntuvo (non una cupola) al di sopra del primo blocco.");
-            put(HERA, "Un avversario non può vincere muovendo in uno spazio perimetrale.");
-            put(HESTIA, "Il tuo lavoratore può costruire una volta in più, ma non in uno spazio perimetrale.");
-            put(MINOTAUR, "Il tuo lavoratore può spostarsi nella casella di un lavoratore avversario se la casella successiva nella stessa direzione è libera, spostando il lavoratore avversario in questa (indipendentemente dal livello).");
-            put(PAN, "Vinci anche se il tuo lavoratore è sceso di due o più livelli.");
-            put(PROMETHEUS, "Se il tuo lavoratore non sale di livello, può costruire prima e dopo essere stato mosso.");
-            put(TRITON, "Ogni volta che il tuo lavoratore si sposta in uno spazio perimetrale, puoi muoverlo un'altra volta.");
-            put(ZEUS, "Il tuo lavoratore può costruire un blocco sotto di sè.");
+            put(APOLLO, "Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated");
+            put(ARTEMIS, "Your Worker may move one additional time, but not back to its initial space.");
+            put(ATHENA, "If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.");
+            put(ATLAS, "Your Worker may build a dome at any level.");
+            put(CHRONUS, "You also win when there are at least five complete Towers on the board.");
+            put(DEMETER, "Your Worker may build one additional time, but not on the same space.");
+            put(HEPHAESTUS, "Your Worker may build one additional block (not dome) on top of your first block.");
+            put(HERA, "An opponent cannot win by moving into a perimeter space.");
+            put(HESTIA, "Your Worker may build one additional time, but this cannot be on a perimeter space.");
+            put(MINOTAUR, "Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level.");
+            put(PAN, "You also win if your Worker moves down two or more levels.");
+            put(PROMETHEUS, "If your Worker does not move up, it may build both before and after moving.");
+            put(TRITON, "Each time your Worker moves into a perimeter space, it may immediately move again.");
+            put(ZEUS, "Your Worker may build a block under itself.");
         }
     };
 

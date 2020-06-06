@@ -11,8 +11,8 @@ public class Message_Construction extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.print("COSTRUZIONE:\nInserisci delle cordinate (x, y): ");
+    public String getMessage(){
+        return "CONSTRUCTION. Type coordinates (x, y): ";
     }
 
 }
