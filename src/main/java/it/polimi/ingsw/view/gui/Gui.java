@@ -34,7 +34,10 @@ public class Gui {
     private Table table;
 
     private DeckCopy deck;
+    private MapCopy map;
+    private GameState gameState;
     private Color color;
+
 
 
     public Gui(String ip, int port){
@@ -77,7 +80,7 @@ public class Gui {
         if(inputObject instanceof GameState){
             switch ((GameState)inputObject){
                 case WELCOME_FIRST ->{
-                    gameFrame.add(welcomeFirst = new WelcomeFirst());
+                    gameFrame.add(welcomeFirst);
                     welcome.setVisible(false);
                     gameFrame.setSize(600,600);
                     gameFrame.setLocation(400,20);
@@ -100,21 +103,27 @@ public class Gui {
                 }
                 case WAIT_PLAYERS -> System.out.println("aspetta");
                 case SET_WORKER -> {
-                    gameFrame.add(table = new Table());
-                    table.setGameState((GameState)inputObject);
-                    welcomeFirst.setVisible(false);
+                    gameState = ((GameState)inputObject);
+                    table = new Table(map);
+                    gameFrame.add(table);
+                    cardChoice.setVisible(false);
                     gameFrame.setSize(1280,755);
                     gameFrame.setLocationRelativeTo(null);
                     table.setVisible(true);
                 }
-                default -> table.setGameState((GameState)inputObject);  //mappa
+                case WAIT_CARD_CHOICE -> System.out.println("aspetta2");
+                default -> {
+                    gameState = ((GameState)inputObject);
+                    table.resetMap();
+                }
             }
         } else if(inputObject instanceof MapCopy){
-            table.setMap((MapCopy)inputObject);
+            map = ((MapCopy)inputObject);
+            System.out.println("mappa ricevuta");
         } else if(inputObject instanceof DeckCopy) {
             deck = ((DeckCopy) inputObject);
         } else if(inputObject instanceof String){
-            JDialog wait = new JDialog();
+            /*JDialog wait = new JDialog();
             wait.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 
             JButton button = new JButton ("OK");
@@ -131,9 +140,9 @@ public class Gui {
 
             wait.setLocation(700,375);
             wait.pack();
-            wait.setVisible(true);
+            wait.setVisible(true); */
         } else if(inputObject instanceof Color){
-            setColor((Color) inputObject);
+            color = ((Color) inputObject);
         } else{
             throw new IllegalArgumentException();
         }
@@ -195,7 +204,7 @@ public class Gui {
     private void startBackgroundInitialization(final Window splashScreen) {
         new Thread(() -> {
             try {
-                Thread.sleep(5000);              //simula qualcosa da fare...
+                Thread.sleep(1000);              //simula qualcosa da fare...
             } catch(InterruptedException e) {
                 e.printStackTrace();
             } finally {
@@ -213,6 +222,7 @@ public class Gui {
         gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         welcome = new Welcome();
+        welcomeFirst = new WelcomeFirst();
         gameFrame.add(welcome);
 
         //CHIUSURA
@@ -266,7 +276,14 @@ public class Gui {
         return color;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+
+    public GameState getGameState() {
+        return gameState;
     }
+
+    public MapCopy getMap(){
+        return map;
+    }
+
+
 }

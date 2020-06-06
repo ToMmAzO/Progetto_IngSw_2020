@@ -2,7 +2,6 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.MapCopy;
-import it.polimi.ingsw.model.game.GameState;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -27,22 +26,23 @@ public class Table extends JLayeredPane{
 
     private final static int NUM_TILES = 25;
 
-    private GameState gameState = GameState.WAIT_TURN;
-    private MapCopy map;
+
 
     //PlayerPanel playerPanel = new PlayerPanel();
     BoardPanel boardPanel = new BoardPanel();
 
-    public Table() throws IOException {
+    public Table(MapCopy map) throws IOException {
         super();
+        System.out.println("fase 1");
         this.setSize(TABLE_DIMENSION);
 
+        System.out.println("fase 2");
         add(getBackGround(), Integer.valueOf(0));
 
         //add(playerPanel, Integer.valueOf(1));
-
+        System.out.println("fase 3");
         add(boardPanel, Integer.valueOf(1));
-
+        System.out.println("fase 4");
         validate();
     }
 
@@ -89,21 +89,12 @@ public class Table extends JLayeredPane{
     }
     */
 
-    public GameState getGameState() {
-        return gameState;
-    }
 
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
 
-    public MapCopy getMap() {
-        return map;
-    }
+      // al posto che prendere la mappa da qui in table devi andare a prendere quella salvata in GUI
+    public void resetMap() throws IOException {
 
-    public void setMap(MapCopy map) throws IOException {
-        this.map = map;
-        boardPanel.drawBoard(map);
+        boardPanel.drawBoard();
     }
 
     /*
@@ -129,7 +120,7 @@ public class Table extends JLayeredPane{
     private class BoardPanel extends JPanel{
         final List<TilePanel> boardTiles;
 
-        BoardPanel() throws IOException {
+        public BoardPanel() throws IOException {
             super(new GridLayout(5,5));
             this.boardTiles = new ArrayList<>();
             for(int i = 0; i < NUM_TILES; i++) {
@@ -143,10 +134,10 @@ public class Table extends JLayeredPane{
             validate();
         }
 
-        public void drawBoard(MapCopy map) throws IOException {
+        public void drawBoard() throws IOException {
             removeAll();
             for(final TilePanel tilePanel : boardTiles){
-                tilePanel.drawTile(map);
+                tilePanel.drawTile();
                 add(tilePanel);
             }
             validate();
@@ -158,22 +149,22 @@ public class Table extends JLayeredPane{
         private final int tileId;
         private int coordX, coordY;
 
-        TilePanel(final int tileId) throws IOException {
+        public TilePanel(final int tileId) throws IOException {
             super(new GridBagLayout());
             this.tileId = tileId;
             tileIdInCoordinate();
             setBackground(new Color(0, 0, 0, 0));
-            assignTilePieceIcon(getMap());
+            assignTilePieceIcon();
 
             addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(final MouseEvent e) {
                     if(isLeftMouseButton(e)){
-                        switch (getGameState()){
+                        switch (Gui.getInstance().getGameState()){
                             case WORKER_CHOICE ->{
-                                if(!Table.this.getMap().noWorkerHere(coordX, coordY)){
-                                    if(Table.this.getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(Gui.getInstance().getColor().toString())){
-                                        Gui.getInstance().asyncWriteToSocket(Table.this.getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(4));
+                                if(!Gui.getInstance().getMap().noWorkerHere(coordX, coordY)){
+                                    if(Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(Gui.getInstance().getColor().toString())){
+                                        Gui.getInstance().asyncWriteToSocket(Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(4));
                                     }
                                 }
                             }
@@ -334,32 +325,32 @@ public class Table extends JLayeredPane{
             }
         }
 
-        public void drawTile(final MapCopy map) throws IOException {
-            assignTilePieceIcon(map);
+        public void drawTile() throws IOException {
+            assignTilePieceIcon();
             validate();
             repaint();
         }
 
-        private void assignTilePieceIcon(final MapCopy map) throws IOException {
+        private void assignTilePieceIcon() throws IOException {
             BufferedImage image;
             this.removeAll();
-            if(map.noWorkerHere(coordX, coordY)) {
-                if(!map.getCellBlockType(coordX, coordY).equals(BlockType.GROUND)) {
-                    image = ImageIO.read(new File(iconsPath + map.getCellBlockType(coordX, coordY).toString() + ".png"));
+            if(Gui.getInstance().getMap().noWorkerHere(coordX, coordY)) {
+                if(!Gui.getInstance().getMap().getCellBlockType(coordX, coordY).equals(BlockType.GROUND)) {
+                    image = ImageIO.read(new File(iconsPath + Gui.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + ".png"));
                 }else{
                     return;
                 }
             }else {
-                image = ImageIO.read(new File(iconsPath + map.getCellBlockType(coordX, coordY).toString() + map.getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3) + ".png"));
+                image = ImageIO.read(new File(iconsPath + Gui.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3) + ".png"));
             }
             add(new JLabel(new ImageIcon(image)));
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         JFrame mainFrame = new JFrame("Main Frame");
         mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        mainFrame.add(new Table());
+        mainFrame.add(new Table(map));
 
         //CHIUSURA
         mainFrame.addWindowListener(new WindowAdapter() {
@@ -379,6 +370,6 @@ public class Table extends JLayeredPane{
         mainFrame.setVisible(true);
         mainFrame.setSize(1280,755);
         mainFrame.setLocationRelativeTo(null);
-    }
+    }*/
 
 }
