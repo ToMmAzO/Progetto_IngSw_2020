@@ -38,8 +38,6 @@ public class Gui {
     private GameState gameState;
     private Color color;
 
-
-
     public Gui(String ip, int port){
         gui = this;
         this.ip = ip;
@@ -74,9 +72,6 @@ public class Gui {
     }
 
     private void readObject(Object inputObject) throws IOException {
-
-        //fai cose con quello che manda il server
-        //System.out.println(inputObject.toString());
         if(inputObject instanceof GameState){
             switch ((GameState)inputObject){
                 case WELCOME_FIRST ->{
@@ -104,7 +99,7 @@ public class Gui {
                 case WAIT_PLAYERS -> System.out.println("aspetta");
                 case SET_WORKER -> {
                     gameState = ((GameState)inputObject);
-                    table = new Table(map);
+                    table = new Table();
                     gameFrame.add(table);
                     cardChoice.setVisible(false);
                     gameFrame.setSize(1280,755);
@@ -119,7 +114,6 @@ public class Gui {
             }
         } else if(inputObject instanceof MapCopy){
             map = ((MapCopy)inputObject);
-            System.out.println("mappa ricevuta");
         } else if(inputObject instanceof DeckCopy) {
             deck = ((DeckCopy) inputObject);
         } else if(inputObject instanceof String){
@@ -204,7 +198,7 @@ public class Gui {
     private void startBackgroundInitialization(final Window splashScreen) {
         new Thread(() -> {
             try {
-                Thread.sleep(1000);              //simula qualcosa da fare...
+                Thread.sleep(1000);
             } catch(InterruptedException e) {
                 e.printStackTrace();
             } finally {
@@ -219,7 +213,7 @@ public class Gui {
 
     private void showMainFrame() throws IOException {
         gameFrame = new JFrame("SANTORINI");
-        gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         welcome = new Welcome();
         welcomeFirst = new WelcomeFirst();
@@ -275,7 +269,6 @@ public class Gui {
     public Color getColor() {
         return color;
     }
-
 
     public GameState getGameState() {
         return gameState;

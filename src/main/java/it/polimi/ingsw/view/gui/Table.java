@@ -1,7 +1,6 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.board.BlockType;
-import it.polimi.ingsw.model.board.MapCopy;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,23 +25,17 @@ public class Table extends JLayeredPane{
 
     private final static int NUM_TILES = 25;
 
-
-
     //PlayerPanel playerPanel = new PlayerPanel();
     BoardPanel boardPanel = new BoardPanel();
 
-    public Table(MapCopy map) throws IOException {
+    public Table() throws IOException {
         super();
-        System.out.println("fase 1");
         this.setSize(TABLE_DIMENSION);
 
-        System.out.println("fase 2");
         add(getBackGround(), Integer.valueOf(0));
-
         //add(playerPanel, Integer.valueOf(1));
-        System.out.println("fase 3");
         add(boardPanel, Integer.valueOf(1));
-        System.out.println("fase 4");
+
         validate();
     }
 
@@ -55,45 +48,7 @@ public class Table extends JLayeredPane{
         return label;
     }
 
-    /*
-    private void enableLayer(Component container, boolean enable, boolean alwaysTrue){
-        container.setEnabled(enable);            //fase1: abilita/disabilita il container e tutti i suoi component
-        container.setVisible(enable);
-        boolean mainContainer = alwaysTrue;
-
-        //fase 2: se il componente è stato disabilitato (enable=false) viene spostato il un layer più basso,
-        //        se è stato abilitato (enable=true) viene spostato nel livello più alto
-
-        if(mainContainer) {      //entra solo se è il container principale (non i sotto-conteiner contenuti in esso)
-            if (!enable) {
-                moveToBack(container);
-            }
-            if (enable) {
-                moveToFront(container);
-            }
-
-        }
-        mainContainer = false;
-
-        try {
-            Component[] components= ((Container) container).getComponents();
-            for (Component component : components) {
-                enableLayer(component, enable,false);
-            }
-        } catch (ClassCastException e) {
-
-        }
-
-
-
-    }
-    */
-
-
-
-      // al posto che prendere la mappa da qui in table devi andare a prendere quella salvata in GUI
     public void resetMap() throws IOException {
-
         boardPanel.drawBoard();
     }
 
@@ -221,6 +176,25 @@ public class Table extends JLayeredPane{
         }
 
         private void tileIdInCoordinate(){
+
+            /*
+            int x = 0;
+            int y = 0;
+
+            for(int i = 0; i < NUM_TILES; i++){
+                if(i == tileId){
+                    coordX = x;
+                    coordY = y;
+                }else{
+                    y++;
+                    if(i % 5 == 0 && i != 0){
+                        x++;
+                        y = 0;
+                    }
+                }
+            }
+            */
+
             switch (tileId){
                 case 0 -> {
                     coordX = 0;
@@ -346,30 +320,4 @@ public class Table extends JLayeredPane{
             add(new JLabel(new ImageIcon(image)));
         }
     }
-
-    /*public static void main(String[] args) throws IOException {
-        JFrame mainFrame = new JFrame("Main Frame");
-        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        mainFrame.add(new Table(map));
-
-        //CHIUSURA
-        mainFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                int answer = JOptionPane.showConfirmDialog(
-                        e.getWindow(),
-                        "Vuoi veramente chiudere la finestra?",
-                        "Conferma chiusura",
-                        JOptionPane.YES_NO_OPTION);
-                if(answer == JOptionPane.YES_OPTION) {
-                    e.getWindow().dispose();
-                }
-            }
-        });
-
-        mainFrame.setVisible(true);
-        mainFrame.setSize(1280,755);
-        mainFrame.setLocationRelativeTo(null);
-    }*/
-
 }
