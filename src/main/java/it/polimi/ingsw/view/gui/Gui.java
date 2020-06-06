@@ -34,6 +34,7 @@ public class Gui {
     private Table table;
     private DeckCopy deck;
     private MapCopy map;
+    private Color color;
 
 
     public Gui(String ip, int port){
@@ -117,6 +118,7 @@ public class Gui {
         } else if(inputObject instanceof String){
 
         } else if(inputObject instanceof Color){
+            color = ((Color)inputObject);
 
         } else{
             throw new IllegalArgumentException();
@@ -179,7 +181,7 @@ public class Gui {
     private void startBackgroundInitialization(final Window splashScreen) {
         new Thread(() -> {
             try {
-                Thread.sleep(5000);              //simula qualcosa da fare...
+                Thread.sleep(1000);              //simula qualcosa da fare...
             } catch(InterruptedException e) {
                 e.printStackTrace();
             } finally {

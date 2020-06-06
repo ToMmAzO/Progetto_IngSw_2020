@@ -26,26 +26,26 @@ public class CardChoice extends JPanel {
 
     public CardChoice(God god1, God god2, God god3, boolean[] availability) throws IOException {   //DA FARE: costruttore per 2 god
         super();
-        //setBackground(Color.RED);
+
         JLabel l1 = new JLabel("Choose a God, here's your options:");
-        l1.setBounds(30,30,400,20);
+        l1.setBounds(38,30,400,20);
         l1.setForeground(Color.WHITE);
         JButton card1 = new JButton();
-        card1.setBounds(30,60,imageWidth,imageHeight);
+        card1.setBounds(38,60,imageWidth,imageHeight);
         card1.setIcon(getImage(god1));
         if(!availability[0]) {
             card1.setEnabled(false);
             card1.setToolTipText("this God has already been chosen by another player");
         }
         JButton card2 = new JButton();
-        card2.setBounds(30 + imageWidth + 20,60,imageWidth,imageHeight);
+        card2.setBounds(38 + imageWidth + 30,60,imageWidth,imageHeight);
         card2.setIcon(getImage(god2));
         if(!availability[1]) {
             card2.setEnabled(false);
             card2.setToolTipText("this God has already been chosen by another player");
         }
         JButton card3 = new JButton();
-        card3.setBounds(30 + 2*imageWidth + 20 + 20,60,imageWidth,imageHeight);
+        card3.setBounds(38 + 2*imageWidth + 30 + 30,60,imageWidth,imageHeight);
         card3.setIcon(getImage(god3));
         if(!availability[2]) {
             card3.setEnabled(false);
@@ -55,7 +55,7 @@ public class CardChoice extends JPanel {
         info1.setWrapStyleWord(true);
         info1.setLineWrap(true);
         info1.setEditable(false);
-        info1.setBounds(30,60 + imageHeight + 20,imageWidth,150);
+        info1.setBounds(38,60 + imageHeight + 20,imageWidth,150);
         info1.setOpaque(false);
         info1.setForeground(Color.WHITE);
 
@@ -63,7 +63,7 @@ public class CardChoice extends JPanel {
         info2.setWrapStyleWord(true);
         info2.setLineWrap(true);
         info2.setEditable(false);
-        info2.setBounds(30 + imageWidth + 20,60 + imageHeight + 20,imageWidth,150);
+        info2.setBounds(38 + imageWidth + 30,60 + imageHeight + 20,imageWidth,150);
         info2.setOpaque(false);
         info2.setForeground(Color.WHITE);
 
@@ -71,7 +71,7 @@ public class CardChoice extends JPanel {
         info3.setWrapStyleWord(true);
         info3.setLineWrap(true);
         info3.setEditable(false);
-        info3.setBounds(30 + 2*imageWidth + 20 + 20,60 + imageHeight + 20,imageWidth,150);
+        info3.setBounds(38 + 2*imageWidth + 30 + 30,60 + imageHeight + 20,imageWidth,150);
         info3.setOpaque(false);
         info3.setForeground(Color.WHITE);
 
@@ -129,16 +129,17 @@ public class CardChoice extends JPanel {
 
 
         JLabel l1 = new JLabel("Choose a God, here's your options:");
-        l1.setBounds(30,30,400,20);
+        l1.setBounds(120,30,400,20);
+        l1.setForeground(Color.WHITE);
         JButton card1 = new JButton();
-        card1.setBounds(30,60,imageWidth,imageHeight);
+        card1.setBounds(120,60,imageWidth,imageHeight);
         card1.setIcon(getImage(god1));
         if(!availability[0]) {
             card1.setEnabled(false);
             card1.setToolTipText("this God has already been chosen by another player");
         }
         JButton card2 = new JButton();
-        card2.setBounds(30 + imageWidth + 20,60,imageWidth,imageHeight);
+        card2.setBounds(120 + imageWidth + 50,60,imageWidth,imageHeight);
         card2.setIcon(getImage(god2));
         if(!availability[1]) {
             card2.setEnabled(false);
@@ -149,7 +150,7 @@ public class CardChoice extends JPanel {
         info1.setWrapStyleWord(true);
         info1.setLineWrap(true);
         info1.setEditable(false);
-        info1.setBounds(30,60 + imageHeight + 20,imageWidth,150);
+        info1.setBounds(120,60 + imageHeight + 20,imageWidth,150);
         info1.setOpaque(false);
         info1.setForeground(Color.WHITE);
 
@@ -157,7 +158,7 @@ public class CardChoice extends JPanel {
         info2.setWrapStyleWord(true);
         info2.setLineWrap(true);
         info2.setEditable(false);
-        info2.setBounds(30 + imageWidth + 20,60 + imageHeight + 20,imageWidth,150);
+        info2.setBounds(120 + imageWidth + 50,60 + imageHeight + 20,imageWidth,150);
         info2.setOpaque(false);
         info2.setForeground(Color.WHITE);
 
@@ -237,8 +238,8 @@ public class CardChoice extends JPanel {
                 try {
                     System.out.println(ImagePath.concat("/Apollo.png"));
                     mainFrame = new JFrame();
-                    boolean[] availability = {false,true,true};
-                    JPanel cardChoice =new CardChoice(God.ATLAS,God.ARTEMIS,God.ZEUS,availability);
+                    boolean[] availability = {true,true};
+                    JPanel cardChoice =new CardChoice(God.ATLAS,God.HESTIA,availability);
                     mainFrame.add(cardChoice);
                     mainFrame.setVisible(true);
                     mainFrame.setSize(600,600);
