@@ -22,13 +22,13 @@ public class Table extends JLayeredPane{
 
     private final static Dimension TABLE_DIMENSION = new Dimension(1280,720);
     private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(530,530);
-    //private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(200,530);
+    private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(200,530);
 
     private final static int NUM_TILES = 25;
 
 
 
-    //PlayerPanel playerPanel = new PlayerPanel();
+    PlayerPanel playerPanel = new PlayerPanel();
     BoardPanel boardPanel = new BoardPanel();
 
     public Table(MapCopy map) throws IOException {
@@ -39,7 +39,7 @@ public class Table extends JLayeredPane{
         System.out.println("fase 2");
         add(getBackGround(), Integer.valueOf(0));
 
-        //add(playerPanel, Integer.valueOf(1));
+        add(playerPanel, Integer.valueOf(1));
         System.out.println("fase 3");
         add(boardPanel, Integer.valueOf(1));
         System.out.println("fase 4");
@@ -55,50 +55,14 @@ public class Table extends JLayeredPane{
         return label;
     }
 
-    /*
-    private void enableLayer(Component container, boolean enable, boolean alwaysTrue){
-        container.setEnabled(enable);            //fase1: abilita/disabilita il container e tutti i suoi component
-        container.setVisible(enable);
-        boolean mainContainer = alwaysTrue;
-
-        //fase 2: se il componente è stato disabilitato (enable=false) viene spostato il un layer più basso,
-        //        se è stato abilitato (enable=true) viene spostato nel livello più alto
-
-        if(mainContainer) {      //entra solo se è il container principale (non i sotto-conteiner contenuti in esso)
-            if (!enable) {
-                moveToBack(container);
-            }
-            if (enable) {
-                moveToFront(container);
-            }
-
-        }
-        mainContainer = false;
-
-        try {
-            Component[] components= ((Container) container).getComponents();
-            for (Component component : components) {
-                enableLayer(component, enable,false);
-            }
-        } catch (ClassCastException e) {
-
-        }
-
-
-
-    }
-    */
-
-
 
       // al posto che prendere la mappa da qui in table devi andare a prendere quella salvata in GUI
     public void resetMap() throws IOException {
-
         boardPanel.drawBoard();
     }
 
-    /*
-    private class PlayerPanel extends JPanel{
+
+    private class PlayerPanel extends JPanel{    //RAFFO: cambia solo questo
 
         PlayerPanel() {
             super();
@@ -115,7 +79,7 @@ public class Table extends JLayeredPane{
         }
 
     }
-    */
+
 
     private class BoardPanel extends JPanel{
         final List<TilePanel> boardTiles;

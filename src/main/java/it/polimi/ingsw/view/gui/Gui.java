@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.cards.DeckCopy;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.game.GameState;
 import it.polimi.ingsw.model.player.Color;
+import it.polimi.ingsw.network.message.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -112,6 +113,38 @@ public class Gui {
                     table.setVisible(true);
                 }
                 case WAIT_CARD_CHOICE -> System.out.println("aspetta2");
+                case QUESTION_ARTEMIS,QUESTION_ATLAS,QUESTION_DEMETER,QUESTION_HESTIA,
+                        QUESTION_HEPHAESTUS,QUESTION_PROMETHEUS,QUESTION_TRITON-> {
+                    Message message;
+                    switch ((GameState)inputObject){
+                        case QUESTION_PROMETHEUS -> message = new Message_QuestionPrometheus();
+                        case QUESTION_TRITON -> message = new Message_QuestionTriton();
+                        case QUESTION_ARTEMIS -> message = new Message_QuestionArtemis();
+                        case QUESTION_ATLAS -> message = new Message_QuestionAtlas();
+                        case QUESTION_HEPHAESTUS -> message = new Message_QuestionHephaestus();
+                        case QUESTION_DEMETER -> message = new Message_QuestionDemeter();
+                        case QUESTION_HESTIA -> message = new Message_QuestionHestia();
+                        default -> message = new Message_Error();
+                    }
+                    JWindow question = new JWindow();
+                    JButton yesBtn = new JButton();
+                    JButton noBtn = new JButton();
+                    question.setLayout(null);
+                    question.setSize(400,300);
+                    JTextArea info = new JTextArea();  //da sostituire con riga sotto dopo aver cambiato le printMessage()
+                    //JTextArea info = new JTextArea(message.printMessage());
+                    info.setWrapStyleWord(true);
+                    info.setLineWrap(true);
+                    info.setEditable(false);
+                    info.setBounds(50,50,300,50);
+                    yesBtn.setBounds(50,150,100,50);
+                    noBtn.setBounds(250,150,100,50);
+                    question.setVisible(true);
+                    gameFrame.add(question);
+
+                    //da fare
+
+                }
                 default -> {
                     gameState = ((GameState)inputObject);
                     table.resetMap();
