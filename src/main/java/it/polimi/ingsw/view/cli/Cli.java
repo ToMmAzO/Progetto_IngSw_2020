@@ -39,12 +39,12 @@ public class Cli {
                     Object inputObject = socketIn.readObject();
                     if(inputObject instanceof String){
                         System.out.println((String)inputObject);
-                    } else if(inputObject instanceof GameState) {
+                    } else if(inputObject instanceof GameState){
                         runState((GameState)inputObject);
                     } else if(inputObject instanceof Color){
                         System.out.println("Your color is " + inputObject.toString() + ".");
                     } else if(inputObject instanceof DeckCopy){
-                        ((DeckCopy) inputObject).printCards();
+                        ((DeckCopy)inputObject).printCards();
                     } else if(inputObject instanceof MapCopy){
                         ((MapCopy)inputObject).print();
                     } else{

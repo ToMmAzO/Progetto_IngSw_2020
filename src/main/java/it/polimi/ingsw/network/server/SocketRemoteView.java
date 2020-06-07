@@ -208,7 +208,7 @@ public class SocketRemoteView {
                 }
                 if(message.equals(SystemMessage.getInstance().youLose)){
                     clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " has lost!");
-                    clientConnection.asyncSend(new MapCopy());
+                    mapUpdate();
                 }
                 if(message.equals(SystemMessage.getInstance().youWin)){
                     clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " has won!");
@@ -240,18 +240,22 @@ public class SocketRemoteView {
             if (!player.equals(message)){
                 clientConnection.asyncSend("Action of " + message.getNickname() + ".");
             }
-            clientConnection.asyncSend(new MapCopy());
-            Player[] players = GameManager.getInstance().getPlayersInGame();
-            for (Player p : players){
-                if(p.getWorkerSelected(1) != null && p.getWorkerSelected(2) != null){
-                    clientConnection.asyncSend(p.getNickname() + ": " +
-                            p.getWorkerSelected(1).getIdWorker() + " (level " + p.getWorkerSelected(1).getCoordZ() + "), " +
-                            p.getWorkerSelected(2).getIdWorker() + " (level " + p.getWorkerSelected(2).getCoordZ() + ")."
-                    );
-                }
-            }
+            mapUpdate();
         }
 
+    }
+
+    private void mapUpdate(){
+        clientConnection.asyncSend(new MapCopy());
+        Player[] players = GameManager.getInstance().getPlayersInGame();
+        for (Player p : players){
+            if(p.getWorkerSelected(1) != null && p.getWorkerSelected(2) != null){
+                clientConnection.asyncSend(p.getNickname() + ": " +
+                        p.getWorkerSelected(1).getIdWorker() + " (level " + p.getWorkerSelected(1).getCoordZ() + "), " +
+                        p.getWorkerSelected(2).getIdWorker() + " (level " + p.getWorkerSelected(2).getCoordZ() + ")."
+                );
+            }
+        }
     }
 
 }

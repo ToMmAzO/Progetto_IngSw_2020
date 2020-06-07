@@ -20,9 +20,9 @@ public class DeckCopy implements Serializable {
         for (int i = 0; i < cardsSelected.length; i++){
             System.out.println("Card " + (i+1) + " --> " + cardsSelected[i].toString() + ": " + God.getGodDescription(cardsSelected[i]));
             if (availability[i]){
-                System.out.println("            This card is still available.");
+                System.out.println("           This card is still available.");
             } else {
-                System.out.println("            This card is not available.");
+                System.out.println("           This card is not available.");
             }
         }
     }
