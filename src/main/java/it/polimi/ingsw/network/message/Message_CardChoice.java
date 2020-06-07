@@ -11,8 +11,8 @@ public class Message_CardChoice extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.print("Scegli il numero di una delle carte ancora disponibili: ");
+    public String getMessage(){
+        return "Choose the number of one card still available: ";
     }
 
 }

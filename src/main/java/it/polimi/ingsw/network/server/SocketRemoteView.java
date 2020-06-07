@@ -34,7 +34,7 @@ public class SocketRemoteView {
         if (player.equals(GameManager.getInstance().getCurrPlayer())){
             readMessage(message);
         } else{
-            clientConnection.asyncSend("Non è il tuo turno! Attendi.");
+            clientConnection.asyncSend("It is not your turn! Wait.");
         }
     }
 
@@ -48,7 +48,7 @@ public class SocketRemoteView {
                     clientConnection.asyncSend(SystemMessage.getInstance().contentError);
                 }
             }
-            case WAIT_PLAYERS -> clientConnection.asyncSend("Attendi il tuo turno!");
+            case WAIT_PLAYERS -> clientConnection.asyncSend("Wait your turn!");
             case CARD_CHOICE -> {
                 try {
                     int cardNumber = Integer.parseInt(message.getContent());
@@ -207,11 +207,11 @@ public class SocketRemoteView {
                     clientConnection.closeConnection();
                 }
                 if(message.equals(SystemMessage.getInstance().youLose)){
-                    clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha perso!");
-                    clientConnection.asyncSend(new MapCopy());
+                    clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " has lost!");
+                    mapUpdate();
                 }
                 if(message.equals(SystemMessage.getInstance().youWin)){
-                    clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha vinto!");
+                    clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " has won!");
                     clientConnection.closeConnection();
                 }
             }
@@ -224,9 +224,9 @@ public class SocketRemoteView {
         @Override
         public void update(God message){
             if(player.equals(GameManager.getInstance().getCurrPlayer())){
-                clientConnection.asyncSend(("\nHai il potere di " + message.toString() + ": " + God.getGodDescription(message)));
+                clientConnection.asyncSend(("\nYou have the power of " + message.toString() + ": " + God.getGodDescription(message)));
             } else{
-                clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " ha scelto la carta "
+                clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " has chosen the card "
                 + message.toString() + ".");
             }
         }
@@ -238,20 +238,24 @@ public class SocketRemoteView {
         @Override
         public void update(Player message){
             if (!player.equals(message)){
-                clientConnection.asyncSend("Azione di " + message.getNickname() + ".");
+                clientConnection.asyncSend("Action of " + message.getNickname() + ".");
             }
-            clientConnection.asyncSend(new MapCopy());
-            Player[] players = GameManager.getInstance().getPlayersInGame();
-            for (Player p : players){
-                if(p.getWorkerSelected(1) != null && p.getWorkerSelected(2) != null){
-                    clientConnection.asyncSend(p.getNickname() + ": " +
-                            p.getWorkerSelected(1).getIdWorker() + " (livello " + p.getWorkerSelected(1).getCoordZ() + "), " +
-                            p.getWorkerSelected(2).getIdWorker() + " (livello " + p.getWorkerSelected(2).getCoordZ() + ")."
-                    );
-                }
-            }
+            mapUpdate();
         }
 
+    }
+
+    private void mapUpdate(){
+        clientConnection.asyncSend(new MapCopy());
+        Player[] players = GameManager.getInstance().getPlayersInGame();
+        for (Player p : players){
+            if(p.getWorkerSelected(1) != null && p.getWorkerSelected(2) != null){
+                clientConnection.asyncSend(p.getNickname() + ": " +
+                        p.getWorkerSelected(1).getIdWorker() + " (level " + p.getWorkerSelected(1).getCoordZ() + "), " +
+                        p.getWorkerSelected(2).getIdWorker() + " (level " + p.getWorkerSelected(2).getCoordZ() + ")."
+                );
+            }
+        }
     }
 
 }

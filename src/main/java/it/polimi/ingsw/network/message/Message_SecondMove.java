@@ -11,8 +11,8 @@ public class Message_SecondMove extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.print("Inserisci delle cordinate (x, y): ");
+    public String getMessage(){
+        return "Type coordinates (x, y): ";
     }
 
 }

@@ -11,8 +11,8 @@ public class Message_QuestionHephaestus extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.print("Vuoi costruire 2 blocchi? Scrivi Yes o No: ");
+    public String getMessage(){
+        return "Do you want to build 2 blocks? Type Yes or No: ";
     }
 
 }

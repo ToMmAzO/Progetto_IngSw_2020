@@ -11,8 +11,8 @@ public class Message_WorkerChoice extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.print("Scegli quale dei tuoi worker usare, scrivi 1 oppure 2: ");
+    public String getMessage(){
+        return "Choose which of your Workers you want to use, type 1 or 2: ";
     }
 
 }

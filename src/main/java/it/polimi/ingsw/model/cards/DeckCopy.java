@@ -16,13 +16,13 @@ public class DeckCopy implements Serializable {
     }
 
     public void printCards(){
-        System.out.println("\nLa partita avrà le seguenti carte divinità:");
+        System.out.println("\nThe game will have the following divinity cards:");
         for (int i = 0; i < cardsSelected.length; i++){
-            System.out.println("Carta " + (i+1) + " --> " + cardsSelected[i].toString() + ": " + God.getGodDescription(cardsSelected[i]));
+            System.out.println("Card " + (i+1) + " --> " + cardsSelected[i].toString() + ": " + God.getGodDescription(cardsSelected[i]));
             if (availability[i]){
-                System.out.println("            La carta è ancora disponibile.");
+                System.out.println("           This card is still available.");
             } else {
-                System.out.println("            La carta non è più disponibile.");
+                System.out.println("           This card is not available.");
             }
         }
     }

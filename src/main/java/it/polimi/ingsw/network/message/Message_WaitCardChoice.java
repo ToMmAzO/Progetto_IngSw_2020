@@ -11,8 +11,8 @@ public class Message_WaitCardChoice extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.println();
+    public String getMessage(){
+        return "\n";
     }
 
 }

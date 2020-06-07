@@ -140,12 +140,16 @@ public class TurnManager {
         }else {
             switch (GameManager.getInstance().getCurrPlayer().getGodChoice()) {
                 case CHRONUS -> {
-                    return (Map.getInstance().getNumberOfCompleteTurrets() >= 5);
+                    if(Map.getInstance().getNumberOfCompleteTurrets() >= 5){
+                        return true;
+                    }
                 }
                 case PAN -> {
-                    return (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 1)
+                    if((workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 1)
                             || (workerSelected.getCoordZ() == 3 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)
-                            || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0);
+                            || (workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 0)){
+                        return true;
+                    }
                 }
             }
             return workerSelected.getCoordZ() == 2 && Map.getInstance().getCellBlockType(x, y).getAbbreviation() == 3;

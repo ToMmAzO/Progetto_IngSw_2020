@@ -11,8 +11,8 @@ public class Message_QuestionAtlas extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.print("Vuoi costruire una CUPOLA? Scrivi Yes o No: ");
+    public String getMessage(){
+        return "Do you want to build a Cupola? Type Yes or No: ";
     }
 
 }
