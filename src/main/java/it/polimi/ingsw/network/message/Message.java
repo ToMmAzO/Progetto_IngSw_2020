@@ -10,6 +10,8 @@ public abstract class Message implements Serializable {
         return null;
     }
 
-    public void printMessage(){}
+    public String getMessage(){
+        return null;
+    }
 
 }

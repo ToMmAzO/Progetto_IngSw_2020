@@ -11,8 +11,8 @@ public class Message_QuestionTriton extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.print("Vuoi muoverti ancora? Scrivi Yes o No: ");
+    public String getMessage(){
+        return "Do you want to move again?\nType Yes or No: ";
     }
 
 }

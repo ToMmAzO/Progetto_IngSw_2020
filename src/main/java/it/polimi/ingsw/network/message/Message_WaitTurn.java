@@ -11,8 +11,8 @@ public class Message_WaitTurn extends Message{
     }
 
     @Override
-    public void printMessage(){
-        System.out.println("Attendi il tuo turno.");
+    public String getMessage(){
+        return "Wait your turn.\n";
     }
 
 }
