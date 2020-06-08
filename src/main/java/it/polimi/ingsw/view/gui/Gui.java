@@ -76,6 +76,8 @@ public class Gui {
 
     private void readObject(Object inputObject) throws IOException {
         if(inputObject instanceof GameState){
+            gameState = ((GameState)inputObject);
+            System.out.println(Gui.getInstance().getGameState().toString());
             switch ((GameState)inputObject){
                 case WELCOME_FIRST ->{
                     gameFrame.add(welcomeFirst);
@@ -100,7 +102,6 @@ public class Gui {
 
                 }
                 case SET_WORKER -> {
-                    gameState = ((GameState)inputObject);
                     table = new Table();
                     gameFrame.add(table);
                     cardChoice.setVisible(false);
@@ -133,7 +134,6 @@ public class Gui {
                     wait.setVisible(true);
                     */
                 }
-                case WAIT_CARD_CHOICE -> System.out.println("aspetta2");
                 case QUESTION_ARTEMIS,QUESTION_ATLAS,QUESTION_DEMETER,QUESTION_HESTIA,
                         QUESTION_HEPHAESTUS,QUESTION_PROMETHEUS,QUESTION_TRITON-> {
                     Message message;
@@ -155,10 +155,6 @@ public class Gui {
 
                     //da fare
 
-                }
-                default -> {
-                    gameState = ((GameState)inputObject);
-                    table.resetMap();
                 }
             }
         } else if(inputObject instanceof MapCopy){
@@ -328,41 +324,6 @@ public class Gui {
 
     public MapCopy getMap(){
         return map;
-    }
-
-    public static void main(String[] args) throws IOException {
-        final Image image;
-         image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/questionBackground.png"));
-         ImageIcon img2 = new ImageIcon(image);
-
-        Message message = new Message_QuestionTriton();
-        JWindow question = new JWindow();
-        JButton yesBtn = new JButton();
-        JButton noBtn = new JButton();
-        JLabel back = new JLabel();
-        back.setIcon(img2);
-        back.setVisible(true);
-        question.setLayout(null);
-        question.setSize(400,300);
-        JTextArea info = new JTextArea(message.getMessage());
-        info.setWrapStyleWord(true);
-        info.setLineWrap(true);
-        info.setEditable(false);
-        info.setOpaque(false);
-        info.setBounds(50,50,300,50);
-        yesBtn.setBounds(50,150,100,50);
-        yesBtn.setVisible(true);
-        noBtn.setBounds(250,150,100,50);
-        noBtn.setVisible(true);
-        question.setVisible(true);
-        question.add(yesBtn);
-        question.add(noBtn);
-        question.add(info);
-        question.add(back);
-        //question.setIconImage(image);
-
-
-
     }
 
 }

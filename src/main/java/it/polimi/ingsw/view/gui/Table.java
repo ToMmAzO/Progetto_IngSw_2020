@@ -9,8 +9,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 
@@ -86,7 +84,7 @@ public class Table extends JLayeredPane{
     }
 
     private class TilePanel extends JPanel{     //piastrella
-        private JLabel label;
+        private final JLabel label;
 
         private final int tileId;
         private int coordX, coordY;
@@ -109,7 +107,7 @@ public class Table extends JLayeredPane{
                     if(isLeftMouseButton(e)){
                         if (Gui.getInstance().getGameState() == GameState.WORKER_CHOICE) {
                             if (!Gui.getInstance().getMap().noWorkerHere(coordX, coordY)) {
-                                if (Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(Gui.getInstance().getColor().toString())) {
+                                if (Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(Gui.getInstance().getColor().toString().substring(0, 3))) {
                                     System.out.println(Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(3));
                                     Gui.getInstance().asyncWriteToSocket(Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(3));
                                 }
@@ -270,7 +268,7 @@ public class Table extends JLayeredPane{
 
         private void assignTilePieceIcon() throws IOException {
             Image image;
-            //removeAll();
+            removeAll();
             if(Gui.getInstance().getMap().noWorkerHere(coordX, coordY)) {
                 if(!Gui.getInstance().getMap().getCellBlockType(coordX, coordY).equals(BlockType.GROUND)) {
                     image = ImageIO.read(new File(iconsPath + Gui.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + ".png"));
