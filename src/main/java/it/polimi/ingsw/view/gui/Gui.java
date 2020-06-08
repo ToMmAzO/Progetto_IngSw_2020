@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.cards.DeckCopy;
 import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.game.GameState;
 import it.polimi.ingsw.model.player.Color;
+import it.polimi.ingsw.network.message.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -132,8 +133,32 @@ public class Gui {
                     wait.setVisible(true);
                     */
                 }
+                case WAIT_CARD_CHOICE -> System.out.println("aspetta2");
+                case QUESTION_ARTEMIS,QUESTION_ATLAS,QUESTION_DEMETER,QUESTION_HESTIA,
+                        QUESTION_HEPHAESTUS,QUESTION_PROMETHEUS,QUESTION_TRITON-> {
+                    Message message;
+                    switch ((GameState)inputObject){
+                        case QUESTION_PROMETHEUS -> message = new Message_QuestionPrometheus();
+                        case QUESTION_TRITON -> message = new Message_QuestionTriton();
+                        case QUESTION_ARTEMIS -> message = new Message_QuestionArtemis();
+                        case QUESTION_ATLAS -> message = new Message_QuestionAtlas();
+                        case QUESTION_HEPHAESTUS -> message = new Message_QuestionHephaestus();
+                        case QUESTION_DEMETER -> message = new Message_QuestionDemeter();
+                        case QUESTION_HESTIA -> message = new Message_QuestionHestia();
+                        default -> message = new Message_Error();
+                    }
+                    QuestionWindow question = new QuestionWindow(message);
+                    question.setVisible(true);
+                    question.setSize(580,300);
+                    question.setLocationRelativeTo(gameFrame);
+                    gameFrame.add(question);
+
+                    //da fare
+
+                }
                 default -> {
                     gameState = ((GameState)inputObject);
+                    table.resetMap();
                 }
             }
         } else if(inputObject instanceof MapCopy){
@@ -305,5 +330,39 @@ public class Gui {
         return map;
     }
 
+    public static void main(String[] args) throws IOException {
+        final Image image;
+         image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/questionBackground.png"));
+         ImageIcon img2 = new ImageIcon(image);
+
+        Message message = new Message_QuestionTriton();
+        JWindow question = new JWindow();
+        JButton yesBtn = new JButton();
+        JButton noBtn = new JButton();
+        JLabel back = new JLabel();
+        back.setIcon(img2);
+        back.setVisible(true);
+        question.setLayout(null);
+        question.setSize(400,300);
+        JTextArea info = new JTextArea(message.getMessage());
+        info.setWrapStyleWord(true);
+        info.setLineWrap(true);
+        info.setEditable(false);
+        info.setOpaque(false);
+        info.setBounds(50,50,300,50);
+        yesBtn.setBounds(50,150,100,50);
+        yesBtn.setVisible(true);
+        noBtn.setBounds(250,150,100,50);
+        noBtn.setVisible(true);
+        question.setVisible(true);
+        question.add(yesBtn);
+        question.add(noBtn);
+        question.add(info);
+        question.add(back);
+        //question.setIconImage(image);
+
+
+
+    }
 
 }
