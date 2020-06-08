@@ -12,7 +12,7 @@ public class Message_QuestionAtlas extends Message{
 
     @Override
     public String getMessage(){
-        return "Do you want to build a Cupola? Type Yes or No: ";
+        return "Do you want to build a Cupola? ";
     }
 
 }

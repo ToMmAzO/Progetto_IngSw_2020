@@ -12,7 +12,7 @@ public class Message_QuestionDemeter extends Message{
 
     @Override
     public String getMessage(){
-        return "Do you want to build again?\nRemember: you cannot build where you have already built. Type Yes or No: ";
+        return "Do you want to build again?\nRemember: you cannot build where you have already built. ";
     }
 
 }

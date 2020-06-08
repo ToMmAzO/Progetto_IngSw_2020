@@ -12,7 +12,7 @@ public class Message_QuestionHestia extends Message{
 
     @Override
     public String getMessage(){
-        return "Do you want to build again?\nRemember: you cannot build into a perimeter space. Type Yes or No: ";
+        return "Do you want to build again?\nRemember: you cannot build into a perimeter space. ";
     }
 
 }

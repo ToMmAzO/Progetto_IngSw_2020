@@ -33,16 +33,10 @@ public class Table extends JLayeredPane{
 
     public Table(MapCopy map) throws IOException {
         super();
-        System.out.println("fase 1");
         this.setSize(TABLE_DIMENSION);
-
-        System.out.println("fase 2");
         add(getBackGround(), Integer.valueOf(0));
-
         add(playerPanel, Integer.valueOf(1));
-        System.out.println("fase 3");
         add(boardPanel, Integer.valueOf(1));
-        System.out.println("fase 4");
         validate();
     }
 

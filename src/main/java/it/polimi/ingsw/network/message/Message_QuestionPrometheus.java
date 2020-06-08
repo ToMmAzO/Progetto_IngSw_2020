@@ -12,7 +12,7 @@ public class Message_QuestionPrometheus extends Message{
 
     @Override
     public String getMessage(){
-        return "Do you want to build before you move?\nRemember: if you build now you will not be able to level up. Type Yes or No: ";
+        return "Do you want to build before you move? Remember: if you build now you will not be able to level up. ";
     }
 
 }

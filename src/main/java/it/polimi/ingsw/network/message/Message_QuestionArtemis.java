@@ -12,7 +12,7 @@ public class Message_QuestionArtemis extends Message{
 
     @Override
     public String getMessage(){
-        return "Do you want to move again?\nRemember: you cannot go back to the previous space. Type Yes or No: ";
+        return "Do you want to move again?\nRemember: you cannot go back to the previous space. ";
     }
 
 }

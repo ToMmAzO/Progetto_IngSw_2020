@@ -126,20 +126,10 @@ public class Gui {
                         case QUESTION_HESTIA -> message = new Message_QuestionHestia();
                         default -> message = new Message_Error();
                     }
-                    JWindow question = new JWindow();
-                    JButton yesBtn = new JButton();
-                    JButton noBtn = new JButton();
-                    question.setLayout(null);
-                    question.setSize(400,300);
-                    JTextArea info = new JTextArea();  //da sostituire con riga sotto dopo aver cambiato le printMessage()
-                    //JTextArea info = new JTextArea(message.printMessage());
-                    info.setWrapStyleWord(true);
-                    info.setLineWrap(true);
-                    info.setEditable(false);
-                    info.setBounds(50,50,300,50);
-                    yesBtn.setBounds(50,150,100,50);
-                    noBtn.setBounds(250,150,100,50);
+                    QuestionWindow question = new QuestionWindow(message);
                     question.setVisible(true);
+                    question.setSize(580,300);
+                    question.setLocationRelativeTo(gameFrame);
                     gameFrame.add(question);
 
                     //da fare
@@ -237,7 +227,7 @@ public class Gui {
     private void startBackgroundInitialization(final Window splashScreen) {
         new Thread(() -> {
             try {
-                Thread.sleep(1000);              //simula qualcosa da fare...
+                Thread.sleep(1000);              //simula caricamento...
             } catch(InterruptedException e) {
                 e.printStackTrace();
             } finally {
@@ -318,5 +308,39 @@ public class Gui {
         return map;
     }
 
+    public static void main(String[] args) throws IOException {
+        final Image image;
+         image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/questionBackground.png"));
+         ImageIcon img2 = new ImageIcon(image);
+
+        Message message = new Message_QuestionTriton();
+        JWindow question = new JWindow();
+        JButton yesBtn = new JButton();
+        JButton noBtn = new JButton();
+        JLabel back = new JLabel();
+        back.setIcon(img2);
+        back.setVisible(true);
+        question.setLayout(null);
+        question.setSize(400,300);
+        JTextArea info = new JTextArea(message.getMessage());
+        info.setWrapStyleWord(true);
+        info.setLineWrap(true);
+        info.setEditable(false);
+        info.setOpaque(false);
+        info.setBounds(50,50,300,50);
+        yesBtn.setBounds(50,150,100,50);
+        yesBtn.setVisible(true);
+        noBtn.setBounds(250,150,100,50);
+        noBtn.setVisible(true);
+        question.setVisible(true);
+        question.add(yesBtn);
+        question.add(noBtn);
+        question.add(info);
+        question.add(back);
+        //question.setIconImage(image);
+
+
+
+    }
 
 }
