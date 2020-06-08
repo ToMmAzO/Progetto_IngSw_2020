@@ -1,12 +1,12 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.board.BlockType;
+import it.polimi.ingsw.model.game.GameState;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class Table extends JLayeredPane{
     private final static int NUM_TILES = 25;
 
     //PlayerPanel playerPanel = new PlayerPanel();
-    BoardPanel boardPanel = new BoardPanel();
+    BoardPanel boardPanel;
 
     public Table() throws IOException {
         super();
@@ -34,22 +34,20 @@ public class Table extends JLayeredPane{
 
         add(getBackGround(), Integer.valueOf(0));
         //add(playerPanel, Integer.valueOf(1));
-        add(boardPanel, Integer.valueOf(1));
-
-        validate();
+        add(boardPanel = new BoardPanel(), Integer.valueOf(1));
     }
 
-    public JLabel getBackGround() throws IOException {
+    private JLabel getBackGround() throws IOException {
         final Image image = ImageIO.read(new File(backGroundPath));
         JLabel label = new JLabel();
         label.setSize(TABLE_DIMENSION);
-        ImageIcon img = new ImageIcon(image.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
-        label.setIcon(img);
+        label.setIcon(new ImageIcon(image));
         return label;
     }
 
     public void resetMap() throws IOException {
-        boardPanel.drawBoard();
+        remove(boardPanel);
+        add(boardPanel = new BoardPanel(), Integer.valueOf(1));
     }
 
     /*
@@ -73,106 +71,77 @@ public class Table extends JLayeredPane{
     */
 
     private class BoardPanel extends JPanel{
-        final List<TilePanel> boardTiles;
-
         public BoardPanel() throws IOException {
             super(new GridLayout(5,5));
-            this.boardTiles = new ArrayList<>();
+
             for(int i = 0; i < NUM_TILES; i++) {
-                final TilePanel tilePanel = new TilePanel(i);
-                this.boardTiles.add(tilePanel);
+                TilePanel tilePanel = new TilePanel(i);
                 add(tilePanel);
             }
             setBackground(new Color(0, 0, 0, 0));
-            setBounds(375, 95, getWidth(), getHeight());
+            setLocation(375, 95);
             setSize(BOARD_PANEL_DIMENSION);
-            validate();
         }
 
-        public void drawBoard() throws IOException {
-            removeAll();
-            for(final TilePanel tilePanel : boardTiles){
-                tilePanel.drawTile();
-                add(tilePanel);
-            }
-            validate();
-            repaint();
-        }
     }
 
     private class TilePanel extends JPanel{     //piastrella
+        private JLabel label;
+
         private final int tileId;
         private int coordX, coordY;
 
-        public TilePanel(final int tileId) throws IOException {
-            super(new GridBagLayout());
+        public TilePanel(int tileId) throws IOException {
+            super();
+
+            label = new JLabel();
+
             this.tileId = tileId;
             tileIdInCoordinate();
             setBackground(new Color(0, 0, 0, 0));
             assignTilePieceIcon();
 
+            add(label);
+
             addMouseListener(new MouseListener() {
                 @Override
-                public void mouseClicked(final MouseEvent e) {
+                public void mouseClicked(MouseEvent e) {
                     if(isLeftMouseButton(e)){
-                        switch (Gui.getInstance().getGameState()){
-                            case WORKER_CHOICE ->{
-                                if(!Gui.getInstance().getMap().noWorkerHere(coordX, coordY)){
-                                    if(Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(Gui.getInstance().getColor().toString())){
-                                        Gui.getInstance().asyncWriteToSocket(Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(4));
-                                    }
+                        if (Gui.getInstance().getGameState() == GameState.WORKER_CHOICE) {
+                            if (!Gui.getInstance().getMap().noWorkerHere(coordX, coordY)) {
+                                if (Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(Gui.getInstance().getColor().toString())) {
+                                    System.out.println(Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(3));
+                                    Gui.getInstance().asyncWriteToSocket(Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(3));
                                 }
                             }
-                            case WAIT_TURN -> {
-                                JDialog wait = new JDialog();
-                                wait.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-
-                                JButton button = new JButton ("OK");
-                                button.addActionListener (e1 -> wait.setVisible(false));
-
-                                JPanel panel = new JPanel();
-
-                                panel.add(new JLabel ("ATTENDI!"));
-                                panel.add(button);
-                                panel.setSize(200, 200);
-
-                                wait.add(panel);
-                                wait.dispose();
-
-                                wait.setLocation(700,375);
-                                wait.pack();
-                                wait.setVisible(true);
-                            }
-                            default -> {
-                                String coordinate = coordX + ", " + coordY;
-                                Gui.getInstance().asyncWriteToSocket(coordinate);
-                            }
+                        } else {
+                            String coordinate = coordX + ", " + coordY;
+                            System.out.println(coordinate);
+                            Gui.getInstance().asyncWriteToSocket(coordinate);
                         }
                     }
                 }
 
                 @Override
-                public void mousePressed(final MouseEvent e) {
+                public void mousePressed(MouseEvent e) {
 
                 }
 
                 @Override
-                public void mouseReleased(final MouseEvent e) {
+                public void mouseReleased(MouseEvent e) {
 
                 }
 
                 @Override
-                public void mouseEntered(final MouseEvent e) {
+                public void mouseEntered(MouseEvent e) {
 
                 }
 
                 @Override
-                public void mouseExited(final MouseEvent e) {
+                public void mouseExited(MouseEvent e) {
 
                 }
             });
-
-            validate();
         }
 
         private void tileIdInCoordinate(){
@@ -299,25 +268,20 @@ public class Table extends JLayeredPane{
             }
         }
 
-        public void drawTile() throws IOException {
-            assignTilePieceIcon();
-            validate();
-            repaint();
-        }
-
         private void assignTilePieceIcon() throws IOException {
-            BufferedImage image;
-            this.removeAll();
+            Image image;
+            //removeAll();
             if(Gui.getInstance().getMap().noWorkerHere(coordX, coordY)) {
                 if(!Gui.getInstance().getMap().getCellBlockType(coordX, coordY).equals(BlockType.GROUND)) {
                     image = ImageIO.read(new File(iconsPath + Gui.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + ".png"));
                 }else{
+                    //cose
                     return;
                 }
             }else {
                 image = ImageIO.read(new File(iconsPath + Gui.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3) + ".png"));
             }
-            add(new JLabel(new ImageIcon(image)));
+            label.setIcon(new ImageIcon(image));
         }
     }
 }

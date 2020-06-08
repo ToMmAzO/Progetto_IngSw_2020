@@ -38,6 +38,8 @@ public class Gui {
     private GameState gameState;
     private Color color;
 
+    boolean notfirst = false;
+
     public Gui(String ip, int port){
         gui = this;
         this.ip = ip;
@@ -96,7 +98,6 @@ public class Gui {
                     cardChoice.setVisible(true);
 
                 }
-                case WAIT_PLAYERS -> System.out.println("aspetta");
                 case SET_WORKER -> {
                     gameState = ((GameState)inputObject);
                     table = new Table();
@@ -105,15 +106,41 @@ public class Gui {
                     gameFrame.setSize(1280,755);
                     gameFrame.setLocationRelativeTo(null);
                     table.setVisible(true);
+                    notfirst = true;
                 }
-                case WAIT_CARD_CHOICE -> System.out.println("aspetta2");
+                case WAIT_PLAYERS, WAIT_CARD_CHOICE, WAIT_TURN -> {
+                    System.out.println("aspetta");
+
+                    /*
+                    JDialog wait = new JDialog();
+                    wait.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+
+                    JButton button = new JButton ("OK");
+                    button.addActionListener (e1 -> wait.setVisible(false));
+
+                    JPanel panel = new JPanel();
+
+                    panel.add(new JLabel ("ATTENDI!"));
+                    panel.add(button);
+                    panel.setSize(200, 200);
+
+                    wait.add(panel);
+                    wait.dispose();
+
+                    wait.setLocation(700,375);
+                    wait.pack();
+                    wait.setVisible(true);
+                    */
+                }
                 default -> {
                     gameState = ((GameState)inputObject);
-                    table.resetMap();
                 }
             }
         } else if(inputObject instanceof MapCopy){
             map = ((MapCopy)inputObject);
+            if(notfirst) {
+                table.resetMap();
+            }
         } else if(inputObject instanceof DeckCopy) {
             deck = ((DeckCopy) inputObject);
         } else if(inputObject instanceof String){
