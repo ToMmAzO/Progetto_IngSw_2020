@@ -262,6 +262,7 @@ public class Gui {
     private void showMainFrame() throws IOException {
         gameFrame = new JFrame("SANTORINI");
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameFrame.setResizable(false);
 
         welcome = new Welcome();
         welcomeFirst = new WelcomeFirst();
