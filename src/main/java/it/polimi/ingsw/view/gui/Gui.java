@@ -34,12 +34,12 @@ public class Gui {
     private CardChoice cardChoice;
     private Table table;
 
+    private Color color;
     private DeckCopy deck;
     private MapCopy map;
     private GameState gameState;
-    private Color color;
 
-    boolean notfirst = false;
+    boolean notFirst = false;
 
     public Gui(String ip, int port){
         gui = this;
@@ -102,37 +102,15 @@ public class Gui {
 
                 }
                 case SET_WORKER -> {
-                    table = new Table();
-                    gameFrame.add(table);
-                    cardChoice.setVisible(false);
-                    gameFrame.setSize(1280,755);
-                    gameFrame.setLocationRelativeTo(null);
-                    table.setVisible(true);
-                    notfirst = true;
-                }
-                case WAIT_PLAYERS, WAIT_CARD_CHOICE, WAIT_TURN -> {
-                    System.out.println("aspetta");
-
-                    /*
-                    JDialog wait = new JDialog();
-                    wait.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-
-                    JButton button = new JButton ("OK");
-                    button.addActionListener (e1 -> wait.setVisible(false));
-
-                    JPanel panel = new JPanel();
-
-                    panel.add(new JLabel ("ATTENDI!"));
-                    panel.add(button);
-                    panel.setSize(200, 200);
-
-                    wait.add(panel);
-                    wait.dispose();
-
-                    wait.setLocation(700,375);
-                    wait.pack();
-                    wait.setVisible(true);
-                    */
+                    if(!notFirst) {
+                        table = new Table();
+                        gameFrame.add(table);
+                        cardChoice.setVisible(false);
+                        gameFrame.setSize(1280, 755);
+                        gameFrame.setLocationRelativeTo(null);
+                        table.setVisible(true);
+                        notFirst = true;
+                    }
                 }
                 case QUESTION_ARTEMIS,QUESTION_ATLAS,QUESTION_DEMETER,QUESTION_HESTIA,
                         QUESTION_HEPHAESTUS,QUESTION_PROMETHEUS,QUESTION_TRITON-> {
@@ -159,8 +137,8 @@ public class Gui {
             }
         } else if(inputObject instanceof MapCopy){
             map = ((MapCopy)inputObject);
-            if(notfirst) {
-                table.resetMap();
+            if(notFirst) {
+                table.updateMap();
             }
         } else if(inputObject instanceof DeckCopy) {
             deck = ((DeckCopy) inputObject);
