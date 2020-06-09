@@ -131,8 +131,6 @@ public class Gui {
                     question.setLocationRelativeTo(gameFrame);
                     gameFrame.add(question);
 
-                    //da fare
-
                 }
             }
         } else if(inputObject instanceof MapCopy){
