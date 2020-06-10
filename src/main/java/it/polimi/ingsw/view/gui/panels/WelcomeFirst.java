@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.gui;
+package it.polimi.ingsw.view.gui.panels;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -28,7 +28,7 @@ public class WelcomeFirst extends JPanel {
         setLayout(null);
         JTextPane welcomeFirst = new JTextPane();
         welcomeFirst.setText("You are the first player to connect to the lobby!!");
-        Font f = new Font(Font.SANS_SERIF,3,25);
+        Font f = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,25);
         welcomeFirst.setFont(f);
         welcomeFirst.setEditable(false);
 
@@ -42,7 +42,7 @@ public class WelcomeFirst extends JPanel {
         add(welcomeFirst);
         JLabel chosePlayers = new JLabel();
         chosePlayers.setText("Chose the number of players: ");
-        Font f2 = new Font(Font.SANS_SERIF,3,15);
+        Font f2 = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,15);
         chosePlayers.setFont(f2);
 
         chosePlayers.setBounds(190,200,250,30);
@@ -70,7 +70,7 @@ public class WelcomeFirst extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //manda notifica al server
-                Gui.getInstance().asyncWriteToSocket("2");
+                PanelManager.getInstance().asyncWriteToSocket("2");
                 button2.setEnabled(false);
                 button3.setEnabled(false);
             }
@@ -102,7 +102,7 @@ public class WelcomeFirst extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //manda notifica al server
-                Gui.getInstance().asyncWriteToSocket("3");
+                PanelManager.getInstance().asyncWriteToSocket("3");
                 button2.setEnabled(false);
                 button3.setEnabled(false);
             }

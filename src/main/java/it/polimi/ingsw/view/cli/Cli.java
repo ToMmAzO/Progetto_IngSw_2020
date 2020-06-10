@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.board.MapCopy;
 import it.polimi.ingsw.model.cards.DeckCopy;
 import it.polimi.ingsw.model.game.GameState;
 import it.polimi.ingsw.model.player.Color;
+import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.message.*;
 
 import java.io.IOException;
@@ -13,29 +14,23 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Cli {
+public class Cli implements Client<Scanner> {
 
     private final String ip;
     private final int port;
     private boolean active = true;
+    private ObjectInputStream socketIn;
+    private PrintWriter socketOut;
 
     public Cli(String ip, int port){
         this.ip = ip;
         this.port = port;
     }
 
-    public synchronized void setActive(boolean active){
-        this.active = active;
-    }
-
-    public synchronized boolean isActive(){
-        return active;
-    }
-
-    public Thread asyncReadFromSocket(final ObjectInputStream socketIn){
+    public Thread asyncReadFromSocket(){
         Thread t = new Thread(() -> {
             try{
-                while(isActive()){
+                while(active){
                     Object inputObject = socketIn.readObject();
                     if(inputObject instanceof String){
                         System.out.println((String)inputObject);
@@ -52,11 +47,63 @@ public class Cli {
                     }
                 }
             } catch(Exception e){
-                setActive(false);
+                active = false;
             }
         });
         t.start();
         return t;
+    }
+
+    public Thread asyncWriteToSocket(Scanner stdin){
+        Thread t = new Thread(() -> {
+            try{
+                while(active) {
+                    String inputLine = stdin.nextLine();
+                    socketOut.println(inputLine);
+                    socketOut.flush();
+                }
+            } catch(Exception e){
+                active = false;
+            }
+        });
+        t.start();
+        return t;
+    }
+
+    public void run() throws IOException {
+        Socket socket = new Socket(ip, port);
+        System.out.println("""
+                            ----------------------------------------------------------------------------------------------------------------------------------------------------
+                            ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+                            ----------------------------------------------------------------------------------------------------------------------------------------------------
+                            |||||              ________          __         ___    __     __________      ________       ________      __     ___    __     __             |||||\s
+                            |||||             //                //\\\\        ||\\\\   ||         ||         ||      ||     ||      \\\\     ||     ||\\\\   ||     ||             |||||\s
+                            |||||             \\\\_______        //__\\\\       || \\\\  ||         ||         ||      ||     ||______//     ||     || \\\\  ||     ||             |||||\s
+                            |||||                     \\\\      //    \\\\      ||  \\\\ ||         ||         ||      ||     ||    \\\\       ||     ||  \\\\ ||     ||             |||||\s
+                            |||||              _______//     //      \\\\     ||   \\\\||         ||         ||______||     ||     \\\\      ||     ||   \\\\||     ||             |||||\s
+                            |||||                                                                                                                                          |||||\s
+                            ----------------------------------------------------------------------------------------------------------------------------------------------------
+                            ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+                            ----------------------------------------------------------------------------------------------------------------------------------------------------
+                            """
+        );
+        socketIn = new ObjectInputStream(socket.getInputStream());
+        socketOut = new PrintWriter(socket.getOutputStream());
+        Scanner stdin = new Scanner(System.in);
+        try{
+            Thread t0 = asyncReadFromSocket();
+            Thread t1 = asyncWriteToSocket(stdin);
+            System.out.print("What is your name? ");
+            t0.join();
+            t1.join();
+        } catch(InterruptedException | NoSuchElementException e){
+            System.out.println("Connection closed!");
+        } finally{
+            stdin.close();
+            socketIn.close();
+            socketOut.close();
+            socket.close();
+        }
     }
 
     private void runState(GameState state){
@@ -87,58 +134,6 @@ public class Cli {
             default -> message = new Message_Error();
         }
         System.out.print(message.getMessage());
-    }
-
-    public Thread asyncWriteToSocket(final Scanner stdin, final PrintWriter socketOut){
-        Thread t = new Thread(() -> {
-            try{
-                while(isActive()) {
-                    String inputLine = stdin.nextLine();
-                    socketOut.println(inputLine);
-                    socketOut.flush();
-                }
-            } catch(Exception e){
-                setActive(false);
-            }
-        });
-        t.start();
-        return t;
-    }
-
-    public void run() throws IOException {
-        Socket socket = new Socket(ip, port);
-        System.out.println("""
-                            ----------------------------------------------------------------------------------------------------------------------------------------------------
-                            ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-                            ----------------------------------------------------------------------------------------------------------------------------------------------------
-                            |||||              ________          __         ___    __     __________      ________       ________      __     ___    __     __             |||||\s
-                            |||||             //                //\\\\        ||\\\\   ||         ||         ||      ||     ||      \\\\     ||     ||\\\\   ||     ||             |||||\s
-                            |||||             \\\\_______        //__\\\\       || \\\\  ||         ||         ||      ||     ||______//     ||     || \\\\  ||     ||             |||||\s
-                            |||||                     \\\\      //    \\\\      ||  \\\\ ||         ||         ||      ||     ||    \\\\       ||     ||  \\\\ ||     ||             |||||\s
-                            |||||              _______//     //      \\\\     ||   \\\\||         ||         ||______||     ||     \\\\      ||     ||   \\\\||     ||             |||||\s
-                            |||||                                                                                                                                          |||||\s
-                            ----------------------------------------------------------------------------------------------------------------------------------------------------
-                            ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-                            ----------------------------------------------------------------------------------------------------------------------------------------------------
-                            """
-        );
-        ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
-        PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
-        Scanner stdin = new Scanner(System.in);
-        try{
-            Thread t0 = asyncReadFromSocket(socketIn);
-            Thread t1 = asyncWriteToSocket(stdin, socketOut);
-            System.out.print("What is your name? ");
-            t0.join();
-            t1.join();
-        } catch(InterruptedException | NoSuchElementException e){
-            System.out.println("Connection closed!");
-        } finally{
-            stdin.close();
-            socketIn.close();
-            socketOut.close();
-            socket.close();
-        }
     }
 
 }

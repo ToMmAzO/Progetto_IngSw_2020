@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.gui;
+package it.polimi.ingsw.view.gui.panels;
 
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.game.GameState;
@@ -69,7 +69,7 @@ public class Table extends JPanel{
         }
 
         private JLabel getGodCard() throws IOException {
-            final Image image = ImageIO.read(new File(godPath + Gui.getInstance().getGodChoice().toString() + ".png"));
+            final Image image = ImageIO.read(new File(godPath + PanelManager.getInstance().getGodChoice().toString() + ".png"));
             JLabel label = new JLabel();
             label.setSize(38,60);
             label.setIcon(new ImageIcon(image));
@@ -126,17 +126,17 @@ public class Table extends JPanel{
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if(isLeftMouseButton(e)){
-                        if (Gui.getInstance().getGameState() == GameState.WORKER_CHOICE) {
-                            if (!Gui.getInstance().getMap().noWorkerHere(coordX, coordY)) {
-                                if (Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(Gui.getInstance().getColor().toString().substring(0, 3))) {
-                                    System.out.println(Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(3));
-                                    Gui.getInstance().asyncWriteToSocket(Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(3));
+                        if (PanelManager.getInstance().getGameState() == GameState.WORKER_CHOICE) {
+                            if (!PanelManager.getInstance().getMap().noWorkerHere(coordX, coordY)) {
+                                if (PanelManager.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3).equals(PanelManager.getInstance().getColor().toString().substring(0, 3))) {
+                                    System.out.println(PanelManager.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(3));
+                                    PanelManager.getInstance().asyncWriteToSocket(PanelManager.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(3));
                                 }
                             }
                         } else {
                             String coordinate = coordX + ", " + coordY;
                             System.out.println(coordinate);
-                            Gui.getInstance().asyncWriteToSocket(coordinate);
+                            PanelManager.getInstance().asyncWriteToSocket(coordinate);
                         }
                     }
                 }
@@ -159,15 +159,15 @@ public class Table extends JPanel{
 
         private void assignTilePieceIcon() throws IOException {
             Image image;
-            if(Gui.getInstance().getMap().noWorkerHere(coordX, coordY)) {
-                if(!Gui.getInstance().getMap().getCellBlockType(coordX, coordY).equals(BlockType.GROUND)) {
-                    image = ImageIO.read(new File(iconsPath + Gui.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + ".png"));
+            if(PanelManager.getInstance().getMap().noWorkerHere(coordX, coordY)) {
+                if(!PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).equals(BlockType.GROUND)) {
+                    image = ImageIO.read(new File(iconsPath + PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + ".png"));
                 }else{
                     setIcon(null);
                     return;
                 }
             }else {
-                image = ImageIO.read(new File(iconsPath + Gui.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + Gui.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3) + ".png"));
+                image = ImageIO.read(new File(iconsPath + PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + PanelManager.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3) + ".png"));
             }
             setIcon(new ImageIcon(image));
         }
