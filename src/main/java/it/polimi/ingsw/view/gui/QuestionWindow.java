@@ -8,8 +8,6 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -18,10 +16,11 @@ import java.io.IOException;
 public class QuestionWindow extends JWindow {
 
     Image image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/questionBackground2.png"));
-    ImageIcon img = new ImageIcon(image);
     Image imageNoBtn = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/noBtn3.png"));
-    ImageIcon noBt = new ImageIcon(imageNoBtn);
     Image imageYesBtn = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/yesBtn3.png"));
+
+    ImageIcon img = new ImageIcon(image);
+    ImageIcon noBt = new ImageIcon(imageNoBtn);
     ImageIcon yesBt = new ImageIcon(imageYesBtn);
 
     public QuestionWindow(Message message) throws IOException {
@@ -55,7 +54,6 @@ public class QuestionWindow extends JWindow {
             public void mouseClicked(MouseEvent e) {
                 Gui.getInstance().asyncWriteToSocket("yes");
                 dispose();
-
             }
 
             @Override
@@ -72,13 +70,11 @@ public class QuestionWindow extends JWindow {
             public void mouseEntered(MouseEvent e) {
                 ImageIcon buttonImg2 = new ImageIcon(imageYesBtn.getScaledInstance(134 + 10, 70 + 10, Image.SCALE_SMOOTH));
                 yesBtn.setIcon(buttonImg2);
-
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 yesBtn.setIcon(yesBt);
-
             }
         });
 
@@ -93,7 +89,6 @@ public class QuestionWindow extends JWindow {
             public void mouseClicked(MouseEvent e) {
                 Gui.getInstance().asyncWriteToSocket("no");
                 dispose();
-
             }
 
             @Override
@@ -110,13 +105,11 @@ public class QuestionWindow extends JWindow {
             public void mouseEntered(MouseEvent e) {
                 ImageIcon buttonImg2 = new ImageIcon(imageNoBtn.getScaledInstance(134 + 10, 70 + 10, Image.SCALE_SMOOTH));
                 noBtn.setIcon(buttonImg2);
-
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 noBtn.setIcon(noBt);
-
             }
         });
 
@@ -130,28 +123,4 @@ public class QuestionWindow extends JWindow {
 
     }
 
-
-
-    public static void main(String[] args) throws IOException {
-        JFrame frame = new JFrame("esempio");
-        JButton button = new JButton("hey");
-        button.setBounds(10,10,50,50);
-        button.setVisible(true);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("hey");
-            }
-        });
-        frame.add(button);
-        frame.setVisible(true);
-        frame.setSize(600, 600);
-        frame.setLocation(400, 20);
-        Message message = new Message_QuestionTriton();
-        QuestionWindow q = new QuestionWindow(message);
-        q.setVisible(true);
-        q.setSize(580,300);
-        //q.setLocationRelativeTo(frame);
-
-    }
 }
