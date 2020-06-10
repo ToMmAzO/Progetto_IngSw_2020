@@ -13,24 +13,17 @@ import java.io.IOException;
 
 public class WelcomeFirst extends JPanel {
 
-    
-    /*For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
+    private final static String imagePath = "src/main/java/it/polimi/ingsw/view/gui/img/";
 
-     */
     private final int panelHeight = 600;
     private final int panelWidth = 600;
 
-
-    private final static String imagePath = "src/main/java/it/polimi/ingsw/view/gui/img/";
     private final Image loadingBack = ImageIO.read(new File(imagePath.concat("Odyssey-Olympus.png")));
     Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
     public WelcomeFirst() throws IOException {
         final int buttonHeight = 220;
         final int buttonWidth = 200;
-
 
         setLayout(null);
         JTextPane welcomeFirst = new JTextPane();
@@ -80,8 +73,6 @@ public class WelcomeFirst extends JPanel {
                 Gui.getInstance().asyncWriteToSocket("2");
                 button2.setEnabled(false);
                 button3.setEnabled(false);
-
-
             }
 
             @Override
@@ -98,14 +89,12 @@ public class WelcomeFirst extends JPanel {
             public void mouseEntered(MouseEvent e) {
                 ImageIcon button2Img = new ImageIcon(button2Png.getScaledInstance(buttonWidth + 10, buttonHeight + 10, Image.SCALE_SMOOTH));
                 button2.setIcon(button2Img);
-
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 ImageIcon button2Img = new ImageIcon(button2Png.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_SMOOTH));
                 button2.setIcon(button2Img);
-
             }
         });
 
@@ -116,9 +105,6 @@ public class WelcomeFirst extends JPanel {
                 Gui.getInstance().asyncWriteToSocket("3");
                 button2.setEnabled(false);
                 button3.setEnabled(false);
-
-
-
             }
 
             @Override
@@ -135,7 +121,6 @@ public class WelcomeFirst extends JPanel {
             public void mouseEntered(MouseEvent e) {
                 ImageIcon button3Img = new ImageIcon(button3Png.getScaledInstance(buttonWidth + 10, buttonHeight + 10, Image.SCALE_SMOOTH));
                 button3.setIcon(button3Img);
-
             }
 
             @Override
@@ -155,31 +140,7 @@ public class WelcomeFirst extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-
         super.paintComponent(g);
         g.drawImage(img, 0, 0, null);
     }
-
-
-    /*public static void main(String[] args) {
-
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                JFrame mainFrame = new JFrame();
-                try {
-                    mainFrame.add(new WelcomeFirst());
-                    mainFrame.setSize(600, 600);
-                    mainFrame.setLocation(400, 20);
-                    mainFrame.setVisible(true);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-    }*/
-
-
-
 }

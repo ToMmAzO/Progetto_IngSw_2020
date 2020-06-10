@@ -16,18 +16,22 @@ public class Table extends JPanel{
 
     private final static String backGroundPath = "src/main/java/it/polimi/ingsw/view/gui/img/SantoriniBoard.png";
     private final static String iconsPath = "src/main/java/it/polimi/ingsw/view/gui/img/icons/";
+    private final static String godPath = "src/main/java/it/polimi/ingsw/view/gui/img/cards/";
 
     private final static Dimension TABLE_DIMENSION = new Dimension(1280,720);
     private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(530,530);
+    private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(200,530);
 
     private final Image image = ImageIO.read(new File(backGroundPath));
 
+    private final PlayerPanel playerPanel;
     private final BoardPanel boardPanel;
 
     public Table() throws IOException {
         super();
         this.setSize(TABLE_DIMENSION);
         setLayout(null);
+        add(playerPanel = new PlayerPanel());
         add(boardPanel = new BoardPanel());
     }
 
@@ -39,6 +43,40 @@ public class Table extends JPanel{
 
     public void updateMap() throws IOException {
         boardPanel.update();
+    }
+
+    private static class PlayerPanel extends JPanel{
+
+        PlayerPanel() throws IOException {
+            super();
+            setBackground(new Color(0, 0, 0, 0));
+            setLocation(1005, 95);
+            setSize(PLAYER_PANEL_DIMENSION);
+
+            /*
+            JTextArea info1 = new JTextArea(Gui.getInstance().getString());
+            info1.setWrapStyleWord(true);
+            info1.setLineWrap(true);
+            info1.setEditable(false);
+            info1.setSize(PLAYER_PANEL_DIMENSION);
+            info1.setOpaque(false);
+            info1.setForeground(Color.WHITE);
+            */
+
+            add(getGodCard());
+
+            setVisible(true);
+        }
+
+        private JLabel getGodCard() throws IOException {
+            final Image image = ImageIO.read(new File(godPath + Gui.getInstance().getGodChoice().toString() + ".png"));
+            JLabel label = new JLabel();
+            label.setSize(38,60);
+            label.setIcon(new ImageIcon(image));
+            return label;
+        }
+
+
     }
 
     private static class BoardPanel extends JPanel{
@@ -76,11 +114,13 @@ public class Table extends JPanel{
         private final int coordX, coordY;
 
         public TilePanel(int x, int y) throws IOException {
+            super();
             coordX = x;
             coordY = y;
             assignTilePieceIcon();
             setBorderPainted(false);
             setBackground(new Color(0, 0, 0, 0));
+            setFocusPainted(false);
 
             addMouseListener(new MouseListener() {
                 @Override

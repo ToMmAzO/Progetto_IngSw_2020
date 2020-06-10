@@ -11,20 +11,17 @@ import java.io.File;
 import java.io.IOException;
 
 public class Welcome extends JPanel {
+
+    private final static String imagePath = "src/main/java/it/polimi/ingsw/view/gui/img/";
+
     private final int panelHeight = 600;
     private final int panelWidth = 600;
 
-    private final static String imagePath = "src/main/java/it/polimi/ingsw/view/gui/img/";
     private final Image loadingBack = ImageIO.read(new File(imagePath.concat("Odyssey-Olympus.png")));
     Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
-
-
-
-
     public Welcome() throws IOException {
         super();
-
         int logoWidth = 400;
         int logoHeight = 130;
         JLabel logo;
@@ -44,9 +41,6 @@ public class Welcome extends JPanel {
         nicknameTextField.setBounds(200,90 + logoHeight,200,30);
         nicknameTextField.setOpaque(false);
 
-        //JLabel nicknameLine = new JLabel("__________________________________________ ");
-        //nicknameLine.setBounds(200,90 + logoHeight,200,30);
-
         int okWidth = 100;
         int okHeight = 150;
 
@@ -65,13 +59,11 @@ public class Welcome extends JPanel {
 
                 if(nicknameTextField.getText().isEmpty()){
                     System.out.println("chose a nickname");
-
                 }else{
                     //manda al server la richiesta con il nickmane inserito
                     Gui.getInstance().asyncWriteToSocket(nicknameTextField.getText());
                     okButton.setEnabled(false);
                 }
-
 
             }
 
@@ -87,10 +79,8 @@ public class Welcome extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-
                 ImageIcon buttonImg2 = new ImageIcon(buttonPng.getScaledInstance(okWidth + 10, okHeight + 10, Image.SCALE_SMOOTH));
                 okButton.setIcon(buttonImg2);
-
             }
 
             @Override
@@ -101,10 +91,6 @@ public class Welcome extends JPanel {
             }
         });
 
-
-
-
-        //Image santoriniLogo = ImageIO.read(new File(imagePath.concat("santorini-logo.png")));
         ImageIcon img = new ImageIcon(imagePath.concat("santorini-logo.png"));
         logo = new JLabel(img);
         logo.setBounds(100,20,logoWidth,logoHeight);
@@ -116,11 +102,7 @@ public class Welcome extends JPanel {
         add(nicknameTextField);
         add(okButton);
         add(logo);
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //pack();
         setVisible(true);
-
-
     }
 
     @Override
@@ -131,23 +113,5 @@ public class Welcome extends JPanel {
         super.paintComponent(g2d);
         g2d.drawImage(img, 0, 0, null);
     }
-
-  /* public static void main(String[] args) {
-
-       javax.swing.SwingUtilities.invokeLater(new Runnable() {
-           public void run() {
-               JFrame mainFrame = new JFrame();
-               try {
-                   mainFrame.add(new Welcome());
-                   mainFrame.setVisible(true);
-                   mainFrame.setSize(600, 600);
-                   mainFrame.setLocation(400, 20);
-               } catch (IOException e) {
-                   e.printStackTrace();
-               }
-
-           }
-       });
-   }*/
 
 }

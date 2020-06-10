@@ -36,8 +36,11 @@ public class Gui {
 
     private Color color;
     private DeckCopy deck;
+    private God[] cards;
+    private God godChoice;
     private MapCopy map;
     private GameState gameState;
+    private String string;
 
     boolean notFirst = false;
 
@@ -68,6 +71,7 @@ public class Gui {
                 }
             } catch(Exception e){
                 setActive(false);
+                e.printStackTrace();
             }
         });
         t.start();
@@ -87,7 +91,7 @@ public class Gui {
                     welcomeFirst.setVisible(true);
                 }
                 case CARD_CHOICE -> {
-                    God[] cards = deck.getCardsSelected();
+                    cards = deck.getCardsSelected();
                     if (cards.length == 3) {
                         gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], cards[2], deck.getAvailability()));
                     }
@@ -129,42 +133,24 @@ public class Gui {
                     question.setVisible(true);
                     question.setSize(580,300);
                     question.setLocationRelativeTo(gameFrame);
-                    gameFrame.add(question);
+                    //gameFrame.add(question);
 
                 }
             }
         } else if(inputObject instanceof MapCopy){
-            map = ((MapCopy)inputObject);
+            map = ((MapCopy) inputObject);
             if(notFirst) {
                 table.updateMap();
             }
         } else if(inputObject instanceof DeckCopy) {
             deck = ((DeckCopy) inputObject);
         } else if(inputObject instanceof String){
-            /*JDialog wait = new JDialog();
-            wait.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-
-            JButton button = new JButton ("OK");
-            button.addActionListener (e1 -> wait.setVisible(false));
-
-            JPanel panel = new JPanel();
-
-            panel.add(new JLabel ((String) inputObject));
-            panel.add(button);
-            panel.setSize(200, 200);
-
-            wait.add(panel);
-            wait.dispose();
-
-            wait.setLocation(700,375);
-            wait.pack();
-            wait.setVisible(true); */
+            string = ((String) inputObject);
         } else if(inputObject instanceof Color){
             color = ((Color) inputObject);
         } else{
             throw new IllegalArgumentException();
         }
-
     }
 
     public void asyncWriteToSocket(String instruction){
@@ -265,7 +251,6 @@ public class Gui {
         gameFrame.setSize(600,600);
         gameFrame.setLocation(400,20);
 
-        //gameFrame.pack();     //la finestra assuma le dimensioni minime necessarie e sufficienti affinchè ciò che contiene sia visualizzato secondo le sue dimensioni ottimali
         gameFrame.validate();
     }
 
@@ -295,6 +280,10 @@ public class Gui {
         return color;
     }
 
+    public God[] getCards(){
+        return cards;
+    }
+
     public GameState getGameState() {
         return gameState;
     }
@@ -303,4 +292,15 @@ public class Gui {
         return map;
     }
 
+    public String getString() {
+        return string;
+    }
+
+    public God getGodChoice() {
+        return godChoice;
+    }
+
+    public void setGodChoice(God godChoice) {
+        this.godChoice = godChoice;
+    }
 }

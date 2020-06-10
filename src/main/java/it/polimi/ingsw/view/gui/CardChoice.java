@@ -11,22 +11,20 @@ import java.io.IOException;
 import java.awt.Graphics;
 
 public class CardChoice extends JPanel {
+
     private final static String ImagePath = "src/main/java/it/polimi/ingsw/view/gui/img/cards/";
     private final static String loadingImagePath = "src/main/java/it/polimi/ingsw/view/gui/img/Odyssey_UI_Backdrop.png";
+
     private final int imageWidth = 150;
     private final int imageHeight = 250;
     private final int panelHeight = 600;
     private final int panelWidth = 600;
+
     private final Image loadingBack = ImageIO.read(new File(loadingImagePath));
     Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
-    private static JFrame mainFrame;
-
-
-
     public CardChoice(God god1, God god2, God god3, boolean[] availability) throws IOException {   //DA FARE: costruttore per 2 god
         super();
-
         JLabel l1 = new JLabel("Choose a God, here's your options:");
         l1.setBounds(38,30,400,20);
         l1.setForeground(Color.WHITE);
@@ -83,22 +81,20 @@ public class CardChoice extends JPanel {
         add(info2);
         add(info3);
 
-
-        card1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //segnala al server che è stato scelto god1
-                Gui.getInstance().asyncWriteToSocket("1");
-                card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
-                card2.setEnabled(false);
-                card3.setEnabled(false);
-            }
+        card1.addActionListener(e -> {
+            //segnala al server che è stato scelto god1
+            Gui.getInstance().setGodChoice(Gui.getInstance().getCards()[0]);
+            Gui.getInstance().asyncWriteToSocket("1");
+            card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
+            card2.setEnabled(false);
+            card3.setEnabled(false);
         });
 
         card2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //segnala al server che è stato scelto god2
+                Gui.getInstance().setGodChoice(Gui.getInstance().getCards()[1]);
                 Gui.getInstance().asyncWriteToSocket("2");
                 card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
                 card2.setEnabled(false);
@@ -107,17 +103,14 @@ public class CardChoice extends JPanel {
             }
         });
 
-        card3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //segnala al server che è stato scelto god3
-                Gui.getInstance().asyncWriteToSocket("3");
-                card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
-                card2.setEnabled(false);
-                card3.setEnabled(false);
-            }
+        card3.addActionListener(e -> {
+            //segnala al server che è stato scelto god3
+            Gui.getInstance().setGodChoice(Gui.getInstance().getCards()[2]);
+            Gui.getInstance().asyncWriteToSocket("3");
+            card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
+            card2.setEnabled(false);
+            card3.setEnabled(false);
         });
-
 
         setSize(panelWidth,panelHeight);
         setLayout(null);
@@ -126,7 +119,6 @@ public class CardChoice extends JPanel {
 
     public CardChoice(God god1, God god2, boolean[] availability) throws IOException {
         super();
-
 
         JLabel l1 = new JLabel("Choose a God, here's your options:");
         l1.setBounds(120,30,400,20);
@@ -169,25 +161,21 @@ public class CardChoice extends JPanel {
         add(info2);
 
 
-        card1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //segnala al server che è stato scelto god1
-                Gui.getInstance().asyncWriteToSocket("1");
-                card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
-                card2.setEnabled(false);
-            }
+        card1.addActionListener(e -> {
+            //segnala al server che è stato scelto god1
+            Gui.getInstance().setGodChoice(Gui.getInstance().getCards()[0]);
+            Gui.getInstance().asyncWriteToSocket("1");
+            card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
+            card2.setEnabled(false);
         });
 
 
-        card2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //segnala al server che è stato scelto god2
-                Gui.getInstance().asyncWriteToSocket("2");
-                card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
-                card2.setEnabled(false);
-            }
+        card2.addActionListener(e -> {
+            //segnala al server che è stato scelto god2
+            Gui.getInstance().setGodChoice(Gui.getInstance().getCards()[1]);
+            Gui.getInstance().asyncWriteToSocket("2");
+            card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
+            card2.setEnabled(false);
         });
 
 
@@ -198,7 +186,6 @@ public class CardChoice extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-
         super.paintComponent(g);
         g.drawImage(img, 0, 0, null);
     }
@@ -209,31 +196,7 @@ public class CardChoice extends JPanel {
 
         image = ImageIO.read(new File(ImagePath + god.toString() + ".png"));
 
-
         return new ImageIcon(image.getScaledInstance(imageWidth, imageHeight, Image.SCALE_AREA_AVERAGING));
     }
 
-
-   /* public static void main(String[] args) {
-
-        //javax.swing.SwingUtilities.invokeLater(new Runnable() {
-          //  public void run() {
-
-                try {
-                    System.out.println(ImagePath.concat("/Apollo.png"));
-                    mainFrame = new JFrame();
-                    boolean[] availability = {true,true};
-                    JPanel cardChoice =new CardChoice(God.ATLAS,God.HESTIA,availability);
-                    mainFrame.add(cardChoice);
-                    mainFrame.setVisible(true);
-                    mainFrame.setSize(600,600);
-                    mainFrame.setLocation(400,20);
-                    mainFrame.setResizable(false);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            //}
-      //  });
-    }*/
 }
