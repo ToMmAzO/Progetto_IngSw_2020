@@ -1,10 +1,8 @@
-package it.polimi.ingsw.view.gui;
+package it.polimi.ingsw.view.gui.panels;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -61,7 +59,7 @@ public class Welcome extends JPanel {
                     System.out.println("chose a nickname");
                 }else{
                     //manda al server la richiesta con il nickmane inserito
-                    Gui.getInstance().asyncWriteToSocket(nicknameTextField.getText());
+                    PanelManager.getInstance().asyncWriteToSocket(nicknameTextField.getText());
                     okButton.setEnabled(false);
                 }
 

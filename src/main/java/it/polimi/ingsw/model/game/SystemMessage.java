@@ -20,7 +20,7 @@ public class SystemMessage extends Observable<String> {
     public String cantPush = "ATTENTION, you cannot push that Worker!";
     public String yourPosition = "ATTENTION, you are already there!";
     public String distantCell = "You must select one of the 8 spaces around the Worker!";
-    public String youHephaestus = "ATTENTO, you are Hephaestus!";
+    public String youHephaestus = "ATTENTION, you are Hephaestus!";
     public String cantMove = "He cannot move.";
     public String cantBuild = "He cannot build.";
     public String cantDoNothing = "Not even the other Worker can move.";

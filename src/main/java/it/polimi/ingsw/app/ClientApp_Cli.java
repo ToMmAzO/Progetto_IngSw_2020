@@ -1,14 +1,15 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.app;
 
-import it.polimi.ingsw.view.gui.Gui;
+import it.polimi.ingsw.view.cli.Cli;
 
 import java.io.IOException;
 
-public class ClientAppGui {
+public class ClientApp_Cli {
+
     public static void main(String[] args){
-        Gui gui = new Gui("127.0.0.1", 12345);
+        Cli cli = new Cli("127.0.0.1", 12345);
         try{
-            gui.run();
+            cli.run();
         } catch(IOException e){
             System.err.println(e.getMessage());
         }

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.gui;
+package it.polimi.ingsw.view.gui.panels;
 
 import it.polimi.ingsw.network.message.*;
 
@@ -24,7 +24,6 @@ public class QuestionWindow extends JWindow {
     ImageIcon yesBt = new ImageIcon(imageYesBtn);
 
     public QuestionWindow(Message message) throws IOException {
-
         JButton yesBtn = new JButton();
         JButton noBtn = new JButton();
         JLabel background = new JLabel();
@@ -37,7 +36,7 @@ public class QuestionWindow extends JWindow {
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
-        Font f = new Font(Font.SANS_SERIF,3,13);
+        Font f = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,13);
         info.setFont(f);
         info.setEditable(false);
         info.setOpaque(false);
@@ -52,7 +51,7 @@ public class QuestionWindow extends JWindow {
         yesBtn.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Gui.getInstance().asyncWriteToSocket("yes");
+                PanelManager.getInstance().asyncWriteToSocket("yes");
                 dispose();
             }
 
@@ -87,7 +86,7 @@ public class QuestionWindow extends JWindow {
         noBtn.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Gui.getInstance().asyncWriteToSocket("no");
+                PanelManager.getInstance().asyncWriteToSocket("no");
                 dispose();
             }
 
@@ -120,7 +119,6 @@ public class QuestionWindow extends JWindow {
         add(noBtn);
         add(info);
         add(background);
-
     }
 
 }
