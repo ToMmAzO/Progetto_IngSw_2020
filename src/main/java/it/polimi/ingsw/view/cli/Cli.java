@@ -124,6 +124,9 @@ public class Cli extends Client<Scanner> {
             case QUESTION_HESTIA -> message = new Message_QuestionHestia();
             case SECOND_CONSTRUCTION_HESTIA -> message = new Message_SecondConstructionHestia();
             case CONSTRUCTION -> message = new Message_Construction();
+            case WIN -> message = new Message_Win();
+            case LOSE -> message = new Message_Lose();
+            case INVALIDATION -> message = new Message_Invalidation();
             default -> message = new Message_Error();
         }
         System.out.print(message.getMessage());

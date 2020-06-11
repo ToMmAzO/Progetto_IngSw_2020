@@ -186,9 +186,28 @@ public class SocketRemoteView {
                 switch(message){
                     case CARD_CHOICE -> clientConnection.asyncSend(new DeckCopy());
                     case WAIT_PLAYERS -> clientConnection.asyncSend(player.getColor());
+                    case INVALIDATION -> {
+                        return;
+                    }
                 }
                 clientConnection.asyncSend(message);
+            } else{
+                switch(message) {
+                    case WIN -> {
+                        clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " has won!");
+                        clientConnection.asyncSend(GameState.LOSE);
+                    }
+                    case LOSE -> {
+                        clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " has lost!");
+                        mapUpdate();
+                    }
+                    case INVALIDATION -> clientConnection.asyncSend(message);
+                }
+                if(message == GameState.WIN || message == GameState.INVALIDATION) {
+                    clientConnection.closeConnection();
+                }
             }
+
         }
     }
 
@@ -196,24 +215,8 @@ public class SocketRemoteView {
 
         @Override
         public void update(String message){
-            if ((player.equals(GameManager.getInstance().getCurrPlayer())) && (!message.equals(SystemMessage.getInstance().gameInvalidation))){
+            if ((player.equals(GameManager.getInstance().getCurrPlayer()))){
                 clientConnection.asyncSend(message);
-                if(message.equals(SystemMessage.getInstance().youWin)){
-                    clientConnection.closeConnection();
-                }
-            } else{
-                if(message.equals(SystemMessage.getInstance().gameInvalidation)){
-                    clientConnection.asyncSend(message);
-                    clientConnection.closeConnection();
-                }
-                if(message.equals(SystemMessage.getInstance().youLose)){
-                    clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " has lost!");
-                    mapUpdate();
-                }
-                if(message.equals(SystemMessage.getInstance().youWin)){
-                    clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " has won!");
-                    clientConnection.closeConnection();
-                }
             }
         }
 
