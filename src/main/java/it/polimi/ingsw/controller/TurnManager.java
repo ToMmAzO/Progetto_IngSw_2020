@@ -101,6 +101,10 @@ public class TurnManager {
                             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
                         }
                     }
+                    case PROMETHEUS -> {
+                        setAllowHeightPrometheus(true);
+                        Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.CONSTRUCTION);
+                    }
                     case TRITON -> {
                         if(workerSelected.getCoordX() == 0 || workerSelected.getCoordX() == 4 || workerSelected.getCoordY() == 0 || workerSelected.getCoordY() == 4) {
                             Game.getInstance().setGameState(GameManager.getInstance().getCurrPlayer(), GameState.QUESTION_TRITON);

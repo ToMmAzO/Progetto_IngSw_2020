@@ -26,7 +26,6 @@ public class Gui extends Client<String> {
                 }
             } catch(Exception e){
                 setActive(false);
-                e.printStackTrace();
             }
         });
         t.start();

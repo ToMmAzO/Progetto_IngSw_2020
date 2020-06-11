@@ -7,6 +7,17 @@ public class Deck {
     private final boolean[] availability;
 
     public Deck(int numberOfCards){
+        
+        /*
+        cardsSelected = new God[numberOfCards];
+        cardsSelected[0]=God.PROMETHEUS;
+        cardsSelected[1]=God.ATLAS;
+        availability = new boolean[2];
+        availability[0] = true;
+        availability[1] = true;
+        cardsSelected[0]=God.PROMETHEUS;
+        */
+
         God[] godList = new God[God.values().length];
         int i = 0;
         for(God d: God.values()) {

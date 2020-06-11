@@ -64,7 +64,7 @@ public class Table extends JPanel{
             JLabel godImage = getGodCard();
             godImage.setLocation(60,160);
 
-            JTextArea info = new JTextArea(God.getGodDescription(Gui.getInstance().getGodChoice()));
+            JTextArea info = new JTextArea(God.getGodDescription(PanelManager.getInstance().getGodChoice()));
             info.setWrapStyleWord(true);
             info.setLineWrap(true);
             info.setEditable(false);

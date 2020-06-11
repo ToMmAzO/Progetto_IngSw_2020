@@ -161,7 +161,7 @@ public class SocketRemoteView {
                             Game.getInstance().setGameState(player, GameState.WAIT_TURN);
                             GameManager.getInstance().nextPlayer(player);
                         }
-                        case QUESTION_PROMETHEUS -> clientConnection.asyncSend(new Message_Movement());
+                        case QUESTION_PROMETHEUS -> Game.getInstance().setGameState(player, GameState.MOVEMENT);
                         default -> Game.getInstance().setGameState(player, GameState.CONSTRUCTION);
                     }
                 } else {
