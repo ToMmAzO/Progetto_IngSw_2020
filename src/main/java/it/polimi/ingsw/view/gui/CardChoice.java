@@ -45,6 +45,7 @@ public class CardChoice extends JPanel {
         JButton card3 = new JButton();
         card3.setBounds(38 + 2*imageWidth + 30 + 30,60,imageWidth,imageHeight);
         card3.setIcon(getImage(god3));
+
         if(!availability[2]) {
             card3.setEnabled(false);
             card3.setToolTipText("this God has already been chosen by another player");

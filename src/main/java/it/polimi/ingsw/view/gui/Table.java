@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.board.BlockType;
+import it.polimi.ingsw.model.cards.God;
 import it.polimi.ingsw.model.game.GameState;
 
 import javax.imageio.ImageIO;
@@ -15,17 +16,22 @@ import static javax.swing.SwingUtilities.isLeftMouseButton;
 public class Table extends JPanel{
 
     private final static String backGroundPath = "src/main/java/it/polimi/ingsw/view/gui/img/SantoriniBoard.png";
+    private final static String textBackPath = "src/main/java/it/polimi/ingsw/view/gui/img/left_panel3.png";
+    private final static String playerBackPath = "src/main/java/it/polimi/ingsw/view/gui/img/right_panel3.png";
     private final static String iconsPath = "src/main/java/it/polimi/ingsw/view/gui/img/icons/";
     private final static String godPath = "src/main/java/it/polimi/ingsw/view/gui/img/cards/";
 
     private final static Dimension TABLE_DIMENSION = new Dimension(1280,720);
     private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(530,530);
-    private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(200,530);
+    private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(250,720);
 
     private final Image image = ImageIO.read(new File(backGroundPath));
+    private final Image image2 = ImageIO.read(new File(textBackPath));
+    private final Image image3 = ImageIO.read(new File(playerBackPath));
 
     private final PlayerPanel playerPanel;
     private final BoardPanel boardPanel;
+    private TextPanel textPanel;
 
     public Table() throws IOException {
         super();
@@ -33,6 +39,7 @@ public class Table extends JPanel{
         setLayout(null);
         add(playerPanel = new PlayerPanel());
         add(boardPanel = new BoardPanel());
+        add(textPanel = new TextPanel());
     }
 
     @Override
@@ -45,25 +52,28 @@ public class Table extends JPanel{
         boardPanel.update();
     }
 
-    private static class PlayerPanel extends JPanel{
+    private class PlayerPanel extends JPanel{
 
         PlayerPanel() throws IOException {
             super();
+            setLayout(null);
             setBackground(new Color(0, 0, 0, 0));
-            setLocation(1005, 95);
+            setLocation(1030, 0);
             setSize(PLAYER_PANEL_DIMENSION);
 
-            /*
-            JTextArea info1 = new JTextArea(Gui.getInstance().getString());
-            info1.setWrapStyleWord(true);
-            info1.setLineWrap(true);
-            info1.setEditable(false);
-            info1.setSize(PLAYER_PANEL_DIMENSION);
-            info1.setOpaque(false);
-            info1.setForeground(Color.WHITE);
-            */
+            JLabel godImage = getGodCard();
+            godImage.setLocation(60,160);
 
-            add(getGodCard());
+            JTextArea info = new JTextArea(God.getGodDescription(Gui.getInstance().getGodChoice()));
+            info.setWrapStyleWord(true);
+            info.setLineWrap(true);
+            info.setEditable(false);
+            info.setBounds(55,412,160,150);
+            info.setOpaque(false);
+            info.setForeground(Color.BLACK);
+
+            add(godImage);
+            add(info);
 
             setVisible(true);
         }
@@ -71,9 +81,45 @@ public class Table extends JPanel{
         private JLabel getGodCard() throws IOException {
             final Image image = ImageIO.read(new File(godPath + Gui.getInstance().getGodChoice().toString() + ".png"));
             JLabel label = new JLabel();
-            label.setSize(38,60);
+            label.setSize(150,250);
             label.setIcon(new ImageIcon(image));
             return label;
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(image3, 0, 0, null);
+        }
+
+
+    }
+
+    private class TextPanel extends JPanel{
+
+        TextPanel(){
+            super();
+            //setBackground(new Color(0, 0, 0, 0));
+            setBackground(Color.WHITE);
+            setLocation(0, 0);
+            setSize(250,720);
+
+            JTextArea info = new JTextArea();
+            info.setWrapStyleWord(true);
+            info.setLineWrap(true);
+            info.setEditable(false);
+            info.setSize(150,150);
+            info.setOpaque(false);
+            info.setForeground(Color.BLACK);
+
+            setOpaque(false);
+            setVisible(true);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(image2, 0, 0, null);
         }
 
 
