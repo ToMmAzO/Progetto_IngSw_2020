@@ -14,24 +14,17 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Cli implements Client<Scanner> {
-
-    private final String ip;
-    private final int port;
-    private boolean active = true;
-    private ObjectInputStream socketIn;
-    private PrintWriter socketOut;
+public class Cli extends Client<Scanner> {
 
     public Cli(String ip, int port){
-        this.ip = ip;
-        this.port = port;
+        super(ip, port);
     }
 
     public Thread asyncReadFromSocket(){
         Thread t = new Thread(() -> {
             try{
-                while(active){
-                    Object inputObject = socketIn.readObject();
+                while(isActive()){
+                    Object inputObject = getSocketIn().readObject();
                     if(inputObject instanceof String){
                         System.out.println((String)inputObject);
                     } else if(inputObject instanceof GameState){
@@ -47,7 +40,7 @@ public class Cli implements Client<Scanner> {
                     }
                 }
             } catch(Exception e){
-                active = false;
+                setActive(false);
             }
         });
         t.start();
@@ -57,13 +50,13 @@ public class Cli implements Client<Scanner> {
     public Thread asyncWriteToSocket(Scanner stdin){
         Thread t = new Thread(() -> {
             try{
-                while(active) {
+                while(isActive()) {
                     String inputLine = stdin.nextLine();
-                    socketOut.println(inputLine);
-                    socketOut.flush();
+                    getSocketOut().println(inputLine);
+                    getSocketOut().flush();
                 }
             } catch(Exception e){
-                active = false;
+                setActive(false);
             }
         });
         t.start();
@@ -71,7 +64,7 @@ public class Cli implements Client<Scanner> {
     }
 
     public void run() throws IOException {
-        Socket socket = new Socket(ip, port);
+        Socket socket = new Socket(getIp(), getPort());
         System.out.println("""
                             ----------------------------------------------------------------------------------------------------------------------------------------------------
                             ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -87,8 +80,8 @@ public class Cli implements Client<Scanner> {
                             ----------------------------------------------------------------------------------------------------------------------------------------------------
                             """
         );
-        socketIn = new ObjectInputStream(socket.getInputStream());
-        socketOut = new PrintWriter(socket.getOutputStream());
+        setSocketIn(new ObjectInputStream(socket.getInputStream()));
+        setSocketOut(new PrintWriter(socket.getOutputStream()));
         Scanner stdin = new Scanner(System.in);
         try{
             Thread t0 = asyncReadFromSocket();
@@ -100,8 +93,8 @@ public class Cli implements Client<Scanner> {
             System.out.println("Connection closed!");
         } finally{
             stdin.close();
-            socketIn.close();
-            socketOut.close();
+            getSocketIn().close();
+            getSocketOut().close();
             socket.close();
         }
     }

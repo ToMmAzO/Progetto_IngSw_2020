@@ -10,29 +10,22 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 
-public class Gui implements Client<String> {
-
-    private final String ip;
-    private final int port;
-    private boolean active = true;
-    private ObjectInputStream socketIn;
-    private PrintWriter socketOut;
+public class Gui extends Client<String> {
 
     public Gui(String ip, int port){
-        this.ip = ip;
-        this.port = port;
+        super(ip, port);
         new PanelManager(this);
     }
 
     public Thread asyncReadFromSocket(){
         Thread t = new Thread(() -> {
             try{
-                while(active){
-                    Object inputObject = socketIn.readObject();
+                while(isActive()){
+                    Object inputObject = getSocketIn().readObject();
                     PanelManager.getInstance().readObject(inputObject);
                 }
             } catch(Exception e){
-                active = false;
+                setActive(false);
                 e.printStackTrace();
             }
         });
@@ -43,10 +36,10 @@ public class Gui implements Client<String> {
     public Thread asyncWriteToSocket(String instruction){
         Thread t = new Thread(() -> {
             try{
-                socketOut.println(instruction);
-                socketOut.flush();
+                getSocketOut().println(instruction);
+                getSocketOut().flush();
             } catch(Exception e){
-                active = false;
+                setActive(false);
             }
         });
         t.start();
@@ -54,10 +47,10 @@ public class Gui implements Client<String> {
     }
 
     public void run() throws IOException {
-        Socket socket = new Socket(ip, port);
+        Socket socket = new Socket(getIp(), getPort());
         try(socket){
-            socketIn = new ObjectInputStream(socket.getInputStream());
-            socketOut = new PrintWriter(socket.getOutputStream());
+            setSocketIn(new ObjectInputStream(socket.getInputStream()));
+            setSocketOut(new PrintWriter(socket.getOutputStream()));
             Thread t0 = asyncReadFromSocket();
             SwingUtilities.invokeLater(() -> {
                 try {
@@ -70,8 +63,8 @@ public class Gui implements Client<String> {
         } catch (InterruptedException | NoSuchElementException e) {
             System.out.println("Connection closed!");
         } finally {
-            socketIn.close();
-            socketOut.close();
+            getSocketIn().close();
+            getSocketOut().close();
         }
     }
 
