@@ -100,7 +100,7 @@ public class Cli extends Client<Scanner> {
     }
 
     private void runState(GameState state){
-        Message message;
+        Message message = null;
         switch (state){
             case WELCOME_FIRST -> message = new Message_WelcomeFirst();
             case WAIT_PLAYERS -> message = new Message_WaitPlayers();
@@ -127,7 +127,7 @@ public class Cli extends Client<Scanner> {
             case WIN -> message = new Message_Win();
             case LOSE -> message = new Message_Lose();
             case INVALIDATION -> message = new Message_Invalidation();
-            default -> message = new Message_Error();
+            case ERROR -> message = new Message_Error();
         }
         System.out.print(message.getMessage());
     }
