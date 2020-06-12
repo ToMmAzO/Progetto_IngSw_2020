@@ -32,7 +32,7 @@ public class Cli extends Client<Scanner> {
                     } else if(inputObject instanceof Color){
                         System.out.println("Your color is " + inputObject.toString() + ".");
                     } else if(inputObject instanceof DeckCopy){
-                        ((DeckCopy)inputObject).printCards();
+                        ((DeckCopy)inputObject).print();
                     } else if(inputObject instanceof MapCopy){
                         ((MapCopy)inputObject).print();
                     } else{
