@@ -130,6 +130,11 @@ public class Cli extends Client<Scanner> {
             case ERROR -> message = new Message_Error();
         }
         System.out.print(message.getMessage());
+        if(state == GameState.QUESTION_ARTEMIS || state == GameState.QUESTION_ATLAS || state == GameState.QUESTION_DEMETER ||
+                state == GameState.QUESTION_HEPHAESTUS || state == GameState.QUESTION_HESTIA ||
+                state == GameState.QUESTION_PROMETHEUS || state == GameState.QUESTION_TRITON){
+            System.out.print("Type yes or no: ");
+        }
     }
 
 }
