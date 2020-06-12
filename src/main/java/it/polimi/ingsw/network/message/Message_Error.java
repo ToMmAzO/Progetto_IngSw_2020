@@ -12,7 +12,7 @@ public class Message_Error extends Message{
 
     @Override
     public String getMessage(){
-        return "Error!\n";
+        return "This server is not yet ready to accept new players, please try later.\n";
     }
 
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameManager;
+import it.polimi.ingsw.model.game.GameState;
 import it.polimi.ingsw.model.player.Player;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class Server {
             GameManager.getInstance().addPlayerConnection(player, c);
             return player;
         } else{
-            c.asyncSend("This server is not yet ready to accept new players, please try later.");
+            c.asyncSend(GameState.ERROR);
             c.closeConnection();
             return null;
         }

@@ -12,7 +12,7 @@ public class Message_Lose extends Message{
 
     @Override
     public String getMessage(){
-        return "You lose!\n";
+        return "GAME OVER. You lose!\n";
     }
 
 }

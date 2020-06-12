@@ -12,7 +12,7 @@ public class Message_Invalidation extends Message{
 
     @Override
     public String getMessage(){
-        return "\nMATCH CANCELED! A player has left the game.You lose!\n";
+        return "\nMATCH CANCELED! A player has left the game!\n";
     }
 
 }

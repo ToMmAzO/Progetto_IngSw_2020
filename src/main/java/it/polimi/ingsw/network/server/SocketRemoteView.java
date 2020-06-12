@@ -191,6 +191,9 @@ public class SocketRemoteView {
                     }
                 }
                 clientConnection.asyncSend(message);
+                if(message == GameState.WIN) {
+                    clientConnection.closeConnection();
+                }
             } else{
                 switch(message) {
                     case WIN -> {
