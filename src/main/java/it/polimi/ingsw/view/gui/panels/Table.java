@@ -127,14 +127,14 @@ public class Table extends JPanel{
 
     private static class BoardPanel extends JPanel{
 
-        private final TilePanel[] tiles = new TilePanel[25];
+        private final TileButton[] tiles = new TileButton[25];
 
         public BoardPanel() throws IOException {
             super(new GridLayout(5,5));
             int x = 0;
             int y = 0;
             for(int i = 0; i < 25; i++) {
-                tiles[i] = new TilePanel(x, y);
+                tiles[i] = new TileButton(x, y);
                 add(tiles[i]);
                 y++;
                 if(y == 5){
@@ -149,17 +149,17 @@ public class Table extends JPanel{
         }
 
         public void update() throws IOException {
-            for(TilePanel t: tiles){
+            for(TileButton t: tiles){
                 t.assignTilePieceIcon();
             }
         }
     }
 
-    private static class TilePanel extends JButton{
+    private static class TileButton extends JButton{
 
         private final int coordX, coordY;
 
-        public TilePanel(int x, int y) throws IOException {
+        public TileButton(int x, int y) throws IOException {
             super();
             coordX = x;
             coordY = y;
