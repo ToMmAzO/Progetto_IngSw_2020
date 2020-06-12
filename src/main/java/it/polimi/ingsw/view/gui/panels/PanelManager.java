@@ -107,17 +107,16 @@ public class PanelManager {
                     question.setSize(580,300);
                     question.setLocationRelativeTo(gameFrame);
                 }
-                case WIN, LOSE, INVALIDATION -> {
-                    Message message;
-                    switch ((GameState)inputObject){
-                        case WIN -> message = new Message_Win();
-                        case LOSE -> message = new Message_Lose();
-                        case INVALIDATION -> message = new Message_Invalidation();
-                        default -> message = new Message_Error();
-                    }
-                    FinalWindow window = new FinalWindow((GameState)inputObject, message);
+                case INVALIDATION, ERROR -> {
+                    FinalWindow window = new FinalWindow((GameState)inputObject);
                     window.setVisible(true);
                     window.setSize(580,300);
+                    window.setLocationRelativeTo(gameFrame);
+                }
+                case WIN, LOSE -> {
+                    FinalWindow window = new FinalWindow((GameState)inputObject);
+                    window.setVisible(true);
+                    window.setSize(600,300);
                     window.setLocationRelativeTo(gameFrame);
                 }
             }
