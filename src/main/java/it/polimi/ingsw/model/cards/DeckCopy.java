@@ -15,7 +15,15 @@ public class DeckCopy implements Serializable {
         }
     }
 
-    public void printCards(){
+    public God[] getCardsSelected() {
+        return cardsSelected;
+    }
+
+    public boolean[] getAvailability() {
+        return availability;
+    }
+
+    public void print(){
         System.out.println("\nThe game will have the following divinity cards:");
         for (int i = 0; i < cardsSelected.length; i++){
             System.out.println("Card " + (i+1) + " --> " + cardsSelected[i].toString() + ": " + God.getGodDescription(cardsSelected[i]));
@@ -27,11 +35,4 @@ public class DeckCopy implements Serializable {
         }
     }
 
-    public God[] getCardsSelected() {
-        return cardsSelected;
-    }
-
-    public boolean[] getAvailability() {
-        return availability;
-    }
 }

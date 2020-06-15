@@ -91,7 +91,7 @@ public class PanelManager {
                 }
                 case QUESTION_ARTEMIS,QUESTION_ATLAS,QUESTION_DEMETER,QUESTION_HESTIA,
                         QUESTION_HEPHAESTUS,QUESTION_PROMETHEUS,QUESTION_TRITON -> {
-                    Message message;
+                    Message message = null;
                     switch ((GameState)inputObject){
                         case QUESTION_ARTEMIS -> message = new Message_QuestionArtemis();
                         case QUESTION_ATLAS -> message = new Message_QuestionAtlas();
@@ -100,12 +100,23 @@ public class PanelManager {
                         case QUESTION_HEPHAESTUS -> message = new Message_QuestionHephaestus();
                         case QUESTION_PROMETHEUS -> message = new Message_QuestionPrometheus();
                         case QUESTION_TRITON -> message = new Message_QuestionTriton();
-                        default -> message = new Message_Error();
                     }
                     QuestionWindow question = new QuestionWindow(message);
                     question.setVisible(true);
                     question.setSize(580,300);
                     question.setLocationRelativeTo(gameFrame);
+                }
+                case INVALIDATION, ERROR -> {
+                    FinalWindow window = new FinalWindow((GameState)inputObject);
+                    window.setVisible(true);
+                    window.setSize(580,300);
+                    window.setLocationRelativeTo(gameFrame);
+                }
+                case WIN, LOSE -> {
+                    FinalWindow window = new FinalWindow((GameState)inputObject);
+                    window.setVisible(true);
+                    window.setSize(600,300);
+                    window.setLocationRelativeTo(gameFrame);
                 }
             }
         } else if(inputObject instanceof MapCopy){

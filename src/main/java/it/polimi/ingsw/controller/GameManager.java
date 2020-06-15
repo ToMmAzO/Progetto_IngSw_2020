@@ -156,10 +156,10 @@ public class GameManager {
         int index = players.indexOf(player);
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(1));
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(2));
+        Game.getInstance().setGameState(player, GameState.LOSE);
         players.remove(player);
         playerConnections.get(player).closeConnection();
         playerConnections.remove(player);
-        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().youLose);
         if(index >= players.size()){
             currPlayer = players.get(0);
         } else{
@@ -174,13 +174,13 @@ public class GameManager {
 
     public void endGame(Player winnerPlayer){
         currPlayer = winnerPlayer;
-        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().youWin);
+        Game.getInstance().setGameState(winnerPlayer, GameState.WIN);
         Server.refresh();
     }
 
     public void disconnectedPlayer(Player player){
         currPlayer = player;
-        SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().gameInvalidation);
+        Game.getInstance().setGameState(player, GameState.INVALIDATION);
         Server.refresh();
     }
 

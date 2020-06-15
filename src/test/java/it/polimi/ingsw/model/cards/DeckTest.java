@@ -31,7 +31,7 @@ class DeckTest {
         }
 
         DeckCopy c = new DeckCopy();
-        c.printCards();
+        c.print();
     }
 
     @Test
@@ -47,7 +47,7 @@ class DeckTest {
         }
 
         DeckCopy c = new DeckCopy();
-        c.printCards();
+        c.print();
     }
 
 }

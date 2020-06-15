@@ -32,7 +32,7 @@ public class Cli extends Client<Scanner> {
                     } else if(inputObject instanceof Color){
                         System.out.println("Your color is " + inputObject.toString() + ".");
                     } else if(inputObject instanceof DeckCopy){
-                        ((DeckCopy)inputObject).printCards();
+                        ((DeckCopy)inputObject).print();
                     } else if(inputObject instanceof MapCopy){
                         ((MapCopy)inputObject).print();
                     } else{
@@ -100,7 +100,7 @@ public class Cli extends Client<Scanner> {
     }
 
     private void runState(GameState state){
-        Message message;
+        Message message = null;
         switch (state){
             case WELCOME_FIRST -> message = new Message_WelcomeFirst();
             case WAIT_PLAYERS -> message = new Message_WaitPlayers();
@@ -124,9 +124,17 @@ public class Cli extends Client<Scanner> {
             case QUESTION_HESTIA -> message = new Message_QuestionHestia();
             case SECOND_CONSTRUCTION_HESTIA -> message = new Message_SecondConstructionHestia();
             case CONSTRUCTION -> message = new Message_Construction();
-            default -> message = new Message_Error();
+            case WIN -> message = new Message_Win();
+            case LOSE -> message = new Message_Lose();
+            case INVALIDATION -> message = new Message_Invalidation();
+            case ERROR -> message = new Message_Error();
         }
         System.out.print(message.getMessage());
+        if(state == GameState.QUESTION_ARTEMIS || state == GameState.QUESTION_ATLAS || state == GameState.QUESTION_DEMETER ||
+                state == GameState.QUESTION_HEPHAESTUS || state == GameState.QUESTION_HESTIA ||
+                state == GameState.QUESTION_PROMETHEUS || state == GameState.QUESTION_TRITON){
+            System.out.print("Type yes or no: ");
+        }
     }
 
 }

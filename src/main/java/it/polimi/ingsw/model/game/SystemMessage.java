@@ -9,9 +9,6 @@ public class SystemMessage extends Observable<String> {
     public String cardNotAvailable = "Card no longer available!";
     public String workerPresence = "There is a Worker here!";
     public String exceedMap = "You can only type integers from 0 to 4!";
-    public String youLose = "You lose!";
-    public String youWin = "Congratulations, you win the game!";
-    public String gameInvalidation = "\nMATCH CANCELED! A player has left the game.";
     public String powerAthena = "ATTENTION, the ATHENA's power is active!";
     public String powerPrometheus = "ATTENTION, you have just built and you are PROMETHEUS!";
     public String doubleGoUp = "ATTENTION, you cannot go up two levels!";
@@ -23,7 +20,7 @@ public class SystemMessage extends Observable<String> {
     public String youHephaestus = "ATTENTION, you are Hephaestus!";
     public String cantMove = "He cannot move.";
     public String cantBuild = "He cannot build.";
-    public String cantDoNothing = "Not even the other Worker can move.";
+    public String cantDoNothing = "Neither Workers can move.";
     public String cantComeBack = "ATTENTION, you cannot go back!";
     public String cantDoubleBuild = "You cannot build two blocks.";
     public String cantRebuildDemeter = "ATTENTION, you cannot rebuild in the same place as before!";

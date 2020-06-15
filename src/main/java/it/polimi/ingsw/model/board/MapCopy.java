@@ -12,26 +12,6 @@ public class MapCopy implements Serializable {
         map = Map.getInstance().getMap();
     }
 
-    public void print(){
-        System.out.printf("   |   %d  |   %d  |   %d  |   %d  |   %d  |\n", 0, 1, 2, 3, 4);
-        System.out.println("---|------|------|------|------|------|");
-        for (int i = 0; i < 5; i++){
-            System.out.printf("%d  |", i);
-            for (int j = 0; j < 5; j++){
-                if(map[i][j].getWorkerPresence() == null){
-                    if(map[i][j].getBlockType() == BlockType.GROUND){
-                        System.out.printf("%7c", '|');
-                    } else{
-                        System.out.printf("%s|", map[i][j].getBlockType().toString());
-                    }
-                } else{
-                    System.out.printf("|%s||", map[i][j].getWorkerPresence().getIdWorker());
-                }
-            }
-            System.out.println("\n---|------|------|------|------|------|");
-        }
-    }
-
     public BlockType getCellBlockType(int row, int column){
         return map[row][column].getBlockType();
     }
@@ -42,6 +22,26 @@ public class MapCopy implements Serializable {
 
     public boolean noWorkerHere(int row, int column){
         return map[row][column].getWorkerPresence() == null;
+    }
+
+    public void print(){
+        System.out.printf("   |   %d  |   %d  |   %d  |   %d  |   %d  |\n", 0, 1, 2, 3, 4);
+        System.out.println("---|------|------|------|------|------|");
+        for (int i = 0; i < 5; i++){
+            System.out.printf("%d  |", i);
+            for (int j = 0; j < 5; j++){
+                if(noWorkerHere(i, j)){
+                    if(getCellBlockType(i, j) == BlockType.GROUND){
+                        System.out.printf("%7c", '|');
+                    } else{
+                        System.out.printf("%s|", getCellBlockType(i, j).toString());
+                    }
+                } else{
+                    System.out.printf("|%s||", getWorkerInCell(i, j).getIdWorker());
+                }
+            }
+            System.out.println("\n---|------|------|------|------|------|");
+        }
     }
 
 }

@@ -2,9 +2,9 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.model.game.GameState;
 
-public class Message_Error extends Message{
+public class Message_Lose extends Message{
 
-    private final GameState gameState = GameState.ERROR;
+    private final GameState gameState = GameState.LOSE;
 
     public GameState getGameState(){
         return gameState;
@@ -12,7 +12,7 @@ public class Message_Error extends Message{
 
     @Override
     public String getMessage(){
-        return "This server is not yet ready to accept new players, please try later.\n";
+        return "GAME OVER. You lose!\n";
     }
 
 }
