@@ -11,20 +11,20 @@ import java.awt.Graphics;
 
 public class CardChoice extends JPanel {
 
-    private final static String ImagePath = "src/main/java/it/polimi/ingsw/view/gui/img/cards/";
-    private final static String loadingImagePath = "src/main/java/it/polimi/ingsw/view/gui/img/Odyssey_UI_Backdrop.png";
+    private final static String backgroundsPath = "src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/";
+    private final static String cardsPath = "src/main/java/it/polimi/ingsw/view/gui/img/cards/";
 
     private final int imageWidth = 150;
     private final int imageHeight = 250;
     private final int panelHeight = 600;
     private final int panelWidth = 600;
 
-    private final Image loadingBack = ImageIO.read(new File(loadingImagePath));
-    Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
+    private final Image loadingBack = ImageIO.read(new File(backgroundsPath.concat("CardsBackground.png")));
+    private final Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
     public CardChoice(God god1, God god2, God god3, boolean[] availability) throws IOException {
         super();
-                JLabel l1 = new JLabel("Choose a God, here's your options:");
+        JLabel l1 = new JLabel("Choose a God, here's your options:");
         l1.setBounds(38,30,400,20);
         l1.setForeground(Color.WHITE);
         JButton card1 = new JButton();
@@ -32,14 +32,14 @@ public class CardChoice extends JPanel {
         card1.setIcon(getImage(god1));
         if(!availability[0]) {
             card1.setEnabled(false);
-            card1.setToolTipText("this God has already been chosen by another player");
+            card1.setToolTipText("This God has already been chosen by another player");
         }
         JButton card2 = new JButton();
         card2.setBounds(38 + imageWidth + 30,60,imageWidth,imageHeight);
         card2.setIcon(getImage(god2));
         if(!availability[1]) {
             card2.setEnabled(false);
-            card2.setToolTipText("this God has already been chosen by another player");
+            card2.setToolTipText("This God has already been chosen by another player");
         }
         JButton card3 = new JButton();
         card3.setBounds(38 + 2*imageWidth + 30 + 30,60,imageWidth,imageHeight);
@@ -47,7 +47,7 @@ public class CardChoice extends JPanel {
 
         if(!availability[2]) {
             card3.setEnabled(false);
-            card3.setToolTipText("this God has already been chosen by another player");
+            card3.setToolTipText("This God has already been chosen by another player");
         }
         JTextArea info1 = new JTextArea(God.getGodDescription(god1));
         info1.setWrapStyleWord(true);
@@ -82,29 +82,26 @@ public class CardChoice extends JPanel {
         add(info3);
 
         card1.addActionListener(e -> {
-            //segnala al server che è stato scelto god1
             PanelManager.getInstance().setGodChoice(PanelManager.getInstance().getCards()[0]);
             PanelManager.getInstance().asyncWriteToSocket("1");
-            card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
+            card1.setEnabled(false);
             card2.setEnabled(false);
             card3.setEnabled(false);
         });
 
         card2.addActionListener(e -> {
-            //segnala al server che è stato scelto god2
             PanelManager.getInstance().setGodChoice(PanelManager.getInstance().getCards()[1]);
             PanelManager.getInstance().asyncWriteToSocket("2");
-            card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
+            card1.setEnabled(false);
             card2.setEnabled(false);
             card3.setEnabled(false);
 
         });
 
         card3.addActionListener(e -> {
-            //segnala al server che è stato scelto god3
             PanelManager.getInstance().setGodChoice(PanelManager.getInstance().getCards()[2]);
             PanelManager.getInstance().asyncWriteToSocket("3");
-            card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
+            card1.setEnabled(false);
             card2.setEnabled(false);
             card3.setEnabled(false);
         });
@@ -124,14 +121,14 @@ public class CardChoice extends JPanel {
         card1.setIcon(getImage(god1));
         if(!availability[0]) {
             card1.setEnabled(false);
-            card1.setToolTipText("this God has already been chosen by another player");
+            card1.setToolTipText("This God has already been chosen by another player");
         }
         JButton card2 = new JButton();
         card2.setBounds(120 + imageWidth + 50,60,imageWidth,imageHeight);
         card2.setIcon(getImage(god2));
         if(!availability[1]) {
             card2.setEnabled(false);
-            card2.setToolTipText("this God has already been chosen by another player");
+            card2.setToolTipText("This God has already been chosen by another player");
         }
 
         JTextArea info1 = new JTextArea(God.getGodDescription(god1));
@@ -157,18 +154,16 @@ public class CardChoice extends JPanel {
         add(info2);
 
         card1.addActionListener(e -> {
-            //segnala al server che è stato scelto god1
             PanelManager.getInstance().setGodChoice(PanelManager.getInstance().getCards()[0]);
             PanelManager.getInstance().asyncWriteToSocket("1");
-            card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
+            card1.setEnabled(false);
             card2.setEnabled(false);
         });
 
         card2.addActionListener(e -> {
-            //segnala al server che è stato scelto god2
             PanelManager.getInstance().setGodChoice(PanelManager.getInstance().getCards()[1]);
             PanelManager.getInstance().asyncWriteToSocket("2");
-            card1.setEnabled(false);    //disabilita i bottoni cosi da non poter mandare più di una richiesta
+            card1.setEnabled(false);
             card2.setEnabled(false);
         });
 
@@ -183,10 +178,9 @@ public class CardChoice extends JPanel {
         g.drawImage(img, 0, 0, null);
     }
 
-
     public ImageIcon getImage(God god) throws IOException {
         Image image;
-        image = ImageIO.read(new File(ImagePath + god.toString() + ".png"));
+        image = ImageIO.read(new File(cardsPath + god.toString() + ".png"));
         return new ImageIcon(image.getScaledInstance(imageWidth, imageHeight, Image.SCALE_AREA_AVERAGING));
     }
 

@@ -52,9 +52,6 @@ public class PanelManager {
     public void readObject(Object inputObject) throws IOException {
         if(inputObject instanceof GameState){
             gameState = ((GameState)inputObject);
-
-            //System.out.println(gameState.toString());
-
             switch ((GameState)inputObject){
                 case WELCOME_FIRST ->{
                     gameFrame.add(welcomeFirst);
@@ -126,9 +123,9 @@ public class PanelManager {
             }
         } else if(inputObject instanceof DeckCopy) {
             deck = ((DeckCopy) inputObject);
-        } else if(inputObject instanceof String){
-            if(tableCreated) {
-                table.addText((String) inputObject);
+        } else if(inputObject instanceof String string){
+            if(tableCreated && !string.contains("(")) {
+                table.addText(string);
             }
         } else if(inputObject instanceof Color){
             color = ((Color) inputObject);
@@ -162,7 +159,7 @@ public class PanelManager {
             JLabel label = new JLabel();
             final Image image;
             try {
-                image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/santorini-logo.png"));
+                image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/SantoriniLogo.png"));
                 label.setSize(400, 130);
                 ImageIcon img = new ImageIcon(image);
                 label.setIcon(img);
@@ -223,7 +220,6 @@ public class PanelManager {
         gameFrame.setVisible(true);
         gameFrame.setSize(600,600);
         gameFrame.setLocation(400,20);
-
         gameFrame.validate();
     }
 

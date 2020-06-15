@@ -16,22 +16,23 @@ import java.io.IOException;
 
 public class FinalWindow  extends JWindow {
 
-    Image winImage = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/Win.png"));
-    Image loseImage = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/Lose.png"));
-    Image invalidationImage = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/questionBackground2.png"));
+    private final static String backgroundsPath = "src/main/java/it/polimi/ingsw/view/gui/img/background/";
 
     public FinalWindow(GameState gameState) throws IOException {
         JLabel background = new JLabel();
         switch (gameState) {
             case WIN -> {
+                Image winImage = ImageIO.read(new File(backgroundsPath.concat("Win.png")));
                 background.setIcon(new ImageIcon(winImage));
                 background.setBounds(0,0,600,300);
             }
             case LOSE -> {
+                Image loseImage = ImageIO.read(new File(backgroundsPath.concat("Lose.png")));
                 background.setIcon(new ImageIcon(loseImage));
                 background.setBounds(0,0,600,300);
             }
             default -> {
+                Image invalidationImage = ImageIO.read(new File(backgroundsPath.concat("QuestionBackground.png")));
                 background.setIcon(new ImageIcon(invalidationImage));
                 background.setBounds(0,0,580,300);
 

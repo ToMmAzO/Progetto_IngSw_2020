@@ -15,13 +15,13 @@ import java.io.IOException;
 
 public class QuestionWindow extends JWindow {
 
-    Image image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/questionBackground2.png"));
-    Image imageNoBtn = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/noBtn3.png"));
-    Image imageYesBtn = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/yesBtn3.png"));
+    private final Image backgroundImage = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/QuestionBackground.png"));
+    private final Image NoButtonImage = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/buttons/NoButton.png"));
+    private final Image YesButtonImage = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/buttons/YesButton.png"));
 
-    ImageIcon img = new ImageIcon(image);
-    ImageIcon noBt = new ImageIcon(imageNoBtn);
-    ImageIcon yesBt = new ImageIcon(imageYesBtn);
+    ImageIcon img = new ImageIcon(backgroundImage);
+    ImageIcon noBt = new ImageIcon(NoButtonImage);
+    ImageIcon yesBt = new ImageIcon(YesButtonImage);
 
     public QuestionWindow(Message message) throws IOException {
         JButton yesBtn = new JButton();
@@ -67,7 +67,7 @@ public class QuestionWindow extends JWindow {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                ImageIcon buttonImg2 = new ImageIcon(imageYesBtn.getScaledInstance(134 + 10, 70 + 10, Image.SCALE_SMOOTH));
+                ImageIcon buttonImg2 = new ImageIcon(YesButtonImage.getScaledInstance(134 + 10, 70 + 10, Image.SCALE_SMOOTH));
                 yesBtn.setIcon(buttonImg2);
             }
 
@@ -102,7 +102,7 @@ public class QuestionWindow extends JWindow {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                ImageIcon buttonImg2 = new ImageIcon(imageNoBtn.getScaledInstance(134 + 10, 70 + 10, Image.SCALE_SMOOTH));
+                ImageIcon buttonImg2 = new ImageIcon(NoButtonImage.getScaledInstance(134 + 10, 70 + 10, Image.SCALE_SMOOTH));
                 noBtn.setIcon(buttonImg2);
             }
 

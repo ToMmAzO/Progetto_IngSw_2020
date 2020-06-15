@@ -10,13 +10,14 @@ import java.io.IOException;
 
 public class Welcome extends JPanel {
 
-    private final static String imagePath = "src/main/java/it/polimi/ingsw/view/gui/img/";
+    private final static String backgroundsPath = "src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/";
+    private final static String buttonsPath = "src/main/java/it/polimi/ingsw/view/gui/img/buttons/";
 
     private final int panelHeight = 600;
     private final int panelWidth = 600;
 
-    private final Image loadingBack = ImageIO.read(new File(imagePath.concat("Odyssey-Olympus.png")));
-    Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
+    private final Image loadingBack = ImageIO.read(new File(backgroundsPath.concat("WelcomeBackground.png")));
+    private final Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
     public Welcome() throws IOException {
         super();
@@ -43,8 +44,8 @@ public class Welcome extends JPanel {
         int okHeight = 150;
 
         okButton = new JButton();
-        Image buttonPng = ImageIO.read(new File(imagePath.concat("button-play-normal.png")));
-        ImageIcon buttonImg = new ImageIcon(imagePath.concat("button-play-normal.png"));
+        Image buttonPng = ImageIO.read(new File(buttonsPath.concat("PlayButton.png")));
+        ImageIcon buttonImg = new ImageIcon(buttonsPath.concat("PlayButton.png"));
         okButton.setIcon(buttonImg);
         okButton.setBounds(250,150 + logoHeight,okWidth,okHeight);
         okButton.setOpaque(false);
@@ -56,9 +57,8 @@ public class Welcome extends JPanel {
             public void mouseClicked(MouseEvent e) {
 
                 if(nicknameTextField.getText().isEmpty()){
-                    System.out.println("chose a nickname");
+                    System.out.println("Chose a nickname");
                 }else{
-                    //manda al server la richiesta con il nickmane inserito
                     PanelManager.getInstance().asyncWriteToSocket(nicknameTextField.getText());
                     okButton.setEnabled(false);
                 }
@@ -83,13 +83,12 @@ public class Welcome extends JPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                //ImageIcon buttonImg = new ImageIcon(buttonPng.getScaledInstance(okWidth, okHeight, Image.SCALE_SMOOTH));
                 okButton.setIcon(buttonImg);
 
             }
         });
 
-        ImageIcon img = new ImageIcon(imagePath.concat("santorini-logo.png"));
+        ImageIcon img = new ImageIcon(backgroundsPath.concat("SantoriniLogo.png"));
         logo = new JLabel(img);
         logo.setBounds(100,20,logoWidth,logoHeight);
         logo.setOpaque(false);
