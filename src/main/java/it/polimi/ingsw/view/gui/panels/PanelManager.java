@@ -33,9 +33,8 @@ public class PanelManager {
     private God godChoice;
     private MapCopy map;
     private GameState gameState;
-    private String string;
 
-    boolean notFirst = false;
+    boolean tableCreated = false;
 
     public PanelManager(Gui gui){
         panelManager = this;
@@ -80,14 +79,14 @@ public class PanelManager {
 
                 }
                 case SET_WORKER -> {
-                    if(!notFirst) {
+                    if(!tableCreated) {
                         table = new Table();
                         gameFrame.add(table);
                         cardChoice.setVisible(false);
                         gameFrame.setSize(1280, 755);
                         gameFrame.setLocationRelativeTo(null);
                         table.setVisible(true);
-                        notFirst = true;
+                        tableCreated = true;
                     }
                 }
                 case QUESTION_ARTEMIS,QUESTION_ATLAS,QUESTION_DEMETER,QUESTION_HESTIA,
@@ -111,13 +110,15 @@ public class PanelManager {
             }
         } else if(inputObject instanceof MapCopy){
             map = ((MapCopy) inputObject);
-            if(notFirst) {
+            if(tableCreated) {
                 table.updateMap();
             }
         } else if(inputObject instanceof DeckCopy) {
             deck = ((DeckCopy) inputObject);
         } else if(inputObject instanceof String){
-            string = ((String) inputObject);
+            if(tableCreated) {
+                table.addText((String) inputObject);
+            }
         } else if(inputObject instanceof Color){
             color = ((Color) inputObject);
         } else{
@@ -229,10 +230,6 @@ public class PanelManager {
 
     public MapCopy getMap(){
         return map;
-    }
-
-    public String getString() {
-        return string;
     }
 
     public God getGodChoice() {

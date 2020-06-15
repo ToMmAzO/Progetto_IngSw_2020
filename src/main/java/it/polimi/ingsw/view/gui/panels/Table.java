@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.game.GameState;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.plaf.ScrollBarUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -16,14 +17,14 @@ import static javax.swing.SwingUtilities.isLeftMouseButton;
 public class Table extends JPanel{
 
     private final static String backGroundPath = "src/main/java/it/polimi/ingsw/view/gui/img/SantoriniBoard.png";
-    private final static String textBackPath = "src/main/java/it/polimi/ingsw/view/gui/img/left_panel3.png";
-    private final static String playerBackPath = "src/main/java/it/polimi/ingsw/view/gui/img/right_panel3.png";
+    private final static String textBackPath = "src/main/java/it/polimi/ingsw/view/gui/img/left_panel6.png";
+    private final static String playerBackPath = "src/main/java/it/polimi/ingsw/view/gui/img/right_panel5.png";
     private final static String iconsPath = "src/main/java/it/polimi/ingsw/view/gui/img/icons/";
     private final static String godPath = "src/main/java/it/polimi/ingsw/view/gui/img/cards/";
 
     private final static Dimension TABLE_DIMENSION = new Dimension(1280,720);
     private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(530,530);
-    private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(250,720);
+    private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(275,720);
 
     private final Image image = ImageIO.read(new File(backGroundPath));
     private final Image image2 = ImageIO.read(new File(textBackPath));
@@ -40,6 +41,10 @@ public class Table extends JPanel{
         add(playerPanel = new PlayerPanel());
         add(boardPanel = new BoardPanel());
         add(textPanel = new TextPanel());
+    }
+
+    public void addText(String string){
+        textPanel.addString(string);
     }
 
     @Override
@@ -62,13 +67,13 @@ public class Table extends JPanel{
             setSize(PLAYER_PANEL_DIMENSION);
 
             JLabel godImage = getGodCard();
-            godImage.setLocation(60,160);
+            godImage.setLocation(70,160);
 
             JTextArea info = new JTextArea(God.getGodDescription(PanelManager.getInstance().getGodChoice()));
             info.setWrapStyleWord(true);
             info.setLineWrap(true);
             info.setEditable(false);
-            info.setBounds(55,412,160,150);
+            info.setBounds(50,412,180,120);
             info.setOpaque(false);
             info.setForeground(Color.BLACK);
 
@@ -97,21 +102,42 @@ public class Table extends JPanel{
 
     private class TextPanel extends JPanel{
 
+        JTextArea info;
+
         TextPanel(){
             super();
+            setLayout(null);
             //setBackground(new Color(0, 0, 0, 0));
             setBackground(Color.WHITE);
             setLocation(0, 0);
-            setSize(250,720);
+            setSize(275,720);
 
-            JTextArea info = new JTextArea();
-            info.setWrapStyleWord(true);
+
+            info = new JTextArea();
+            /*info.setWrapStyleWord(true);
             info.setLineWrap(true);
             info.setEditable(false);
-            info.setSize(150,150);
+            info.setSize(200,40);*/
+            //info.setBounds(27,180,200,300);
             info.setOpaque(false);
-            info.setForeground(Color.BLACK);
+            info.setForeground(new Color(0xFF91511D, true));
+            info.setBackground(new Color(0,0,0,0));
 
+
+            JScrollPane scrollPane = new JScrollPane(info);
+            scrollPane.setBounds(50,220,160,250);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+            scrollPane.getHorizontalScrollBar().setBackground(new Color(0,0,0,0));
+
+            scrollPane.setOpaque(false);
+            scrollPane.getViewport().setOpaque(false);
+
+            scrollPane.getVerticalScrollBar().addAdjustmentListener(e -> e.getAdjustable().setValue(e.getAdjustable().getMaximum()));
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.setBackground(new Color(0,0,0,0));
+
+            add(scrollPane);
             setOpaque(false);
             setVisible(true);
         }
@@ -120,6 +146,10 @@ public class Table extends JPanel{
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(image2, 0, 0, null);
+        }
+
+        private void addString(String string){
+            info.append(string + "\n");
         }
 
 
