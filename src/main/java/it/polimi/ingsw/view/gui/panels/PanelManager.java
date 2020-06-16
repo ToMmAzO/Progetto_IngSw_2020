@@ -27,12 +27,11 @@ public class PanelManager {
     private CardChoice cardChoice;
     private Table table;
 
+    private GameState gameState;
     private Color color;
     private DeckCopy deck;
-    private God[] cards;
     private God godChoice;
     private MapCopy map;
-    private GameState gameState;
 
     boolean tableCreated = false;
 
@@ -61,19 +60,18 @@ public class PanelManager {
                     welcomeFirst.setVisible(true);
                 }
                 case CARD_CHOICE -> {
-                    cards = deck.getCardsSelected();
-                    if (cards.length == 3) {
-                        gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], cards[2], deck.getAvailability()));
-                    }
+                    God[] cards = deck.getCardsSelected();
                     if (cards.length == 2) {
                         gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], deck.getAvailability()));
+                    }
+                    if (cards.length == 3) {
+                        gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], cards[2], deck.getAvailability()));
                     }
                     welcome.setVisible(false);
                     welcomeFirst.setVisible(false);
                     gameFrame.setSize(600, 600);
                     gameFrame.setLocation(400, 20);
                     cardChoice.setVisible(true);
-
                 }
                 case SET_WORKER -> {
                     if(!tableCreated) {
@@ -86,6 +84,7 @@ public class PanelManager {
                         tableCreated = true;
                     }
                 }
+                case WORKER_CHOICE -> table.addText("It`s your turn, select a worker.");
                 case QUESTION_ARTEMIS,QUESTION_ATLAS,QUESTION_DEMETER,QUESTION_HESTIA,
                         QUESTION_HEPHAESTUS,QUESTION_PROMETHEUS,QUESTION_TRITON -> {
                     Message message = null;
@@ -116,63 +115,61 @@ public class PanelManager {
                     window.setLocationRelativeTo(gameFrame);
                 }
             }
-        } else if(inputObject instanceof MapCopy){
-            map = ((MapCopy) inputObject);
-            if(tableCreated) {
-                table.updateMap();
-            }
-        } else if(inputObject instanceof DeckCopy) {
-            deck = ((DeckCopy) inputObject);
-        } else if(inputObject instanceof String string){
-            if(tableCreated && !string.contains("(")) {
-                table.addText(string);
-            }
         } else if(inputObject instanceof Color){
             color = ((Color) inputObject);
+        } else if(inputObject instanceof DeckCopy){
+            deck = ((DeckCopy) inputObject);
+        } else if(inputObject instanceof MapCopy){
+            map = ((MapCopy) inputObject);
+            if(tableCreated){
+                table.updateMap();
+            }
+        } else if(inputObject instanceof String string){
+            if(tableCreated && !string.contains("(")){
+                table.addText(string);
+            }
         } else{
             throw new IllegalArgumentException();
         }
     }
 
     public void start() {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            JWindow splashScreen = new JWindow();
-            splashScreen.addWindowListener(new WindowAdapter() {
-                private boolean closed = false;
+        JWindow splashScreen = new JWindow();
+        splashScreen.addWindowListener(new WindowAdapter() {
+            private boolean closed = false;
 
-                public void windowOpened(WindowEvent e) {
-                    startBackgroundInitialization(e.getWindow());
-                }
-
-                public void windowClosed(WindowEvent e) {
-                    if(!closed) {
-                        closed = true;
-                        try {
-                            showMainFrame();
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
-                        }
-                    }
-                }
-            });
-
-            JLabel label = new JLabel();
-            final Image image;
-            try {
-                image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/SantoriniLogo.png"));
-                label.setSize(400, 130);
-                ImageIcon img = new ImageIcon(image);
-                label.setIcon(img);
-            } catch (IOException e) {
-                e.printStackTrace();
+            public void windowOpened(WindowEvent e) {
+                startBackgroundInitialization(e.getWindow());
             }
 
-            splashScreen.setLayout(new GridBagLayout());
-            splashScreen.add(label, new GridBagConstraints());
-            splashScreen.setSize(400, 130);
-            splashScreen.setLocationRelativeTo(null);
-            splashScreen.setVisible(true);
+            public void windowClosed(WindowEvent e) {
+                if(!closed) {
+                    closed = true;
+                    try {
+                        showMainFrame();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                }
+            }
         });
+
+        JLabel label = new JLabel();
+        final Image image;
+        try {
+            image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/SantoriniLogo.png"));
+            label.setSize(400, 130);
+            ImageIcon img = new ImageIcon(image);
+            label.setIcon(img);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        splashScreen.setLayout(new GridBagLayout());
+        splashScreen.add(label, new GridBagConstraints());
+        splashScreen.setSize(400, 130);
+        splashScreen.setLocationRelativeTo(null);
+        splashScreen.setVisible(true);
     }
 
     private void startBackgroundInitialization(final Window splashScreen) {
@@ -182,13 +179,9 @@ public class PanelManager {
             } catch(InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                disposeWindow(splashScreen);
+                EventQueue.invokeLater(splashScreen::dispose);
             }
         }).start();
-    }
-
-    private void disposeWindow(final Window window) {
-        EventQueue.invokeLater(window::dispose);
     }
 
     private void showMainFrame() throws IOException {
@@ -200,51 +193,30 @@ public class PanelManager {
         welcomeFirst = new WelcomeFirst();
         gameFrame.add(welcome);
 
-        //CHIUSURA
-        /*
-        gameFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                int answer = JOptionPane.showConfirmDialog(
-                        e.getWindow(),
-                        "Vuoi veramente chiudere la finestra?",
-                        "Conferma chiusura",
-                        JOptionPane.YES_NO_OPTION);
-                if(answer == JOptionPane.YES_OPTION) {
-                    e.getWindow().dispose();
-                }
-            }
-        });
-        */
-
         gameFrame.setVisible(true);
         gameFrame.setSize(600,600);
         gameFrame.setLocation(400,20);
         gameFrame.validate();
     }
 
-    public Color getColor() {
-        return color;
-    }
-
-    public God[] getCards(){
-        return cards;
-    }
-
     public GameState getGameState() {
         return gameState;
     }
 
-    public MapCopy getMap(){
-        return map;
+    public Color getColor() {
+        return color;
+    }
+
+    public void setGodChoice(God godChoice) {
+        this.godChoice = godChoice;
     }
 
     public God getGodChoice() {
         return godChoice;
     }
 
-    public void setGodChoice(God godChoice) {
-        this.godChoice = godChoice;
+    public MapCopy getMap(){
+        return map;
     }
 
 }

@@ -82,7 +82,7 @@ public class CardChoice extends JPanel {
         add(info3);
 
         card1.addActionListener(e -> {
-            PanelManager.getInstance().setGodChoice(PanelManager.getInstance().getCards()[0]);
+            PanelManager.getInstance().setGodChoice(god1);
             PanelManager.getInstance().asyncWriteToSocket("1");
             card1.setEnabled(false);
             card2.setEnabled(false);
@@ -90,7 +90,7 @@ public class CardChoice extends JPanel {
         });
 
         card2.addActionListener(e -> {
-            PanelManager.getInstance().setGodChoice(PanelManager.getInstance().getCards()[1]);
+            PanelManager.getInstance().setGodChoice(god2);
             PanelManager.getInstance().asyncWriteToSocket("2");
             card1.setEnabled(false);
             card2.setEnabled(false);
@@ -99,7 +99,7 @@ public class CardChoice extends JPanel {
         });
 
         card3.addActionListener(e -> {
-            PanelManager.getInstance().setGodChoice(PanelManager.getInstance().getCards()[2]);
+            PanelManager.getInstance().setGodChoice(god3);
             PanelManager.getInstance().asyncWriteToSocket("3");
             card1.setEnabled(false);
             card2.setEnabled(false);
@@ -154,14 +154,14 @@ public class CardChoice extends JPanel {
         add(info2);
 
         card1.addActionListener(e -> {
-            PanelManager.getInstance().setGodChoice(PanelManager.getInstance().getCards()[0]);
+            PanelManager.getInstance().setGodChoice(god1);
             PanelManager.getInstance().asyncWriteToSocket("1");
             card1.setEnabled(false);
             card2.setEnabled(false);
         });
 
         card2.addActionListener(e -> {
-            PanelManager.getInstance().setGodChoice(PanelManager.getInstance().getCards()[1]);
+            PanelManager.getInstance().setGodChoice(god2);
             PanelManager.getInstance().asyncWriteToSocket("2");
             card1.setEnabled(false);
             card2.setEnabled(false);

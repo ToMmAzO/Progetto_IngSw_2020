@@ -14,9 +14,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class FinalWindow  extends JWindow {
+public class FinalWindow extends JWindow {
 
-    private final static String backgroundsPath = "src/main/java/it/polimi/ingsw/view/gui/img/background/";
+    private final static String backgroundsPath = "src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/";
 
     public FinalWindow(GameState gameState) throws IOException {
         JLabel background = new JLabel();

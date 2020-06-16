@@ -15,19 +15,16 @@ import java.io.IOException;
 
 public class QuestionWindow extends JWindow {
 
-    private final Image backgroundImage = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/QuestionBackground.png"));
-    private final Image NoButtonImage = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/buttons/NoButton.png"));
-    private final Image YesButtonImage = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/buttons/YesButton.png"));
-
-    ImageIcon img = new ImageIcon(backgroundImage);
-    ImageIcon noBt = new ImageIcon(NoButtonImage);
-    ImageIcon yesBt = new ImageIcon(YesButtonImage);
+    private final static String backgroundsPath = "src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/";
+    private final static String buttonsPath = "src/main/java/it/polimi/ingsw/view/gui/img/buttons/";
 
     public QuestionWindow(Message message) throws IOException {
         JButton yesBtn = new JButton();
         JButton noBtn = new JButton();
         JLabel background = new JLabel();
-        background.setIcon(img);
+
+        Image backgroundImage = ImageIO.read(new File(backgroundsPath.concat("QuestionBackground.png")));
+        background.setIcon(new ImageIcon(backgroundImage));
         background.setBounds(0,0,580,300);
 
         JTextPane info = new JTextPane();
@@ -42,9 +39,11 @@ public class QuestionWindow extends JWindow {
         info.setOpaque(false);
         info.setBounds(230,50,200,80);
 
+        Image yesButtonImage = ImageIO.read(new File(buttonsPath.concat("YesButton.png")));
+        ImageIcon yesBt = new ImageIcon(yesButtonImage);
+        yesBtn.setIcon(yesBt);
         yesBtn.setBounds(230,180,140,80);
         yesBtn.setVisible(true);
-        yesBtn.setIcon(yesBt);
         yesBtn.setOpaque(false);
         yesBtn.setBorderPainted(false);
         yesBtn.setBackground(Color.DARK_GRAY);
@@ -67,8 +66,8 @@ public class QuestionWindow extends JWindow {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                ImageIcon buttonImg2 = new ImageIcon(YesButtonImage.getScaledInstance(134 + 10, 70 + 10, Image.SCALE_SMOOTH));
-                yesBtn.setIcon(buttonImg2);
+                ImageIcon buttonEntered = new ImageIcon(yesButtonImage.getScaledInstance(134 + 10, 70 + 10, Image.SCALE_SMOOTH));
+                yesBtn.setIcon(buttonEntered);
             }
 
             @Override
@@ -77,9 +76,11 @@ public class QuestionWindow extends JWindow {
             }
         });
 
+        Image noButtonImage = ImageIO.read(new File(buttonsPath.concat("NoButton.png")));
+        ImageIcon noBt = new ImageIcon(noButtonImage);
+        noBtn.setIcon(noBt);
         noBtn.setBounds(400,180,140,80);
         noBtn.setVisible(true);
-        noBtn.setIcon(noBt);
         noBtn.setOpaque(false);
         noBtn.setBorderPainted(false);
         noBtn.setBackground(Color.DARK_GRAY);
@@ -102,8 +103,8 @@ public class QuestionWindow extends JWindow {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                ImageIcon buttonImg2 = new ImageIcon(NoButtonImage.getScaledInstance(134 + 10, 70 + 10, Image.SCALE_SMOOTH));
-                noBtn.setIcon(buttonImg2);
+                ImageIcon buttonEntered = new ImageIcon(noButtonImage.getScaledInstance(134 + 10, 70 + 10, Image.SCALE_SMOOTH));
+                noBtn.setIcon(buttonEntered);
             }
 
             @Override
