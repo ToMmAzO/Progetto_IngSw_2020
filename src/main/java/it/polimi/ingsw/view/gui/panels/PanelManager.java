@@ -74,11 +74,11 @@ public class PanelManager {
                         cardChoice.setVisible(false);
                         gameFrame.setSize(1280, 755);
                         gameFrame.setLocationRelativeTo(null);
-                        table.setVisible(true);
+                        /*table.setVisible(true);
                         Tutorial tutorial = new Tutorial();
                         tutorial.setVisible(true);
                         gameFrame.add(tutorial);
-                        tutorial.setSize(1280,720);
+                        tutorial.setSize(1280,720);*/
                         tableCreated = true;
                     }
                 }

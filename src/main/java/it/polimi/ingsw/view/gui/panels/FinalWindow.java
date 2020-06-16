@@ -21,7 +21,6 @@ public class FinalWindow extends JWindow {
     public FinalWindow(JFrame owner, GameState gameState) throws IOException {
         super(owner);
         JLabel background = new JLabel();
-        setBackground(new Color(0,0,0,0));
         switch (gameState) {
             case WIN -> {
                 Image winImage = ImageIO.read(new File(backgroundsPath.concat("Win.png")));
@@ -39,13 +38,12 @@ public class FinalWindow extends JWindow {
                 Image invalidationImage = ImageIO.read(new File(backgroundsPath.concat("ErrorBackground.png")));
                 background.setIcon(new ImageIcon(invalidationImage));
                 background.setBounds(0,0,500,250);
-                background.setOpaque(false);
                 setSize(500,250);
 
                 Message message;
                 if(gameState == GameState.INVALIDATION){
                     message = new Message_Invalidation();
-                }else{
+                } else{
                     message = new Message_Error();
                 }
 
@@ -61,10 +59,9 @@ public class FinalWindow extends JWindow {
                 info.setEditable(false);
                 info.setOpaque(false);
                 info.setBounds(100,50,300,150);
-                add(info);
+                background.add(info);
             }
         }
-
 
         setLayout(null);
         setVisible(true);

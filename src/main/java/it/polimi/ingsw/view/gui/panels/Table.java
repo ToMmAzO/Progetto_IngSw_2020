@@ -26,7 +26,6 @@ public class Table extends JPanel{
     private final Image boardImage = ImageIO.read(new File(backgroundsPath.concat("SantoriniBoard.png")));
     private final Image scrollPanelImage = ImageIO.read(new File(backgroundsPath.concat("ScrollPanel.png")));
     private final Image godPanelImage = ImageIO.read(new File(backgroundsPath.concat("GodPanel.png")));
-    private final Image colorImage = ImageIO.read(new File(backgroundsPath + "Color" + PanelManager.getInstance().getColor().toString() + ".png"));
 
     private final BoardPanel boardPanel;
     private final TextPanel textPanel;
@@ -34,17 +33,19 @@ public class Table extends JPanel{
     public Table() throws IOException {
         super();
         this.setSize(TABLE_DIMENSION);
-        setLayout(null);
-        add(new PlayerPanel());
-        add(boardPanel = new BoardPanel());
-        add(textPanel = new TextPanel());
+
         JLabel color = new JLabel();
+        Image colorImage = ImageIO.read(new File(backgroundsPath + "Color" + PanelManager.getInstance().getColor().toString() + ".png"));
         color.setIcon(new ImageIcon(colorImage));
         color.setBounds(543,0,200,84);
         color.setOpaque(false);
         color.setVisible(true);
         color.setBackground(new Color(0,0,0,0));
-        add(color);
+
+        add(boardPanel = new BoardPanel());
+        add(color);setLayout(null);
+        add(new PlayerPanel());
+        add(textPanel = new TextPanel());
     }
 
     @Override
