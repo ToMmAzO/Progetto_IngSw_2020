@@ -18,7 +18,8 @@ public class QuestionWindow extends JWindow {
     private final static String backgroundsPath = "src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/";
     private final static String buttonsPath = "src/main/java/it/polimi/ingsw/view/gui/img/buttons/";
 
-    public QuestionWindow(Message message) throws IOException {
+    public QuestionWindow(JFrame owner, Message message) throws IOException {
+        super(owner);
         JButton yesBtn = new JButton();
         JButton noBtn = new JButton();
         JLabel background = new JLabel();
@@ -112,6 +113,7 @@ public class QuestionWindow extends JWindow {
                 noBtn.setIcon(noBt);
             }
         });
+
 
         setLayout(null);
         setSize(580,300);

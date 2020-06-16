@@ -55,9 +55,6 @@ public class PanelManager {
                 case WELCOME_FIRST ->{
                     gameFrame.add(welcomeFirst);
                     welcome.setVisible(false);
-                    gameFrame.setSize(600,600);
-                    gameFrame.setLocation(400,20);
-                    welcomeFirst.setVisible(true);
                 }
                 case CARD_CHOICE -> {
                     God[] cards = deck.getCardsSelected();
@@ -69,9 +66,6 @@ public class PanelManager {
                     }
                     welcome.setVisible(false);
                     welcomeFirst.setVisible(false);
-                    gameFrame.setSize(600, 600);
-                    gameFrame.setLocation(400, 20);
-                    cardChoice.setVisible(true);
                 }
                 case SET_WORKER -> {
                     if(!tableCreated) {
@@ -81,6 +75,10 @@ public class PanelManager {
                         gameFrame.setSize(1280, 755);
                         gameFrame.setLocationRelativeTo(null);
                         table.setVisible(true);
+                        Tutorial tutorial = new Tutorial();
+                        tutorial.setVisible(true);
+                        gameFrame.add(tutorial);
+                        tutorial.setSize(1280,720);
                         tableCreated = true;
                     }
                 }
@@ -97,21 +95,11 @@ public class PanelManager {
                         case QUESTION_PROMETHEUS -> message = new Message_QuestionPrometheus();
                         case QUESTION_TRITON -> message = new Message_QuestionTriton();
                     }
-                    QuestionWindow question = new QuestionWindow(message);
-                    question.setVisible(true);
-                    question.setSize(580,300);
+                    QuestionWindow question = new QuestionWindow(gameFrame, message);
                     question.setLocationRelativeTo(gameFrame);
                 }
-                case INVALIDATION, ERROR -> {
-                    FinalWindow window = new FinalWindow((GameState)inputObject);
-                    window.setVisible(true);
-                    window.setSize(580,300);
-                    window.setLocationRelativeTo(gameFrame);
-                }
-                case WIN, LOSE -> {
-                    FinalWindow window = new FinalWindow((GameState)inputObject);
-                    window.setVisible(true);
-                    window.setSize(600,300);
+                case WIN, LOSE, INVALIDATION, ERROR -> {
+                    FinalWindow window = new FinalWindow(gameFrame, (GameState)inputObject);
                     window.setLocationRelativeTo(gameFrame);
                 }
             }

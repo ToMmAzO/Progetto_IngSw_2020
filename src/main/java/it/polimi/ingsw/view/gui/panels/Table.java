@@ -26,6 +26,7 @@ public class Table extends JPanel{
     private final Image boardImage = ImageIO.read(new File(backgroundsPath.concat("SantoriniBoard.png")));
     private final Image scrollPanelImage = ImageIO.read(new File(backgroundsPath.concat("ScrollPanel.png")));
     private final Image godPanelImage = ImageIO.read(new File(backgroundsPath.concat("GodPanel.png")));
+    private final Image colorImage = ImageIO.read(new File(backgroundsPath + "Color" + PanelManager.getInstance().getColor().toString() + ".png"));
 
     private final BoardPanel boardPanel;
     private final TextPanel textPanel;
@@ -37,6 +38,13 @@ public class Table extends JPanel{
         add(new PlayerPanel());
         add(boardPanel = new BoardPanel());
         add(textPanel = new TextPanel());
+        JLabel color = new JLabel();
+        color.setIcon(new ImageIcon(colorImage));
+        color.setBounds(543,0,200,84);
+        color.setOpaque(false);
+        color.setVisible(true);
+        color.setBackground(new Color(0,0,0,0));
+        add(color);
     }
 
     @Override
@@ -59,7 +67,7 @@ public class Table extends JPanel{
             super();
             setLayout(null);
             setBackground(new Color(0, 0, 0, 0));
-            setLocation(1030, 0);
+            setLocation(995, 0);
             setSize(PLAYER_PANEL_DIMENSION);
 
             JLabel godImage = getGodCard();
@@ -71,7 +79,7 @@ public class Table extends JPanel{
             info.setEditable(false);
             info.setBounds(50,412,180,120);
             info.setOpaque(false);
-            info.setForeground(Color.BLACK);
+            info.setForeground(new Color(0x3C3C3C));
 
             add(godImage);
             add(info);
@@ -112,6 +120,7 @@ public class Table extends JPanel{
             info.setOpaque(false);
             info.setForeground(new Color(0xFF91511D, true));
             info.setBackground(new Color(0,0,0,0));
+            info.setEditable(false);
 
             JScrollPane scrollPane = new JScrollPane(info);
             scrollPane.setBounds(50,220,165,250);

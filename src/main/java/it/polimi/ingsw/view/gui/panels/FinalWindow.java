@@ -18,23 +18,29 @@ public class FinalWindow extends JWindow {
 
     private final static String backgroundsPath = "src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/";
 
-    public FinalWindow(GameState gameState) throws IOException {
+    public FinalWindow(JFrame owner, GameState gameState) throws IOException {
+        super(owner);
         JLabel background = new JLabel();
+        setBackground(new Color(0,0,0,0));
         switch (gameState) {
             case WIN -> {
                 Image winImage = ImageIO.read(new File(backgroundsPath.concat("Win.png")));
                 background.setIcon(new ImageIcon(winImage));
                 background.setBounds(0,0,600,300);
+                setSize(600,300);
             }
             case LOSE -> {
                 Image loseImage = ImageIO.read(new File(backgroundsPath.concat("Lose.png")));
                 background.setIcon(new ImageIcon(loseImage));
                 background.setBounds(0,0,600,300);
+                setSize(600,300);
             }
             default -> {
-                Image invalidationImage = ImageIO.read(new File(backgroundsPath.concat("QuestionBackground.png")));
+                Image invalidationImage = ImageIO.read(new File(backgroundsPath.concat("ErrorBackground.png")));
                 background.setIcon(new ImageIcon(invalidationImage));
-                background.setBounds(0,0,580,300);
+                background.setBounds(0,0,500,250);
+                background.setOpaque(false);
+                setSize(500,250);
 
                 Message message;
                 if(gameState == GameState.INVALIDATION){
@@ -49,14 +55,16 @@ public class FinalWindow extends JWindow {
                 SimpleAttributeSet center = new SimpleAttributeSet();
                 StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
                 doc.setParagraphAttributes(0, doc.getLength(), center, false);
-                Font f = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,13);
+                Font f = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,17);
+                info.setForeground(new Color(0x3C3C3C));
                 info.setFont(f);
                 info.setEditable(false);
                 info.setOpaque(false);
-                info.setBounds(230,50,200,80);
+                info.setBounds(100,50,300,150);
                 add(info);
             }
         }
+
 
         setLayout(null);
         setVisible(true);
