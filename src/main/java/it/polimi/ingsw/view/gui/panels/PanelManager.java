@@ -24,7 +24,7 @@ public class PanelManager {
     private JFrame gameFrame;
     private Welcome welcome;
     private WelcomeFirst welcomeFirst;
-    private Waiting waiting;
+    private JLabel waiting;
     private CardChoice cardChoice;
     private Table table;
 
@@ -191,10 +191,9 @@ public class PanelManager {
 
         welcome = new Welcome();
         welcomeFirst = new WelcomeFirst();
-        waiting = new Waiting();
+        waiting = new JLabel(new ImageIcon("src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/WaitingBackground.gif"));
 
         gameFrame.add(welcome);
-
         gameFrame.setVisible(true);
         gameFrame.setSize(600,600);
         gameFrame.setLocation(400,20);
