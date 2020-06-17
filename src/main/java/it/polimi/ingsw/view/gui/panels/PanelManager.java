@@ -92,7 +92,7 @@ public class PanelManager {
                 }
                 case WIN, LOSE, INVALIDATION, ERROR -> {
                     FinalWindow window = new FinalWindow(gameFrame, (GameState)inputObject);
-                    window.setLocationRelativeTo(gameFrame);
+                    window.setLocationRelativeTo(null);
                 }
             }
         } else if(inputObject instanceof Color){
@@ -107,11 +107,10 @@ public class PanelManager {
                 cardChoice.setVisible(false);
                 gameFrame.setSize(1280, 755);
                 gameFrame.setLocationRelativeTo(null);
-                /*table.setVisible(true);
-                Tutorial tutorial = new Tutorial();
+                table.setVisible(true);
+                Tutorial tutorial = new Tutorial(gameFrame);
                 tutorial.setVisible(true);
-                gameFrame.add(tutorial);
-                tutorial.setSize(1280,720);*/
+                tutorial.repaint();
                 tableCreated = true;
             } else{
                 table.updateMap();
