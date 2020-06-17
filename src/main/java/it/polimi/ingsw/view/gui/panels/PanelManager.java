@@ -24,6 +24,7 @@ public class PanelManager {
     private JFrame gameFrame;
     private Welcome welcome;
     private WelcomeFirst welcomeFirst;
+    private Waiting waiting;
     private CardChoice cardChoice;
     private Table table;
 
@@ -57,6 +58,16 @@ public class PanelManager {
                     gameFrame.add(welcomeFirst);
                     welcome.setVisible(false);
                 }
+                case WAIT_PLAYERS -> {
+                    gameFrame.add(waiting);
+                    waiting.setVisible(true);
+                    welcome.setVisible(false);
+                    welcomeFirst.setVisible(false);
+                }
+                case WAIT_CARD_CHOICE -> {
+                    waiting.setVisible(true);
+                    cardChoice.setVisible(false);
+                }
                 case CARD_CHOICE -> {
                     God[] cards = deck.getCardsSelected();
                     if (cards.length == 2) {
@@ -65,8 +76,7 @@ public class PanelManager {
                     if (cards.length == 3) {
                         gameFrame.add(cardChoice = new CardChoice(cards[0], cards[1], cards[2], deck.getAvailability()));
                     }
-                    welcome.setVisible(false);
-                    welcomeFirst.setVisible(false);
+                    waiting.setVisible(false);
                 }
                 case SET_WORKER -> {
                     if(!firstWorkerIsSet) {
@@ -104,7 +114,7 @@ public class PanelManager {
             if(!tableCreated) {
                 table = new Table();
                 gameFrame.add(table);
-                cardChoice.setVisible(false);
+                waiting.setVisible(false);
                 gameFrame.setSize(1280, 755);
                 gameFrame.setLocationRelativeTo(null);
                 table.setVisible(true);
@@ -181,6 +191,8 @@ public class PanelManager {
 
         welcome = new Welcome();
         welcomeFirst = new WelcomeFirst();
+        waiting = new Waiting();
+
         gameFrame.add(welcome);
 
         gameFrame.setVisible(true);
