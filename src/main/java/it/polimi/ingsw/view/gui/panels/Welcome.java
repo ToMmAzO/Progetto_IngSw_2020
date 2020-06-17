@@ -56,9 +56,7 @@ public class Welcome extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                if(nicknameTextField.getText().isEmpty()){
-                    System.out.println("Chose a nickname");
-                }else{
+                if(!nicknameTextField.getText().isEmpty()){
                     PanelManager.getInstance().asyncWriteToSocket(nicknameTextField.getText());
                     okButton.setEnabled(false);
                 }
