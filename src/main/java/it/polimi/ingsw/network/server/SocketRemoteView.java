@@ -34,7 +34,7 @@ public class SocketRemoteView {
         if (player.equals(GameManager.getInstance().getCurrPlayer())){
             readMessage(message);
         } else{
-            clientConnection.asyncSend("It is not your turn! Wait.");
+            clientConnection.asyncSend("It's not your turn! Wait.");
         }
     }
 

@@ -92,7 +92,7 @@ public class PanelManager {
                 }
                 case WIN, LOSE, INVALIDATION, ERROR -> {
                     FinalWindow window = new FinalWindow(gameFrame, (GameState)inputObject);
-                    window.setLocationRelativeTo(null);
+                    window.setLocationRelativeTo(gameFrame);
                 }
             }
         } else if(inputObject instanceof Color){
@@ -109,8 +109,7 @@ public class PanelManager {
                 gameFrame.setLocationRelativeTo(null);
                 table.setVisible(true);
                 Tutorial tutorial = new Tutorial(gameFrame);
-                tutorial.setVisible(true);
-                tutorial.repaint();
+                tutorial.setLocationRelativeTo(gameFrame);
                 tableCreated = true;
             } else{
                 table.updateMap();

@@ -13,7 +13,7 @@ public class SystemMessage extends Observable<String> {
     public String powerPrometheus = "ATTENTION, you have just built and you are PROMETHEUS!";
     public String doubleGoUp = "ATTENTION, you cannot go up two levels!";
     public String cupolaPresence = "ATTENTION, there is a Cupola!";
-    public String yourWorker = "ATTENTION, he is not an opposing Worker!";
+    public String yourWorker = "ATTENTION, he's not an opposing Worker!";
     public String cantPush = "ATTENTION, you cannot push that Worker!";
     public String yourPosition = "ATTENTION, you are already there!";
     public String distantCell = "You must select one of the 8 spaces around the Worker!";

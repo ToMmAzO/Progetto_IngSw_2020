@@ -1,4 +1,4 @@
-package it.polimi.ingsw.app;
+package it.polimi.ingsw.apps;
 
 import it.polimi.ingsw.view.cli.Cli;
 
