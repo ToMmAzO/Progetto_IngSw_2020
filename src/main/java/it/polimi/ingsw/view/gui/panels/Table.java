@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.game.GameState;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -74,13 +77,16 @@ public class Table extends JPanel{
             JLabel godImage = getGodCard();
             godImage.setLocation(70,160);
 
-            JTextArea info = new JTextArea(God.getGodDescription(PanelManager.getInstance().getGodChoice()));
-            info.setWrapStyleWord(true);
-            info.setLineWrap(true);
+            JTextPane info = new JTextPane();
+            info.setText(God.getGodDescription(PanelManager.getInstance().getGodChoice()));
             info.setEditable(false);
-            info.setBounds(50,412,180,120);
+            info.setBounds(55,412,180,120);
             info.setOpaque(false);
             info.setForeground(new Color(0x3C3C3C));
+            StyledDocument doc = info.getStyledDocument();
+            SimpleAttributeSet center = new SimpleAttributeSet();
+            StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+            doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
             add(godImage);
             add(info);
