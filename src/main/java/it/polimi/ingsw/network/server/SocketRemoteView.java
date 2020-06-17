@@ -175,9 +175,9 @@ public class SocketRemoteView {
 
         @Override
         public void update(GameState message){
-            if (player.equals(GameManager.getInstance().getCurrPlayer())){
+            if(player.equals(GameManager.getInstance().getCurrPlayer())){
                 if(player.equals(GameManager.getInstance().getPlayersInGame()[0])){
-                    if (message == GameState.SET_WORKER) {
+                    if(message == GameState.SET_WORKER) {
                         if (player.getWorkerSelected(1) == null) {
                             clientConnection.asyncSend(new MapCopy());
                         }
@@ -195,23 +195,31 @@ public class SocketRemoteView {
                     clientConnection.closeConnection();
                 }
             } else{
-                switch(message) {
+                switch(message){
+                    case SET_WORKER -> {
+                        if(GameManager.getInstance().getCurrPlayer().equals(GameManager.getInstance().getPlayersInGame()[0])){
+                            if(GameManager.getInstance().getCurrPlayer().getWorkerSelected(1) == null){
+                                clientConnection.asyncSend(new MapCopy());
+                            }
+                        }
+                    }
                     case WIN -> {
                         clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " has won!");
                         clientConnection.asyncSend(GameState.LOSE);
+                        clientConnection.closeConnection();
                     }
                     case LOSE -> {
                         clientConnection.asyncSend(GameManager.getInstance().getCurrPlayer().getNickname() + " has lost!");
                         mapUpdate();
                     }
-                    case INVALIDATION -> clientConnection.asyncSend(message);
-                }
-                if(message == GameState.WIN || message == GameState.INVALIDATION) {
-                    clientConnection.closeConnection();
+                    case INVALIDATION -> {
+                        clientConnection.asyncSend(message);
+                        clientConnection.closeConnection();
+                    }
                 }
             }
-
         }
+
     }
 
     private class Error implements Observer<String> {
@@ -243,7 +251,7 @@ public class SocketRemoteView {
 
         @Override
         public void update(Player message){
-            if (!player.equals(message)){
+            if(!player.equals(message)){
                 clientConnection.asyncSend("Action of " + message.getNickname() + ".");
             }
             mapUpdate();
@@ -254,12 +262,14 @@ public class SocketRemoteView {
     private void mapUpdate(){
         clientConnection.asyncSend(new MapCopy());
         Player[] players = GameManager.getInstance().getPlayersInGame();
-        for (Player p : players){
-            if(p.getWorkerSelected(1) != null && p.getWorkerSelected(2) != null){
-                clientConnection.asyncSend(p.getNickname() + ": " +
-                        p.getWorkerSelected(1).getIdWorker() + " (level " + p.getWorkerSelected(1).getCoordZ() + "), " +
-                        p.getWorkerSelected(2).getIdWorker() + " (level " + p.getWorkerSelected(2).getCoordZ() + ")."
-                );
+        if(players[players.length - 1].getWorkerSelected(2) != null){
+            for(Player p : players){
+                if(p.getWorkerSelected(1) != null && p.getWorkerSelected(2) != null){
+                    clientConnection.asyncSend(p.getNickname() + ": " +
+                            p.getWorkerSelected(1).getIdWorker() + " (level " + p.getWorkerSelected(1).getCoordZ() + "), " +
+                            p.getWorkerSelected(2).getIdWorker() + " (level " + p.getWorkerSelected(2).getCoordZ() + ")."
+                    );
+                }
             }
         }
     }

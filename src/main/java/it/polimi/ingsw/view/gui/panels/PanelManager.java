@@ -34,6 +34,7 @@ public class PanelManager {
     private MapCopy map;
 
     boolean tableCreated = false;
+    boolean firstWorkerIsSet = false;
 
     public PanelManager(Gui gui){
         panelManager = this;
@@ -68,21 +69,12 @@ public class PanelManager {
                     welcomeFirst.setVisible(false);
                 }
                 case SET_WORKER -> {
-                    if(!tableCreated) {
-                        table = new Table();
-                        gameFrame.add(table);
-                        cardChoice.setVisible(false);
-                        gameFrame.setSize(1280, 755);
-                        gameFrame.setLocationRelativeTo(null);
-                        /*table.setVisible(true);
-                        Tutorial tutorial = new Tutorial();
-                        tutorial.setVisible(true);
-                        gameFrame.add(tutorial);
-                        tutorial.setSize(1280,720);*/
-                        tableCreated = true;
+                    if(!firstWorkerIsSet) {
+                        table.addText("It`s your turn, set your Workers on map.");
+                        firstWorkerIsSet = true;
                     }
                 }
-                case WORKER_CHOICE -> table.addText("It`s your turn, select a worker.");
+                case WORKER_CHOICE -> table.addText("It`s your turn, select a Worker.");
                 case QUESTION_ARTEMIS,QUESTION_ATLAS,QUESTION_DEMETER,QUESTION_HESTIA,
                         QUESTION_HEPHAESTUS,QUESTION_PROMETHEUS,QUESTION_TRITON -> {
                     Message message = null;
@@ -107,9 +99,21 @@ public class PanelManager {
             color = ((Color) inputObject);
         } else if(inputObject instanceof DeckCopy){
             deck = ((DeckCopy) inputObject);
-        } else if(inputObject instanceof MapCopy){
+        } else if(inputObject instanceof MapCopy) {
             map = ((MapCopy) inputObject);
-            if(tableCreated){
+            if(!tableCreated) {
+                table = new Table();
+                gameFrame.add(table);
+                cardChoice.setVisible(false);
+                gameFrame.setSize(1280, 755);
+                gameFrame.setLocationRelativeTo(null);
+                /*table.setVisible(true);
+                Tutorial tutorial = new Tutorial();
+                tutorial.setVisible(true);
+                gameFrame.add(tutorial);
+                tutorial.setSize(1280,720);*/
+                tableCreated = true;
+            } else{
                 table.updateMap();
             }
         } else if(inputObject instanceof String string){
