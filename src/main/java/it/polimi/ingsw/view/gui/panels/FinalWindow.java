@@ -23,14 +23,12 @@ public class FinalWindow extends JWindow {
         JLabel background = new JLabel();
         switch (gameState) {
             case WIN -> {
-                Image winImage = ImageIO.read(new File(backgroundsPath.concat("Win.png")));
-                background.setIcon(new ImageIcon(winImage));
+                background.setIcon(new ImageIcon(backgroundsPath.concat("Win.gif")));
                 background.setBounds(0,0,600,300);
                 setSize(600,300);
             }
             case LOSE -> {
-                Image loseImage = ImageIO.read(new File(backgroundsPath.concat("Lose.png")));
-                background.setIcon(new ImageIcon(loseImage));
+                background.setIcon(new ImageIcon(backgroundsPath.concat("Lose.gif")));
                 background.setBounds(0,0,600,300);
                 setSize(600,300);
             }

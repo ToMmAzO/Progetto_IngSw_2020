@@ -191,7 +191,7 @@ public class PanelManager {
 
         welcome = new Welcome();
         welcomeFirst = new WelcomeFirst();
-        waiting = new JLabel(new ImageIcon("src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/WaitingBackground.gif"));
+        waiting = new JLabel(new ImageIcon("src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/LoadingBackground.gif"));
 
         gameFrame.add(welcome);
         gameFrame.setVisible(true);
