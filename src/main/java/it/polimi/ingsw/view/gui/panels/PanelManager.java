@@ -118,8 +118,6 @@ public class PanelManager {
                 gameFrame.setSize(1280, 755);
                 gameFrame.setLocationRelativeTo(null);
                 table.setVisible(true);
-                Tutorial tutorial = new Tutorial(gameFrame);
-                tutorial.setLocationRelativeTo(gameFrame);
                 tableCreated = true;
             } else{
                 table.updateMap();

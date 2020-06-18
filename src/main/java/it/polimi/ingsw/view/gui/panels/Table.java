@@ -30,23 +30,30 @@ public class Table extends JPanel{
     private final Image scrollPanelImage = ImageIO.read(new File(backgroundsPath.concat("ScrollPanel.png")));
     private final Image godPanelImage = ImageIO.read(new File(backgroundsPath.concat("GodPanel.png")));
 
+    private final JLabel tutorial;
     private final BoardPanel boardPanel;
     private final TextPanel textPanel;
+
+    private boolean tutorialIsClosed = false;
 
     public Table() throws IOException {
         super();
         this.setSize(TABLE_DIMENSION);
+        setLayout(null);
 
         JLabel color = new JLabel();
         Image colorImage = ImageIO.read(new File(backgroundsPath + "Color" + PanelManager.getInstance().getColor().toString() + ".png"));
         color.setIcon(new ImageIcon(colorImage));
         color.setBounds(543,0,200,84);
-        color.setOpaque(false);
-        color.setVisible(true);
-        color.setBackground(new Color(0,0,0,0));
 
+        tutorial = new JLabel();
+        Image tutorialImage = ImageIO.read(new File(backgroundsPath.concat("TutorialBackground.png")));
+        tutorial.setIcon(new ImageIcon(tutorialImage));
+        tutorial.setBounds(25, 0, 1100, 720);
+
+        add(color);
+        add(tutorial);
         add(boardPanel = new BoardPanel());
-        add(color);setLayout(null);
         add(new PlayerPanel());
         add(textPanel = new TextPanel());
     }
@@ -159,7 +166,7 @@ public class Table extends JPanel{
 
     }
 
-    private static class BoardPanel extends JPanel{
+    private class BoardPanel extends JPanel{
 
         private final TileButton[] tiles = new TileButton[25];
 
@@ -190,7 +197,7 @@ public class Table extends JPanel{
 
     }
 
-    private static class TileButton extends JButton{
+    private class TileButton extends JButton{
 
         private final int coordX, coordY;
 
@@ -206,6 +213,10 @@ public class Table extends JPanel{
             addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    if(!tutorialIsClosed) {
+                        tutorial.setVisible(false);
+                        tutorialIsClosed = true;
+                    }
                     if(isLeftMouseButton(e)){
                         if (PanelManager.getInstance().getGameState() == GameState.WORKER_CHOICE) {
                             if (!PanelManager.getInstance().getMap().noWorkerHere(coordX, coordY)) {
