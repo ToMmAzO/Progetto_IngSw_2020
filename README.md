@@ -8,7 +8,7 @@ La seguente documentazione comprende i documenti realizzati per la progettazione
 
 ### UML
 I seguenti diagrammi delle classi rappresentano: il modello secondo il quale il gioco dovrebbe essere stato implementato e i diagrammi del prodotto finale.
-- [UML Iniziali](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/blob/master/deliverables/UML/Santorini.mdj)
+- [UML Iniziali](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/blob/master/deliverables/UML/Initial.mdj)
 - [UML Finali](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/blob/master/deliverables/UML/Santorini.mdj)
 
 ### JavaDoc
