@@ -49,7 +49,7 @@ public class Welcome extends JPanel {
 
         nickname = new JLabel("Chose a nickname:");
         nickname.setForeground(Color.BLACK);
-        nickname.setBounds(75,140 + logoHeight,200,30);
+        nickname.setBounds(80,140 + logoHeight,200,30);
         nicknameTextField = new JTextField();
         nicknameTextField.setBounds(200,140 + logoHeight,200,30);
         nicknameTextField.setOpaque(false);
@@ -71,9 +71,9 @@ public class Welcome extends JPanel {
             public void mouseClicked(MouseEvent e) {
 
                 if(nicknameTextField.getText().isEmpty()){
-                    f = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,20);
+                    f = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,18);
                     welcome.setFont(f);
-                    welcome.setText("You must choose a nickname to play!");
+                    welcome.setText("You must choose a \nnickname to play!");
                 } else{
                     PanelManager.getInstance().asyncWriteToSocket(nicknameTextField.getText());
                 }
