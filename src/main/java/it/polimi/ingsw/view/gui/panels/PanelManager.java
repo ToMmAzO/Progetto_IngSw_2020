@@ -54,7 +54,11 @@ public class PanelManager {
         if(inputObject instanceof GameState){
             gameState = ((GameState)inputObject);
             switch ((GameState)inputObject){
-                case WELCOME_FIRST ->{
+                case WELCOME -> {
+                    Message message = new Message_Welcome();
+                    welcome.changeNickname(message.getMessage().substring(0, message.getMessage().length()-2));
+                }
+                case WELCOME_FIRST -> {
                     gameFrame.add(welcomeFirst);
                     welcome.setVisible(false);
                 }

@@ -2,6 +2,9 @@ package it.polimi.ingsw.view.gui.panels;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,21 +22,30 @@ public class Welcome extends JPanel {
     private final Image loadingBack = ImageIO.read(new File(backgroundsPath.concat("WelcomeBackground.png")));
     private final Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
+    private final JTextPane welcome;
+
     public Welcome() throws IOException {
         super();
         int logoWidth = 400;
         int logoHeight = 130;
         JLabel logo;
-        JLabel welcome;
         JLabel nickname;
         JTextField nicknameTextField;
         JButton okButton;
 
-        welcome = new JLabel("WELCOME!!");
-        welcome.setForeground(Color.BLACK);
-        welcome.setBounds(270,40 + logoHeight,300,30);
+        welcome = new JTextPane();
+        welcome.setText("WELCOME!!");
+        Font f = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,20);
+        welcome.setFont(f);
+        welcome.setEditable(false);
+        welcome.setBounds(100,30 + logoHeight,400,50);
+        welcome.setOpaque(false);
+        StyledDocument doc = welcome.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
-        nickname = new JLabel("Chose a nickname: ");
+        nickname = new JLabel("Chose a nickname:");
         nickname.setForeground(Color.BLACK);
         nickname.setBounds(60,90 + logoHeight,200,30);
         nicknameTextField = new JTextField();
@@ -56,9 +68,10 @@ public class Welcome extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                if(!nicknameTextField.getText().isEmpty()){
+                if(nicknameTextField.getText().isEmpty()){
+                    welcome.setText("You must choose a nickname to play!");
+                } else{
                     PanelManager.getInstance().asyncWriteToSocket(nicknameTextField.getText());
-                    okButton.setEnabled(false);
                 }
 
             }
@@ -98,6 +111,10 @@ public class Welcome extends JPanel {
         add(okButton);
         add(logo);
         setVisible(true);
+    }
+
+    public void changeNickname(String message){
+        welcome.setText(message);
     }
 
     @Override
