@@ -102,6 +102,7 @@ public class Cli extends Client<Scanner> {
     private void runState(GameState state){
         Message message = null;
         switch (state){
+            case WELCOME -> message = new Message_Welcome();
             case WELCOME_FIRST -> message = new Message_WelcomeFirst();
             case WAIT_PLAYERS -> message = new Message_WaitPlayers();
             case WAIT_CARD_CHOICE -> message = new Message_WaitCardChoice();

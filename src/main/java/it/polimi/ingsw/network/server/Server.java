@@ -34,6 +34,12 @@ public class Server {
 
     public synchronized Player lobby(String nickname, SocketClientConnection c) {
         if(serverReady){
+            Player[] players = GameManager.getInstance().getPlayersInGame();
+            for(Player p: players){
+                if(p.getNickname().equals(nickname)){
+                    return null;
+                }
+            }
             Player player = new Player(nickname);
             if(GameManager.getInstance().mapEmpty()) {
                 GameManager.getInstance().setCurrPlayer(player);

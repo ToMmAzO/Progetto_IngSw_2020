@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameManager;
 import it.polimi.ingsw.model.game.Game;
+import it.polimi.ingsw.model.game.GameState;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.ClientMessage;
 
@@ -53,12 +54,18 @@ public class SocketClientConnection implements Runnable {
 
     @Override
     public void run(){
-        try{
+        try {
             Scanner in = new Scanner(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
-            String read = in.nextLine();
-            String clientName = read;
-            player = server.lobby(clientName, this);
+            String read;
+            while(player == null) {
+                read = in.nextLine();
+                String clientName = read;
+                player = server.lobby(clientName, this);
+                if(player == null){
+                    asyncSend(GameState.WELCOME);
+                }
+            }
             ClientMessage message = new ClientMessage();
             while(active) {
                 read = in.nextLine();
