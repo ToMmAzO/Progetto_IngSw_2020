@@ -12,6 +12,14 @@ public abstract class Worker implements Serializable {
     private final String idWorker;
     private int coordX, coordY, coordZ;
 
+
+    /**
+     * Insert the worker, only for the first time, in the map
+     *
+     * @param idWorker worker name
+     * @param coordX row coordinate of the worker in the map
+     * @param coordY column coordinate of the worker in the map
+     */
     public Worker(String idWorker, int coordX, int coordY) {
         this.idWorker = idWorker;
         this.coordX = coordX;
@@ -48,6 +56,12 @@ public abstract class Worker implements Serializable {
         this.coordZ = coordZ;
     }
 
+
+    /**
+     * Verify that the worker can move according to the rules of the game
+     *
+     * @return true if can move
+     */
     public boolean canMove() {
         for (int i = coordX - 1; i <= coordX + 1; i++) {
             for (int j = coordY - 1; j <= coordY + 1; j++) {
@@ -67,6 +81,11 @@ public abstract class Worker implements Serializable {
         return false;
     }
 
+    /**
+     * Verify that the worker can build (only for Apollo, Hephaestus, Hestia, Prometheus)
+     *
+     * @return true if can build
+     */
     public boolean canBuild(){
         for (int i = getCoordX() - 1; i <= getCoordX() + 1; i++) {
             for (int j = getCoordY() - 1; j <= getCoordY() + 1; j++) {
@@ -77,8 +96,14 @@ public abstract class Worker implements Serializable {
             }
         }
         return false;
-    }//Prometheus, Apollo, Hephaestus, Hestia
+    }
 
+    /**
+     * Change the worker position with the two new coordinates
+     *
+     * @param newX new row coordinate of the worker in the map
+     * @param newY new column coordinate of the worker in the map
+     */
     public void changePosition(int newX, int newY){
         Map.getInstance().deleteWorkerInCell(this);
         coordX = newX;
@@ -95,6 +120,12 @@ public abstract class Worker implements Serializable {
         return false;
     }//Minotaur
 
+    /**
+     * Build a block in the the map
+     *
+     * @param buildX row coordinate of the building
+     * @param buildY column coordinate of the building
+     */
     public void buildBlock(int buildX, int buildY){
         if(Map.getInstance().getCellBlockType(buildX, buildY) == BlockType.GROUND){
             Map.getInstance().setCellBlockType(buildX, buildY, BlockType.BLOCK1);
