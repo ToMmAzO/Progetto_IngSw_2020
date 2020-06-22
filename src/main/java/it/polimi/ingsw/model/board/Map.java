@@ -59,6 +59,13 @@ public class Map extends Observable<Player> {
         map[worker.getCoordX()][worker.getCoordY()].setWorkerPresence(null);
     }
 
+    /**
+     * controls if there's a worker in the block placed in row,column on the map
+     *
+     * @param row row of the cell to controll on the map
+     * @param column column of the cell to controll on the map
+     * @return 'true' if the cell is free (there's no worker in it) else 'false'
+     */
     public boolean noWorkerHere(int row, int column){
         return map[row][column].getWorkerPresence() == null;
     }
