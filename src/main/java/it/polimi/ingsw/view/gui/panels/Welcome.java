@@ -23,6 +23,7 @@ public class Welcome extends JPanel {
     private final Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
     private final JTextPane welcome;
+    private Font f;
 
     public Welcome() throws IOException {
         super();
@@ -35,10 +36,11 @@ public class Welcome extends JPanel {
 
         welcome = new JTextPane();
         welcome.setText("WELCOME!!");
-        Font f = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,20);
+        f = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,30);
         welcome.setFont(f);
         welcome.setEditable(false);
-        welcome.setBounds(100,30 + logoHeight,400,50);
+        welcome.setBounds(110,30 + logoHeight,390,50);
+        welcome.setForeground(Color.WHITE);
         welcome.setOpaque(false);
         StyledDocument doc = welcome.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
@@ -47,9 +49,9 @@ public class Welcome extends JPanel {
 
         nickname = new JLabel("Chose a nickname:");
         nickname.setForeground(Color.BLACK);
-        nickname.setBounds(60,90 + logoHeight,200,30);
+        nickname.setBounds(75,140 + logoHeight,200,30);
         nicknameTextField = new JTextField();
-        nicknameTextField.setBounds(200,90 + logoHeight,200,30);
+        nicknameTextField.setBounds(200,140 + logoHeight,200,30);
         nicknameTextField.setOpaque(false);
 
         int okWidth = 100;
@@ -59,7 +61,7 @@ public class Welcome extends JPanel {
         Image buttonPng = ImageIO.read(new File(buttonsPath.concat("PlayButton.png")));
         ImageIcon buttonImg = new ImageIcon(buttonsPath.concat("PlayButton.png"));
         okButton.setIcon(buttonImg);
-        okButton.setBounds(250,150 + logoHeight,okWidth,okHeight);
+        okButton.setBounds(250,180 + logoHeight,okWidth,okHeight);
         okButton.setOpaque(false);
         okButton.setBorderPainted(false);
         okButton.setBackground(Color.DARK_GRAY);
@@ -69,6 +71,8 @@ public class Welcome extends JPanel {
             public void mouseClicked(MouseEvent e) {
 
                 if(nicknameTextField.getText().isEmpty()){
+                    f = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,20);
+                    welcome.setFont(f);
                     welcome.setText("You must choose a nickname to play!");
                 } else{
                     PanelManager.getInstance().asyncWriteToSocket(nicknameTextField.getText());
@@ -114,6 +118,8 @@ public class Welcome extends JPanel {
     }
 
     public void changeNickname(String message){
+        f = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,20);
+        welcome.setFont(f);
         welcome.setText(message);
     }
 
