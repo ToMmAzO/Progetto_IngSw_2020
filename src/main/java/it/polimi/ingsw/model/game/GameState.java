@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.game;
 
 public enum GameState {
 
-    WELCOME_FIRST,
+    WELCOME, WELCOME_FIRST,
     WAIT_PLAYERS, WAIT_CARD_CHOICE, WAIT_TURN,
     CARD_CHOICE, SET_WORKER,
     WORKER_CHOICE,
