@@ -12,6 +12,9 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * This class represents the connection between a server socket and a specific client.
+ */
 public class SocketClientConnection implements Runnable {
 
     private final Socket socket;
@@ -21,6 +24,10 @@ public class SocketClientConnection implements Runnable {
     private boolean active = true;
     Player player;
 
+    /**
+     * @param socket is the socket associated with the client connection.
+     * @param server is referenced to server class.
+     */
     public SocketClientConnection(Socket socket, Server server){
         this.socket = socket;
         this.server = server;
@@ -34,6 +41,11 @@ public class SocketClientConnection implements Runnable {
         return viewSocket;
     }
 
+    /**
+     * This method is used by server to send messages to the client.
+     *
+     * @param message is a generic Object
+     */
     public synchronized void asyncSend(Object message){
         try{
             out.reset();
@@ -42,6 +54,9 @@ public class SocketClientConnection implements Runnable {
         } catch(IOException ignore){}
     }
 
+    /**
+     * This method is used to close the connection between server and client.
+     */
     public synchronized void closeConnection(){
         asyncSend("Connection closed!");
         try{
@@ -52,6 +67,10 @@ public class SocketClientConnection implements Runnable {
         active = false;
     }
 
+    /**
+     * This method is used to configure this connection and its functionality.
+     * It manages and forwards client requests or messages.
+     */
     @Override
     public void run(){
         try {

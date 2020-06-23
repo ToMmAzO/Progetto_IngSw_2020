@@ -13,11 +13,20 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.observer.Observer;
 
+/**
+ * This class represents the client virtual view into the server and it's associated with a specific socket.
+ */
 public class SocketRemoteView {
 
     private final SocketClientConnection clientConnection;
     private final Player player;
 
+    /**
+     * When a SocketRemoteView is created, observers of the model are also initialized.
+     *
+     * @param player is the entity of client in this game.
+     * @param c is the client socket.
+     */
     public SocketRemoteView(Player player, SocketClientConnection c) {
         this.player = player;
         this.clientConnection = c;
@@ -26,10 +35,16 @@ public class SocketRemoteView {
         Map.getInstance().addObserver(new ChangeInMap());
     }
 
+    /**
+     * This method initializes the Deck observer, that can`t be initialized before knowing the number of players in game.
+     */
     public ChangeInDeck createChangeInDeck(){
         return new ChangeInDeck();
     }
 
+    /**
+     * @param message is the messages received from the client.
+     */
     public void messageReceiver(ClientMessage message) {
         if (player.equals(GameManager.getInstance().getCurrPlayer())){
             readMessage(message);
@@ -38,6 +53,11 @@ public class SocketRemoteView {
         }
     }
 
+    /**
+     * This method analyzes all client messages and consult the controller.
+     *
+     * @param message is a client message.
+     */
     private void readMessage(ClientMessage message) {
         switch (message.getGameState()) {
             case WELCOME_FIRST -> {
@@ -69,6 +89,11 @@ public class SocketRemoteView {
         }
     }
 
+    /**
+     * This method is connected with readMessage and manages the game when it actually begins.
+     *
+     * @param message is the client message
+     */
     private void turn(ClientMessage message) {
         switch (message.getGameState()) {
             case WORKER_CHOICE -> {
@@ -171,8 +196,16 @@ public class SocketRemoteView {
         }
     }
 
+    /**
+     * This private class is observer of the model for GameState.
+     */
     private class ChangeState implements Observer<GameState> {
 
+        /**
+         * This method is the implementation of update(T) method in observer class and is used to notify the client.
+         *
+         * @param message is a GameState.
+         */
         @Override
         public void update(GameState message){
             if(player.equals(GameManager.getInstance().getCurrPlayer())){
@@ -222,8 +255,16 @@ public class SocketRemoteView {
 
     }
 
+    /**
+     * This private class is observer of the model for String.
+     */
     private class Error implements Observer<String> {
 
+        /**
+         * This method is the implementation of update(T) method in observer class and is used to notify the client.
+         *
+         * @param message is a system string message.
+         */
         @Override
         public void update(String message){
             if ((player.equals(GameManager.getInstance().getCurrPlayer()))){
@@ -233,8 +274,16 @@ public class SocketRemoteView {
 
     }
 
+    /**
+     * This private class is observer of the model for God.
+     */
     private class ChangeInDeck implements Observer<God> {
 
+        /**
+         * This method is the implementation of update(T) method in observer class and is used to notify the client.
+         *
+         * @param message is a God card.
+         */
         @Override
         public void update(God message){
             if(player.equals(GameManager.getInstance().getCurrPlayer())){
@@ -247,8 +296,16 @@ public class SocketRemoteView {
 
     }
 
+    /**
+     * This private class is observer of the model for Player.
+     */
     private class ChangeInMap implements Observer<Player> {
 
+        /**
+         * This method is the implementation of update(T) method in observer class and is used to notify the client.
+         *
+         * @param message is a Player in game.
+         */
         @Override
         public void update(Player message){
             if(!player.equals(message)){
@@ -259,6 +316,9 @@ public class SocketRemoteView {
 
     }
 
+    /**
+     * This method is used to send an updated map copy and the level of every workers of players in game (used only in Cli).
+     */
     private void mapUpdate(){
         clientConnection.asyncSend(new MapCopy());
         Player[] players = GameManager.getInstance().getPlayersInGame();

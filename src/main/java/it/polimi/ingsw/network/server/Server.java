@@ -10,6 +10,9 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * This class starts the entire program and establishes new connections.
+ */
 public class Server {
 
     private static int PORT;
@@ -17,6 +20,10 @@ public class Server {
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
     private static boolean serverReady;
 
+    /**
+     * @param port is the server port.
+     * @throws IOException for possible error when socket is opened.
+     */
     public Server(int port) throws IOException {
         PORT = port;
         this.serverSocket = new ServerSocket(PORT);
@@ -27,11 +34,21 @@ public class Server {
         serverReady = choice;
     }
 
+    /**
+     * This method is used for deleting the current game and replacing it with a new one.
+     */
     public static void refresh(){
         new GameManager();
         setServerAvailability(true);
     }
 
+    /**
+     * This method accepts new connections and, if server is ready, add this player to the game.
+     *
+     * @param nickname is the name of the new player.
+     * @param c is the player connection.
+     * @return the player created or null if the new player can`t join the lobby.
+     */
     public synchronized Player lobby(String nickname, SocketClientConnection c) {
         if(serverReady){
             Player[] players = GameManager.getInstance().getPlayersInGame();
@@ -53,6 +70,9 @@ public class Server {
         }
     }
 
+    /**
+     * This method starts the execution and waits for new connections.
+     */
     public void run(){
         System.out.println("Server listening on port " + PORT + ".");
         new GameManager();

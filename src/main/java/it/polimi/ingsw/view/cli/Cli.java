@@ -14,12 +14,22 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * This class derives from Client and implements its methods.
+ */
 public class Cli extends Client<Scanner> {
 
     public Cli(String ip, int port){
         super(ip, port);
     }
 
+    /**
+     * This method starts a new thread for reading object from the socket.
+     * Different actions are performed based on the content.
+     * Thread stays active until the connection between client and server is closed or occurs an error.
+     *
+     * @return the thread started.
+     */
     public Thread asyncReadFromSocket(){
         Thread t = new Thread(() -> {
             try{
@@ -47,6 +57,13 @@ public class Cli extends Client<Scanner> {
         return t;
     }
 
+    /**
+     * This method starts a new thread for writing object to the socket.
+     * Thread stays active until the connection between client and server is closed or occurs an error.
+     *
+     * @param stdin is the line scanner.
+     * @return the thread started.
+     */
     public Thread asyncWriteToSocket(Scanner stdin){
         Thread t = new Thread(() -> {
             try{
@@ -63,8 +80,12 @@ public class Cli extends Client<Scanner> {
         return t;
     }
 
+    /**
+     * This method prints the game logo and tries to connect to te server. After doing that, it configures its functionalities.
+     *
+     * @throws IOException for connection errors with socket.
+     */
     public void run() throws IOException {
-        Socket socket = new Socket(getIp(), getPort());
         System.out.println("""
                             ----------------------------------------------------------------------------------------------------------------------------------------------------
                             ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -80,6 +101,7 @@ public class Cli extends Client<Scanner> {
                             ----------------------------------------------------------------------------------------------------------------------------------------------------
                             """
         );
+        Socket socket = new Socket(getIp(), getPort());
         setSocketIn(new ObjectInputStream(socket.getInputStream()));
         setSocketOut(new PrintWriter(socket.getOutputStream()));
         Scanner stdin = new Scanner(System.in);

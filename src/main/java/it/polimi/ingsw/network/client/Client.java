@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 
+/**
+ * Cli and Gui classes derive from this class, indeed its attributes are the same for these two classes.
+ *
+ * @param <T> is used to specify what attribute must be used for write Objects to socket.
+ */
 public abstract class Client<T> {
 
     private final String ip;
@@ -12,6 +17,10 @@ public abstract class Client<T> {
     private ObjectInputStream socketIn;
     private PrintWriter socketOut;
 
+    /**
+     * @param ip is the client IP address.
+     * @param port is the server port to which this client should connect.
+     */
     public Client(String ip, int port){
         this.ip = ip;
         this.port = port;
@@ -49,10 +58,26 @@ public abstract class Client<T> {
         return socketOut;
     }
 
+    /**
+     * This method is used for reading Objects from socket. A new thread is used to do that.
+     *
+     * @return the thread created.
+     */
     public abstract Thread asyncReadFromSocket();
 
+    /**
+     * This method is used for writing Objects from socket. A new thread is used to do that.
+     *
+     * @param object for Cli is Scanner, for Gui is String.
+     * @return the thread created.
+     */
     public abstract Thread asyncWriteToSocket(T object);
 
+    /**
+     * This method starts the execution of Client and tries to connect to server socket.
+     *
+     * @throws IOException for connection errors with socket.
+     */
     public abstract void run() throws IOException;
 
 }
