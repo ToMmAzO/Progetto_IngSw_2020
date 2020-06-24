@@ -12,9 +12,8 @@ public abstract class Worker implements Serializable {
     private final String idWorker;
     private int coordX, coordY, coordZ;
 
-
     /**
-     * Insert the worker, only for the first time, in the map
+     * Initialize the worker's coordinates and insert him in the map
      *
      * @param idWorker worker name
      * @param coordX row coordinate of the worker in the map
@@ -27,35 +26,6 @@ public abstract class Worker implements Serializable {
         this.coordZ = 0;
         Map.getInstance().setWorkerInCell(coordX, coordY, this);
     }
-
-    public String getIdWorker() {
-        return idWorker;
-    }
-
-    public int getCoordX() {
-        return coordX;
-    }
-
-    public void setCoordX(int coordX) {
-        this.coordX = coordX;
-    }
-
-    public int getCoordY() {
-        return coordY;
-    }
-
-    public void setCoordY(int coordY) {
-        this.coordY = coordY;
-    }
-
-    public int getCoordZ() {
-        return coordZ;
-    }
-
-    public void setCoordZ(int coordZ) {
-        this.coordZ = coordZ;
-    }
-
 
     /**
      * Verify that the worker can move according to the rules of the game
@@ -112,13 +82,29 @@ public abstract class Worker implements Serializable {
         Map.getInstance().setWorkerInCell(newX, newY, this);
     }
 
+    /**
+     * Verify that the worker can move (Artemis) or build (Demeter) again
+     *
+     * @param x row coordinate where the worker can't move/build
+     * @param y column coordinate where the worker can't move/build
+     *
+     * @return true if can do again
+     */
     public boolean canDoAgain(int x, int y){
         return false;
-    }//Artemis e Demeter
+    }
 
+    /**
+     * Verify that the worker Minotaur can push the worker in that cell
+     *
+     * @param x row coordinate of the worker that must be pushed
+     * @param y column coordinate of the worker that must be pushed
+     *
+     * @return true if can push the other worker
+     */
     public boolean canPush(int x, int y){
         return false;
-    }//Minotaur
+    }
 
     /**
      * Build a block in the the map
@@ -139,6 +125,40 @@ public abstract class Worker implements Serializable {
         }
     }
 
-    public void specialBuild(int buildX, int buildY){}//Hephaestus e Atlas
+    /**
+     * Build a cupola (Atlas) or 2 blocks (Hephaestus) in the the map
+     *
+     * @param buildX row coordinate of the building
+     * @param buildY column coordinate of the building
+     */
+    public void specialBuild(int buildX, int buildY){}
+
+    public String getIdWorker() {
+        return idWorker;
+    }
+
+    public int getCoordX() {
+        return coordX;
+    }
+
+    public void setCoordX(int coordX) {
+        this.coordX = coordX;
+    }
+
+    public int getCoordY() {
+        return coordY;
+    }
+
+    public void setCoordY(int coordY) {
+        this.coordY = coordY;
+    }
+
+    public int getCoordZ() {
+        return coordZ;
+    }
+
+    public void setCoordZ(int coordZ) {
+        this.coordZ = coordZ;
+    }
 
 }
