@@ -6,6 +6,13 @@ import it.polimi.ingsw.view.gui.Gui;
 
 import java.io.IOException;
 
+/**
+ * This is the executable client app.
+ * To run it, some arguments are needed:
+ *      - "cli" or "gui" to set the user interface
+ *      - client IP
+ * By default the port used to establish connection with the server is 12345.
+ */
 public class ClientApp {
 
     public static void main(String[] args) throws IOException {
@@ -14,9 +21,9 @@ public class ClientApp {
         try{
             for (int i = 0; i < args.length; i++) {
                 switch(args[i]) {
-                    case "-ip" -> ip = args[i + 1];
                     case "cli" -> isGui = false;
                     case "gui" -> isGui = true;
+                    case "-ip" -> ip = args[i + 1];
                 }
             }
         } catch(ArrayIndexOutOfBoundsException e){
