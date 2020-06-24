@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * This class is the principal controller of entire program.
+ * In every its methods players are updated on their game state.
+ */
 public class GameManager {
 
     private static GameManager gameManager;
@@ -23,6 +27,10 @@ public class GameManager {
     private Player currPlayer;
     private int numberOfPlayers;
 
+    /**
+     * When GameManager is created, it initializes all others classes.
+     * The server uses this constructor to create a new game.
+     */
     public GameManager(){
         gameManager = this;
         new TurnManager();
@@ -38,14 +46,20 @@ public class GameManager {
     }
 
     /**
-     * Verify that the playerConnections's HashMap is empty
+     * This method verifies that the playerConnections's HashMap is empty.
      *
-     * @return true if it is empty
+     * @return true if it is empty.
      */
     public boolean mapEmpty(){
         return playerConnections.isEmpty();
     }
 
+    /**
+     * This method adds new players in game and initializes them like deck's observers.
+     *
+     * @param player is the player to add.
+     * @param c is the socket connection of him.
+     */
     public void addPlayerConnection(Player player, SocketClientConnection c){
         if(players.isEmpty()){
             Server.setServerAvailability(false);
@@ -79,12 +93,20 @@ public class GameManager {
         return currPlayer;
     }
 
+    /**
+     * @return all players actually in game.
+     */
     public Player[] getPlayersInGame(){
         Player[] listOfPlayer = new Player[players.size()];
         listOfPlayer = players.toArray(listOfPlayer);
         return listOfPlayer;
     }
 
+    /**
+     * This method sets the number of players that this game will have and initializes a new deck with this number of card.
+     *
+     * @param numberOfPlayers is the number chosen by the first player.
+     */
     public void setNumberOfPlayers(int numberOfPlayers){
         if (numberOfPlayers == 2 || numberOfPlayers == 3) {
             this.numberOfPlayers = numberOfPlayers;
@@ -96,6 +118,12 @@ public class GameManager {
         }
     }
 
+    /**
+     * This method assigns the card chosen by a player in his class.
+     * The first number available is 1 and not 0 like in array indexes in deck.
+     *
+     * @param cardNumber is the number of card selected.
+     */
     public void choiceOfCard(int cardNumber){
         if (Deck.getInstance().isAvailable(cardNumber)) {
             currPlayer.setGodChoice(Deck.getInstance().getCardToPlayer(cardNumber));
@@ -107,6 +135,12 @@ public class GameManager {
 
     }
 
+    /**
+     * This method sets workers on map for every players in game.
+     *
+     * @param coordRow is the row coordinate.
+     * @param coordColumn is column coordinate.
+     */
     public void setWorker(int coordRow, int coordColumn){
         if (currPlayer.getWorkerSelected(1) == null) {
             if (ActionManager.getInstance().validCoords(coordRow, coordColumn)) {
@@ -132,6 +166,11 @@ public class GameManager {
         }
     }
 
+    /**
+     * This method is used to know who is the next player.
+     *
+     * @param player is the current player.
+     */
     public void nextPlayer(Player player){
         Iterator<Player> i = players.iterator();
         Player nextPlayer = null;
@@ -157,6 +196,11 @@ public class GameManager {
         }
     }
 
+    /**
+     * This method eliminates a player from the game and updates the player list.
+     *
+     * @param player is the player to delete.
+     */
     public void deletePlayer(Player player){
         int index = players.indexOf(player);
         Map.getInstance().deleteWorkerInCell(player.getWorkerSelected(1));
@@ -177,12 +221,24 @@ public class GameManager {
         }
     }
 
+    /**
+     * This method is used when a player wins the game.
+     * After notifying all players, the server is cleaned.
+     *
+     * @param winnerPlayer is the winner player.
+     */
     public void endGame(Player winnerPlayer){
         currPlayer = winnerPlayer;
         Game.getInstance().setGameState(winnerPlayer, GameState.WIN);
         Server.refresh();
     }
 
+    /**
+     * This method is used to invalidate the game because a player in game has disconnected from the server.
+     * After notifying all players, the server is cleaned.
+     *
+     * @param player is the player that has left the game.
+     */
     public void disconnectedPlayer(Player player){
         currPlayer = player;
         Game.getInstance().setGameState(player, GameState.INVALIDATION);

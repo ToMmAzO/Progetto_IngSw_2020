@@ -93,7 +93,6 @@ public class SocketClientConnection implements Runnable {
                 viewSocket.messageReceiver(message);
             }
         } catch (IOException | NoSuchElementException e) {
-            System.err.println("Closing socket for " + player.getNickname() + "...");
             GameManager.getInstance().disconnectedPlayer(player);
         }
     }
