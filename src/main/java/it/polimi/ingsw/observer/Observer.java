@@ -1,7 +1,7 @@
 package it.polimi.ingsw.observer;
 
 /**
- * This class represents the Observer pattern
+ * This class represents the Observer pattern.
  *
  * @param <T> is the generic observed object.
  */

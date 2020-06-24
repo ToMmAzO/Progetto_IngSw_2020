@@ -6,9 +6,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>it.polimi.ingsw</groupId>
-  <artifactId>ing-sw-2020-Pozzi-Quagliana-Simeoni</artifactId>  <!-- Prima GC10  -->
+  <artifactId>ing-sw-2020-Pozzi-Quagliana-Simeoni</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>  <!-- Nuovo (Lollo) -->
+  <packaging>jar</packaging>
 
   <name>GC10</name>
   <!-- FIXME change it to the project's website -->
@@ -16,8 +16,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.14</maven.compiler.source>  <!-- Prima 1.7 -->
-    <maven.compiler.gameState>1.14</maven.compiler.gameState>  <!-- Prima 1.7 -->
+    <maven.compiler.source>1.14</maven.compiler.source>
+    <maven.compiler.gameState>1.14</maven.compiler.gameState>
 
     <junit-jupiter.version>5.6.2</junit-jupiter.version>
 
@@ -27,20 +27,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- Nuovo -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.6.1</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <version>5.6.2</version>
@@ -49,37 +35,65 @@
   </dependencies>
 
   <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
-        <!-- Nuovo (Lollo) -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.0.0-M4</version>   <!-- Prima 3.0.0-M3 -->
+          <version>3.0.0-M5</version>
         </plugin>
-
-        <!-- Nuovo -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.1</version>  <!-- Prima 3.8.0 -->
-          <configuration>
-            <source>14</source>
-            <target>14</target>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-      <plugins>
           <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.8.1</version>
               <configuration>
-                  <source>13</source>
-                  <target>13</target>
-                  <compilerArgs>--enable-preview</compilerArgs>
-              </configuration>
+                    <source>14</source>
+                    <target>14</target>
+                </configuration>
           </plugin>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.3.0</version>
+          <executions>
+            <execution>
+              <id>build-server</id>
+              <configuration>
+                <appendAssemblyId>false</appendAssemblyId>
+                <archive>
+                  <manifest>
+                    <mainClass>it.polimi.ingsw.apps.ServerApp</mainClass>
+                  </manifest>
+                </archive>
+                <descriptorRefs>
+                  <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+                <finalName>${project.artifactId}-server</finalName>
+              </configuration>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>build-client</id>
+              <configuration>
+                <appendAssemblyId>false</appendAssemblyId>
+                <archive>
+                  <manifest>
+                    <mainClass>it.polimi.ingsw.apps.ClientApp</mainClass>
+                  </manifest>
+                </archive>
+                <descriptorRefs>
+                  <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+                <finalName>${project.artifactId}-client</finalName>
+              </configuration>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
   </build>
 </project>

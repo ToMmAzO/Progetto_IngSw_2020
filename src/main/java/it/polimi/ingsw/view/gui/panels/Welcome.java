@@ -8,18 +8,17 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.io.IOException;
 
 public class Welcome extends JPanel {
 
-    private final static String backgroundsPath = "src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/";
-    private final static String buttonsPath = "src/main/java/it/polimi/ingsw/view/gui/img/buttons/";
+    private final static String backgroundsPath = "img/backgrounds/";
+    private final static String buttonsPath = "img/buttons/";
 
     private final int panelHeight = 600;
     private final int panelWidth = 600;
 
-    private final Image loadingBack = ImageIO.read(new File(backgroundsPath.concat("WelcomeBackground.png")));
+    private final Image loadingBack = ImageIO.read(getClass().getClassLoader().getResource(backgroundsPath.concat("WelcomeBackground.png")));
     private final Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
     private final JTextPane welcome;
@@ -58,8 +57,8 @@ public class Welcome extends JPanel {
         int okHeight = 150;
 
         okButton = new JButton();
-        Image buttonPng = ImageIO.read(new File(buttonsPath.concat("PlayButton.png")));
-        ImageIcon buttonImg = new ImageIcon(buttonsPath.concat("PlayButton.png"));
+        Image buttonPng = ImageIO.read(getClass().getClassLoader().getResource(buttonsPath.concat("PlayButton.png")));
+        ImageIcon buttonImg = new ImageIcon(buttonPng);
         okButton.setIcon(buttonImg);
         okButton.setBounds(250,180 + logoHeight,okWidth,okHeight);
         okButton.setOpaque(false);
@@ -103,7 +102,7 @@ public class Welcome extends JPanel {
             }
         });
 
-        ImageIcon img = new ImageIcon(backgroundsPath.concat("SantoriniLogo.png"));
+        ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource(backgroundsPath.concat("SantoriniLogo.png")));
         logo = new JLabel(img);
         logo.setBounds(100,20,logoWidth,logoHeight);
         logo.setOpaque(false);

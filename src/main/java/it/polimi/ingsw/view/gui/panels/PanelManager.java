@@ -8,12 +8,10 @@ import it.polimi.ingsw.model.player.Color;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.view.gui.Gui;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.IOException;
 
 public class PanelManager {
@@ -89,6 +87,9 @@ public class PanelManager {
                     }
                 }
                 case WORKER_CHOICE -> table.addText("It`s your turn, select a Worker.");
+                case MOVEMENT, SECOND_MOVE -> table.addText("MOVEMENT: select a box around your Worker.");
+                case CONSTRUCTION, PREBUILD_PROMETHEUS, CONSTRUCTION_CUPOLA, DOUBLE_CONSTRUCTION, SECOND_CONSTRUCTION_DEMETER,
+                        SECOND_CONSTRUCTION_HESTIA -> table.addText("CONSTRUCTION: select a box around your Worker.");
                 case QUESTION_ARTEMIS,QUESTION_ATLAS,QUESTION_DEMETER,QUESTION_HESTIA,
                         QUESTION_HEPHAESTUS,QUESTION_PROMETHEUS,QUESTION_TRITON -> {
                     Message message = null;
@@ -126,7 +127,8 @@ public class PanelManager {
             } else{
                 table.updateMap();
             }
-        } else if(inputObject instanceof String string){
+        } else if(inputObject instanceof String){
+            String string = (String) inputObject;
             if(tableCreated && !string.contains("(")){
                 table.addText(string);
             }
@@ -157,15 +159,9 @@ public class PanelManager {
         });
 
         JLabel label = new JLabel();
-        final Image image;
-        try {
-            image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/SantoriniLogo.png"));
-            label.setSize(400, 130);
-            ImageIcon img = new ImageIcon(image);
-            label.setIcon(img);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        label.setSize(400, 130);
+        ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("img/backgrounds/SantoriniLogo.png"));
+        label.setIcon(img);
 
         splashScreen.setLayout(new GridBagLayout());
         splashScreen.add(label, new GridBagConstraints());
@@ -193,7 +189,7 @@ public class PanelManager {
 
         welcome = new Welcome();
         welcomeFirst = new WelcomeFirst();
-        waiting = new JLabel(new ImageIcon("src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/LoadingBackground.gif"));
+        waiting = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("img/backgrounds/LoadingBackground.gif")));
 
         gameFrame.add(welcome);
         gameFrame.setVisible(true);

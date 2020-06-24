@@ -10,13 +10,12 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.io.IOException;
 
 public class QuestionWindow extends JWindow {
 
-    private final static String backgroundsPath = "src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/";
-    private final static String buttonsPath = "src/main/java/it/polimi/ingsw/view/gui/img/buttons/";
+    private final static String backgroundsPath = "img/backgrounds/";
+    private final static String buttonsPath = "img/buttons/";
 
     public QuestionWindow(JFrame owner, Message message) throws IOException {
         super(owner);
@@ -24,8 +23,7 @@ public class QuestionWindow extends JWindow {
         JButton noBtn = new JButton();
         JLabel background = new JLabel();
 
-        Image backgroundImage = ImageIO.read(new File(backgroundsPath.concat("QuestionBackground.png")));
-        background.setIcon(new ImageIcon(backgroundImage));
+        background.setIcon(new ImageIcon(getClass().getClassLoader().getResource(backgroundsPath.concat("QuestionBackground.png"))));
         background.setBounds(0,0,580,300);
 
         JTextPane info = new JTextPane();
@@ -40,7 +38,7 @@ public class QuestionWindow extends JWindow {
         info.setOpaque(false);
         info.setBounds(230,50,200,80);
 
-        Image yesButtonImage = ImageIO.read(new File(buttonsPath.concat("YesButton.png")));
+        Image yesButtonImage = ImageIO.read(getClass().getClassLoader().getResource(buttonsPath.concat("YesButton.png")));
         ImageIcon yesBt = new ImageIcon(yesButtonImage);
         yesBtn.setIcon(yesBt);
         yesBtn.setBounds(230,180,140,80);
@@ -77,7 +75,7 @@ public class QuestionWindow extends JWindow {
             }
         });
 
-        Image noButtonImage = ImageIO.read(new File(buttonsPath.concat("NoButton.png")));
+        Image noButtonImage = ImageIO.read(getClass().getClassLoader().getResource(buttonsPath.concat("NoButton.png")));
         ImageIcon noBt = new ImageIcon(noButtonImage);
         noBtn.setIcon(noBt);
         noBtn.setBounds(400,180,140,80);

@@ -11,24 +11,23 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.io.IOException;
 
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 
 public class Table extends JPanel{
 
-    private final static String backgroundsPath = "src/main/java/it/polimi/ingsw/view/gui/img/backgrounds/";
-    private final static String mapIconsPath = "src/main/java/it/polimi/ingsw/view/gui/img/mapIcons/";
-    private final static String cardsPath = "src/main/java/it/polimi/ingsw/view/gui/img/cards/";
+    private final static String backgroundsPath = "img/backgrounds/";
+    private final static String mapIconsPath = "img/mapIcons/";
+    private final static String cardsPath = "img/cards/";
 
     private final static Dimension TABLE_DIMENSION = new Dimension(1280,720);
     private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(530,530);
     private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(275,720);
 
-    private final Image boardImage = ImageIO.read(new File(backgroundsPath.concat("SantoriniBoard.png")));
-    private final Image scrollPanelImage = ImageIO.read(new File(backgroundsPath.concat("ScrollPanel.png")));
-    private final Image godPanelImage = ImageIO.read(new File(backgroundsPath.concat("GodPanel.png")));
+    private final Image boardImage = ImageIO.read(getClass().getClassLoader().getResource(backgroundsPath.concat("SantoriniBoard.png")));
+    private final Image scrollPanelImage = ImageIO.read(getClass().getClassLoader().getResource(backgroundsPath.concat("ScrollPanel.png")));
+    private final Image godPanelImage = ImageIO.read(getClass().getClassLoader().getResource(backgroundsPath.concat("GodPanel.png")));
 
     private final JLabel tutorial;
     private final BoardPanel boardPanel;
@@ -42,13 +41,11 @@ public class Table extends JPanel{
         setLayout(null);
 
         JLabel color = new JLabel();
-        Image colorImage = ImageIO.read(new File(backgroundsPath + "Color" + PanelManager.getInstance().getColor().toString() + ".png"));
-        color.setIcon(new ImageIcon(colorImage));
+        color.setIcon(new ImageIcon(getClass().getClassLoader().getResource(backgroundsPath + "Color" + PanelManager.getInstance().getColor().toString() + ".png")));
         color.setBounds(543,0,200,84);
 
         tutorial = new JLabel();
-        Image tutorialImage = ImageIO.read(new File(backgroundsPath.concat("TutorialBackground.png")));
-        tutorial.setIcon(new ImageIcon(tutorialImage));
+        tutorial.setIcon(new ImageIcon(getClass().getClassLoader().getResource(backgroundsPath.concat("TutorialBackground.png"))));
         tutorial.setBounds(25, 0, 1100, 720);
 
         add(color);
@@ -64,7 +61,7 @@ public class Table extends JPanel{
         g.drawImage(boardImage, 0, 0, null);
     }
 
-    public void updateMap() throws IOException {
+    public void updateMap(){
         boardPanel.update();
     }
 
@@ -74,7 +71,7 @@ public class Table extends JPanel{
 
     private class PlayerPanel extends JPanel{
 
-        public PlayerPanel() throws IOException {
+        public PlayerPanel(){
             super();
             setLayout(null);
             setBackground(new Color(0, 0, 0, 0));
@@ -101,11 +98,10 @@ public class Table extends JPanel{
             setVisible(true);
         }
 
-        private JLabel getGodCard() throws IOException {
-            final Image image = ImageIO.read(new File(cardsPath + PanelManager.getInstance().getGodChoice().toString() + ".png"));
+        private JLabel getGodCard() {
             JLabel label = new JLabel();
             label.setSize(150,250);
-            label.setIcon(new ImageIcon(image));
+            label.setIcon(new ImageIcon(getClass().getClassLoader().getResource(cardsPath + PanelManager.getInstance().getGodChoice().toString() + ".png")));
             return label;
         }
 
@@ -170,7 +166,7 @@ public class Table extends JPanel{
 
         private final TileButton[] tiles = new TileButton[25];
 
-        public BoardPanel() throws IOException {
+        public BoardPanel(){
             super(new GridLayout(5,5));
             int x = 0;
             int y = 0;
@@ -189,7 +185,7 @@ public class Table extends JPanel{
             setOpaque(false);
         }
 
-        public void update() throws IOException {
+        public void update(){
             for(TileButton t: tiles){
                 t.assignTilePieceIcon();
             }
@@ -201,7 +197,7 @@ public class Table extends JPanel{
 
         private final int coordX, coordY;
 
-        public TileButton(int x, int y) throws IOException {
+        public TileButton(int x, int y){
             super();
             coordX = x;
             coordY = y;
@@ -247,19 +243,16 @@ public class Table extends JPanel{
             setOpaque(false);
         }
 
-        private void assignTilePieceIcon() throws IOException {
-            Image image;
+        private void assignTilePieceIcon(){
             if(PanelManager.getInstance().getMap().noWorkerHere(coordX, coordY)) {
                 if(!PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).equals(BlockType.GROUND)) {
-                    image = ImageIO.read(new File(mapIconsPath + PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + ".png"));
+                    setIcon(new ImageIcon(getClass().getClassLoader().getResource(mapIconsPath + PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + ".png")));
                 }else{
                     setIcon(null);
-                    return;
                 }
             }else {
-                image = ImageIO.read(new File(mapIconsPath + PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + PanelManager.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3) + ".png"));
+                setIcon(new ImageIcon(getClass().getClassLoader().getResource(mapIconsPath + PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + PanelManager.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3) + ".png")));
             }
-            setIcon(new ImageIcon(image));
         }
 
     }
