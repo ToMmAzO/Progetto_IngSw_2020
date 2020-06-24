@@ -18,14 +18,42 @@ public class ActionManager {
         return actionManager;
     }
 
+    /**
+     * Verify that the new coordinates are around the workers's coordinates
+     *
+     * @param x row coordinate of the worker
+     * @param y column coordinate of the worker
+     * @param newX new row coordinate
+     * @param newY new row coordinate
+     *
+     * @return true if the new coordinates are around the workers's coordinates
+     */
     public boolean isAround(int x, int y, int newX, int newY) {
         return newX >= x - 1 && newX <= x + 1 && newY >= y - 1 && newY <= y + 1;
     }
 
+    /**
+     * Verify that these coordinates are in the map
+     *
+     * @param x row coordinate to be verified
+     * @param y column coordinate to be verified
+     *
+     * @return true if they are map's coordinates
+     */
     public boolean validCoords(int x, int y) {
         return (x >= 0 && x <= 4) && (y >= 0 && y <= 4);
     }
 
+    /**
+     * Verify that the worker can do the movement in these coordinates
+     *
+     * @param w worker that must move
+     * @param g worker's god
+     * @param coordX new row coordinate
+     * @param coordY new column coordinate
+     *
+     * @return true if can move
+     */
     public boolean verifyCoordinateMovement(Worker w, God g, int coordX, int coordY) {
         if (validCoords(coordX, coordY)) {
             if (isAround(w.getCoordX(), w.getCoordY(), coordX, coordY)) {
@@ -121,6 +149,17 @@ public class ActionManager {
         return false;
     }
 
+    /**
+     * Verify that the worker can do the construction in these coordinates
+     *
+     * @param w worker that must build
+     * @param g worker's god
+     * @param doubleConstruction true if the worker can do the double construction
+     * @param coordX new row coordinate
+     * @param coordY new column coordinate
+     *
+     * @return true if can build
+     */
     public boolean verifyCoordinateConstruction(Worker w, God g, boolean doubleConstruction, int coordX, int coordY) {
         if (validCoords(coordX, coordY)) {
             if (isAround(w.getCoordX(), w.getCoordY(), coordX, coordY)) {

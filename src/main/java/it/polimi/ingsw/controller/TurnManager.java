@@ -24,6 +24,11 @@ public class TurnManager {
         return turnManager;
     }
 
+    /**
+     * Select the worker chosen, if it can't move select the other one; if neither can move send message cantDoNothing.
+     *
+     * @param selectionWorker choice of the worker (1 or 2)
+     */
     public void workerChoice(int selectionWorker){
         if(selectionWorker == 1 || selectionWorker == 2){
             if(GameManager.getInstance().getCurrPlayer().getWorkerSelected(1).canMove() || GameManager.getInstance().getCurrPlayer().getWorkerSelected(2).canMove()){
@@ -48,6 +53,12 @@ public class TurnManager {
         }
     }
 
+    /**
+     * WorkerPrometheus's build before his movement
+     *
+     * @param coordX row coordinate of the building
+     * @param coordY column coordinate of the building
+     */
     public void prebuildPrometheus(int coordX, int coordY){
         if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), false, coordX, coordY)){
             workerSelected.buildBlock(coordX, coordY);
@@ -63,6 +74,12 @@ public class TurnManager {
         }
     }
 
+    /**
+     * Worker's movement
+     *
+     * @param coordX row coordinate of the moving
+     * @param coordY column coordinate of the moving
+     */
     public void movement(int coordX, int coordY){
         if(ActionManager.getInstance().verifyCoordinateMovement(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), coordX, coordY)){
             if(GameManager.getInstance().getCurrPlayer().getGodChoice() == God.ARTEMIS){
@@ -118,6 +135,12 @@ public class TurnManager {
         }
     }
 
+    /**
+     * WorkerArtemis's second movement
+     *
+     * @param coordX row coordinate of the moving
+     * @param coordY column coordinate of the moving
+     */
     public void secondMove(int coordX, int coordY){
         if (startX == coordX && startY == coordY) {
             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantComeBack);
@@ -134,6 +157,14 @@ public class TurnManager {
         }
     }
 
+    /**
+     * Verify that the worker will win if it moves there
+     *
+     * @param x next row coordinate of the worker
+     * @param y next column coordinate of the worker
+     *
+     * @return true if the worker win
+     */
     public boolean win(int x, int y){
         if((x == 0 || x == 4 || y == 0 || y == 4) && cannotWin()){
             if(GameManager.getInstance().getCurrPlayer().getGodChoice() == God.HERA){
@@ -160,6 +191,12 @@ public class TurnManager {
         }
     }
 
+    /**
+     * Worker's construction
+     *
+     * @param coordX row coordinate of the building
+     * @param coordY column coordinate of the building
+     */
     public void construction(int coordX, int coordY){
         if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), false, coordX, coordY)){
             workerSelected.buildBlock(coordX, coordY);
@@ -200,6 +237,12 @@ public class TurnManager {
         }
     }
 
+    /**
+     * WorkerDemeter's second construction
+     *
+     * @param coordX row coordinate of the building
+     * @param coordY column coordinate of the building
+     */
     public void secondConstructionDemeter(int coordX, int coordY){
         if (buildX == coordX && buildY == coordY) {
             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantRebuildDemeter);
@@ -212,6 +255,12 @@ public class TurnManager {
         }
     }
 
+    /**
+     * WorkerHestia's second construction
+     *
+     * @param coordX row coordinate of the building
+     * @param coordY column coordinate of the building
+     */
     public void secondConstructionHestia(int coordX, int coordY){
         if (coordX == 0 || coordX == 4 || coordY == 0 || coordY == 4) {
             SystemMessage.getInstance().serverMessage(SystemMessage.getInstance().cantRebuildHestia);
@@ -224,6 +273,12 @@ public class TurnManager {
         }
     }
 
+    /**
+     * WorkerAtlas's cupola construction
+     *
+     * @param coordX row coordinate of the building
+     * @param coordY column coordinate of the building
+     */
     public void constructionCupola(int coordX, int coordY){
         if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), false, coordX, coordY)){
             workerSelected.specialBuild(coordX, coordY);
@@ -232,6 +287,12 @@ public class TurnManager {
         }
     }
 
+    /**
+     * WorkerHephaesus's double construction
+     *
+     * @param coordX row coordinate of the building
+     * @param coordY column coordinate of the building
+     */
     public void doubleConstruction(int coordX, int coordY){
         if(ActionManager.getInstance().verifyCoordinateConstruction(workerSelected, GameManager.getInstance().getCurrPlayer().getGodChoice(), true, coordX, coordY)){
             workerSelected.specialBuild(coordX, coordY);

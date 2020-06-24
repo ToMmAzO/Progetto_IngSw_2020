@@ -37,6 +37,11 @@ public class GameManager {
         return gameManager;
     }
 
+    /**
+     * Verify that the playerConnections's HashMap is empty
+     *
+     * @return true if it is empty
+     */
     public boolean mapEmpty(){
         return playerConnections.isEmpty();
     }
