@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.ActionManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 
+/**
+ * This Worker may build one additional block (not dome) on top of your first block.
+ */
 public class WorkerHephaestus extends Worker {
 
     public WorkerHephaestus(String idWorker, int coordX, int coordY) {

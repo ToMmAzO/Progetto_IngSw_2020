@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.ActionManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 
+/**
+ * This Worker may build one additional time, but this cannot be on a perimeter space.
+ */
 public class WorkerHestia extends Worker {
 
     public WorkerHestia(String idWorker, int coordX, int coordY) {

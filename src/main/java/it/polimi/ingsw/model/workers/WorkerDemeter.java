@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.ActionManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 
+/**
+ * This Worker may build one additional time, but not on the same space.
+ */
 public class WorkerDemeter extends Worker {
 
     public WorkerDemeter(String idWorker, int coordX, int coordY) {

@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 
+/**
+ * This Worker may move one additional time, but not back to its initial space.
+ */
 public class WorkerArtemis extends Worker {
 
     public WorkerArtemis(String idWorker, int coordX, int coordY) {

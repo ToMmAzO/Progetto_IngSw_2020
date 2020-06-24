@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 
+/**
+ * If one of this Workers moved up on their last turn, opponent Workers cannot move up this turn.
+ */
 public class WorkerAthena extends Worker {
 
     public WorkerAthena(String idWorker, int coordX, int coordY) {

@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 
+/**
+ * This Worker may move into an opponent Worker’s space by forcing him to the space yours just vacated.
+ */
 public class WorkerApollo extends Worker {
 
     public WorkerApollo(String idWorker, int coordX, int coordY) {

@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 
+/**
+ * If this Worker does not move up, it may build both before and after moving.
+ */
 public class WorkerPrometheus extends Worker {
 
     public WorkerPrometheus(String idWorker, int coordX, int coordY) {

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.workers;
 
+/**
+ * This Worker may build a block under itself.
+ */
 public class WorkerZeus extends Worker {
 
     public WorkerZeus(String idWorker, int coordX, int coordY) {

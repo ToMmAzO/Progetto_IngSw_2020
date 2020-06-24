@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.TurnManager;
 import it.polimi.ingsw.model.board.BlockType;
 import it.polimi.ingsw.model.board.Map;
 
+/**
+ * This Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level.
+ */
 public class WorkerMinotaur extends Worker {
 
     public WorkerMinotaur(String idWorker, int coordX, int coordY) {
