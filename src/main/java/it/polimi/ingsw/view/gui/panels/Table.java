@@ -17,17 +17,17 @@ import static javax.swing.SwingUtilities.isLeftMouseButton;
 
 public class Table extends JPanel{
 
-    private final static String backgroundsPath = "img/backgrounds/";
-    private final static String mapIconsPath = "img/mapIcons/";
-    private final static String cardsPath = "img/cards/";
+    private final static String backgroundsPath = "/img/backgrounds/";
+    private final static String mapIconsPath = "/img/mapIcons/";
+    private final static String cardsPath = "/img/cards/";
 
     private final static Dimension TABLE_DIMENSION = new Dimension(1280,720);
     private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(530,530);
     private final static Dimension PLAYER_PANEL_DIMENSION = new Dimension(275,720);
 
-    private final Image boardImage = ImageIO.read(getClass().getClassLoader().getResource(backgroundsPath.concat("SantoriniBoard.png")));
-    private final Image scrollPanelImage = ImageIO.read(getClass().getClassLoader().getResource(backgroundsPath.concat("ScrollPanel.png")));
-    private final Image godPanelImage = ImageIO.read(getClass().getClassLoader().getResource(backgroundsPath.concat("GodPanel.png")));
+    private final Image boardImage = ImageIO.read(getClass().getResource(backgroundsPath.concat("SantoriniBoard.png")));
+    private final Image scrollPanelImage = ImageIO.read(getClass().getResource(backgroundsPath.concat("ScrollPanel.png")));
+    private final Image godPanelImage = ImageIO.read(getClass().getResource(backgroundsPath.concat("GodPanel.png")));
 
     private final JLabel tutorial;
     private final BoardPanel boardPanel;
@@ -41,11 +41,11 @@ public class Table extends JPanel{
         setLayout(null);
 
         JLabel color = new JLabel();
-        color.setIcon(new ImageIcon(getClass().getClassLoader().getResource(backgroundsPath + "Color" + PanelManager.getInstance().getColor().toString() + ".png")));
+        color.setIcon(new ImageIcon(getClass().getResource(backgroundsPath + "Color" + PanelManager.getInstance().getColor().toString() + ".png")));
         color.setBounds(543,0,200,84);
 
         tutorial = new JLabel();
-        tutorial.setIcon(new ImageIcon(getClass().getClassLoader().getResource(backgroundsPath.concat("TutorialBackground.png"))));
+        tutorial.setIcon(new ImageIcon(getClass().getResource(backgroundsPath.concat("TutorialBackground.png"))));
         tutorial.setBounds(25, 0, 1100, 720);
 
         add(color);
@@ -101,7 +101,7 @@ public class Table extends JPanel{
         private JLabel getGodCard() {
             JLabel label = new JLabel();
             label.setSize(150,250);
-            label.setIcon(new ImageIcon(getClass().getClassLoader().getResource(cardsPath + PanelManager.getInstance().getGodChoice().toString() + ".png")));
+            label.setIcon(new ImageIcon(getClass().getResource(cardsPath + PanelManager.getInstance().getGodChoice().toString() + ".png")));
             return label;
         }
 
@@ -246,12 +246,12 @@ public class Table extends JPanel{
         private void assignTilePieceIcon(){
             if(PanelManager.getInstance().getMap().noWorkerHere(coordX, coordY)) {
                 if(!PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).equals(BlockType.GROUND)) {
-                    setIcon(new ImageIcon(getClass().getClassLoader().getResource(mapIconsPath + PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + ".png")));
-                }else{
+                    setIcon(new ImageIcon(getClass().getResource(mapIconsPath + PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + ".png")));
+                } else{
                     setIcon(null);
                 }
-            }else {
-                setIcon(new ImageIcon(getClass().getClassLoader().getResource(mapIconsPath + PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + PanelManager.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3) + ".png")));
+            } else{
+                setIcon(new ImageIcon(getClass().getResource(mapIconsPath + PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).toString() + PanelManager.getInstance().getMap().getWorkerInCell(coordX, coordY).getIdWorker().substring(0, 3) + ".png")));
             }
         }
 

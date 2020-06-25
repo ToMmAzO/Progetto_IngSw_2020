@@ -34,7 +34,7 @@ public class ClientApp {
             System.out.println("IP needed, type -ip [your_ip]");
             return;
         }
-        Client client;
+        Client<?> client;
         if(isGui){
             client = new Gui(ip, 12345);
         } else{

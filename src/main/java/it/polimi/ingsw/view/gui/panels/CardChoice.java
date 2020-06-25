@@ -10,15 +10,15 @@ import java.awt.Graphics;
 
 public class CardChoice extends JPanel {
 
-    private final static String backgroundsPath = "img/backgrounds/";
-    private final static String cardsPath = "img/cards/";
+    private final static String backgroundsPath = "/img/backgrounds/";
+    private final static String cardsPath = "/img/cards/";
 
     private final int imageWidth = 150;
     private final int imageHeight = 250;
     private final int panelHeight = 600;
     private final int panelWidth = 600;
 
-    private final Image loadingBack = ImageIO.read(getClass().getClassLoader().getResource(backgroundsPath.concat("CardsBackground.png")));
+    private final Image loadingBack = ImageIO.read(getClass().getResource(backgroundsPath.concat("CardsBackground.png")));
     private final Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
     public CardChoice(God god1, God god2, God god3, boolean[] availability) throws IOException {
@@ -28,21 +28,21 @@ public class CardChoice extends JPanel {
         l1.setForeground(Color.WHITE);
         JButton card1 = new JButton();
         card1.setBounds(38,60,imageWidth,imageHeight);
-        card1.setIcon(new ImageIcon(getClass().getClassLoader().getResource(cardsPath + god1.toString() + ".png")));
+        card1.setIcon(new ImageIcon(getClass().getResource(cardsPath + god1.toString() + ".png")));
         if(!availability[0]) {
             card1.setEnabled(false);
             card1.setToolTipText("This God has already been chosen by another player");
         }
         JButton card2 = new JButton();
         card2.setBounds(38 + imageWidth + 30,60,imageWidth,imageHeight);
-        card2.setIcon(new ImageIcon(getClass().getClassLoader().getResource(cardsPath + god2.toString() + ".png")));
+        card2.setIcon(new ImageIcon(getClass().getResource(cardsPath + god2.toString() + ".png")));
         if(!availability[1]) {
             card2.setEnabled(false);
             card2.setToolTipText("This God has already been chosen by another player");
         }
         JButton card3 = new JButton();
         card3.setBounds(38 + 2*imageWidth + 30 + 30,60,imageWidth,imageHeight);
-        card3.setIcon(new ImageIcon(getClass().getClassLoader().getResource(cardsPath + god3.toString() + ".png")));
+        card3.setIcon(new ImageIcon(getClass().getResource(cardsPath + god3.toString() + ".png")));
 
         if(!availability[2]) {
             card3.setEnabled(false);
@@ -117,14 +117,14 @@ public class CardChoice extends JPanel {
         l1.setForeground(Color.WHITE);
         JButton card1 = new JButton();
         card1.setBounds(120,60,imageWidth,imageHeight);
-        card1.setIcon(new ImageIcon(getClass().getClassLoader().getResource(cardsPath + god1.toString() + ".png")));
+        card1.setIcon(new ImageIcon(getClass().getResource(cardsPath + god1.toString() + ".png")));
         if(!availability[0]) {
             card1.setEnabled(false);
             card1.setToolTipText("This God has already been chosen by another player");
         }
         JButton card2 = new JButton();
         card2.setBounds(120 + imageWidth + 50,60,imageWidth,imageHeight);
-        card2.setIcon(new ImageIcon(getClass().getClassLoader().getResource(cardsPath + god2.toString() + ".png")));
+        card2.setIcon(new ImageIcon(getClass().getResource(cardsPath + god2.toString() + ".png")));
         if(!availability[1]) {
             card2.setEnabled(false);
             card2.setToolTipText("This God has already been chosen by another player");

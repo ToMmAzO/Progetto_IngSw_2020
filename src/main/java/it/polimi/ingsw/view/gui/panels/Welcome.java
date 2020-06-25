@@ -12,13 +12,13 @@ import java.io.IOException;
 
 public class Welcome extends JPanel {
 
-    private final static String backgroundsPath = "img/backgrounds/";
-    private final static String buttonsPath = "img/buttons/";
+    private final static String backgroundsPath = "/img/backgrounds/";
+    private final static String buttonsPath = "/img/buttons/";
 
     private final int panelHeight = 600;
     private final int panelWidth = 600;
 
-    private final Image loadingBack = ImageIO.read(getClass().getClassLoader().getResource(backgroundsPath.concat("WelcomeBackground.png")));
+    private final Image loadingBack = ImageIO.read(getClass().getResource(backgroundsPath.concat("WelcomeBackground.png")));
     private final Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
     private final JTextPane welcome;
@@ -30,6 +30,7 @@ public class Welcome extends JPanel {
         int logoHeight = 130;
         JLabel logo;
         JLabel nickname;
+        JLabel flag;
         JTextField nicknameTextField;
         JButton okButton;
 
@@ -49,6 +50,11 @@ public class Welcome extends JPanel {
         nickname = new JLabel("Chose a nickname:");
         nickname.setForeground(Color.BLACK);
         nickname.setBounds(80,140 + logoHeight,200,30);
+
+        flag = new JLabel();
+        flag.setIcon(new ImageIcon(getClass().getResource(backgroundsPath.concat("Flag.png"))));
+        flag.setBounds(52, 136, 493, 145);
+
         nicknameTextField = new JTextField();
         nicknameTextField.setBounds(200,140 + logoHeight,200,30);
         nicknameTextField.setOpaque(false);
@@ -57,7 +63,7 @@ public class Welcome extends JPanel {
         int okHeight = 150;
 
         okButton = new JButton();
-        Image buttonPng = ImageIO.read(getClass().getClassLoader().getResource(buttonsPath.concat("PlayButton.png")));
+        Image buttonPng = ImageIO.read(getClass().getResource(buttonsPath.concat("PlayButton.png")));
         ImageIcon buttonImg = new ImageIcon(buttonPng);
         okButton.setIcon(buttonImg);
         okButton.setBounds(250,180 + logoHeight,okWidth,okHeight);
@@ -102,7 +108,7 @@ public class Welcome extends JPanel {
             }
         });
 
-        ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource(backgroundsPath.concat("SantoriniLogo.png")));
+        ImageIcon img = new ImageIcon(getClass().getResource(backgroundsPath.concat("SantoriniLogo.png")));
         logo = new JLabel(img);
         logo.setBounds(100,20,logoWidth,logoHeight);
         logo.setOpaque(false);
@@ -110,6 +116,7 @@ public class Welcome extends JPanel {
         setLayout(null);
         add(welcome);
         add(nickname);
+        add(flag);
         add(nicknameTextField);
         add(okButton);
         add(logo);

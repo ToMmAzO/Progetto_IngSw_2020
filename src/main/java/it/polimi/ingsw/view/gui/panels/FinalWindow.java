@@ -13,24 +13,24 @@ import java.awt.*;
 
 public class FinalWindow extends JWindow {
 
-    private final static String backgroundsPath = "img/backgrounds/";
+    private final static String backgroundsPath = "/img/backgrounds/";
 
     public FinalWindow(JFrame owner, GameState gameState){
         super(owner);
         JLabel background = new JLabel();
         switch (gameState) {
             case WIN -> {
-                background.setIcon(new ImageIcon(getClass().getClassLoader().getResource(backgroundsPath.concat("Win.gif"))));
+                background.setIcon(new ImageIcon(getClass().getResource(backgroundsPath.concat("Win.gif"))));
                 background.setBounds(0,0,600,300);
                 setSize(600,300);
             }
             case LOSE -> {
-                background.setIcon(new ImageIcon(getClass().getClassLoader().getResource(backgroundsPath.concat("Lose.gif"))));
+                background.setIcon(new ImageIcon(getClass().getResource(backgroundsPath.concat("Lose.gif"))));
                 background.setBounds(0,0,600,300);
                 setSize(600,300);
             }
             default -> {
-                background.setIcon(new ImageIcon(getClass().getClassLoader().getResource(backgroundsPath.concat("ErrorBackground.png"))));
+                background.setIcon(new ImageIcon(getClass().getResource(backgroundsPath.concat("ErrorBackground.png"))));
                 background.setBounds(0,0,500,250);
                 setSize(500,250);
 

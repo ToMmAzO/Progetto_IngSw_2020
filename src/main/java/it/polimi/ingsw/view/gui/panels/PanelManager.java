@@ -70,6 +70,7 @@ public class PanelManager {
                     waiting.setVisible(true);
                     cardChoice.setVisible(false);
                 }
+                case WAIT_TURN -> table.addText("Your turn is over, wait for the next one.");
                 case CARD_CHOICE -> {
                     God[] cards = deck.getCardsSelected();
                     if (cards.length == 2) {
@@ -160,7 +161,7 @@ public class PanelManager {
 
         JLabel label = new JLabel();
         label.setSize(400, 130);
-        ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("img/backgrounds/SantoriniLogo.png"));
+        ImageIcon img = new ImageIcon(getClass().getResource("/img/backgrounds/SantoriniLogo.png"));
         label.setIcon(img);
 
         splashScreen.setLayout(new GridBagLayout());
@@ -189,7 +190,7 @@ public class PanelManager {
 
         welcome = new Welcome();
         welcomeFirst = new WelcomeFirst();
-        waiting = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("img/backgrounds/LoadingBackground.gif")));
+        waiting = new JLabel(new ImageIcon(getClass().getResource("/img/backgrounds/LoadingBackground.gif")));
 
         gameFrame.add(welcome);
         gameFrame.setVisible(true);

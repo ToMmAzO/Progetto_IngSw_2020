@@ -12,13 +12,13 @@ import java.io.IOException;
 
 public class WelcomeFirst extends JPanel {
 
-    private final static String backgroundsPath = "img/backgrounds/";
-    private final static String buttonsPath = "img/buttons/";
+    private final static String backgroundsPath = "/img/backgrounds/";
+    private final static String buttonsPath = "/img/buttons/";
 
     private final int panelHeight = 600;
     private final int panelWidth = 600;
 
-    private final Image loadingBack = ImageIO.read(getClass().getClassLoader().getResource(backgroundsPath.concat("WelcomeBackground.png")));
+    private final Image loadingBack = ImageIO.read(getClass().getResource(backgroundsPath.concat("WelcomeBackground.png")));
     private final Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
     public WelcomeFirst() throws IOException {
@@ -49,7 +49,7 @@ public class WelcomeFirst extends JPanel {
         add(chosePlayers);
 
         JButton button2 = new JButton();
-        Image button2Png = ImageIO.read(getClass().getClassLoader().getResource(buttonsPath.concat("2PlayersButton.png")));
+        Image button2Png = ImageIO.read(getClass().getResource(buttonsPath.concat("2PlayersButton.png")));
         ImageIcon button2Img = new ImageIcon(button2Png.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_SMOOTH));
         button2.setIcon(button2Img);
         button2.setBounds(70,250,buttonWidth,buttonHeight);
@@ -59,7 +59,7 @@ public class WelcomeFirst extends JPanel {
 
         JButton button3 = new JButton();
         button3.setBounds(70 + buttonWidth + 50,250,buttonWidth,buttonHeight);
-        Image button3Png = ImageIO.read(getClass().getClassLoader().getResource(buttonsPath.concat("3PlayersButton.png")));
+        Image button3Png = ImageIO.read(getClass().getResource(buttonsPath.concat("3PlayersButton.png")));
         ImageIcon button3Img = new ImageIcon(button3Png.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_SMOOTH));
         button3.setIcon(button3Img);
         button3.setOpaque(false);
