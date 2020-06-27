@@ -94,7 +94,7 @@ public class GameManager {
     }
 
     /**
-     * @return all players actually in game.
+     * @return all players currently in game.
      */
     public Player[] getPlayersInGame(){
         Player[] listOfPlayer = new Player[players.size()];
