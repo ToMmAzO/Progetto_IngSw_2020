@@ -8,8 +8,8 @@ La seguente documentazione comprende i documenti realizzati per la progettazione
 
 ### UML
 I seguenti diagrammi delle classi rappresentano: il modello secondo il quale il gioco dovrebbe essere stato implementato e i diagrammi del prodotto finale.
-- [UML Iniziali](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/blob/master/deliverables/UML/Initial.mdj)
-- [UML Finali](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/blob/master/deliverables/UML/Santorini.mdj)
+- [UML Iniziali](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/blob/master/deliverables/uml/initial)
+- [UML Finali](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/blob/master/deliverables/uml/final)
 
 ### JavaDoc
 La seguente documentazione include una descrizione per la maggiore parte delle classi e dei metodi utilizzati seguendo le tecniche di documentazione di Java.
@@ -41,12 +41,26 @@ Il client viene eseguito scegliendo l'interfaccia con cui giocare, le possibili 
 
 #### CLI
 Per lanciare il client in modalità CLI digitare il seguente comando:
+```
+java -jar client.jar cli -ip 127.0.0.1
+```
 
 #### GUI
 Per lanciare il client in modalità GUI digitare il seguente comando:
+```
+java -jar client.jar gui -ip 127.0.0.1
+```
+
+#### Parameters
+- `cli/gui`: permette di scegliere se giocare in cli/gui. Se non specificato il valore di default è __gui__;
+- `-ip [own ip]`: permette di specificare l'ip personale;
+
 
 ### Server
-Per eseguire il server è solamente necessario configurare alcune delle sue caratteristiche attraverso un file di configurazione in formato json.
+L'esecuzione del server avviene attraverso il seguente comando:
+```
+java -jar server.jar
+```
 
 ## Componenti del gruppo
 - [__Tommaso Pozzi__](https://github.com/ToMmAzO)
