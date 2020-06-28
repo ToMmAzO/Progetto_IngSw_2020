@@ -14,6 +14,9 @@ I seguenti diagrammi delle classi rappresentano: il modello secondo il quale il 
 ### JavaDoc
 La seguente documentazione include una descrizione per la maggiore parte delle classi e dei metodi utilizzati seguendo le tecniche di documentazione di Java.
 
+### Test Coverage
+![alt text](deliverables/testCoverage/TestCoverage.png)
+
 ### Librerie e Plugins
 |Libreria/Plugin|Descrizione|
 |---------------|-----------|
@@ -22,7 +25,7 @@ La seguente documentazione include una descrizione per la maggiore parte delle c
 |__Swing__|libreria grafica di Java|
 
 ### Jars
-I seguenti jar sono stati utilizzati per la consegna del progetto, permettono quindi il lancio del gioco secondo le funzionalità descritte nell'introduzione. Le funzionalità realizzate secondo la specifica del progetto sono elencate nella prossima sezione mentre i dettagli per come lanciare il sistema saranno definiti nella sezione chiamata __Esecuzione dei jar__. La cartella in cui si trovano il software del client e del server si trova al seguente indirizzo: [Jars](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/blob/master/deliverables/jar).
+I seguenti jar sono stati utilizzati per la consegna del progetto, permettono quindi il lancio del gioco secondo le funzionalità descritte nell'introduzione. Le funzionalità realizzate secondo la specifica del progetto sono elencate nella prossima sezione mentre i dettagli per come lanciare il sistema saranno definiti nella sezione chiamata __Esecuzione dei jar__. Per permettere la corretta esecuzione del gioco è necessario eseguire prima il __server.jar__ e poi i __client.jar__. La cartella in cui si trovano il software del client e del server si trova al seguente indirizzo: [Jars](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/blob/master/deliverables/jar).
 
 ## Funzionalità
 ### Funzionalità Sviluppate
@@ -42,18 +45,17 @@ Il client viene eseguito scegliendo l'interfaccia con cui giocare, le possibili 
 #### CLI
 Per lanciare il client in modalità CLI digitare il seguente comando:
 ```
-java -jar client.jar cli -ip 127.0.0.1
+java -jar client.jar -cli
 ```
 
 #### GUI
-Per lanciare il client in modalità GUI digitare il seguente comando:
+Per lanciare il client in modalità GUI è possibile fare doppio click su __client.jar__, oppure digitare il seguente comando:
 ```
-java -jar client.jar gui -ip 127.0.0.1
+java -jar client.jar -gui
 ```
 
 #### Parameters
-- `cli/gui`: permette di scegliere se giocare in cli/gui. Se non specificato il valore di default è __gui__;
-- `-ip [own ip]`: permette di specificare l'ip personale;
+- `-cli/-gui`: permette di scegliere se giocare in cli/gui. Se non specificato il valore di default è __gui__;
 
 
 ### Server

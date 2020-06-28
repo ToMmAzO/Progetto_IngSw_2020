@@ -9,9 +9,7 @@ import java.net.InetAddress;
 
 /**
  * This is the executable client app.
- * To run it, some arguments are needed:
- *      - "cli" or "gui" to set the user interface
- *      - client IP// DA CANCELLARE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * Arguments "-cli" or "-gui" are used to set the user interface, if omitted the UI will be Gui.
  * By default the port used to establish connection with the server is 12345.
  */
 public class ClientApp {
@@ -25,17 +23,12 @@ public class ClientApp {
                 switch(arg){
                     case "-cli" -> isGui = false;
                     case "-gui" -> isGui = true;
-                    //case "-ip" -> ip = args[i + 1];
                 }
             }
         } catch(ArrayIndexOutOfBoundsException e){
             System.out.println("Wrong parameters!");
             return;
         }
-        /*if(ip == null) {
-            System.out.println("IP needed, type -ip [your_ip]");
-            return;
-        }*/
         Client<?> client;
         if(isGui){
             client = new Gui(ip, 12345);
