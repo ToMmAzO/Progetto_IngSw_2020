@@ -1,0 +1,14 @@
+it.polimi.ingsw.apps
+it.polimi.ingsw.controller
+it.polimi.ingsw.model.board
+it.polimi.ingsw.model.cards
+it.polimi.ingsw.model.game
+it.polimi.ingsw.model.player
+it.polimi.ingsw.model.workers
+it.polimi.ingsw.network.client
+it.polimi.ingsw.network.message
+it.polimi.ingsw.network.server
+it.polimi.ingsw.observer
+it.polimi.ingsw.view.cli
+it.polimi.ingsw.view.gui
+it.polimi.ingsw.view.gui.panels
