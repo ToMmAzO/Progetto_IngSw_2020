@@ -31,15 +31,34 @@ public class Deck {
         return cardsSelected;
     }
 
+    /**
+     * when a player choose a God (by sending a number), this method set that God's availiability to 'false'
+     * and return the God instance
+     * @param cardNumber the number of the God chosen
+     * @return chosen God's instance
+     */
     public God getCardToPlayer(int cardNumber){
         availability[cardNumber-1] = false;
         return cardsSelected[cardNumber-1];
     }
 
+    /**
+     * in the God selection phase of the game, tells if the card chosen is still availiable
+     *
+     * @param cardNumber the number of the card the player has chosen
+     * @return 'true' if it's still availiable, 'false' if it has already been chosen by another player
+     */
     public boolean isAvailable(int cardNumber) {
         return (cardNumber >= 1 && cardNumber <= cardsSelected.length) && (availability[cardNumber - 1]);
     }
 
+    /**
+     * it casually extract 2 or 3 numbers (based on the numberOfPlayers chosen by the first player)
+     * from 0 to numberOfGods
+     *
+     * @param numberOfNumbers chosen by the first Player, it tells if the game is gonna be between 2 or 3 people
+     * @return an array with the extracted numbers
+     */
     private int[] extractCasualNumbers(int numberOfNumbers){
         int numberOfGods = God.values().length;
         int[] casual = new int[numberOfNumbers];

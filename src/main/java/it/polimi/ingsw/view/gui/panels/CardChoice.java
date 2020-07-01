@@ -21,6 +21,15 @@ public class CardChoice extends JPanel {
     private final Image loadingBack = ImageIO.read(getClass().getResource(backgroundsPath.concat("CardsBackground.png")));
     private final Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
+    /**
+     * create the JPanel for the God's Card selection phase of the game.
+     * let the player choose between 3 different Gods
+     * @param god1 option number 1
+     * @param god2 option number 2
+     * @param god3 option number 3
+     * @param availability array of boolean that tells wich of the 3 options is still availiable
+     * @throws IOException for errors when reading from file
+     */
     public CardChoice(God god1, God god2, God god3, boolean[] availability) throws IOException {
         super();
         JLabel l1 = new JLabel("Choose a God, here's your options:");
@@ -110,6 +119,14 @@ public class CardChoice extends JPanel {
         setVisible(true);
     }
 
+    /**
+     * create the JPanel for the God's Card selection phase of the game.
+     * let the player choose between 2 different Gods
+     * @param god1 option number 1
+     * @param god2 option number 2
+     * @param availability array of boolean that tells wich of the 2 options is still availiable
+     * @throws IOException for errors when reading from file
+     */
     public CardChoice(God god1, God god2, boolean[] availability) throws IOException {
         super();
         JLabel l1 = new JLabel("Choose a God, here's your options:");

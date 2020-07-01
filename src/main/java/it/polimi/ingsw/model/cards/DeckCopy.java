@@ -23,6 +23,9 @@ public class DeckCopy implements Serializable {
         return availability;
     }
 
+    /**
+     * used by the Cli to print the info about the possible God's options
+     */
     public void print(){
         System.out.println("\nThe game will have the following divinity cards:");
         for (int i = 0; i < cardsSelected.length; i++){

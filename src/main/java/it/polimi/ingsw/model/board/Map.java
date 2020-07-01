@@ -47,6 +47,12 @@ public class Map extends Observable<Player> {
         return map[row][column].getWorkerPresence();
     }
 
+    /**
+     * from the beginning of the game, each time a tower is completed (a dome is placed over a block3) the
+     * numberOfCompleteTurrets is raised by 1
+     *
+     *    *needed for the Chronus' God power*
+     */
     public void addNumberOfCompleteTurrets(){
         numberOfCompleteTurrets++;
     }
@@ -55,6 +61,11 @@ public class Map extends Observable<Player> {
         return numberOfCompleteTurrets;
     }
 
+    /**
+     * given a worker, this method deletes it from the cell where it is
+     *
+     * @param worker the worker you want to be deleted
+     */
     public void deleteWorkerInCell(Worker worker){
         map[worker.getCoordX()][worker.getCoordY()].setWorkerPresence(null);
     }

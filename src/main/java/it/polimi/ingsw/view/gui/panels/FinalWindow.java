@@ -15,6 +15,13 @@ public class FinalWindow extends JWindow {
 
     private final static String backgroundsPath = "/img/backgrounds/";
 
+    /**
+     * create a JWindow with a specific icon to be displayed when the game ends (WIN or LOSE) or when
+     * there's an error during the game (like if a Client connection is closed)
+     *
+     * @param owner the JFrame owner of this JWindow
+     * @param gameState the GameState you want the icon for
+     */
     public FinalWindow(JFrame owner, GameState gameState){
         super(owner);
         JLabel background = new JLabel();

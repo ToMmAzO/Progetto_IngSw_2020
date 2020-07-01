@@ -8,6 +8,10 @@ public enum Color {
 
     static HashMap<Color, Boolean> availability = new HashMap<>();
 
+    /**
+     * initialize the hashmap with the 3 colors as keys and set them to 'true'
+     * ('true' means the color is still availiable)
+     */
     public static void initialization(){
         availability.put(RED, true);
         availability.put(YELLOW, true);

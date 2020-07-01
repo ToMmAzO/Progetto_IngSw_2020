@@ -17,6 +17,15 @@ public class QuestionWindow extends JWindow {
     private final static String backgroundsPath = "/img/backgrounds/";
     private final static String buttonsPath = "/img/buttons/";
 
+    /**
+     * a JWindow used for question the player about some specific God behavior during the game
+     * it can only take 2 answers ('yes' or 'no') by 2 JButtons
+     * when a button is clicked it sends the answer to the Server
+     *
+     * @param owner the JFrame owner of this JWindow
+     * @param message the Message you want to be displayed (Message is a pre-defined type. see: network.message folder)
+     * @throws IOException for errors when reading from file
+     */
     public QuestionWindow(JFrame owner, Message message) throws IOException {
         super(owner);
         JButton yesBtn = new JButton();

@@ -44,10 +44,20 @@ public class PanelManager {
         return panelManager;
     }
 
+    /**
+     * calls the gui.asyncWriteToSocket() in order to send a String to the Server
+     * @param string the String you want to send
+     */
     public void asyncWriteToSocket(String string){
         gui.asyncWriteToSocket(string);
     }
 
+    /**
+     * performs different action depending on the inputObject
+     *
+     * @param inputObject the Object you want to perform the action for
+     * @throws IOException for errors when reading from file
+     */
     public void readObject(Object inputObject) throws IOException {
         if(inputObject instanceof GameState){
             gameState = ((GameState)inputObject);
@@ -138,6 +148,9 @@ public class PanelManager {
         }
     }
 
+    /**
+     * starts the PanelManager
+     */
     public void start() {
         JWindow splashScreen = new JWindow();
         splashScreen.addWindowListener(new WindowAdapter() {
@@ -171,6 +184,11 @@ public class PanelManager {
         splashScreen.setVisible(true);
     }
 
+    /**
+     * Display a Window with the Santorini Logo for a time t
+     *
+     * @param splashScreen the window you want to be displayed
+     */
     private void startBackgroundInitialization(final Window splashScreen) {
         new Thread(() -> {
             try {
@@ -183,6 +201,13 @@ public class PanelManager {
         }).start();
     }
 
+    /**
+     * -create the main JFrame and adds to it the WelcomePanel in order to let the player insert his nickname
+     *  and send it to the Server
+     * -it also create the WelcomeFirst panel but it becomes visible only in one case (see: PanelManager.readObject() )
+     *
+     * @throws IOException for errors when reading from file
+     */
     private void showMainFrame() throws IOException {
         gameFrame = new JFrame("SANTORINI");
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

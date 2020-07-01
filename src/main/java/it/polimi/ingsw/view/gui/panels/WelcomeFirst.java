@@ -21,6 +21,11 @@ public class WelcomeFirst extends JPanel {
     private final Image loadingBack = ImageIO.read(getClass().getResource(backgroundsPath.concat("WelcomeBackground.png")));
     private final Image img = loadingBack.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
 
+    /**
+     * create the JPanel for the WelcomeFirst phase of the game.
+     * it let the first player chose the amount of players in the game ( 2 or 3)
+     * @throws IOException for errors when reading from file
+     */
     public WelcomeFirst() throws IOException {
         final int buttonHeight = 220;
         final int buttonWidth = 200;

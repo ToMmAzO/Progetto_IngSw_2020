@@ -24,6 +24,11 @@ public class Welcome extends JPanel {
     private final JTextPane welcome;
     private Font f;
 
+    /**
+     * create the JPanel for the Welcome phase of the game.
+     * it let the player insert a nickname
+     * @throws IOException for errors when reading from file
+     */
     public Welcome() throws IOException {
         super();
         int logoWidth = 400;
@@ -123,6 +128,10 @@ public class Welcome extends JPanel {
         setVisible(true);
     }
 
+    /**
+     * notifies the player if it's chosen nickname it's not acceptable (ex: missing nickname or already chosen by another player)
+     * @param message the message you want to be notified
+     */
     public void changeNickname(String message){
         f = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC,20);
         welcome.setFont(f);

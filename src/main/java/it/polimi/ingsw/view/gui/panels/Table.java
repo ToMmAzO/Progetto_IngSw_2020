@@ -35,6 +35,11 @@ public class Table extends JPanel{
 
     private boolean tutorialIsClosed = false;
 
+    /**
+     * creates the JPanel where's displayed the game's grid and adds all the needed elements to get it work properly
+     * it also adds some extra JPanels to enhance the visual appearence
+     * @throws IOException for errors when reading from file
+     */
     public Table() throws IOException {
         super();
         this.setSize(TABLE_DIMENSION);
@@ -61,16 +66,27 @@ public class Table extends JPanel{
         g.drawImage(boardImage, 0, 0, null);
     }
 
+
+    /**
+     * update the grid of the game
+     */
     public void updateMap(){
         boardPanel.update();
     }
 
+    /**
+     * adds a String in the textPanel's JTextArea
+     * @param string the String you want to be added
+     */
     public void addText(String string){
         textPanel.addString(string);
     }
 
     private class PlayerPanel extends JPanel{
 
+        /**
+         * adds a JPanel (on the right of the frame) wich reminds the player his God choice and its power
+         */
         public PlayerPanel(){
             super();
             setLayout(null);
@@ -98,6 +114,11 @@ public class Table extends JPanel{
             setVisible(true);
         }
 
+        /**
+         * creates a JLabel with the icon of a God based on the player's God choice
+         *
+         * @return the JLabel with the icon
+         */
         private JLabel getGodCard() {
             JLabel label = new JLabel();
             label.setSize(150,250);
@@ -117,6 +138,9 @@ public class Table extends JPanel{
 
         JTextArea info;
 
+        /**
+         * adds a JPanel (on the left of the frame) wich contains a JTextArea used to communicate with the player
+         */
         public TextPanel(){
             super();
             setLayout(null);
@@ -166,6 +190,9 @@ public class Table extends JPanel{
 
         private final TileButton[] tiles = new TileButton[25];
 
+        /**
+         * creates a Grid of TileButton
+         */
         public BoardPanel(){
             super(new GridLayout(5,5));
             int x = 0;
@@ -197,6 +224,12 @@ public class Table extends JPanel{
 
         private final int coordX, coordY;
 
+        /**
+         * create a card with a mouseListener and its coordinates (which will be the same as the map cell it represents),
+         * used to get player inputs
+         * @param x coord x
+         * @param y coord y
+         */
         public TileButton(int x, int y){
             super();
             coordX = x;
@@ -243,6 +276,9 @@ public class Table extends JPanel{
             setOpaque(false);
         }
 
+        /**
+         * assign an icon to the TileButton
+         */
         private void assignTilePieceIcon(){
             if(PanelManager.getInstance().getMap().noWorkerHere(coordX, coordY)) {
                 if(!PanelManager.getInstance().getMap().getCellBlockType(coordX, coordY).equals(BlockType.GROUND)) {

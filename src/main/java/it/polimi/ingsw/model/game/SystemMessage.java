@@ -34,6 +34,10 @@ public class SystemMessage extends Observable<String> {
         return systemError;
     }
 
+    /**
+     * used in case of error in the Server side, it notify all the Clients with a String
+     * @param error the String you want to be notified
+     */
     public void serverMessage(String error){
         notify(error);
     }
