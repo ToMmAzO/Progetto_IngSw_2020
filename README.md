@@ -36,7 +36,6 @@ I seguenti jar sono stati utilizzati per la consegna del progetto, permettono qu
 
 ### Funzionalità Aggiuntive Sviluppate
 - Divinità Avanzate
-- Persistenza ?
 
 ## Esecuzione dei JAR
 ### Client
@@ -45,16 +44,17 @@ Il client viene eseguito scegliendo l'interfaccia con cui giocare, le possibili 
 #### CLI
 Per lanciare il client in modalità CLI digitare il seguente comando:
 ```
-java -jar client.jar -cli
+java -jar client.jar -ip [server_ip] -cli
 ```
 
 #### GUI
-Per lanciare il client in modalità GUI è possibile fare doppio click su __client.jar__, oppure digitare il seguente comando:
+Per lanciare il client in modalità GUI digitare il seguente comando:
 ```
-java -jar client.jar -gui
+java -jar client.jar -ip [server_ip] -gui
 ```
 
 #### Parameters
+- `-ip 127.0.0.1`: consente di inserire l'indirizzo ip del server a cui collegarsi, nel caso mostrato 127.0.0.1
 - `-cli/-gui`: permette di scegliere se giocare in cli/gui. Se non specificato il valore di default è __gui__;
 
 
