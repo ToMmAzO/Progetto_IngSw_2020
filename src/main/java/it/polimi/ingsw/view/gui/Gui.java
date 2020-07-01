@@ -18,7 +18,7 @@ public class Gui extends Client<String> {
     /**
      * This constructor performs the Client constructor, but also initializes the manager of graphic interface.
      *
-     * @param ip is the client IP address.
+     * @param ip is the server IP address.
      * @param port is the server port to which this client should connect.
      */
     public Gui(String ip, int port){

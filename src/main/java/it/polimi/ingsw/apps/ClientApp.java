@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * This is the executable client app.
  * To run it, some arguments are needed:
- *      - server ip
+ *      - server IP
  *      - "-cli" or "-gui" to set the user interface
  * By default the port used to establish connection with the server is 12345.
  */
