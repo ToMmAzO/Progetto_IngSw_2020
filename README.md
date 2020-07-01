@@ -8,8 +8,8 @@ The following documentation includes the documents created for the design of the
 
 ### UML
 The following class diagrams represent the model according to which the game should have been implemented and the diagrams of the final product.
-- [UML Iniziali](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/tree/master/deliverables/uml/initial)
-- [UML Finali](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/tree/master/deliverables/uml/final)
+- [UML Initial](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/tree/master/deliverables/uml/initial)
+- [UML Final](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/tree/master/deliverables/uml/final)
 
 ### JavaDoc
 The following documentation includes a description for most of the classes and methods used, follows the Java documentation techniques and can be consulted at the following address: [JavaDoc](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/tree/master/deliverables/JavaDoc)
