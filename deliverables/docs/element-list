@@ -11,3 +11,4 @@ it.polimi.ingsw.network.server
 it.polimi.ingsw.observer
 it.polimi.ingsw.view.cli
 it.polimi.ingsw.view.gui
+it.polimi.ingsw.view.gui.panels
