@@ -18,7 +18,7 @@ public abstract class Client<T> {
     private PrintWriter socketOut;
 
     /**
-     * @param ip is the client IP address.
+     * @param ip is the server IP address.
      * @param port is the server port to which this client should connect.
      */
     public Client(String ip, int port){

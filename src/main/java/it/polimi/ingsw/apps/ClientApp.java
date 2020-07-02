@@ -5,28 +5,33 @@ import it.polimi.ingsw.view.cli.Cli;
 import it.polimi.ingsw.view.gui.Gui;
 
 import java.io.IOException;
-import java.net.InetAddress;
 
 /**
  * This is the executable client app.
- * Arguments "-cli" or "-gui" are used to set the user interface, if omitted the UI will be Gui.
+ * To run it, some arguments are needed:
+ *      - server IP
+ *      - "-cli" or "-gui" to set the user interface
  * By default the port used to establish connection with the server is 12345.
  */
 public class ClientApp {
 
     public static void main(String[] args) throws IOException {
-        InetAddress inetAddress = InetAddress.getLocalHost();
-        String ip = inetAddress.getHostAddress();
+        String ip = null;
         boolean isGui = true;
         try{
-            for(String arg : args){
-                switch(arg){
+            for (int i = 0; i < args.length; i++) {
+                switch(args[i]) {
+                    case "-ip" -> ip = args[i + 1];
                     case "-cli" -> isGui = false;
                     case "-gui" -> isGui = true;
                 }
             }
         } catch(ArrayIndexOutOfBoundsException e){
             System.out.println("Wrong parameters!");
+            return;
+        }
+        if(ip == null) {
+            System.out.println("IP needed, type -ip [server_ip]");
             return;
         }
         Client<?> client;

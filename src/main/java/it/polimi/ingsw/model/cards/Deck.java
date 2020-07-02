@@ -32,7 +32,7 @@ public class Deck {
     }
 
     /**
-     * when a player choose a God (by sending a number), this method set that God's availiability to 'false'
+     * when a player choose a God (by sending a number), this method set that God's availability to 'false'
      * and return the God instance
      * @param cardNumber the number of the God chosen
      * @return chosen God's instance
@@ -43,10 +43,10 @@ public class Deck {
     }
 
     /**
-     * in the God selection phase of the game, tells if the card chosen is still availiable
+     * in the God selection phase of the game, tells if the card chosen is still available
      *
      * @param cardNumber the number of the card the player has chosen
-     * @return 'true' if it's still availiable, 'false' if it has already been chosen by another player
+     * @return 'true' if it's still available, 'false' if it has already been chosen by another player
      */
     public boolean isAvailable(int cardNumber) {
         return (cardNumber >= 1 && cardNumber <= cardsSelected.length) && (availability[cardNumber - 1]);
