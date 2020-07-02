@@ -37,7 +37,7 @@ public class Table extends JPanel{
 
     /**
      * creates the JPanel where's displayed the game's grid and adds all the needed elements to get it work properly
-     * it also adds some extra JPanels to enhance the visual appearence
+     * it also adds some extra JPanels to enhance the visual appearance
      * @throws IOException for errors when reading from file
      */
     public Table() throws IOException {
@@ -85,7 +85,7 @@ public class Table extends JPanel{
     private class PlayerPanel extends JPanel{
 
         /**
-         * adds a JPanel (on the right of the frame) wich reminds the player his God choice and its power
+         * adds a JPanel (on the right of the frame) which reminds the player his God choice and its power
          */
         public PlayerPanel(){
             super();
@@ -139,7 +139,7 @@ public class Table extends JPanel{
         JTextArea info;
 
         /**
-         * adds a JPanel (on the left of the frame) wich contains a JTextArea used to communicate with the player
+         * adds a JPanel (on the left of the frame) which contains a JTextArea used to communicate with the player
          */
         public TextPanel(){
             super();

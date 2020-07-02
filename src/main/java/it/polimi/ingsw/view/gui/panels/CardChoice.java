@@ -27,7 +27,7 @@ public class CardChoice extends JPanel {
      * @param god1 option number 1
      * @param god2 option number 2
      * @param god3 option number 3
-     * @param availability array of boolean that tells wich of the 3 options is still availiable
+     * @param availability array of boolean that tells which of the 3 options is still available
      * @throws IOException for errors when reading from file
      */
     public CardChoice(God god1, God god2, God god3, boolean[] availability) throws IOException {
@@ -124,7 +124,7 @@ public class CardChoice extends JPanel {
      * let the player choose between 2 different Gods
      * @param god1 option number 1
      * @param god2 option number 2
-     * @param availability array of boolean that tells wich of the 2 options is still availiable
+     * @param availability array of boolean that tells which of the 2 options is still available
      * @throws IOException for errors when reading from file
      */
     public CardChoice(God god1, God god2, boolean[] availability) throws IOException {

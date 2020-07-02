@@ -9,7 +9,7 @@ public class MapCopy implements Serializable {
     private final Cell[][] map;
 
     /**
-     * create an exact copy of the map (wich is Singleton on the Server) in order to send it to the Clients
+     * create an exact copy of the map (which is Singleton on the Server) in order to send it to the Clients
      * Being only a copy it doesn't create problems even if modified by the Client
      */
     public MapCopy(){
@@ -27,8 +27,8 @@ public class MapCopy implements Serializable {
     /**
      * controls if there's a worker in the block placed in row,column on the map
      *
-     * @param row row of the cell to controll on the map
-     * @param column column of the cell to controll on the map
+     * @param row row of the cell to control on the map
+     * @param column column of the cell to control on the map
      * @return 'true' if the cell is free (there's no worker in it) else 'false'
      */
     public boolean noWorkerHere(int row, int column){
