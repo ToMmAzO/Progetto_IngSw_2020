@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.network.message.Message</OriginalElement>
+  <nodes>
+    <node x="2415.892857142857" y="272.0">it.polimi.ingsw.model.workers.WorkerTriton</node>
+    <node x="414.0" y="822.0">it.polimi.ingsw.model.game.Game</node>
+    <node x="439.25" y="721.0">it.polimi.ingsw.observer.Observable</node>
+    <node x="50.5" y="822.0">java.lang.Runnable</node>
+    <node x="1796.8928571428569" y="272.0">it.polimi.ingsw.model.workers.WorkerChronus</node>
+    <node x="3330.941964285714" y="0.0">java.awt.image.ImageObserver</node>
+    <node x="296.75" y="121.0">java.lang.Enum</node>
+    <node x="1212.8835635669361" y="121.0">it.polimi.ingsw.model.cards.DeckCopy</node>
+    <node x="453.0" y="272.0">it.polimi.ingsw.model.game.GameState</node>
+    <node x="216.0" y="272.0">it.polimi.ingsw.model.player.Color</node>
+    <node x="2543.9192778526503" y="121.0">it.polimi.ingsw.model.board.Cell</node>
+    <node x="943.0" y="721.0">it.polimi.ingsw.network.server.SocketRemoteView</node>
+    <node x="828.0" y="822.0">it.polimi.ingsw.view.gui.Gui</node>
+    <node x="1152.0" y="721.0">it.polimi.ingsw.controller.ActionManager</node>
+    <node x="511.0" y="822.0">it.polimi.ingsw.model.board.Map</node>
+    <node x="493.75" y="625.0">it.polimi.ingsw.view.gui.panels.Welcome</node>
+    <node x="1295.8928571428569" y="272.0">it.polimi.ingsw.model.workers.WorkerPrometheus</node>
+    <node x="2340.0" y="721.0">it.polimi.ingsw.model.cards.Deck</node>
+    <node x="2253.892857142857" y="272.0">it.polimi.ingsw.model.workers.WorkerArtemis</node>
+    <node x="612.75" y="625.0">it.polimi.ingsw.view.gui.panels.Table</node>
+    <node x="1958.8928571428569" y="272.0">it.polimi.ingsw.model.workers.WorkerZeus</node>
+    <node x="3199.5468048068283" y="625.0">it.polimi.ingsw.view.gui.panels.QuestionWindow</node>
+    <node x="3316.441964285714" y="272.0">javax.accessibility.Accessible</node>
+    <node x="3183.441964285714" y="121.0">java.awt.Component</node>
+    <node x="1380.3835635669361" y="0.0">java.io.Serializable</node>
+    <node x="545.5" y="524.0">javax.swing.JPanel</node>
+    <node x="736.892857142857" y="272.0">it.polimi.ingsw.model.workers.WorkerHestia</node>
+    <node x="772.0" y="721.0">it.polimi.ingsw.network.client.Client</node>
+    <node x="2725.892857142857" y="272.0">it.polimi.ingsw.model.workers.WorkerHera</node>
+    <node x="0.0" y="923.0">it.polimi.ingsw.network.server.SocketClientConnection</node>
+    <node x="0.0" y="272.0">java.beans.JavaBean</node>
+    <node x="1457.8835635669361" y="121.0">it.polimi.ingsw.model.board.MapCopy</node>
+    <node x="1706.0" y="721.0">it.polimi.ingsw.controller.TurnManager</node>
+    <node x="3655.6919642857138" y="393.0">javax.swing.SwingContainer</node>
+    <node x="891.892857142857" y="272.0">javax.swing.TransferHandler.HasGetTransferHandler</node>
+    <node x="2865.892857142857" y="272.0">it.polimi.ingsw.model.workers.WorkerDemeter</node>
+    <node x="2203.0" y="721.0">it.polimi.ingsw.network.server.Server</node>
+    <node x="320.0" y="272.0">it.polimi.ingsw.model.board.BlockType</node>
+    <node x="1338.8835635669361" y="121.0">it.polimi.ingsw.network.message.Message</node>
+    <node x="3027.892857142857" y="272.0">it.polimi.ingsw.model.workers.WorkerPan</node>
+    <node x="11.0" y="721.0">java.lang.FunctionalInterface</node>
+    <node x="126.0" y="272.0">it.polimi.ingsw.model.cards.God</node>
+    <node x="338.75" y="625.0">it.polimi.ingsw.view.gui.panels.WelcomeFirst</node>
+    <node x="1339.0" y="721.0">it.polimi.ingsw.network.message.ClientMessage</node>
+    <node x="2014.5264207097932" y="121.0">it.polimi.ingsw.model.workers.Worker</node>
+    <node x="3183.441964285714" y="272.0">java.awt.Container</node>
+    <node x="1526.0" y="721.0">it.polimi.ingsw.view.gui.panels.PanelManager</node>
+    <node x="804.2787230458218" y="393.0">javax.swing.JComponent</node>
+    <node x="3352.691964285714" y="393.0">java.awt.Window</node>
+    <node x="3464.691964285714" y="393.0">javax.swing.RootPaneContainer</node>
+    <node x="3168.941964285714" y="0.0">java.awt.MenuContainer</node>
+    <node x="716.75" y="625.0">it.polimi.ingsw.view.gui.panels.CardChoice</node>
+    <node x="1111.8928571428569" y="272.0">it.polimi.ingsw.model.workers.WorkerHephaestus</node>
+    <node x="601.0" y="822.0">it.polimi.ingsw.model.player.Player</node>
+    <node x="1479.8928571428569" y="272.0">it.polimi.ingsw.model.workers.WorkerAtlas</node>
+    <node x="3051.5468048068283" y="625.0">it.polimi.ingsw.view.gui.panels.FinalWindow</node>
+    <node x="142.25" y="0.0">java.lang.constant.Constable</node>
+    <node x="1879.0" y="721.0">it.polimi.ingsw.controller.GameManager</node>
+    <node x="3199.7968048068283" y="524.0">javax.swing.JWindow</node>
+    <node x="2098.892857142857" y="272.0">it.polimi.ingsw.model.workers.WorkerAthena</node>
+    <node x="738.0" y="822.0">it.polimi.ingsw.view.cli.Cli</node>
+    <node x="1627.8928571428569" y="272.0">it.polimi.ingsw.model.workers.WorkerMinotaur</node>
+    <node x="252.0" y="822.0">it.polimi.ingsw.model.game.SystemMessage</node>
+    <node x="275.25" y="0.0">java.lang.Comparable</node>
+    <node x="2052.0" y="721.0">it.polimi.ingsw.observer.Observer</node>
+    <node x="2570.892857142857" y="272.0">it.polimi.ingsw.model.workers.WorkerApollo</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.model.game.SystemMessage" target="it.polimi.ingsw.observer.Observable">
+      <point x="0.0" y="-25.5" />
+      <point x="323.0" y="792.0" />
+      <point x="454.25" y="792.0" />
+      <point x="-45.0" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JComponent" target="java.awt.Container">
+      <point x="45.0" y="-25.5" />
+      <point x="909.2787230458218" y="353.0" />
+      <point x="3211.691964285714" y="353.0" />
+      <point x="-28.25" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.board.Cell" target="java.io.Serializable">
+      <point x="0.0" y="-25.5" />
+      <point x="2582.4192778526503" y="81.0" />
+      <point x="1490.0710635669361" y="81.0" />
+      <point x="42.1875" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JPanel" target="javax.accessibility.Accessible">
+      <point x="30.666666666666515" y="-25.5" />
+      <point x="622.1666666666665" y="504.0" />
+      <point x="3029.3801381401618" y="504.0" />
+      <point x="3029.3801381401618" y="363.0" />
+      <point x="3336.441964285714" y="363.0" />
+      <point x="-40.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerArtemis" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="2324.892857142857" y="242.0" />
+      <point x="2070.3835635669357" y="242.0" />
+      <point x="9.857142857142662" y="25.5" />
+    </edge>
+    <edge source="java.awt.Component" target="java.awt.image.ImageObserver">
+      <point x="37.666666666666515" y="-25.5" />
+      <point x="3277.6086309523807" y="101.0" />
+      <point x="3401.941964285714" y="101.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JWindow" target="java.awt.Window">
+      <point x="8.25" y="-25.5" />
+      <point x="3257.5468048068283" y="484.0" />
+      <point x="3398.691964285714" y="484.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerDemeter" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="2936.892857142857" y="202.0" />
+      <point x="2096.6692778526503" y="202.0" />
+      <point x="36.14285714285734" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerHestia" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="804.392857142857" y="192.0" />
+      <point x="2017.8121349955074" y="192.0" />
+      <point x="-42.71428571428578" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JWindow" target="javax.swing.RootPaneContainer">
+      <point x="24.75" y="-25.5" />
+      <point x="3274.0468048068283" y="494.0" />
+      <point x="3550.191964285714" y="494.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.panels.QuestionWindow" target="javax.swing.JWindow">
+      <point x="0.0" y="-25.5" />
+      <point x="24.75" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.message.Message" target="java.io.Serializable">
+      <point x="0.0" y="-25.5" />
+      <point x="1388.3835635669361" y="101.0" />
+      <point x="1439.4460635669361" y="101.0" />
+      <point x="-8.4375" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerHephaestus" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="1193.8928571428569" y="202.0" />
+      <point x="2024.3835635669361" y="202.0" />
+      <point x="-36.14285714285711" y="25.5" />
+    </edge>
+    <edge source="java.lang.Enum" target="java.lang.constant.Constable">
+      <point x="-25.666666666666686" y="-25.5" />
+      <point x="309.58333333333326" y="101.0" />
+      <point x="198.75" y="101.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="java.awt.Window" target="javax.accessibility.Accessible">
+      <point x="23.0" y="-25.5" />
+      <point x="3421.691964285714" y="373.0" />
+      <point x="3416.441964285714" y="373.0" />
+      <point x="40.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.cards.DeckCopy" target="java.io.Serializable">
+      <point x="0.0" y="-25.5" />
+      <point x="1265.8835635669361" y="91.0" />
+      <point x="1422.5710635669361" y="91.0" />
+      <point x="-25.3125" y="25.5" />
+    </edge>
+    <edge source="java.lang.Enum" target="java.lang.Comparable">
+      <point x="0.0" y="-25.5" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JPanel" target="java.beans.JavaBean">
+      <point x="-30.666666666666515" y="-25.5" />
+      <point x="560.8333333333335" y="504.0" />
+      <point x="29.833333333333258" y="504.0" />
+      <point x="29.833333333333258" y="373.0" />
+      <point x="17.666666666666742" y="373.0" />
+      <point x="-35.33333333333326" y="25.5" />
+    </edge>
+    <edge source="java.awt.Component" target="java.io.Serializable">
+      <point x="-37.666666666666515" y="-25.5" />
+      <point x="3202.2752976190477" y="71.0" />
+      <point x="1506.9460635669361" y="71.0" />
+      <point x="59.0625" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerTriton" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="2483.392857142857" y="232.0" />
+      <point x="2076.954992138365" y="232.0" />
+      <point x="16.42857142857156" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.cards.God" target="java.lang.Enum">
+      <point x="0.0" y="-25.5" />
+      <point x="161.0" y="242.0" />
+      <point x="306.375" y="242.0" />
+      <point x="-28.875" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JComponent" target="java.beans.JavaBean">
+      <point x="-45.0" y="-25.5" />
+      <point x="819.2787230458218" y="373.0" />
+      <point x="88.33333333333326" y="373.0" />
+      <point x="35.33333333333334" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JWindow" target="javax.swing.TransferHandler.HasGetTransferHandler">
+      <point x="-24.75" y="-25.5" />
+      <point x="3224.5468048068283" y="474.0" />
+      <point x="1314.671580188679" y="474.0" />
+      <point x="1314.671580188679" y="343.0" />
+      <point x="1041.8928571428569" y="343.0" />
+      <point x="49.999999999999886" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerZeus" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="2018.8928571428569" y="252.0" />
+      <point x="2057.240706424079" y="252.0" />
+      <point x="-3.2857142857142208" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerHera" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="2785.892857142857" y="212.0" />
+      <point x="2090.097849281222" y="212.0" />
+      <point x="29.57142857142844" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.panels.CardChoice" target="javax.swing.JPanel">
+      <point x="0.0" y="-25.5" />
+      <point x="776.75" y="595.0" />
+      <point x="626.0" y="595.0" />
+      <point x="34.5" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerChronus" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="1867.8928571428569" y="242.0" />
+      <point x="2050.6692778526503" y="242.0" />
+      <point x="-9.857142857142662" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.player.Color" target="java.lang.Enum">
+      <point x="0.0" y="-25.5" />
+      <point x="258.0" y="252.0" />
+      <point x="325.625" y="252.0" />
+      <point x="-9.625" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.Gui" target="it.polimi.ingsw.network.client.Client">
+      <point x="0.0" y="-25.5" />
+      <point x="863.0" y="797.0" />
+      <point x="841.0" y="797.0" />
+      <point x="23.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.panels.Table" target="javax.swing.JPanel">
+      <point x="0.0" y="-25.5" />
+      <point x="654.75" y="605.0" />
+      <point x="603.0" y="605.0" />
+      <point x="11.5" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JPanel" target="javax.swing.JComponent">
+      <point x="0.0" y="-25.5" />
+      <point x="591.5" y="494.0" />
+      <point x="864.2787230458218" y="494.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JWindow" target="javax.swing.SwingContainer">
+      <point x="41.25" y="-25.5" />
+      <point x="3290.5468048068283" y="504.0" />
+      <point x="3730.1919642857138" y="504.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.game.Game" target="it.polimi.ingsw.observer.Observable">
+      <point x="0.0" y="-25.5" />
+      <point x="452.5" y="802.0" />
+      <point x="484.25" y="802.0" />
+      <point x="-15.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerApollo" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="2638.392857142857" y="222.0" />
+      <point x="2083.5264207097935" y="222.0" />
+      <point x="23.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.cli.Cli" target="it.polimi.ingsw.network.client.Client">
+      <point x="0.0" y="-25.5" />
+      <point x="773.0" y="797.0" />
+      <point x="795.0" y="797.0" />
+      <point x="-23.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.Worker" target="java.io.Serializable">
+      <point x="0.0" y="-25.5" />
+      <point x="2060.5264207097935" y="91.0" />
+      <point x="1473.1960635669361" y="91.0" />
+      <point x="25.3125" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.board.BlockType" target="java.lang.Enum">
+      <point x="0.0" y="-25.5" />
+      <point x="376.5" y="252.0" />
+      <point x="344.875" y="252.0" />
+      <point x="9.625" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerPrometheus" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="1377.8928571428569" y="212.0" />
+      <point x="2030.9549921383646" y="212.0" />
+      <point x="-29.57142857142867" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.panels.FinalWindow" target="javax.swing.JWindow">
+      <point x="0.0" y="-25.5" />
+      <point x="3115.5468048068283" y="605.0" />
+      <point x="3224.5468048068283" y="605.0" />
+      <point x="-24.75" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.server.SocketClientConnection" target="java.lang.Runnable">
+      <point x="0.0" y="-25.5" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.panels.Welcome" target="javax.swing.JPanel">
+      <point x="0.0" y="-25.5" />
+      <point x="543.25" y="605.0" />
+      <point x="580.0" y="605.0" />
+      <point x="-11.5" y="25.5" />
+    </edge>
+    <edge source="java.lang.Runnable" target="java.lang.FunctionalInterface">
+      <point x="0.0" y="-25.5" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="java.lang.Enum" target="java.io.Serializable">
+      <point x="25.666666666666686" y="-25.5" />
+      <point x="360.91666666666674" y="71.0" />
+      <point x="1388.8210635669361" y="71.0" />
+      <point x="-59.0625" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.game.GameState" target="java.lang.Enum">
+      <point x="0.0" y="-25.5" />
+      <point x="509.5" y="242.0" />
+      <point x="364.125" y="242.0" />
+      <point x="28.875" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerAtlas" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="1543.8928571428569" y="222.0" />
+      <point x="2037.5264207097932" y="222.0" />
+      <point x="-23.0" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JWindow" target="javax.accessibility.Accessible">
+      <point x="-8.25" y="-25.5" />
+      <point x="3241.0468048068283" y="464.0" />
+      <point x="3051.7968048068283" y="464.0" />
+      <point x="3051.7968048068283" y="373.0" />
+      <point x="3376.441964285714" y="373.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.player.Player" target="it.polimi.ingsw.observer.Observable">
+      <point x="0.0" y="-25.5" />
+      <point x="647.0" y="792.0" />
+      <point x="544.25" y="792.0" />
+      <point x="45.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerPan" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="3084.392857142857" y="192.0" />
+      <point x="2103.240706424079" y="192.0" />
+      <point x="42.71428571428578" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JComponent" target="javax.swing.TransferHandler.HasGetTransferHandler">
+      <point x="15.0" y="-25.5" />
+      <point x="879.2787230458218" y="343.0" />
+      <point x="941.892857142857" y="343.0" />
+      <point x="-50.0" y="25.5" />
+    </edge>
+    <edge source="java.awt.Window" target="java.awt.Container">
+      <point x="-23.0" y="-25.5" />
+      <point x="3375.691964285714" y="353.0" />
+      <point x="3268.191964285714" y="353.0" />
+      <point x="28.25" y="25.5" />
+    </edge>
+    <edge source="java.awt.Component" target="java.awt.MenuContainer">
+      <point x="0.0" y="-25.5" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerMinotaur" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="1702.3928571428569" y="232.0" />
+      <point x="2044.097849281222" y="232.0" />
+      <point x="-16.42857142857133" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.board.Map" target="it.polimi.ingsw.observer.Observable">
+      <point x="0.0" y="-25.5" />
+      <point x="546.0" y="802.0" />
+      <point x="514.25" y="802.0" />
+      <point x="15.0" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.board.MapCopy" target="java.io.Serializable">
+      <point x="0.0" y="-25.5" />
+      <point x="1507.3835635669361" y="101.0" />
+      <point x="1456.3210635669361" y="101.0" />
+      <point x="8.4375" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.panels.WelcomeFirst" target="javax.swing.JPanel">
+      <point x="0.0" y="-25.5" />
+      <point x="406.25" y="595.0" />
+      <point x="557.0" y="595.0" />
+      <point x="-34.5" y="25.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.workers.WorkerAthena" target="it.polimi.ingsw.model.workers.Worker">
+      <point x="0.0" y="-25.5" />
+      <point x="2166.392857142857" y="252.0" />
+      <point x="2063.812134995507" y="252.0" />
+      <point x="3.2857142857142208" y="25.5" />
+    </edge>
+    <edge source="java.awt.Container" target="java.awt.Component">
+      <point x="0.0" y="-25.5" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JWindow" target="java.beans.JavaBean">
+      <point x="-41.25" y="-25.5" />
+      <point x="3208.0468048068283" y="484.0" />
+      <point x="40.83333333333326" y="484.0" />
+      <point x="40.83333333333326" y="373.0" />
+      <point x="53.0" y="373.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="javax.swing.JComponent" target="java.io.Serializable">
+      <point x="-15.0" y="-25.5" />
+      <point x="849.2787230458218" y="363.0" />
+      <point x="576.5" y="363.0" />
+      <point x="576.5" y="81.0" />
+      <point x="1405.6960635669361" y="81.0" />
+      <point x="-42.1875" y="25.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6526178010471203" x="1103.330124348175" y="573.7877642892327" />
+  <SelectedNodes>
+    <node>it.polimi.ingsw.network.message.Message</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

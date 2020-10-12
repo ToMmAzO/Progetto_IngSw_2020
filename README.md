@@ -17,7 +17,7 @@ The following documentation includes a description for most of the classes and m
 ### Test Coverage
 ![alt text](deliverables/testCoverage/TestCoverage.png)
 
-### Librerie e Plugins
+### Libraries and Plugins
 |Library/Plugin|Description|
 |---------------|-----------|
 |__maven__|management tool for software based on Java and build automation|
@@ -25,7 +25,7 @@ The following documentation includes a description for most of the classes and m
 |__Swing__|Java graphics library|
 
 ### Jars
-The following jars allow the launch of the game as described in the introduction feature. The features built according to the design specification are listed in the next section while the details for how to launch the system will be defined in the section called __Execution of jar__. To allow the game to run correctly, you must first run the __server.jar__ and then the __client.jar__. The folder where the client and server software are located is at the following address: [Jars](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/blob/master/deliverables/jar).
+The following jars allow the launch of the game as described in the introduction feature. The features built according to the design specification are listed in the next section while the details for how to launch the system will be defined in the section called __Execution of jar__. To allow the game to run correctly, you must first run the __server.jar__ and then the __client.jar__. The folder, where the client and server software are located, is at the following address: [Jars](https://github.com/ToMmAzO/ing-sw-2020-Pozzi-Quagliana-Simeoni/blob/master/deliverables/jar).
 
 ## Funzionalità
 ### Funzionalità Sviluppate
