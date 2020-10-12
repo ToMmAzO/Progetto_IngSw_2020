@@ -6,7 +6,8 @@
   </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/deliverables/JavaDoc" />
-    <option name="OPTION_SCOPE" value="private" />
+    <option name="OPTION_SCOPE" value="public" />
+    <option name="OTHER_OPTIONS" value="-docletpath &quot;C:\Users\tomma\Desktop\ing-sw-2020-riva-valassi-volta\src\main\java\umldoclet-2.0.10.jar&quot; -doclet nl.talsmasoftware.umldoclet.UMLDoclet" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
